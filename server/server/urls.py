@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path,include
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
     # path('api/', include("app.urls")),
+    path("volunteer_register_info",views.volunteer_register_info, name = "volunteer_register_info"),
+    path("admin_register_info",views.admin_register_info, name = "admin_register_info"),
+    path("login-info", views.login_info, name="login_info"),
+
 ]
