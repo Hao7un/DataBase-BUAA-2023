@@ -5,13 +5,14 @@
     </div>
     <div class="nav-container">
       <el-menu mode="horizontal" :default-active="activeMemu" class="menu-container">
+        <el-menu-item index="recruit" class="item-font" @click="changeToRecruit()">志愿招募</el-menu-item>
         <el-menu-item index="project" class="item-font" @click="changeToProject()">志愿项目</el-menu-item>
         <el-menu-item index="team" class="item-font" @click="changeToTeam()">志愿团队</el-menu-item>
       </el-menu>
     </div>
     <div class="avatar-container">
       <el-dropdown trigger="click">
-        <el-avatar :size="50" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
+        <el-avatar :size="45" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
         <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item @click="changeToUserInfo()">个人信息</el-dropdown-item>
@@ -20,6 +21,7 @@
       </template>
       </el-dropdown>
     </div>
+    <!-- <div class="username-container">{{ username }}</div> -->
 </div>
 </template>
 
@@ -30,20 +32,27 @@ import { ElMessage } from 'element-plus';
 export default {
   data() {
     return {
+      username: "王乐",
       activeMemu: "project"
     }
   },
   methods: {
+    changeToRecruit() {
+      console.log("change to recruit");
+      this.$router.push({
+        path: '/recruitment/join'
+      });
+    },
     changeToProject() {
       console.log("change to project");
       this.$router.push({
-        path: 'project'
+        path: '/project/join'
       });
     },
     changeToTeam() {
       console.log("change to team");
       this.$router.push({
-        path: 'team'
+        path: '/team/join'
       });
     },
     changeToUserInfo() {
@@ -70,6 +79,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 10px 10px;
+    border-bottom: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .logo-container img {

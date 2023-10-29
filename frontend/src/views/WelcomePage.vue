@@ -14,17 +14,15 @@
         </el-button>
     </div>
     <div class="form-container">
-      <el-form :rules="rules" :model="loginForm" ref="loginForm">
+      <el-form :rules="rules" :model="loginForm" ref="loginForm" label-width="80px">
         <div>
-          <el-form-item prop="username">
-            <span class="form-font">用户名</span>
-            <el-input v-model="loginForm.username" clearable placeholder="请输入用户名" :style="{width : '275px', height : '40px'}"></el-input>
+          <el-form-item label="学工号" prop="loginAccount">
+            <el-input v-model="loginForm.account" clearable placeholder="请输入学工号" :style="{width: '300px', height: '40px'}"></el-input>
           </el-form-item>
         </div>
         <div>
-          <el-form-item prop="loginPassword">
-            <span class="form-font">密码</span>
-            <el-input v-model="loginForm.password" show-password clearable placeholder="请输入密码" :style="{width : '300px', height : '40px'}"></el-input>
+          <el-form-item label="密码" prop="loginPassword">
+            <el-input v-model="loginForm.password" show-password clearable placeholder="请输入密码" :style="{width: '300px', height: '40px'}"></el-input>
           </el-form-item>
         </div>
       </el-form>
@@ -41,41 +39,44 @@
       </el-button>
     </div>
     <div class="form-container">
-      <el-form :rules="rules" :model="registerForm" ref="registerForm">
+      <el-form :rules="rules" :model="registerForm" ref="registerForm" label-width="80px">
         <div>
-          <el-form-item prop="username">
-            <span class="form-font">用户名</span>
-            <el-input v-model="registerForm.username" clearable placeholder="请输入用户名" :style="{width : '275px', height : '40px'}"></el-input>
+          <el-form-item prop="username" label="姓名">
+            <el-input v-model="registerForm.username" clearable placeholder="请输入姓名" :style="{width: '300px', height: '40px'}"></el-input>
           </el-form-item>
         </div>
         <div>
-          <el-form-item prop="account">
-            <span class="form-font">学工号</span>
-            <el-input v-model="registerForm.account" clearable placeholder="请输入学工号" :style="{width : '275px', height : '40px'}"></el-input>
+          <el-form-item prop="registerAccount" label="学工号">
+            <el-input v-model="registerForm.account" clearable placeholder="请输入学工号" :style="{width: '300px', height: '40px'}"></el-input>
           </el-form-item>
         </div>
         <div>
-          <el-form-item prop="telephone">
-            <span class="form-font">电话</span>
-            <el-input v-model="registerForm.telephone" clearable placeholder="请输入电话" :style="{width : '300px', height : '40px'}"></el-input>
+          <el-form-item prop="telephone" label="电话">
+            <el-input v-model="registerForm.telephone" clearable placeholder="请输入电话" :style="{width: '300px', height: '40px'}"></el-input>
           </el-form-item>
         </div>
         <div>
-          <el-form-item prop="email">
-            <span class="form-font">邮箱</span>
+          <el-form-item prop="email" label="邮箱">
             <el-input v-model="registerForm.email" clearable placeholder="请输入邮箱" :style="{width : '300px', height : '40px'}"></el-input>
           </el-form-item>
         </div>
         <div>
-          <el-form-item prop="registerPassword">
-            <span class="form-font">密码</span>
+          <el-form-item prop="registerPassword" label="密码">
             <el-input v-model="registerForm.password" show-password clearable placeholder="请输入密码" :style="{width : '300px', height : '40px'}"></el-input>
           </el-form-item>
         </div>
         <div>
-          <el-form-item prop="confirmPassword">
-            <span class="form-font">确认密码</span>
-            <el-input v-model="registerForm.rePassword" show-password clearable placeholder="请再次输入密码" :style="{width : '250px', height : '40px'}"></el-input>
+          <el-form-item prop="confirmPassword" label="确认密码">
+            <el-input v-model="registerForm.rePassword" show-password clearable placeholder="请再次输入密码" :style="{width : '300px', height : '40px'}"></el-input>
+          </el-form-item>
+        </div>
+        <div>
+          <el-form-item label="注册类型" prop="userType">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-radio-group v-model="registerForm.userType">
+              <el-radio label="普通用户">普通用户</el-radio>
+              <el-radio label="团队负责人">团队负责人</el-radio>
+            </el-radio-group>
           </el-form-item>
         </div>
       </el-form>
@@ -91,7 +92,6 @@ import { ElMessage } from 'element-plus';
 
 export default {
   data() {
-    
     const validateLoginPassword = (rule, value, callback) => {
       if (this.loginForm.password === '') {
         callback(new Error("密码不能为空！"));
@@ -103,15 +103,59 @@ export default {
         callback();
       }
     };
+    const validateLoginAccount = (rule, value, callback) => {
+      if (this.loginForm.account === "") {
+        callback(new Error("学工号不能为空！"));
+      }
+      else {
+        callback();
+      }
+    };
+    const validateRegisterUserName = (rule, value, callback) => {
+      if (this.registerForm.username === '') {
+        callback(new Error("姓名不能为空！"));
+      }
+      else {
+        callback();
+      }
+    };
+    const validateRegisterAccount = (rule, value, callback) => {
+      if (this.registerForm.account === '') {
+        callback(new Error("学工号不能为空！"));
+      }
+      else {
+        callback();
+      }
+    };
+    const validateTelephone = (rule, value, callback) => {
+      if (this.registerForm.telephone === '') {
+        callback(new Error("电话不能为空！"));
+      }
+      else {
+        callback();
+      }
+    };
+    const validateEmail = (rule, value, callback) => {
+      if (this.registerForm.email === '') {
+        callback(new Error('邮箱不能为空！'))
+      }
+      let reg = /^[a-zA-Z0-9]+([-_.][A-Za-zd]+)*@([a-zA-Z0-9]+[-.])+[A-Za-zd]{2,5}$/
+      var result = reg.test(this.registerForm.email)
+      if (!result) {
+          callback(new Error('邮箱格式不正确！'));
+      }
+      else {
+        callback();
+      }
+    };
     const validateRegisterPassword = (rule, value, callback) => {
       if (this.registerForm.password === '') {
         callback(new Error("密码不能为空！"));
       }
       else if (this.registerForm.password.length < 6) {
-        callback(new Error("密码长度不能小于6位！"));
+        callback(new Error("密码长度不能小于6位! "));
       }
       else {
-
         callback();
       }
     };
@@ -128,18 +172,20 @@ export default {
     };
     return {
       rules: {
+        loginAccount: [
+          {validator: validateLoginAccount, trigger: 'blur'},
+        ],
         username: [
-          {required: true, message: "用户名不能为空！", trigger: 'blur'},
+          {validator: validateRegisterUserName, trigger: 'blur'},
         ],
         telephone: [
-          {required: true, message: "电话不能为空！", trigger: 'blur'},
+          {validator: validateTelephone, trigger: 'blur'},
         ],
         email: [
-          {required: true, message: "邮箱不能为空！", trigger: 'blur'},
-          {type: "email", message: "请输入有效的邮箱地址！", trigger: 'blur'}
+          {validator: validateEmail, trigger: 'blur'},
         ],
-        account: [
-          {required: true, message:"学工号不能为空！", trigger: 'blur'},
+        registerAccount: [
+          {validator: validateRegisterAccount, trigger: 'blur'},
         ],
         loginPassword: [
           {validator: validateLoginPassword, trigger: 'blur'},
@@ -149,11 +195,12 @@ export default {
         ],
         confirmPassword: [
           {validator: validateConfirmPassword, trigger: 'blur'}
-        ]
+        ],
       },
       loginForm: {
-        username: "",
+        account: "",
         password: "",
+        userType: "普通用户",
       },
       registerForm: {
         username: "",
@@ -162,6 +209,7 @@ export default {
         account: "",
         password: "",
         rePassword: "",
+        userType: "普通用户",
       },
       loginWindowVisible: false,
       registerWindowVisible: false,
@@ -200,6 +248,7 @@ export default {
     clearLoginForm() {
       this.loginForm.username = "";
       this.loginForm.password = "";
+      this.loginForm.userType = "普通用户";
     },
     clearRegisterForm() {
       this.registerForm.account = "";
@@ -208,6 +257,7 @@ export default {
       this.registerForm.username = "";
       this.registerForm.password = "";
       this.registerForm.rePassword = "";
+      this.registerForm.userType = "普通用户";
     },
 
     loginSubmit() {
@@ -215,7 +265,7 @@ export default {
         /* 登录判断逻辑 */
         if (valid) {
           console.log("登录成功");
-          ElMessage.success('登陆成功')
+          ElMessage.success('登陆成功');
           this.$router.push({path: '/project/join'});
         }
         else {

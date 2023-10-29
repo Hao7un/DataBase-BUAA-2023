@@ -13,83 +13,39 @@
         <div class="content-container">
             <div class="selector-container">
                 <div class="menu-container">
-                    <el-menu mode="horizontal">
-                        <el-sub-menu index="type">
-                            <template #title>
-                                <el-icon class="icon-container"><FolderOpened /></el-icon>
-                                <p class="item-font">服务类别</p>
-                            </template>
-                            <el-radio-group v-model="typeRadio" class="radio-container">
-                                <div class="radio-item-container">
-                                    <el-radio :label="1" class="radio-spacer">社区服务</el-radio>
-                                </div>
-                                <div class="radio-item-container">
-                                    <el-radio :label="2" class="radio-spacer">科技科普</el-radio>
-                                </div>
-                                <div class="radio-item-container">
-                                    <el-radio :label="3" class="radio-spacer">支教助学</el-radio>
-                                </div>
-                                <div class="radio-item-container">
-                                    <el-radio :label="4" class="radio-spacer">体育赛事</el-radio>
-                                </div>
-                                <div class="radio-item-container">
-                                    <el-radio :label="5" class="radio-spacer">大型演出</el-radio>
-                                </div>
-                                <div class="radio-item-container">
-                                    <el-button size="small" @click="clearTypeRadio()">撤销</el-button>
-                                </div>                                
-                            </el-radio-group>
-                        </el-sub-menu>
-                        <el-sub-menu index="status">
-                            <template #title>
-                                <el-icon class="icon-container"><Open /></el-icon>
-                                <p class="item-font">项目状态</p>                                
-                            </template>
-                            <el-radio-group v-model="statusRadio" class="radio-container">
-                                <div class="radio-item-container">
-                                    <el-radio :label="1" class="radio-spacer">招募中</el-radio>
-                                </div>
-                                <div class="radio-item-container">
-                                    <el-radio :label="2" class="radio-spacer">运行中</el-radio>
-                                </div>
-                                <div class="radio-item-container">
-                                    <el-radio :label="3" class="radio-spacer">已结项</el-radio>
-                                </div>
-                                <div class="radio-item-container">
-                                    <el-button size="small" @click="clearStatusRadio()">撤销</el-button>
-                                </div>
-                            </el-radio-group>
-                        </el-sub-menu>
-                        <el-sub-menu index="people">
-                            <template #title>
-                                <el-icon class="icon-container"><User /></el-icon>
-                                <p class="item-font">招募人群</p> 
-                            </template>
-                            <el-radio-group v-model="authRadio" class="radio-container">
-                                <div class="radio-item-container">
-                                    <el-radio :label="1" class="radio-spacer">面向公共招募</el-radio>
-                                </div>
-                                <div class="radio-item-container">
-                                    <el-radio :label="2" class="radio-spacer">仅团队内招募</el-radio>
-                                </div>
-                                <div class="radio-item-container">
-                                    <el-button size="small" @click="clearAuthRadio()">撤销</el-button>
-                                </div>
-                            </el-radio-group>  
-                        </el-sub-menu>
-                    </el-menu>
+                    <el-select v-model="typeRadio" placeholder="项目类别" clearable size="large" class="select-container">
+                        <template #prefix>
+                            <el-icon class="icon-container"><FolderOpened /></el-icon>
+                        </template>
+                        <el-option
+                            v-for="item in option1"
+                            :key="item.value"
+                            :value="item.value"
+                            size="large"
+                        ></el-option>
+                    </el-select>
+                    <el-select v-model="statusRadio" placeholder="项目状态" clearable size="large" class="select-container">
+                        <template #prefix>
+                            <el-icon class="icon-container"><Open /></el-icon>
+                        </template>
+                        <el-option
+                            v-for="item in option2"
+                            :key="item.value"
+                            :value="item.value"
+                        ></el-option>
+                    </el-select>
                 </div>
                 <div class="search-container">
                     <div class="search-item-container">
                         <el-date-picker v-model="date" placeholder="请选择项目开始日期" size="large"></el-date-picker>
                     </div>
                     <div class="search-item-container">
-                        <el-input v-model="keyword" placeholder="请输入项目名称" clearable size="large"></el-input>
+                        <el-input v-model="keyword" placeholder="请输入项目名称" clearable size="large" style="width: 200px"></el-input>
                     </div>
-                    <el-button size="large" type="primary"><span style="font-weight: bold; font-size: 15px;">搜 索</span></el-button>
+                    <el-button size="large" type="primary"><span style="font-weight: bold; font-size: 15px; color:whitesmoke">搜 索</span></el-button>
                 </div>
             </div>
-            <div class="recruitments-container"> 
+            <div class="recruitments-container">
                 <div class="info-container">
                     <div class="card" v-for="(item, index) in displayedList" >
                         <el-card shadow="hover" class="inner-card" @click="showRecruitmentTable(index, this.currentPage)">
@@ -98,8 +54,8 @@
                             </div>
                             <div class="card-info">
                                 <div class="info-item">项目名称：{{ item.name }}</div>
-                                <div class="info-item">剩余招募人数：{{ item.remainingNumber }} 人</div>
-                                <div class="info-item">距离招募截止：{{ item.remainingDays }} 天</div>
+                                <!-- <div class="info-item">剩余招募人数：{{ item.remainingNumber }} 人</div>
+                                <div class="info-item">距离招募截止：{{ item.remainingDays }} 天</div> -->
                             </div>
                           </el-card>
                     </div>
@@ -151,65 +107,6 @@
     </div>
 </template>
 
-<!-- <style>
-    .container {
-      display: flex;
-      flex-direction: column;
-      height: 100vh; /* 设置容器高度为视口高度 */
-    }
-  
-    .top {
-      flex: 1; /* 上半层占据剩余空间 */
-      display: flex;
-    }
-  
-    .image {
-      flex: 1; /* 左半边占据一半空间 */
-    }
-  
-    .info {
-      flex: 1; /* 右半边占据一半空间 */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  
-    .info-item {
-      margin-bottom: 10px; /* 调整每个信息文字之间的间距 */
-    }
-  
-    .bottom {
-      flex: 1; /* 下半层占据剩余空间 */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style> -->
-  
-  <!-- <div class="container">
-    <div class="top">
-      <div class="image">
-
-      </div>
-      <div class="info">
-        <div class="info-item">
-
-        </div>
-        <div class="info-item">
-
-        </div>
-        <div class="info-item">
-
-        </div>
-      </div>
-    </div>
-    <div class="bottom">
-
-    </div>
-  </div> -->
-
-
 <script>
 
 export default {
@@ -239,7 +136,20 @@ export default {
                 {name: "志愿项目14", hours: 14, number: 0, remainingNumber: 0, remainingDays: 0, time: "2023-10-9", location: "田径场", type: "社区服务", state: "正在招募", intro: "这是一段介绍"},
                 {name: "志愿项目15", hours: 15, number: 0, remainingNumber: 0, remainingDays: 0, time: "2023-10-9", location: "田径场", type: "社区服务", state: "正在招募", intro: "这是一段介绍"},
             ],
-            recruitmentTableVisible: false
+            recruitmentTableVisible: false,
+            option1: [
+                {name: "社区服务", value: "社区服务"},
+                {name: "科技科普", value: "科技科普"},
+                {name: "支教助学", value: "支教助学"},
+                {name: "体育赛事", value: "体育赛事"},
+                {name: "大型演出", value: "大型演出"},
+                {name: "其它", value: "其它"},
+
+            ],
+            option2: [
+                {name: "正在招募", value: "正在招募"},
+                {name: "已结项", value: "已结项"},
+            ]
         };
     },
     computed: {
@@ -296,7 +206,7 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    border-right: 2px solid black;
+    border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .item-font {
@@ -329,19 +239,13 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 160px;
+    margin-left: 200px;
     margin-right: 100px;
 }
 
 .search-item-container {
     margin-left: 10px;
-    margin-right: 15px;
-}
-
-.radio-container {
-    display: flex;
-    flex-direction: column;
-    width: 130px;
+    margin-right: 10px;
 }
 
 .recruitments-container {
@@ -355,7 +259,7 @@ export default {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: flex-start;
-    margin-top: 40px;
+    margin-top: 15px;
     height: 1000px;
     width: 1350px;
 }
@@ -377,11 +281,14 @@ export default {
     width: 100%;
     height: 66.6%;
     display: flex;
+    align-items: center;
     justify-content: center;
 }
 
 .info-item {
     margin-top: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .card-info {
@@ -448,6 +355,10 @@ export default {
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+.select-container {
+    margin-left: 40px;
 }
 
 </style>

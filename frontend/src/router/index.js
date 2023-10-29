@@ -30,13 +30,17 @@ const router = createRouter({
                     component: () => import('../views/MyProjectPage.vue')
                 },
                 {
-                    path: '/team',
-                    name: 'team',
-                    component: () => import('../views/TeamPage.vue')
+                    path: '/team/join',
+                    name: 'joinTeam',
+                    component: () => import('../views/joinTeamPage.vue')
+                },
+                {
+                    path: '/recruitment/join',
+                    name: 'joinRecruitment',
+                    component: () => import('../views/JoinRecruitmentPage.vue')
                 }
             ]
         },
-        
     ]
 })
 
