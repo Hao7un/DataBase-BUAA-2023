@@ -32,12 +32,22 @@ const router = createRouter({
                 {
                     path: '/team/join',
                     name: 'joinTeam',
-                    component: () => import('../views/joinTeamPage.vue')
+                    component: () => import('../views/JoinTeamPage.vue')
+                },
+                {
+                    path: '/team/myteam',
+                    name: 'myTeam',
+                    component: () => import('../views/MyTeamPage.vue')
                 },
                 {
                     path: '/recruitment/join',
                     name: 'joinRecruitment',
                     component: () => import('../views/JoinRecruitmentPage.vue')
+                },
+                {
+                    path: '/recruitment/my',
+                    name: 'myRecruitment',
+                    component: () => import('../views/MyRecruitmentPage.vue')
                 }
             ]
         },

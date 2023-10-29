@@ -274,10 +274,34 @@ export default {
       });
     },
     registerSubmit() {
-      this.$refs.registerForm.validate(valid => {
+      this.$refs.registerForm.validate(async(valid) => {
           if (valid) {
-            console.log("注册成功");
-            /* 注册成功逻辑 */
+            console.log("注册信息有效");
+            /* 注册有效逻辑 */
+            const submitParams = {
+              userName: this.registerForm.userName,
+              collegeId: this.registerSubmit.account,
+              password: this.registerForm.password,
+              email: this.registerForm.email,
+              telephone: this.registerForm.telephone,
+              userType: this.registerForm.userType,
+            }
+            await this.$axios({
+              method: 'post',
+              url: '',
+              data: submitParams,
+            })
+              .then(async (res) => {
+                  /* 注册成功 */
+                  if (res.code === 0) {
+
+                  }
+                  /* 重复注册 */
+                  else if (res.code === 1) {
+
+                  }
+                }
+            )
           }
           else {
             ElMessage.error('请正确填写注册信息！');

@@ -70,6 +70,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="recruitment-table" v-if="recruitmentTableVisible">
             <div class="quit-container">
                 <el-button round @click="quitRecruitmentTable()">
@@ -159,15 +160,6 @@ export default {
         }
     },
     methods: {
-        clearTypeRadio() {
-            this.typeRadio = null;
-        },
-        clearAuthRadio() {
-            this.authRadio = null;
-        },
-        clearStatusRadio() {
-            this.statusRadio = null;
-        },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
         },
@@ -232,6 +224,7 @@ export default {
 }
 
 .menu-container {
+    display: flex;
     width: 590px;
 }
 

@@ -54,15 +54,6 @@ export default {
         }
     },
     methods: {
-        clearTypeRadio() {
-            this.typeRadio = null;
-        },
-        clearAuthRadio() {
-            this.authRadio = null;
-        },
-        clearStatusRadio() {
-            this.statusRadio = null;
-        },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
         },
