@@ -26,8 +26,14 @@
                     </el-date-picker>
                 </div>
                 <div class="search-container">
+                    <el-select v-model="number" placeholder="团队人数" clearable size="large" style="width: 200px">
+                        <el-option key="1-10" value="1-10">1-10</el-option>
+                        <el-option key="11-50" value="11-50">11-50</el-option>
+                        <el-option key="50以上" value="50以上">50以上</el-option>
+                    </el-select>
+                    &nbsp; &nbsp; &nbsp;
                     <el-input v-model="keyword" placeholder="请输入团队名称" clearable size="large" style="width: 200px"></el-input>
-                </div> &nbsp;
+                </div>
                 <el-button size="large" type="primary" @click="searchSubmit"><span style="font-weight: bold; font-size: 15px; color:whitesmoke">搜 索</span></el-button>
             </div>
             <div class="teams-container">
@@ -38,7 +44,12 @@
                                 <img src="../assets/images/hand_shaking.png">
                             </div>
                             <div class="card-info">
-                                <div class="info-item">团队名称：{{ item.name }}</div>
+                                <div class="team-name">{{ item.name }}</div>
+                                <div class="team-details">
+                                    <div class="detail-item"><el-icon><User /></el-icon> 团队人数：{{ item.number }}</div>
+                                    <el-divider border-style="solid" direction="vertical" />
+                                    <div class="detail-item"><el-icon><Clock /></el-icon> 总服务时长：{{ item.hours }} 小时</div>
+                                </div>
                             </div>
                         </el-card>
                     </div>
@@ -63,19 +74,20 @@ export default {
         return {
             dateRange: null,
             keyword: null,
+            number: null,
             currentPage: 1,
             selectedTotalIndex: null,
             totalList: [
-                {name: "志愿团队1"},
-                {name: "志愿团队2"},
-                {name: "志愿团队3"},
-                {name: "志愿团队4"},
-                {name: "志愿团队5"},
-                {name: "志愿团队6"},
-                {name: "志愿团队7"},
-                {name: "志愿团队8"},
-                {name: "志愿团队9"},
-                {name: "志愿团队10"},
+                {name: "志愿团队1", number: 10, hours: 100},
+                {name: "志愿团队2", number: 10, hours: 50},
+                {name: "志愿团队3", number: 10, hours: 50},
+                {name: "志愿团队4", number: 10, hours: 50},
+                {name: "志愿团队5", number: 10, hours: 50},
+                {name: "志愿团队6", number: 10, hours: 50},
+                {name: "志愿团队7", number: 10, hours: 50},
+                {name: "志愿团队8", number: 10, hours: 50},
+                {name: "志愿团队9", number: 10, hours: 50},
+                {name: "志愿团队10", number: 10, hours: 50},
             ]
         }
     },
@@ -157,7 +169,7 @@ export default {
 .search-container {
     display: flex;
     justify-content: center;
-    margin-left: 150px;
+    margin-left: 100px;
     margin-right: 30px;
 }
 
@@ -188,22 +200,34 @@ export default {
 
 .img-container {
     width: 100%;
-    height: 66.6%;
+    height: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.info-item {
+.card-info {
+    display: flex;
+    height: 40%;
+    flex-direction: column;
+}
+
+.team-name {
+    text-align: center;
+    height: 20%;
+}
+
+.team-details {
+    display: flex;
+    height: 20%;
     margin-top: 10px;
     justify-content: center;
     align-items: center;
 }
 
-.info-item {
-    margin-top: 10px;
-    justify-content: center;
-    align-items: center;
+.detail-item {
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .pagination-container {

@@ -13,17 +13,13 @@
         <div class="content-container">
             <div class="table-container">
                 <div class="recruitments-container">
-                    <el-table 
-                        :data="this.displayedList" border 
+                    <el-table
+                        :data="this.displayedList" border
                         :header-cell-style="{background:'#eef1f6', color:'#606266'}"
-                        @row-click=""
+                        @row-click="handleRowClick"
                     >
 
-                        <el-table-column prop="status" label="状态" align="center" 
-                            :filters="statusFilters"
-                            :filter-method="filterStatus"
-                            filter-placement="bottom-end"
-                        ></el-table-column>
+                        <el-table-column prop="status" label="状态" align="center" ></el-table-column>
         
                         <el-table-column prop="project" label="所属项目" align="center"></el-table-column>
                         
@@ -35,7 +31,7 @@
 
                         <el-table-column prop="hours" label="志愿时长" align="center"></el-table-column>
         
-                        <el-table-column prop="number" label="招募人数" align="center"></el-table-column>   
+                        <el-table-column prop="totalNumber" label="招募人数" align="center"></el-table-column>   
                                
                     </el-table>
                 </div>
@@ -59,30 +55,27 @@ export default {
         return {
             currentPage: 1,
             totalList: [
-                {status: "招募中", project: "项目1", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目2", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "结束招募", project: "项目3", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目4", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目5", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "结束招募", project: "项目6", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目7", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目8", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "结束招募", project: "项目9", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目10", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目11", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "结束招募", project: "项目12", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目13", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "结束招募", project: "项目14", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目15", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目16", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "结束招募", project: "项目17", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目18", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
-                {status: "招募中", project: "项目19", date: "2023-10-29", location: "田径场", type: "面向公共", hours: 16, number: 5},
+                {status: "招募中", project: "项目1", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目2", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目3", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目4", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目5", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目6", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目7", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目8", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目9", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目10", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目11", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目12", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目13", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目14", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目15", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目16", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目17", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目18", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目19", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
             ],
-            statusFilters: [
-                { text: "招募中", value: "招募中" },
-                { text: "结束招募", value: "结束招募" },
-            ],
+            selectedRow: null,
         }
     },
     computed: {
@@ -92,8 +85,16 @@ export default {
         }
     },
     methods: {
-        filterStatus(value, row) {
-            return row.status === value;
+        getStatusClass(status) {
+            return status === '招募中' ? "green-border" : "red-border";
+        },
+        handleRowClick(row) {
+            this.selectedRow = row;
+            console.log("click!!!");
+            console.log(this.selectedRow.status, 
+                this.selectedRow.project, this.selectedRow.date, 
+                this.selectedRow.location, this.selectedRow.type, 
+                this.selectedRow.hours, this.selectedRow.number);
         },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
@@ -107,7 +108,7 @@ export default {
             this.$router.push({
                 path: '/recruitment/my'
             })
-        }
+        },
     },
 }
 </script>
@@ -120,7 +121,7 @@ export default {
 .sidebar-container {
     display: flex;
     width: 180px;
-    height: 1000px;
+    height: 900px;
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
@@ -151,12 +152,20 @@ export default {
     align-content: flex-start;
     margin-top: 30px;
     margin-left: 30px;
-    height: 800px;
+    height: 700px;
     width: 1350px;
 }
 
 .pagination-container {
     margin-top: 50px;
+}
+
+.green-border {
+  border: 2px solid green;
+}
+
+.red-border {
+  border: 2px solid red;
 }
 
 </style>

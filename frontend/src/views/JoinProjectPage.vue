@@ -238,7 +238,7 @@ export default {
 
 .search-item-container {
     margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 30px;
 }
 
 .recruitments-container {
