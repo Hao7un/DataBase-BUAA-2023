@@ -58,6 +58,9 @@ export default {
     changeToUserInfo() {
       console.log("change to user info");
       /* 切换到profile页 */
+      this.$router.push({
+        path: '/user'
+      });
     },
     logout() {
       console.log("quit to welcome");
