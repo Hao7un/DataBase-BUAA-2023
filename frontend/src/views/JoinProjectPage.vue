@@ -13,18 +13,7 @@
         <div class="content-container">
             <div class="selector-container">
                 <div class="menu-container">
-                    <el-select v-model="typeRadio" placeholder="项目类别" clearable size="large" class="select-container">
-                        <template #prefix>
-                            <el-icon class="icon-container"><FolderOpened /></el-icon>
-                        </template>
-                        <el-option
-                            v-for="item in option1"
-                            :key="item.value"
-                            :value="item.value"
-                            size="large"
-                        ></el-option>
-                    </el-select>
-                    <el-select v-model="statusRadio" placeholder="项目状态" clearable size="large" class="select-container">
+                    <!-- <el-select v-model="statusRadio" placeholder="项目状态" clearable size="large" class="select-container">
                         <template #prefix>
                             <el-icon class="icon-container"><Open /></el-icon>
                         </template>
@@ -33,11 +22,21 @@
                             :key="item.value"
                             :value="item.value"
                         ></el-option>
-                    </el-select>
+                    </el-select> -->
                 </div>
                 <div class="search-container">
                     <div class="search-item-container">
-                        <el-date-picker v-model="date" placeholder="请选择项目开始日期" size="large"></el-date-picker>
+                        <el-select v-model="typeRadio" placeholder="项目类别" clearable size="large">
+                            <template #prefix>
+                                <el-icon class="icon-container"><FolderOpened /></el-icon>
+                            </template>
+                            <el-option
+                                v-for="item in option1"
+                                :key="item.value"
+                                :value="item.value"
+                                size="large"
+                            ></el-option>
+                        </el-select>
                     </div>
                     <div class="search-item-container">
                         <el-input v-model="keyword" placeholder="请输入项目名称" clearable size="large" style="width: 200px"></el-input>
@@ -232,7 +231,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 200px;
+    margin-left: 190px;
     margin-right: 100px;
 }
 

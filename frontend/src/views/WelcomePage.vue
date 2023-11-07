@@ -246,7 +246,7 @@ export default {
       this.clearRegisterForm();
     },
     clearLoginForm() {
-      this.loginForm.username = "";
+      this.loginForm.account = "";
       this.loginForm.password = "";
       this.loginForm.userType = "普通用户";
     },
@@ -261,11 +261,24 @@ export default {
     },
 
     loginSubmit() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate(async (valid) => {
         /* 登录判断逻辑 */
         if (valid) {
           console.log("登录成功");
           ElMessage.success('登陆成功');
+          const submitParams = {
+            collegeId: this.loginForm.account,
+            password: this.loginForm.password,
+          }
+          // await this.axios({
+          //   method: 'get',
+          //   url: 'login-info/',
+          //   data: submitParams,
+          // })
+          //   .then(async(res) => {
+          //     console.log(res);
+          //   })
+
           this.$router.push({path: '/project/join'});
         }
         else {
@@ -286,7 +299,7 @@ export default {
               telephone: this.registerForm.telephone,
               userType: this.registerForm.userType,
             }
-            await this.$axios({
+            await this.axios({
               method: 'post',
               url: '',
               data: submitParams,
