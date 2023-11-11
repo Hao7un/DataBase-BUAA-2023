@@ -90,18 +90,6 @@ export default {
         }
     },
     computed: {
-        displayedList() {
-            let startIndex = (this.currentPage - 1) * 6;
-            let endIndex = startIndex + 6;
-            let filteredList = this.totalList;
-            if (this.keyword != null && this.number != null && this.date != null) {
-                filteredList = filteredList.filter(item => {
-                        return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
-                    }
-                );
-            }
-            return filteredList.slice(startIndex, endIndex);
-        },
         range() {
             if (this.number === "1-10") {
                 return [1, 10];
@@ -116,9 +104,21 @@ export default {
                 return [0, Infinity];
             }
         },
+        displayedList() {
+            let startIndex = (this.currentPage - 1) * 6;
+            let endIndex = startIndex + 6;
+            let filteredList = this.totalList;
+            if (this.keyword != null && this.number != null) {
+                filteredList = filteredList.filter(item => {
+                        return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
+                    }
+                );
+            }
+            return filteredList.slice(startIndex, endIndex);
+        },
         filteredList() {
             let list = this.totalList;
-            if (this.keyword != null && this.number != null && this.date != null) {
+            if (this.keyword != null && this.number != null) {
                 list = list.filter( item => {
                         return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
                     }
