@@ -270,13 +270,26 @@ export default {
             collegeId: this.loginForm.account,
             password: this.loginForm.password,
           }
+
           // await this.axios({
           //   method: 'get',
-          //   url: 'login-info/',
+          //   url: 'http://localhost:8000/login_info',
           //   data: submitParams,
           // })
           //   .then(async(res) => {
           //     console.log(res);
+          //     /* 登陆成功 */
+          //     if (res.code === 0) {
+
+          //     }
+          //     /* 用户不存在 */
+          //     else if (res.code === 1) {
+
+          //     }
+          //     /* 密码错误 */
+          //     else if (res.code === 2) {
+
+          //     }
           //   })
 
           this.$router.push({path: '/project/join'});
@@ -292,26 +305,27 @@ export default {
             console.log("注册信息有效");
             /* 注册有效逻辑 */
             const submitParams = {
-              userName: this.registerForm.userName,
-              collegeId: this.registerSubmit.account,
+              userName: this.registerForm.username,
+              collegeId: this.registerForm.account,
               password: this.registerForm.password,
               email: this.registerForm.email,
               telephone: this.registerForm.telephone,
-              userType: this.registerForm.userType,
+              userType: this.registerForm.userType === "普通用户" ? "0" : "1",
             }
             await this.axios({
               method: 'post',
-              url: '',
+              url: 'http://localhost:8000/register_info',
               data: submitParams,
             })
               .then(async (res) => {
                   /* 注册成功 */
+                  console.log(res);
                   if (res.code === 0) {
-
+                      
                   }
                   /* 重复注册 */
                   else if (res.code === 1) {
-
+                    
                   }
                 }
             )

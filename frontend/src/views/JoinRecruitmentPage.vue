@@ -44,7 +44,7 @@
                                 ></el-date-picker>
                                 </th>
                                 <th style="width: 150px;">
-                                    <el-select v-model="type" placeholder="面向对象" clearable>
+                                    <el-select v-model="type" placeholder="选择面向群体" clearable>
                                         <el-option key="面向公共招募" value="面向公共招募">面向公共招募</el-option>
                                         <el-option key="仅限团队内部" value="仅限团队内部">仅限团队内部</el-option>
                                     </el-select>
@@ -54,13 +54,13 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in displayedList" @click="handleClickRow(item)">
-                                <td style="text-align:center">{{ item.status }}</td>
+                                <td style="text-align:center"><div :class="item.status === '招募中' ? 'green-status' : 'grey-status' " style="width: 75px; height: 25px; margin-left: 37px;">{{ item.status }}</div></td>
                                 <td style="text-align:center">{{ item.project }}</td>
                                 <td style="text-align:center">{{ item.date }}</td>
-                                <td style="text-align:center">{{ item.type }}</td>
+                                <td style="text-align:center"><div :class="item.type === '面向公共招募' ? 'blue-type' : 'orange-type' " style="width: 120px; height: 25px; margin-left: 15px;">{{ item.type }}</div></td>
                                 <td style="text-align:center">{{ item.location }}</td>
                                 <td style="text-align:center">{{ item.hours }} 小时</td>
-                                <td style="text-align:center">{{ item.number }}</td>
+                                <td style="text-align:center" :class="item.number === item.totalNumber ? 'red-number' : 'green-number' ">{{ item.number }} / {{ item.totalNumber }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -69,7 +69,7 @@
                     <el-pagination 
                         @current-change="handlePageChange"
                         :page-size="20"
-                        :total="totalList.length"
+                        :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
@@ -84,36 +84,36 @@ export default {
     data() {
         return {
             currentPage: 1,
-            status: null,
-            keyword: null,
+            status: "",
+            keyword: "",
             date: null,
-            type: null,
+            type: "",
             hours: null,
             totalList: [
-                {status: "招募中", project: "项目1", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "招募中", project: "项目2", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "招募中", project: "项目3", date: "2023-10-29 23:59", location: "田径场", type: "仅限团队内部", hours: 16, number: 5, totalNumber: 10},
-                {status: "招募中", project: "项目4", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "招募中", project: "项目5", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "招募中", project: "项目6", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "招募中", project: "项目7", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目8", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目9", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目10", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目11", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目12", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目13", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目14", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目15", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目16", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目17", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目18", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目19", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目20", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目1", date: "2023-10-21 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 1, totalNumber: 11},
+                {status: "招募中", project: "项目2", date: "2023-10-22 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 12, totalNumber: 12},
+                {status: "招募中", project: "项目3", date: "2023-10-23 23:59", location: "田径场", type: "仅限团队内部", hours: 16, number: 3, totalNumber: 13},
+                {status: "招募中", project: "项目4", date: "2023-10-24 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 4, totalNumber: 14},
+                {status: "招募中", project: "项目5", date: "2023-10-25 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 15},
+                {status: "招募中", project: "项目6", date: "2023-10-26 23:59", location: "田径场", type: "仅限团队内部", hours: 16, number: 5, totalNumber: 10},
+                {status: "招募中", project: "项目7", date: "2023-10-27 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目8", date: "2023-10-28 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目9", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 10, totalNumber: 10},
+                {status: "结束招募", project: "项目10", date: "2023-10-30 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 10, totalNumber: 10},
+                {status: "结束招募", project: "项目11", date: "2023-10-31 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目12", date: "2023-10-29 23:59", location: "田径场", type: "仅限团队内部", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目13", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目14", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目15", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目16", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目17", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目18", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目19", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目20", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
                 {status: "结束招募", project: "项目21", date: "2023-10-29 23:59", location: "田径场", type: "仅限团队内部", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目22", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目23", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目", date: "2023-10-29 23:59", location: "田径场", type: "面向公共", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目22", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目23", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+                {status: "结束招募", project: "项目24", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
             ],
             selectedRow: null,
         }
@@ -121,15 +121,35 @@ export default {
     computed: {
         displayedList() {
             let startIndex = (this.currentPage - 1) * 20;
-            return this.totalList.slice(startIndex, startIndex + 20);
+            let endIndex = startIndex + 20;
+            let filteredList = this.totalList;
+            if (this.keyword != null && this.status != null && this.type != null) {
+                filteredList = filteredList.filter(item => {
+                    return item.project.includes(this.keyword) && item.status.includes(this.status) && item.type.includes(this.type) && item.date.includes(this.formatDateString);
+                });
+            }
+            return filteredList.slice(startIndex, endIndex);
         },
-        filterdList() {
-            
-        }
+        filteredList() {
+            let list = this.totalList;
+            if (this.keyword != null && this.status != null && this.type != null) {
+                list = list.filter(item => {
+                    return item.project.includes(this.keyword) && item.status.includes(this.status) && item.type.includes(this.type) && item.date.includes(this.formatDateString);
+                });
+            }
+            return list;
+        },
+        formatDateString() {
+            if (this.date == null) return "";
+            return this.formatDate(this.date);
+        },
     },
     methods: {
-        getStatusClass(status) {
-            return status === '招募中' ? "green-border" : "red-border";
+        formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         },
         handleClickRow(row) {
             console.log(row.status, row.project, row.date, row.location, row.type, row.hours, row.number);
@@ -173,7 +193,7 @@ export default {
 
 .content-container {
     display: flex;
-    height: 600px;
+    height: 1000px;
     flex-direction: column;
 }
 
@@ -189,6 +209,7 @@ export default {
 
 .table-style {
     border-collapse: collapse;
+    border: 3px solid black;
 }
 
 .recruitments-container {
@@ -206,17 +227,50 @@ export default {
     width: 100%;
 }
 
+table tr:hover {
+    cursor: pointer;
+}
+
+th, td {
+    border: 2px solid black;
+    height: 35px;
+}
+
 .pagination-container {
-    margin-top: 50px;
+    margin-top: 150px;
     margin-bottom: 50px;
 }
 
-.green-border {
-  border: 2px solid green;
+.green-status {
+  background: green;
+  color: white;
+  border-radius: 5px;
 }
 
-.red-border {
-  border: 2px solid red;
+.grey-status {
+  background: grey;
+  color: white;
+  border-radius: 5px;
+}
+
+.blue-type {
+    background: rgb(78, 78, 249);
+    color: white;
+    border-radius: 5px;
+}
+
+.orange-type {
+    background: orange;
+    color: white;
+    border-radius: 5px;
+}
+
+.red-number {
+    color: red;
+}
+
+.green-number {
+    color: green;
 }
 
 </style>

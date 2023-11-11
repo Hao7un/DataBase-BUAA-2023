@@ -15,15 +15,13 @@
                 <div class="date-container">
                     <span style="display: flex; align-items: center;">团队注册日期</span> &nbsp;&nbsp;
                     <el-date-picker 
-                        v-model="dateRange" 
-                        type="daterange" 
-                        unlink-panels 
-                        range-separator="至" 
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
+                        v-model="date" 
+                        type="date" 
+                        placeholder="输入日期"
                         size="large"
                         clearable>
                     </el-date-picker>
+                    &nbsp; &nbsp; <span style="display: flex; align-items: center;">至今</span>
                 </div>
                 <div class="search-container">
                     <el-select v-model="number" placeholder="团队人数" clearable size="large" style="width: 200px">
@@ -32,9 +30,9 @@
                         <el-option key="50以上" value="50以上">50以上</el-option>
                     </el-select>
                     &nbsp; &nbsp; &nbsp;
-                    <el-input v-model="keyword" placeholder="请输入团队名称" clearable size="large" style="width: 200px"></el-input>
+                    <el-input v-model="keyword" placeholder="输入团队名称" clearable size="large" style="width: 200px"></el-input>
                 </div>
-                <el-button size="large" type="primary" @click="searchSubmit"><span style="font-weight: bold; font-size: 15px; color:whitesmoke">搜 索</span></el-button>
+                <!-- <el-button size="large" type="primary" @click="searchSubmit"><span style="font-weight: bold; font-size: 15px; color:whitesmoke">搜 索</span></el-button> -->
             </div>
             <div class="teams-container">
                 <div class="info-container">
@@ -58,7 +56,7 @@
                     <el-pagination 
                         @current-change="handlePageChange"
                         :page-size="6"
-                        :total="totalList.length"
+                        :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
@@ -72,35 +70,74 @@
 export default {
     data() {
         return {
-            dateRange: null,
-            keyword: null,
-            number: null,
+            date: null,
+            keyword: "",
+            number: "",
             currentPage: 1,
-            selectedTotalIndex: null,
+            selectedTotalIndex: "",
             totalList: [
-                {name: "志愿团队1", number: 10, hours: 100},
-                {name: "志愿团队2", number: 10, hours: 50},
-                {name: "志愿团队3", number: 10, hours: 50},
-                {name: "志愿团队4", number: 10, hours: 50},
-                {name: "志愿团队5", number: 10, hours: 50},
-                {name: "志愿团队6", number: 10, hours: 50},
-                {name: "志愿团队7", number: 10, hours: 50},
-                {name: "志愿团队8", number: 10, hours: 50},
-                {name: "志愿团队9", number: 10, hours: 50},
-                {name: "志愿团队10", number: 10, hours: 50},
+                {name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100},
+                {name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50},
+                {name: "志愿团队3", date: "2023-11-03", number: 8, hours: 50},
+                {name: "志愿团队4", date: "2023-11-04", number: 25, hours: 50},
+                {name: "志愿团队5", date: "2023-11-05", number: 27, hours: 50},
+                {name: "志愿团队6", date: "2023-11-06", number: 30, hours: 50},
+                {name: "志愿团队7", date: "2023-11-07", number: 45, hours: 50},
+                {name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50},
+                {name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50},
+                {name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50},
             ]
         }
     },
     computed: {
         displayedList() {
             let startIndex = (this.currentPage - 1) * 6;
-            return this.totalList.slice(startIndex, startIndex + 6);
-        }
+            let endIndex = startIndex + 6;
+            let filteredList = this.totalList;
+            if (this.keyword != null && this.number != null && this.date != null) {
+                filteredList = filteredList.filter(item => {
+                        return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
+                    }
+                );
+            }
+            return filteredList.slice(startIndex, endIndex);
+        },
+        range() {
+            if (this.number === "1-10") {
+                return [1, 10];
+            }
+            else if (this.number === "11-50") {
+                return [11, 50];
+            }
+            else if (this.number === "50以上") {
+                return [51, Infinity];
+            }
+            else {
+                return [0, Infinity];
+            }
+        },
+        filteredList() {
+            let list = this.totalList;
+            if (this.keyword != null && this.number != null && this.date != null) {
+                list = list.filter( item => {
+                        return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
+                    }
+                );
+            }
+            return list;
+        },
+        formatDateString() {
+            if (this.date == null) return "";
+            return this.formatDate(this.date);
+        },
+        
     },
     methods: {
-        searchSubmit() {
-            var date = new Date();
-            console.log(date);
+        formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
@@ -143,8 +180,8 @@ export default {
     height: 50px;
     display: flex;
     align-items: center;
-    margin-top: 15px;
-    margin-left: 50px;
+    margin-top: 25px;
+    margin-left: 180px;
 }
 
 .content-container {
@@ -155,7 +192,7 @@ export default {
 
 .date-container {
     display: flex;
-    width: 590px;
+    width: 500px;
     margin-left: 30px;
 }
 
