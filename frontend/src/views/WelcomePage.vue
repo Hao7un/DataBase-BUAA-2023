@@ -264,35 +264,34 @@ export default {
       this.$refs.loginForm.validate(async (valid) => {
         /* 登录判断逻辑 */
         if (valid) {
-          console.log("登录成功");
-          ElMessage.success('登陆成功');
           const submitParams = {
             collegeId: this.loginForm.account,
             password: this.loginForm.password,
           }
 
-          // await this.axios({
-          //   method: 'get',
-          //   url: 'http://localhost:8000/login_info',
-          //   data: submitParams,
-          // })
-          //   .then(async(res) => {
-          //     console.log(res);
-          //     /* 登陆成功 */
-          //     if (res.code === 0) {
+          await this.axios({
+            method: 'post',
+            url: 'http://localhost:8000/login_info',
+            data: submitParams,
+          })
+            .then(async(res) => {
+              console.log(res);
+              /* 登陆成功 */
+              if (res.data.code === 0) {
+                console.log("登录成功");
+                ElMessage.success('登陆成功');
+                this.$router.push({path: '/project/join'});
+              }
+              /* 用户不存在 */
+              else if (res.data.code === 1) {
+                ElMessage.error('该用户不存在！');
+              }
+              /* 密码错误 */
+              else if (res.data.code === 2) {
+                ElMessage.error('密码错误！');
+              }
+            })
 
-          //     }
-          //     /* 用户不存在 */
-          //     else if (res.code === 1) {
-
-          //     }
-          //     /* 密码错误 */
-          //     else if (res.code === 2) {
-
-          //     }
-          //   })
-
-          this.$router.push({path: '/project/join'});
         }
         else {
           ElMessage.error("请填写正确的登录信息");
@@ -312,6 +311,7 @@ export default {
               telephone: this.registerForm.telephone,
               userType: this.registerForm.userType === "普通用户" ? "0" : "1",
             }
+
             await this.axios({
               method: 'post',
               url: 'http://localhost:8000/register_info',
@@ -320,15 +320,17 @@ export default {
               .then(async (res) => {
                   /* 注册成功 */
                   console.log(res);
-                  if (res.code === 0) {
-                      
+                  if (res.data.code === 0) {
+                    ElMessage.success('注册成功');
+                    this.$router.push({path: '/project/join'});
                   }
                   /* 重复注册 */
-                  else if (res.code === 1) {
-                    
+                  else if (res.data.code === 1) {
+                    ElMessage.error('该用户已被注册！');
                   }
                 }
             )
+
           }
           else {
             ElMessage.error('请正确填写注册信息！');
