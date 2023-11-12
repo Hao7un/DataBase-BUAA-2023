@@ -89,6 +89,7 @@
 
 <script>
 import { ElMessage } from 'element-plus';
+import store from '../store'
 
 export default {
   data() {
@@ -96,9 +97,6 @@ export default {
       if (this.loginForm.password === '') {
         callback(new Error("密码不能为空！"));
       }
-      // else if (密码错误) {
-        // callback(new Error("密码错误！"));
-      // }
       else {
         callback();
       }
@@ -280,6 +278,7 @@ export default {
               if (res.data.code === 0) {
                 console.log("登录成功");
                 ElMessage.success('登陆成功');
+                // this.$store.commit('changeIsAdmin', res.data.isAdmin); 这部分可能要修改接口：从后端获取登录用户的身份信息等
                 this.$router.push({path: '/project/join'});
               }
               /* 用户不存在 */
