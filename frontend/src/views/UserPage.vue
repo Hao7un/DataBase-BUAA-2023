@@ -84,7 +84,7 @@
       {{ volunteerTime }}
     </el-descriptions-item>
   </el-descriptions>
-  
+
   <br>
   <el-button type="primary" @click="editUserInfo">保存</el-button>
 </template>
@@ -119,7 +119,7 @@ export default {
       password: this.password,
       telephone: this.telephone,
       email: this.email,
-      userIntro: this.userIntro,
+      userIntro: this.userIntro
     })
       .then(res => {
         console.log(res)
