@@ -3,7 +3,7 @@
     <h1 class="title">个人信息</h1>
   </div>
 
-  <el-descriptions class="margin-top" :column="3" :size="size" border>
+  <el-descriptions class="margin-top" :column="1" border>
     <template #extra>
     </template>
     <el-descriptions-item>
@@ -32,12 +32,23 @@
       <template #label>
         <div class="cell-item">
           <el-icon>
+            <Tickets />
+          </el-icon>
+          用户类型
+        </div>
+      </template>
+      <el-tag>{{ userType }}</el-tag>
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template #label>
+        <div class="cell-item">
+          <el-icon>
             <Iphone />
           </el-icon>
           电话
         </div>
       </template>
-      {{ telephone }}
+      <el-input type="textarea" v-model="telephone"></el-input>
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
@@ -48,18 +59,18 @@
           邮箱
         </div>
       </template>
-      {{ email }}
+      <el-input type="textarea" v-model="email"></el-input>
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
           <el-icon>
-            <Tickets />
+            <Postcard />
           </el-icon>
-          用户类型
+          个人简介
         </div>
       </template>
-      <el-tag size="small">{{ userType }}</el-tag>
+      <el-input type="textarea" v-model="userIntro"></el-input>
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
@@ -72,20 +83,10 @@
       </template>
       {{ volunteerTime }}
     </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon>
-            <Postcard />
-          </el-icon>
-          个人简介
-        </div>
-      </template>
-      {{ userIntro }}
-    </el-descriptions-item>
   </el-descriptions>
+  
   <br>
-  <el-button type="primary" @click="editUserInfo">编辑</el-button>
+  <el-button type="primary" @click="editUserInfo">保存</el-button>
 </template>
   
 <script>
@@ -113,8 +114,6 @@ export default {
   },
   methods: {
     editUserInfo(){
-      
-
       this.axios.post('http://localhost:5173/user', {
       collegeId: this.collegeId,
       password: this.password,
