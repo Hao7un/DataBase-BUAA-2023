@@ -3,99 +3,92 @@
     <h1 class="title">个人信息</h1>
   </div>
 
-  <el-radio-group v-model="size">
-    <el-radio label="large">大字体</el-radio>
-    <el-radio>默认</el-radio>
-    <el-radio label="small">小字体</el-radio>
-  </el-radio-group>
-
   <el-descriptions class="margin-top" :column="3" :size="size" border>
     <template #extra>
     </template>
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
-          <el-icon :style="iconStyle">
+          <el-icon>
             <User />
           </el-icon>
           学工号
         </div>
       </template>
-      21371295
+      {{ collegeId }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
-          <el-icon :style="iconStyle">
+          <el-icon>
             <User />
           </el-icon>
           姓名
         </div>
       </template>
-      张昊翔
+      {{ userName }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
-          <el-icon :style="iconStyle">
+          <el-icon>
             <Iphone />
           </el-icon>
-          电话号码
+          电话
         </div>
       </template>
-      18100000000
+      {{ telephone }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
-          <el-icon :style="iconStyle">
+          <el-icon>
             <VideoCamera />
           </el-icon>
           邮箱
         </div>
       </template>
-      212345131@gmail.com
+      {{ email }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
-          <el-icon :style="iconStyle">
+          <el-icon>
             <Tickets />
           </el-icon>
           用户类型
         </div>
       </template>
-      <el-tag size="small">普通用户</el-tag>
+      <el-tag size="small">{{ userType }}</el-tag>
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
-          <el-icon :style="iconStyle">
+          <el-icon>
             <DataBoard />
           </el-icon>
           志愿时长
         </div>
       </template>
-      100h
+      {{ volunteerTime }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
-          <el-icon :style="iconStyle">
+          <el-icon>
             <Postcard />
           </el-icon>
           个人简介
         </div>
       </template>
-      <el-input type="textarea" class="full-width"></el-input>
+      {{ userIntro }}
     </el-descriptions-item>
   </el-descriptions>
   <br>
-  <el-button type="primary">编辑</el-button>
+  <el-button type="primary" @click="editUserInfo">编辑</el-button>
 </template>
   
-<script setup lang="ts">
-import { computed, ref } from 'vue'
+<script>
 import {
   Iphone,
   VideoCamera,
@@ -105,17 +98,42 @@ import {
   Postcard,
 } from '@element-plus/icons-vue'
 
-const size = ref('')
-const iconStyle = computed(() => {
-  const marginMap = {
-    large: '8px',
-    default: '6px',
-    small: '4px',
+export default {
+  data() {
+    return {
+      collegeId : '21371295',
+      userName : '张昊翔',
+      password : '123456',
+      telephone : '18100000000',
+      email : '21371295@buaa.edu.cn',
+      userType : '普通用户',
+      volunteerTime : '100h',
+      userIntro : '我是张昊翔，我来自北京航空航天大学'
+    }
+  },
+  methods: {
+    editUserInfo(){
+      
+
+      this.axios.post('http://localhost:5173/user', {
+      collegeId: this.collegeId,
+      password: this.password,
+      telephone: this.telephone,
+      email: this.email,
+      userIntro: this.userIntro,
+    })
+      .then(res => {
+        console.log(res)
+        if (res.data.code === 0) {
+          console.log("修改成功");
+          this.telephone = res.data.telephone;
+          this.email = res.data.email;
+          this.userIntro = res.data.userIntro;
+        }
+      })
+    }
   }
-  return {
-    marginRight: marginMap[size.value] || marginMap.default,
-  }
-})
+}
 </script>
   
 <style scoped>
@@ -132,10 +150,6 @@ const iconStyle = computed(() => {
 
 .margin-top {
   margin-top: 20px;
-}
-
-.full-width {
-  width: 100%;
 }
 </style>
   
