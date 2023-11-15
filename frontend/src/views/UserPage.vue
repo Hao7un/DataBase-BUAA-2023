@@ -1,8 +1,12 @@
 <template>
+  <div>
+    <h1 class="title">个人信息</h1>
+  </div>
+
   <el-radio-group v-model="size">
-    <el-radio label="large">Large</el-radio>
-    <el-radio>Default</el-radio>
-    <el-radio label="small">Small</el-radio>
+    <el-radio label="large">大字体</el-radio>
+    <el-radio>默认</el-radio>
+    <el-radio label="small">小字体</el-radio>
   </el-radio-group>
 
   <el-descriptions class="margin-top" :column="3" :size="size" border>
@@ -14,7 +18,7 @@
           <el-icon :style="iconStyle">
             <User />
           </el-icon>
-          collegeId
+          学工号
         </div>
       </template>
       21371295
@@ -25,7 +29,7 @@
           <el-icon :style="iconStyle">
             <User />
           </el-icon>
-          userName
+          姓名
         </div>
       </template>
       张昊翔
@@ -36,7 +40,7 @@
           <el-icon :style="iconStyle">
             <Iphone />
           </el-icon>
-          telephone
+          电话号码
         </div>
       </template>
       18100000000
@@ -47,7 +51,7 @@
           <el-icon :style="iconStyle">
             <VideoCamera />
           </el-icon>
-          email
+          邮箱
         </div>
       </template>
       212345131@gmail.com
@@ -58,7 +62,7 @@
           <el-icon :style="iconStyle">
             <Tickets />
           </el-icon>
-          userType
+          用户类型
         </div>
       </template>
       <el-tag size="small">普通用户</el-tag>
@@ -69,13 +73,25 @@
           <el-icon :style="iconStyle">
             <DataBoard />
           </el-icon>
-          userIntro
+          志愿时长
         </div>
       </template>
-      adadwdadaw
+      100h
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template #label>
+        <div class="cell-item">
+          <el-icon :style="iconStyle">
+            <Postcard />
+          </el-icon>
+          个人简介
+        </div>
+      </template>
+      <el-input type="textarea" class="full-width"></el-input>
     </el-descriptions-item>
   </el-descriptions>
-
+  <br>
+  <el-button type="primary">编辑</el-button>
 </template>
   
 <script setup lang="ts">
@@ -86,6 +102,7 @@ import {
   Tickets,
   User,
   DataBoard,
+  Postcard,
 } from '@element-plus/icons-vue'
 
 const size = ref('')
@@ -99,21 +116,13 @@ const iconStyle = computed(() => {
     marginRight: marginMap[size.value] || marginMap.default,
   }
 })
-const blockMargin = computed(() => {
-  const marginMap = {
-    large: '32px',
-    default: '28px',
-    small: '24px',
-  }
-  return {
-    marginTop: marginMap[size.value] || marginMap.default,
-  }
-})
 </script>
   
 <style scoped>
-.el-descriptions {
+.title {
+  text-align: center;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .cell-item {
@@ -123,6 +132,10 @@ const blockMargin = computed(() => {
 
 .margin-top {
   margin-top: 20px;
+}
+
+.full-width {
+  width: 100%;
 }
 </style>
   
