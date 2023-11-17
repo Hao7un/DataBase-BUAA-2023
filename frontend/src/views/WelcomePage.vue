@@ -265,7 +265,10 @@ export default {
         /* 登录判断逻辑 */
         if (valid) {
           console.log("登录成功");
-          ElMessage.success('登陆成功');
+          ElMessage.success("登录成功");
+          this.$store.commit("setCollegeId", "21371295");
+          this.$store.commit("setUserName", "张昊翔");
+          this.$store.commit("setUserType", "普通用户");
           this.$router.push({path: '/project/join'});
         }
         else {

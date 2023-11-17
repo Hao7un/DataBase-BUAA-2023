@@ -1,0 +1,224 @@
+<template>
+  <div class="main-container">
+    <div class="sidebar-container">
+      <el-menu mode="vertical" default-active="info">
+        <el-menu-item index="info" @click="changeToUserInfoPage">
+          <span class="item-font" style="font-weight: bold;">个人信息</span>
+        </el-menu-item>
+        <el-menu-item index="password" @click="changeToPasswordPage">
+          <span class="item-font" style="font-weight: bold;">修改密码</span>
+        </el-menu-item>
+        <el-menu-item index="volunteerHours" @click="changeToVolunteerHoursPage">
+          <span class="item-font" style="font-weight: bold;">志愿统计</span>
+        </el-menu-item>
+      </el-menu>
+    </div>
+
+    <div class="content-container">
+      <el-descriptions class="margin-top" :column="1" size="large">
+        <el-descriptions-item label="姓名" width="400px">
+          <template #label>
+            <div class="cell-item">
+              <el-icon>
+                <Paperclip />
+              </el-icon>
+              学工号
+            </div>
+          </template>
+          {{ collegeId }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              <el-icon>
+                <User />
+              </el-icon>
+              姓名
+            </div>
+          </template>
+          {{ userName }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              <el-icon>
+                <School />
+              </el-icon>
+              用户类型
+            </div>
+          </template>
+          <el-tag>{{ userType }}</el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              <el-icon>
+                <Iphone />
+              </el-icon>
+              电话
+            </div>
+          </template>
+          <el-input type="text" v-model="telephone"></el-input>
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              <el-icon>
+                <MessageBox />
+              </el-icon>
+              邮箱
+            </div>
+          </template>
+          <el-input type="text" v-model="email"></el-input>
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              <el-icon>
+                <Postcard />
+              </el-icon>
+              个人简介
+            </div>
+          </template>
+          <el-input type="textarea" v-model="userIntro"></el-input>
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              <el-icon>
+                <DataAnalysis />
+              </el-icon>
+              志愿时长
+            </div>
+          </template>
+          {{ volunteerTime }}
+        </el-descriptions-item>
+      </el-descriptions>
+
+      <br>
+      <el-button type="primary" round size="large" @click="editUserInfo">
+        <span style="color:whitesmoke">保存</span></el-button>
+    </div>
+  </div>
+</template>
+  
+<script>
+import {
+  Paperclip,
+  User,
+  School,
+  Iphone,
+  MessageBox,
+  Postcard,
+  DataAnalysis
+} from '@element-plus/icons-vue'
+
+export default {
+  beforemounted() {
+    /*this.axios.post('http://localhost:5173/user/info', {
+      collegeId: this.collegeId
+    })
+      .then(res => {
+        console.log(res);
+        if (res.data.code === 0) {
+          this.telephone = res.data.telephone;
+          this.email = res.data.email;
+          this.volunteerTime = res.data.volunteerTime;
+          this.userIntro = res.data.userIntro;
+        }
+      });*/
+  },
+  data() {
+    return {
+      telephone: '18100000000',
+      email: '21371295@buaa.edu.cn',
+      volunteerTime: '100h',
+      userIntro: '我是张昊翔，我来自北京航空航天大学'
+    };
+  },
+  computed: {
+    collegeId() {
+      return this.$store.state.collegeId;
+    },
+    userName() {
+      return this.$store.state.userName;
+    },
+    userType() {
+      return this.$store.state.userType;
+    }
+  },
+  methods: {
+    changeToUserInfoPage() {
+      this.$router.push({
+        path: '/user/info'
+      })
+    },
+    changeToPasswordPage() {
+      this.$router.push({
+        path: '/user/password'
+      })
+    },
+    changeToVolunteerHoursPage() {
+      this.$router.push({
+        path: '/user/volunteerHours'
+      })
+    },
+    editUserInfo() {
+      this.axios.post('http://localhost:5173/user/info', {
+        collegeId: this.collegeId,
+        telephone: this.telephone,
+        email: this.email,
+        userIntro: this.userIntro
+      })
+        .then(res => {
+          console.log(res);
+          if (res.data.code === 0) {
+            console.log("修改成功");
+            this.telephone = res.data.telephone;
+            this.email = res.data.email;
+            this.userIntro = res.data.userIntro;
+          }
+        });
+    }
+  }
+}
+</script>
+  
+<style scoped>
+.cell-item {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.margin-top {
+  margin-top: 50px;
+}
+
+.main-container {
+  display: flex;
+}
+
+.sidebar-container {
+  display: flex;
+  width: 180px;
+  height: 1200px;
+  flex-direction: column;
+  padding-top: 20px;
+  margin-left: 20px;
+  border-right: 2px solid rgb(114, 110, 104, 0.2);
+}
+
+.content-container {
+  display: block;
+  flex-direction: column;
+  margin-left: 300px;
+}
+
+.item-font {
+  font-size: 18px;
+  margin-left: 10px;
+}
+</style>
+  

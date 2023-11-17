@@ -50,9 +50,19 @@ const router = createRouter({
                     component: () => import('../views/MyRecruitmentPage.vue')
                 },
                 {
-                    path: '/user',
-                    name: 'user',
-                    component: () => import('../views/UserPage.vue')
+                    path: '/user/info',
+                    name: 'userInfo',
+                    component: () => import('../views/UserInfoPage.vue')
+                },
+                {
+                    path: '/user/password',
+                    name: 'password',
+                    component: () => import('../views/PasswordPage.vue')
+                },
+                {
+                    path: '/user/volunteerHours',
+                    name: 'volunteerHours',
+                    component: () => import('../views/VolunteerHoursPage.vue')
                 }
             ]
         },

@@ -1,10 +1,10 @@
 <template>
-<div class="header-container">
+  <div class="header-container">
     <div class="logo-container">
       <img src="../assets/images/logo.png" alt="Logo!">
     </div>
     <div class="nav-container">
-      <el-menu mode="horizontal" :default-active="activeMemu" class="menu-container">
+      <el-menu mode="horizontal" :default-active="activeMenu" class="menu-container">
         <el-menu-item index="recruit" class="item-font" @click="changeToRecruit()">志愿招募</el-menu-item>
         <el-menu-item index="project" class="item-font" @click="changeToProject()">志愿项目</el-menu-item>
         <el-menu-item index="team" class="item-font" @click="changeToTeam()">志愿团队</el-menu-item>
@@ -14,15 +14,15 @@
       <el-dropdown trigger="click">
         <el-avatar :size="45" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
         <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item @click="changeToUserInfo()">个人信息</el-dropdown-item>
-          <el-dropdown-item @click="logout()">退出登录</el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
+          <el-dropdown-menu>
+            <el-dropdown-item @click="changeToUserInfo()">个人主页</el-dropdown-item>
+            <el-dropdown-item @click="logout()">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
     </div>
     <!-- <div class="username-container">{{ username }}</div> -->
-</div>
+  </div>
 </template>
 
 <script>
@@ -32,8 +32,7 @@ import { ElMessage } from 'element-plus';
 export default {
   data() {
     return {
-      username: "王乐",
-      activeMemu: "project"
+      activeMenu: "project"
     }
   },
   methods: {
@@ -56,10 +55,13 @@ export default {
       });
     },
     changeToUserInfo() {
-      console.log("change to user info");
-      /* 切换到profile页 */
+      console.log("change to user");
+      this.activeMenu = "temp"; // 设置为一个临时的值
+      this.$nextTick(() => { // 在下一个 DOM 更新周期后执行
+        this.activeMenu = "none"; // 再将 activeMenu 设置为 "none"
+      });
       this.$router.push({
-        path: '/user'
+        path: '/user/info'
       });
     },
     logout() {
@@ -76,14 +78,14 @@ export default {
 
 <style scoped>
 .header-container {
-    height: 60px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 10px;
-    /* padding: 0 10px; */
-    border-bottom: 2px solid rgb(114, 110, 104, 0.2);
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px;
+  /* padding: 0 10px; */
+  border-bottom: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .logo-container img {
