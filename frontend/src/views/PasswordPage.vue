@@ -93,8 +93,25 @@ export default {
             }
         },
         editPassword() {
-            
+            this.axios.post('http://localhost:5173/user/password', {
+                collegeId: this.$store.state.collegeId,
+                newPassword: this.newPassword
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        console.log("修改成功");
+                        ElMessage.success('修改成功');
+                        this.$store.commit('setPassword', this.newPassword);
+                    } else if (res.data.code === 1) {
+                        console.log("修改失败");
+                        ElMessage.error('密码格式错误');
+                    }
+                });
             this.dialogVisible = false;
+            this.oldPassword = '';
+            this.newPassword = '';
+            this.confirmPassword = '';
         }
 
     }

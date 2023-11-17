@@ -48,4 +48,34 @@
   }
   ```
 
+## PasswordPage
+### 修改密码
+
+* 发送请求：
+
+  ```javascript
+  {
+      collegeId: "",
+      newPassword: ""
+  }
+  ```
+
+* 修改成功
+
+  ```javascript
+  {
+      code: 0,
+      message: ""
+  }
+  ```
+
+* 修改失败
+
+  ```javascript
+  {
+      code: 1,
+      message: ""
+  }
+  ```
+
   
