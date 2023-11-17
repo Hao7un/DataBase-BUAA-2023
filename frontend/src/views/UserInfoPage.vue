@@ -97,7 +97,7 @@
 
       <br>
       <el-button type="primary" round size="large" @click="editUserInfo">
-        <span style="color:whitesmoke">保存</span></el-button>
+        <span style="font-weight: bold; font-size: 15px; color:whitesmoke">保存</span></el-button>
     </div>
   </div>
 </template>
@@ -188,7 +188,7 @@ export default {
 .cell-item {
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: bold;
 }
 

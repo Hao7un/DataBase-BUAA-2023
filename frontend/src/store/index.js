@@ -8,6 +8,7 @@ const store = createStore({
     state() {
         return {
             userName: null,
+            password: null,
             collegeId: null,
             email: null,
             userType: null
@@ -16,6 +17,9 @@ const store = createStore({
     mutations: {
         setUserName(state, userName) {
             state.userName = userName;
+        },
+        setPassword(state, password) {
+            state.password = password;
         },
         setCollegeId(state, collegeId) {
             state.collegeId = collegeId;
