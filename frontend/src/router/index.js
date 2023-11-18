@@ -25,7 +25,7 @@ const router = createRouter({
                     component: () => import('../views/JoinProjectPage.vue')
                 },
                 {
-                    path: '/project/myproject',
+                    path: '/project/my',
                     name: 'myProject',
                     component: () => import('../views/MyProjectPage.vue')
                 },
@@ -35,7 +35,7 @@ const router = createRouter({
                     component: () => import('../views/JoinTeamPage.vue')
                 },
                 {
-                    path: '/team/myteam',
+                    path: '/team/my',
                     name: 'myTeam',
                     component: () => import('../views/MyTeamPage.vue')
                 },
@@ -60,7 +60,7 @@ const router = createRouter({
                     component: () => import('../views/PasswordPage.vue')
                 },
                 {
-                    path: '/user/volunteerHours',
+                    path: '/user/volunteer-hours',
                     name: 'volunteerHours',
                     component: () => import('../views/VolunteerHoursPage.vue')
                 }

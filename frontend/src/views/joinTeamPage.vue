@@ -57,7 +57,7 @@
                 <div class="pagination-container">
                     <el-pagination 
                         @current-change="handlePageChange"
-                        :page-size="6"
+                        :page-size="8"
                         :total="totalList.length"
                         layout="prev, pager, next">
                     </el-pagination>
@@ -93,8 +93,8 @@ export default {
     },
     computed: {
         displayedList() {
-            let startIndex = (this.currentPage - 1) * 6;
-            return this.totalList.slice(startIndex, startIndex + 6);
+            let startIndex = (this.currentPage - 1) * 8;
+            return this.totalList.slice(startIndex, startIndex + 8);
         }
     },
     methods: {
@@ -112,7 +112,7 @@ export default {
         },
         changeToMyTeamPage() {
             this.$router.push({
-                path: '/team/myteam'
+                path: '/team/my'
             })
         }
     },
@@ -127,11 +127,9 @@ export default {
 .sidebar-container {
     display: flex;
     width: 180px;
-    height: 1200px;
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .item-font {
@@ -179,7 +177,7 @@ export default {
     justify-content: flex-start;
     align-content: flex-start;
     margin-top: 15px;
-    height: 1000px;
+    height: 1300px;
     width: 1350px;
 }
 

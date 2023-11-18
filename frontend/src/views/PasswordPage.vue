@@ -76,7 +76,7 @@ export default {
         },
         changeToVolunteerHoursPage() {
             this.$router.push({
-                path: '/user/volunteerHours'
+                path: '/user/volunteer-hours'
             })
         },
         checkPassword() {
@@ -103,17 +103,16 @@ export default {
                         console.log("修改成功");
                         ElMessage.success('修改成功');
                         this.$store.commit('setPassword', this.newPassword);
+                        this.oldPassword = '';
                     } else if (res.data.code === 1) {
                         console.log("修改失败");
-                        ElMessage.error('密码格式错误');
+                        ElMessage.error('新密码格式错误');
                     }
+                    this.newPassword = '';
+                    this.confirmPassword = '';
                 });
             this.dialogVisible = false;
-            this.oldPassword = '';
-            this.newPassword = '';
-            this.confirmPassword = '';
         }
-
     }
 }
 </script>
@@ -126,7 +125,6 @@ export default {
 .sidebar-container {
     display: flex;
     width: 180px;
-    height: 1200px;
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;

@@ -159,11 +159,9 @@ export default {
 .sidebar-container {
     display: flex;
     width: 180px;
-    height: 900px;
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .item-font {

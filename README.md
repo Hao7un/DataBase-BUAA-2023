@@ -78,4 +78,33 @@
   }
   ```
 
+## MyTeamPage
+### 获取我的团队
+
+* 发送请求：
+
+  ```javascript
+  {
+      collegeId: ""
+  }
+  ```
+
+* 获取成功
+
+  ```javascript
+  {
+      code: 0,
+      message: "",
+      data: {
+          teamList: [
+              {
+                  id: "",
+                  name: "",
+                  number: "",
+                  hours: "",
+              }
+          ]
+      }
+  }
+  ```
   
