@@ -15,7 +15,7 @@
         <el-avatar :size="45" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="changeToUserInfo()">个人主页</el-dropdown-item>
+            <el-dropdown-item @click="changeToUser()">个人主页</el-dropdown-item>
             <el-dropdown-item @click="logout()">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -54,7 +54,7 @@ export default {
         path: '/team/join'
       });
     },
-    changeToUserInfo() {
+    changeToUser() {
       console.log("change to user");
       this.activeMenu = "temp"; // 设置为一个临时的值
       this.$nextTick(() => { // 在下一个 DOM 更新周期后执行

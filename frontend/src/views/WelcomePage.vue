@@ -269,7 +269,7 @@ export default {
           this.$store.commit("setCollegeId", "21371295");
           this.$store.commit("setPassword", "123456");
           this.$store.commit("setUserName", "张昊翔");
-          this.$store.commit("setUserType", "普通用户");
+          this.$store.commit("setUserType", "0");
           this.$router.push({path: '/project/join'});
         }
         else {

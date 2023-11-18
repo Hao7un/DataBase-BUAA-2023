@@ -115,7 +115,7 @@ import {
 
 export default {
   created() {
-    /*this.axios.post('http://localhost:5173/user/info', {
+    this.axios.post('http://localhost:5173/user/info', {
       collegeId: this.collegeId
     })
       .then(res => {
@@ -126,7 +126,7 @@ export default {
           this.volunteerTime = res.data.volunteerTime;
           this.userIntro = res.data.userIntro;
         }
-      });*/
+      });
   },
   data() {
     return {
@@ -144,7 +144,11 @@ export default {
       return this.$store.state.userName;
     },
     userType() {
-      return this.$store.state.userType;
+      if (this.$store.state.userType == 0) {
+        return "普通用户";
+      } else if (this.$store.state.userType == 1) {
+        return "管理员";
+      }
     }
   },
   methods: {

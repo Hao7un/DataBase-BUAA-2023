@@ -79,7 +79,7 @@
   ```
 
 ## MyTeamPage
-### 获取我的团队
+### 获取我所在的团队
 
 * 发送请求：
 
@@ -101,10 +101,47 @@
                   id: "",
                   name: "",
                   number: "",
-                  hours: "",
+                  hours: ""
               }
           ]
       }
   }
   ```
   
+## TeamInfoPage
+### 获取团队信息
+
+* 发送请求：
+
+  ```javascript
+  {
+      teamId: ""
+  }
+  ```
+
+* 获取成功
+
+  ```javascript
+  {
+      code: 0,
+      message: "",
+      data: {
+          teamName: "",
+          teamNumber: "",
+          teamIntro: "",
+          foundationDate: "",
+          teamLeader: "",
+          telephone: "",
+          email: "",
+          projectList: [
+              { 
+                  id: "", 
+                  name: "", 
+                  type: "", 
+                  hours: "" 
+              }  
+          ]
+      }
+  }
+  ```
+

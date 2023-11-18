@@ -142,10 +142,11 @@ export default {
                 path: '/team/my'
             })
         },
-        changeToTeamInfoPage(teamId) {
+        changeToTeamInfoPage(id) {
+            console.log(id);
             this.$router.push({
-                path: '/team/info', 
-                params: { id: teamId }
+                name: 'teamInfo',
+                params: { teamId: id }
             });
         },
     }
