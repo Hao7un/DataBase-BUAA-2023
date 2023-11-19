@@ -281,7 +281,7 @@ export default {
               /* 登陆成功 */
               if (res.data.code === 0) {
                 console.log("登录成功");
-                ElMessage.success('登陆成功');
+                ElMessage.success('登录成功');
                 this.$store.commit("setUserId", res.data.userId);
                 this.$store.commit("setUserName", res.data.userName);
                 this.$store.commit("setCollegeId", this.loginForm.account);
@@ -301,7 +301,6 @@ export default {
                 ElMessage.error('密码错误！');
               }
             })
-
         }
         else {
           ElMessage.error("请填写正确的登录信息");

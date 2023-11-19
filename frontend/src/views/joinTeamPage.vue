@@ -130,7 +130,6 @@ export default {
             if (this.date == null) return "";
             return this.formatDate(this.date);
         },
-        
     },
     methods: {
         formatDate(date) {
@@ -149,7 +148,7 @@ export default {
         },
         changeToMyTeamPage() {
             this.$router.push({
-                path: '/team/myteam'
+                path: '/team/my'
             })
         },
 
@@ -165,11 +164,9 @@ export default {
 .sidebar-container {
     display: flex;
     width: 180px;
-    height: 1200px;
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .item-font {
@@ -217,7 +214,7 @@ export default {
     justify-content: flex-start;
     align-content: flex-start;
     margin-top: 15px;
-    height: 1000px;
+    height: 1300px;
     width: 1350px;
 }
 

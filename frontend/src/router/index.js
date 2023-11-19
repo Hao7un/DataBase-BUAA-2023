@@ -25,9 +25,14 @@ const router = createRouter({
                     component: () => import('../views/JoinProjectPage.vue')
                 },
                 {
-                    path: '/project/myproject',
+                    path: '/project/my',
                     name: 'myProject',
                     component: () => import('../views/MyProjectPage.vue')
+                },
+                {
+                    path: '/project/info/:projectId',
+                    name: 'projectInfo',
+                    component: () => import('../views/ProjectInfoPage.vue')
                 },
                 {
                     path: '/team/join',
@@ -35,9 +40,14 @@ const router = createRouter({
                     component: () => import('../views/JoinTeamPage.vue')
                 },
                 {
-                    path: '/team/myteam',
+                    path: '/team/my',
                     name: 'myTeam',
                     component: () => import('../views/MyTeamPage.vue')
+                },
+                {
+                    path: '/team/info/:teamId',
+                    name: 'teamInfo',
+                    component: () => import('../views/TeamInfoPage.vue')
                 },
                 {
                     path: '/recruitment/join',
@@ -50,9 +60,19 @@ const router = createRouter({
                     component: () => import('../views/MyRecruitmentPage.vue')
                 },
                 {
-                    path: '/user',
-                    name: 'user',
-                    component: () => import('../views/UserPage.vue')
+                    path: '/user/info',
+                    name: 'userInfo',
+                    component: () => import('../views/UserInfoPage.vue')
+                },
+                {
+                    path: '/user/password',
+                    name: 'password',
+                    component: () => import('../views/PasswordPage.vue')
+                },
+                {
+                    path: '/user/volunteer-hours',
+                    name: 'volunteerHours',
+                    component: () => import('../views/VolunteerHoursPage.vue')
                 },
                 {
                     path: '/admin/manage',

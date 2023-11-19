@@ -1,4 +1,3 @@
-
 import { createApp } from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -17,6 +16,9 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+
+
+axios.defaults.baseURL = 'http://120.46.80.149'
 
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
