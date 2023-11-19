@@ -65,7 +65,7 @@
 
 export default {
     created() {
-        this.axios.get('http://localhost:8000/get_all_teams_info')
+        this.axios.get('http://localhost:8000/user_get_all_teams_info')
             .then(res => {
                 console.log(res);
                 if (res.data.code === 0) {
