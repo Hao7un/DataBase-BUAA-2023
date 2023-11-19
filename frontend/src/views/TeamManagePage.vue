@@ -71,8 +71,8 @@
           <el-table-column prop="date" label="申请日期" width="250px" align="center"></el-table-column>
           <el-table-column label="操作" width="200px" align="center">
             <template #default="scope">
-              <el-button @click="handleAccept(scope.$index, scope.row, 'accept')" type="primary"><span style="color: white;">通过</span></el-button>
-              <el-button @click="handleAccept(scope.$index, scope.row, 'reject')" type="warning"><span style="color: white;">拒绝</span></el-button>
+              <el-button @click="handleAccept(scope.$index, scope.row, 'true')" type="primary"><span style="color: white;">通过</span></el-button>
+              <el-button @click="handleAccept(scope.$index, scope.row, 'false')" type="warning"><span style="color: white;">拒绝</span></el-button>
             </template>
           </el-table-column>
         </el-table>
