@@ -14,12 +14,7 @@
             <div class="selector-container">
                 <div class="date-container">
                     <span style="display: flex; align-items: center;">团队注册日期</span> &nbsp;&nbsp;
-                    <el-date-picker 
-                        v-model="date" 
-                        type="date" 
-                        placeholder="输入日期"
-                        size="large"
-                        clearable>
+                    <el-date-picker v-model="date" type="date" placeholder="输入日期" size="large" clearable>
                     </el-date-picker>
                     &nbsp; &nbsp; <span style="display: flex; align-items: center;">至今</span>
                 </div>
@@ -44,19 +39,20 @@
                             <div class="card-info">
                                 <div class="team-name">{{ item.name }}</div>
                                 <div class="team-details">
-                                    <div class="detail-item"><el-icon><User /></el-icon> 团队人数：{{ item.number }}</div>
+                                    <div class="detail-item"><el-icon>
+                                            <User />
+                                        </el-icon> 团队人数：{{ item.number }}</div>
                                     <el-divider border-style="solid" direction="vertical" />
-                                    <div class="detail-item"><el-icon><Clock /></el-icon> 总服务时长：{{ item.hours }} 小时</div>
+                                    <div class="detail-item"><el-icon>
+                                            <Clock />
+                                        </el-icon> 总服务时长：{{ item.hours }} 小时</div>
                                 </div>
                             </div>
                         </el-card>
                     </div>
                 </div>
                 <div class="pagination-container">
-                    <el-pagination 
-                        @current-change="handlePageChange"
-                        :page-size="6"
-                        :total="filteredList.length"
+                    <el-pagination @current-change="handlePageChange" :page-size="6" :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
@@ -68,6 +64,15 @@
 <script>
 
 export default {
+    created() {
+        this.axios.get('http://localhost:8000/team/join')
+            .then(res => {
+                console.log(res);
+                if (res.data.code === 0) {
+                    this.totalList = res.data.totalList;
+                }
+            });
+    },
     data() {
         return {
             date: null,
@@ -76,16 +81,16 @@ export default {
             currentPage: 1,
             selectedTotalIndex: "",
             totalList: [
-                {id: 1, name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100},
-                {id: 2, name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50},
-                {id: 3, name: "志愿团队3", date: "2023-11-03", number: 8, hours: 50},
-                {id: 4, name: "志愿团队4", date: "2023-11-04", number: 25, hours: 50},
-                {id: 5, name: "志愿团队5", date: "2023-11-05", number: 27, hours: 50},
-                {id: 6, name: "志愿团队6", date: "2023-11-06", number: 30, hours: 50},
-                {id: 7, name: "志愿团队7", date: "2023-11-07", number: 45, hours: 50},
-                {id: 8, name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50},
-                {id: 9, name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50},
-                {id: 10, name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50},
+                { id: 1, name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100 },
+                { id: 2, name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50 },
+                { id: 3, name: "志愿团队3", date: "2023-11-03", number: 8, hours: 50 },
+                { id: 4, name: "志愿团队4", date: "2023-11-04", number: 25, hours: 50 },
+                { id: 5, name: "志愿团队5", date: "2023-11-05", number: 27, hours: 50 },
+                { id: 6, name: "志愿团队6", date: "2023-11-06", number: 30, hours: 50 },
+                { id: 7, name: "志愿团队7", date: "2023-11-07", number: 45, hours: 50 },
+                { id: 8, name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50 },
+                { id: 9, name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50 },
+                { id: 10, name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50 },
             ]
         }
     },
@@ -110,8 +115,8 @@ export default {
             let filteredList = this.totalList;
             if (this.keyword != null && this.number != null) {
                 filteredList = filteredList.filter(item => {
-                        return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
-                    }
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
+                }
                 );
             }
             return filteredList.slice(startIndex, endIndex);
@@ -119,9 +124,9 @@ export default {
         filteredList() {
             let list = this.totalList;
             if (this.keyword != null && this.number != null) {
-                list = list.filter( item => {
-                        return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
-                    }
+                list = list.filter(item => {
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
+                }
                 );
             }
             return list;
@@ -276,5 +281,4 @@ export default {
     margin-top: 50px;
     margin-bottom: 50px;
 }
-
 </style>

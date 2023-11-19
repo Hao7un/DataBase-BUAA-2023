@@ -76,6 +76,35 @@
   }
   ```
 
+## JoinTeamPage
+### 获取所有团队
+
+* 发送请求：
+
+  ```javascript
+  {
+
+  }
+  ```
+
+* 获取成功
+
+  ```javascript
+  {
+    code: 0,
+    message: "",
+    teamList: [
+        {
+          id: "00001",
+          name: "志愿团队1",
+          date: "YYYY-MM-DD",
+          number: "50",
+          hours: "150"
+        }
+    ] 
+  }
+  ```
+
 ## MyTeamPage
 ### 获取我所在的团队
 
