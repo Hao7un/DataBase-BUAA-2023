@@ -73,7 +73,18 @@ const router = createRouter({
                     path: '/user/volunteer-hours',
                     name: 'volunteerHours',
                     component: () => import('../views/VolunteerHoursPage.vue')
-                }
+                },
+                {
+                    path: '/admin/manage',
+                    name: 'admin',
+                    component: () => import('../views/AdminPage.vue'),
+                },
+                {
+                    path: '/admin/teaminfo',
+                    name: 'teamDetail',
+                    component: () => import('../views/TeamManagePage.vue')
+                },
+                
             ]
         },
     ]

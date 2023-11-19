@@ -8,6 +8,7 @@
         <el-menu-item index="recruit" class="item-font" @click="changeToRecruit()">志愿招募</el-menu-item>
         <el-menu-item index="project" class="item-font" @click="changeToProject()">志愿项目</el-menu-item>
         <el-menu-item index="team" class="item-font" @click="changeToTeam()">志愿团队</el-menu-item>
+        <el-menu-item index="manage" class="item-font" @click="changeToManagement()" v-if="this.$store.state.isAdmin">管理端</el-menu-item>
       </el-menu>
     </div>
     <div class="avatar-container">
@@ -63,6 +64,12 @@ export default {
       this.$router.push({
         path: '/user/info'
       });
+},
+    changeToManagement() {
+      console.log("change to admin");
+      this.$router.push({
+        path: '/admin/manage',
+      })
     },
     logout() {
       console.log("quit to welcome");
@@ -78,14 +85,13 @@ export default {
 
 <style scoped>
 .header-container {
-  height: 60px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 10px;
-  /* padding: 0 10px; */
-  border-bottom: 2px solid rgb(114, 110, 104, 0.2);
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+    border-bottom: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .logo-container img {
@@ -116,4 +122,5 @@ export default {
   font-size: 20px;
   font-weight: bold;
 }
+
 </style>
