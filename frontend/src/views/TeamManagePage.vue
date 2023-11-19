@@ -361,7 +361,7 @@ export default {
                       vm.applicationList.splice(index, 1);
                       // 刷新团队页
                       vm.fetch();
-                      if (approved === "accept") {
+                      if (approved === "true") {
                         ElMessage.success("通过申请");
                       }
                       else {
