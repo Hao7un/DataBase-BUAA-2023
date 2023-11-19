@@ -6,12 +6,13 @@
     <p>团队领导：{{ teamLeader }}</p>
     <p>联系电话：{{ telephone }}</p>
     <p>电子邮件：{{ email }}</p>
-    <el-button v-if="!isTeamMember" type="primary" @click="applyForTeam">申请加入</el-button>
+    <el-button v-if="!isTeamMember" type="primary" @click="applyForTeam">
+        <span style="font-weight: bold; font-size: 15px; color:whitesmoke">申请加入</span></el-button>
     <h2>项目列表</h2>
     <ul>
-      <li v-for="project in projectList" :key="project.id">
-        {{ project.name }} - {{ project.type }} - {{ project.hours }} 小时
-      </li>
+        <li v-for="project in projectList" :key="project.id">
+            {{ project.name }} - {{ project.type }} - {{ project.hours }} 小时
+        </li>
     </ul>
 </template>
 
@@ -22,7 +23,7 @@ export default {
     created() {
         this.teamId = this.$route.params.teamId;
         this.axios.post('http://localhost:5173/team/info', {
-            collegeId: this.collegeId,
+            userId: this.userId,
             teamId: this.teamId
         })
             .then(res => {
@@ -69,9 +70,8 @@ export default {
         },
         applyForTeam() {
             this.axios.post('http://localhost:5173/team/info', {
-                collegeId: this.collegeId,
+                userId: this.userId,
                 teamId: this.teamId,
-                applyTime: "2021-01-01 00:00:00"
             })
                 .then(res => {
                     console.log(res);
@@ -83,8 +83,8 @@ export default {
 
     },
     computed: {
-        collegeId() {
-            return this.$store.state.collegeId;
+        userId() {
+            return this.$store.state.userId;
         }
     }
 }

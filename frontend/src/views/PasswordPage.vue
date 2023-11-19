@@ -94,7 +94,7 @@ export default {
         },
         editPassword() {
             this.axios.post('http://localhost:5173/user/password', {
-                collegeId: this.$store.state.collegeId,
+                userId: this.$store.state.userId,
                 newPassword: this.newPassword
             })
                 .then(res => {

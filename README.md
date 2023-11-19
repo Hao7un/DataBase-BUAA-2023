@@ -32,7 +32,7 @@
 
   ```javascript
   {
-      collegeId: "21371295",
+      userId: "00001",
       telephone: "18100000000",
       email: "abcd@xyz.com",
       userIntro: "我是一个好人。"
@@ -55,7 +55,7 @@
 
   ```javascript
   {
-      collegeId: "21371295",
+      userId: "00001",
       newPassword: "123456"
   }
   ```
@@ -85,7 +85,7 @@
 
   ```javascript
   {
-      collegeId: "21371295"
+      userId: "00001",
   }
   ```
 
@@ -115,7 +115,7 @@
 
   ```javascript
   {
-      collegeId: "21371295",
+      userId: "00001",
       teamId: "00001"
   }
   ```
@@ -153,9 +153,8 @@
 
   ```javascript
   {
-      collegeId: "21371295",
+      userId: "00001",
       teamId: "00001",
-      applyTime: "YYYY-MM-DD HH:MM:SS"
   }
   ```
 

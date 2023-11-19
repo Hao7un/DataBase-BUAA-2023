@@ -7,6 +7,7 @@ import { createStore } from 'vuex'
 const store = createStore({
     state() {
         return {
+            userId: null,
             userName: null,
             password: null,
             collegeId: null,
@@ -15,6 +16,9 @@ const store = createStore({
         }
     },
     mutations: {
+        setUserId(state, userId) {
+            state.userId = userId;
+        },
         setUserName(state, userName) {
             state.userName = userName;
         },

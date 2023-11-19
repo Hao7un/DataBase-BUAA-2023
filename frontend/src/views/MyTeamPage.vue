@@ -60,7 +60,7 @@
 export default {
     created() {
         this.axios.post('http://localhost:5173/team/my', {
-            collegeId: this.collegeId
+            userId: this.$store.state.userId
         })
             .then(res => {
                 console.log(res);
@@ -89,9 +89,6 @@ export default {
         }
     },
     computed: {
-        collegeId() {
-            return this.$store.state.collegeId;
-        },
         range() {
             if (this.number === "10人以下") {
                 return [1, 10];

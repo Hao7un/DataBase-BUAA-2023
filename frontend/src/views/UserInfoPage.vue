@@ -116,7 +116,7 @@ import {
 export default {
   created() {
     this.axios.post('http://localhost:5173/user/info', {
-      collegeId: this.collegeId
+      userId: this.userId
     })
       .then(res => {
         console.log(res);
@@ -137,6 +137,9 @@ export default {
     };
   },
   computed: {
+    userId() {
+      return this.$store.state.userId;
+    },
     collegeId() {
       return this.$store.state.collegeId;
     },
@@ -169,7 +172,7 @@ export default {
     },
     editUserInfo() {
       this.axios.post('http://localhost:5173/user/info', {
-        collegeId: this.collegeId,
+        userId: this.userId,
         telephone: this.telephone,
         email: this.email,
         userIntro: this.userIntro
