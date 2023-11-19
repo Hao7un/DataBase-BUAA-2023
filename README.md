@@ -6,7 +6,7 @@
 
   ```javascript
   {
-      collegeId: "21371295"
+    userId: "00001",
   }
   ```
 
@@ -14,14 +14,12 @@
 
   ```javascript
   {
-      code: 0,
-      message: "",
-      data: {
-          telephone: "18100000000",
-          email: "abcd@xyz.com",
-          volunteerTime: "20",
-          userIntro: "我是一个好人。"
-      }
+    code: 0,
+    message: "",
+    telephone: "18100000000",
+    email: "abcd@xyz.com",
+    volunteerTime: "20",
+    userIntro: "我是一个好人。"
   }
   ```
 
@@ -32,10 +30,10 @@
 
   ```javascript
   {
-      userId: "00001",
-      telephone: "18100000000",
-      email: "abcd@xyz.com",
-      userIntro: "我是一个好人。"
+    userId: "00001",
+    telephone: "18100000000",
+    email: "abcd@xyz.com",
+    userIntro: "我是一个好人。"
   }
   ```
 
@@ -43,8 +41,8 @@
 
   ```javascript
   {
-      code: 0,
-      message: ""
+    code: 0,
+    message: ""
   }
   ```
 
@@ -55,8 +53,8 @@
 
   ```javascript
   {
-      userId: "00001",
-      newPassword: "123456"
+    userId: "00001",
+    newPassword: "123456"
   }
   ```
 
@@ -64,8 +62,8 @@
 
   ```javascript
   {
-      code: 0,
-      message: ""
+    code: 0,
+    message: ""
   }
   ```
 
@@ -73,8 +71,8 @@
 
   ```javascript
   {
-      code: 1,
-      message: ""
+    code: 1,
+    message: ""
   }
   ```
 
@@ -85,7 +83,7 @@
 
   ```javascript
   {
-      userId: "00001",
+    userId: "00001"
   }
   ```
 
@@ -93,18 +91,16 @@
 
   ```javascript
   {
-      code: 0,
-      message: "",
-      data: {
-          teamList: [
-              {
-                  id: "00001",
-                  name: "志愿团队1",
-                  number: "50",
-                  hours: "150"
-              }
-          ]
-      }
+    code: 0,
+    message: "",
+    teamList: [
+        {
+          id: "00001",
+          name: "志愿团队1",
+          number: "50",
+          hours: "150"
+        }
+    ] 
   }
   ```
   
@@ -115,8 +111,8 @@
 
   ```javascript
   {
-      userId: "00001",
-      teamId: "00001"
+    userId: "00001",
+    teamId: "00001"
   }
   ```
 
@@ -124,26 +120,24 @@
 
   ```javascript
   {
-      code: 0,
-      message: "",
-      data: {
-          isTeamMember: "0", // 0: 不是团队成员，1: 是团队成员
-          teamName: "志愿团队1",
-          teamNumber: "50",
-          teamIntro: "优秀团队。",
-          foundationDate: "YYYY-MM-DD",
-          teamLeader: "张昊翔",
-          telephone: "18100000000",
-          email: "abcd@xyz.com",
-          projectList: [
-              { 
-                  id: "00001", 
-                  name: "志愿项目1", 
-                  type: "社区服务", 
-                  hours: "100" 
-              }  
-          ]
-      }
+    code: 0,
+    message: "",
+    isTeamMember: "0", // 0: 不是团队成员，1: 是团队成员
+    teamName: "志愿团队1",
+    teamNumber: "50",
+    teamIntro: "优秀团队。",
+    foundationDate: "YYYY-MM-DD",
+    teamLeader: "张昊翔",
+    telephone: "18100000000",
+    email: "abcd@xyz.com",
+    projectList: [
+        { 
+          id: "00001", 
+          name: "志愿项目1", 
+          type: "社区服务", 
+          hours: "100" 
+        }  
+    ]
   }
   ```
 
@@ -153,8 +147,8 @@
 
   ```javascript
   {
-      userId: "00001",
-      teamId: "00001",
+    userId: "00001",
+    teamId: "00001"
   }
   ```
 
@@ -162,8 +156,8 @@
 
   ```javascript
   {
-      code: 0,
-      message: ""
+    code: 0,
+    message: ""
   }
   ```
 

@@ -21,7 +21,7 @@
                 <h2>志 愿 项 目</h2>
             </div>
             <div class="block text-center">
-                <el-carousel height="400px" :interval="5000" type="card">
+                <el-carousel height="400px" :interval="4000" type="card">
                     <el-carousel-item v-for="project in projectList" :key="project.id" @click="changeToProjectInfoPage(project.id)">
                         <h3>{{ project.name }}</h3>
                         <p>项目类别：{{ project.type }}</p>
@@ -40,7 +40,7 @@ import { ElMessage } from 'element-plus';
 export default {
     created() {
         this.teamId = this.$route.params.teamId;
-        this.axios.post('http://localhost:5173/team/info', {
+        this.axios.post('http://localhost:8000/team/info', {
             userId: this.userId,
             teamId: this.teamId
         })
@@ -87,7 +87,7 @@ export default {
             });
         },
         applyForTeam() {
-            this.axios.post('http://localhost:5173/team/info', {
+            this.axios.post('http://localhost:8000/team/info', {
                 userId: this.userId,
                 teamId: this.teamId,
             })

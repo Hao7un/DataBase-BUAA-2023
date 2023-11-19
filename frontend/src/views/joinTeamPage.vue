@@ -25,9 +25,9 @@
                 </div>
                 <div class="search-container">
                     <el-select v-model="number" placeholder="团队人数" clearable size="large" style="width: 200px">
-                        <el-option key="1-10" value="1-10">1-10</el-option>
-                        <el-option key="11-50" value="11-50">11-50</el-option>
-                        <el-option key="50以上" value="50以上">50以上</el-option>
+                        <el-option key="1-10" value="10人以下">10人以下</el-option>
+                        <el-option key="11-50" value="11至99人">11至99人</el-option>
+                        <el-option key="50以上" value="100人以上">100人以上</el-option>
                     </el-select>
                     &nbsp; &nbsp; &nbsp;
                     <el-input v-model="keyword" placeholder="输入团队名称" clearable size="large" style="width: 200px"></el-input>
@@ -91,22 +91,22 @@ export default {
     },
     computed: {
         range() {
-            if (this.number === "1-10") {
+            if (this.number === "10人以下") {
                 return [1, 10];
             }
-            else if (this.number === "11-50") {
-                return [11, 50];
+            else if (this.number === "11至99人") {
+                return [11, 99];
             }
-            else if (this.number === "50以上") {
-                return [51, Infinity];
+            else if (this.number === "100人以上") {
+                return [100, Infinity];
             }
             else {
                 return [0, Infinity];
             }
         },
         displayedList() {
-            let startIndex = (this.currentPage - 1) * 6;
-            let endIndex = startIndex + 6;
+            let startIndex = (this.currentPage - 1) * 8;
+            let endIndex = startIndex + 8;
             let filteredList = this.totalList;
             if (this.keyword != null && this.number != null) {
                 filteredList = filteredList.filter(item => {
@@ -255,6 +255,8 @@ export default {
 .team-name {
     text-align: center;
     height: 20%;
+    font-size: large;
+    font-weight: bold;
 }
 
 .team-details {

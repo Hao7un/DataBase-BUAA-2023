@@ -116,7 +116,7 @@ import { ElMessage } from 'element-plus';
 
 export default {
   created() {
-    this.axios.post('http://localhost:5173/user/info', {
+    this.axios.post('http://localhost:8000/user/info', {
       userId: this.userId
     })
       .then(res => {
@@ -186,7 +186,7 @@ export default {
         return;
       }
       
-      this.axios.post('http://localhost:5173/user/info', {
+      this.axios.post('http://localhost:8000/user/info', {
         userId: this.userId,
         telephone: this.telephone,
         email: this.email,
@@ -197,9 +197,6 @@ export default {
           if (res.data.code === 0) {
             console.log("修改成功");
             ElMessage.success('修改成功');
-            this.telephone = res.data.telephone;
-            this.email = res.data.email;
-            this.userIntro = res.data.userIntro;
           }
         });
     }

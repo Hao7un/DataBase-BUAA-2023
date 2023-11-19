@@ -59,7 +59,7 @@
 
 export default {
     created() {
-        this.axios.post('http://localhost:5173/team/my', {
+        this.axios.post('http://localhost:8000/team/my', {
             userId: this.$store.state.userId
         })
             .then(res => {
