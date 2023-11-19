@@ -18,8 +18,18 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+const vuetify = createVuetify({
+  components,
+  directives,
+})
+
 axios.defaults.baseURL = 'http://120.46.80.149'
 
+app.use(vuetify)
 app.use(ElementPlus)
 app.use(router)
 app.use(VueAxios, axios)

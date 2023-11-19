@@ -1,7 +1,7 @@
 <template>
     <div class="main-container">
         <div class="sidebar-container">
-            <el-menu mode="vertical" default-active="my">
+            <el-menu mode="vertical" default-active="my" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
                 <el-menu-item index="join" @click="changeToJoinRecruitmentPage">
                     <span class="item-font" style="font-weight: bold;">参与招募</span>
                 </el-menu-item>

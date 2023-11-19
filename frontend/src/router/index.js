@@ -48,7 +48,23 @@ const router = createRouter({
                     path: '/recruitment/my',
                     name: 'myRecruitment',
                     component: () => import('../views/MyRecruitmentPage.vue')
-                }
+                },
+                {
+                    path: '/user',
+                    name: 'user',
+                    component: () => import('../views/UserPage.vue')
+                },
+                {
+                    path: '/admin/manage',
+                    name: 'admin',
+                    component: () => import('../views/AdminPage.vue'),
+                },
+                {
+                    path: '/admin/teaminfo',
+                    name: 'teamDetail',
+                    component: () => import('../views/TeamManagePage.vue')
+                },
+                
             ]
         },
     ]

@@ -1,7 +1,7 @@
 <template>
     <div class="main-container">
         <div class="sidebar-container">
-            <el-menu mode="vertical" default-active="join">
+            <el-menu mode="vertical" default-active="join" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
                 <el-menu-item index="join" @click="changeToJoinRecruitmentPage">
                     <span class="item-font" style="font-weight: bold;">参与招募</span>
                 </el-menu-item>
@@ -32,7 +32,7 @@
                                         <el-option key="结束招募" value="结束招募">结束招募</el-option>
                                     </el-select>
                                 </th>
-                                <th style="width: 150px;">
+                                <th style="width: 180px;">
                                     <el-input v-model="keyword" placeholder="搜索项目名称" clearable></el-input>
                                 </th>
                                 <th style="width: 200px;">
@@ -49,7 +49,7 @@
                                         <el-option key="仅限团队内部" value="仅限团队内部">仅限团队内部</el-option>
                                     </el-select>
                                 </th>
-                                <th colspan="3" style="width: 450px;"></th>
+                                <th colspan="3" style="width: 500px;"></th>
                             </tr>
                         </thead>
                         <tbody>

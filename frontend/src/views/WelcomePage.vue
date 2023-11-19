@@ -266,6 +266,10 @@ export default {
             collegeId: this.loginForm.account,
             password: this.loginForm.password,
           }
+          // console.log("登录成功");
+          // ElMessage.success('登陆成功');
+          // this.$store.commit('setIsAdmin', true); // 这部分可能要修改接口：从后端获取登录用户的身份信息等
+          // this.$router.push({path: '/project/join'});
 
           await this.axios({
             method: 'post',
@@ -278,15 +282,22 @@ export default {
               if (res.data.code === 0) {
                 console.log("登录成功");
                 ElMessage.success('登陆成功');
-                // this.$store.commit('changeIsAdmin', res.data.isAdmin); 这部分可能要修改接口：从后端获取登录用户的身份信息等
+                this.$store.commit("setUserId", res.data.userId);
+                this.$store.commit("setUserName", res.data.userName);
+                this.$store.commit("setCollegeId", this.loginForm.account);
+                this.$store.commit("setIsAdmin", res.data.userType === "0" ? false : true);
+                this.$store.commit("setPassword", this.loginForm.password);
+          
                 this.$router.push({path: '/project/join'});
               }
               /* 用户不存在 */
               else if (res.data.code === 1) {
+                console.log("用户不存在");
                 ElMessage.error('该用户不存在！');
               }
               /* 密码错误 */
               else if (res.data.code === 2) {
+                console.log("密码错误");
                 ElMessage.error('密码错误！');
               }
             })
@@ -321,6 +332,12 @@ export default {
                   console.log(res);
                   if (res.data.code === 0) {
                     ElMessage.success('注册成功');
+                    this.$store.commit("setUserId", res.data.userId);
+                    this.$store.commit("setUserName", this.registerForm.username);
+                    this.$store.commit("setCollegeId", this.registerForm.account);
+                    this.$store.commit("setIsAdmin", this.registerForm.userType === "普通用户" ? false : true);
+                    this.$store.commit("setPassword", this.registerForm.password);
+
                     this.$router.push({path: '/project/join'});
                   }
                   /* 重复注册 */
