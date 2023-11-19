@@ -37,7 +37,7 @@
             <div class="teams-container">
                 <div class="info-container">
                     <div class="card" v-for="(item, index) in displayedList">
-                        <el-card shadow="hover" class="inner-card">
+                        <el-card shadow="hover" class="inner-card" @click="changeToTeamInfoPage(item.id)">
                             <div class="img-container">
                                 <img src="../assets/images/hand_shaking.png">
                             </div>
@@ -76,16 +76,16 @@ export default {
             currentPage: 1,
             selectedTotalIndex: "",
             totalList: [
-                {name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100},
-                {name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50},
-                {name: "志愿团队3", date: "2023-11-03", number: 8, hours: 50},
-                {name: "志愿团队4", date: "2023-11-04", number: 25, hours: 50},
-                {name: "志愿团队5", date: "2023-11-05", number: 27, hours: 50},
-                {name: "志愿团队6", date: "2023-11-06", number: 30, hours: 50},
-                {name: "志愿团队7", date: "2023-11-07", number: 45, hours: 50},
-                {name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50},
-                {name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50},
-                {name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50},
+                {id: 1, name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100},
+                {id: 2, name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50},
+                {id: 3, name: "志愿团队3", date: "2023-11-03", number: 8, hours: 50},
+                {id: 4, name: "志愿团队4", date: "2023-11-04", number: 25, hours: 50},
+                {id: 5, name: "志愿团队5", date: "2023-11-05", number: 27, hours: 50},
+                {id: 6, name: "志愿团队6", date: "2023-11-06", number: 30, hours: 50},
+                {id: 7, name: "志愿团队7", date: "2023-11-07", number: 45, hours: 50},
+                {id: 8, name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50},
+                {id: 9, name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50},
+                {id: 10, name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50},
             ]
         }
     },
@@ -151,7 +151,13 @@ export default {
                 path: '/team/my'
             })
         },
-
+        changeToTeamInfoPage(id) {
+            console.log(id);
+            this.$router.push({
+                name: 'teamInfo',
+                params: { teamId: id }
+            });
+        },
     },
 }
 </script>
@@ -214,7 +220,6 @@ export default {
     justify-content: flex-start;
     align-content: flex-start;
     margin-top: 15px;
-    height: 1300px;
     width: 1350px;
 }
 
