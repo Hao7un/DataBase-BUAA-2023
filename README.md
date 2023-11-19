@@ -93,7 +93,7 @@
   {
     code: 0,
     message: "",
-    teamList: [
+    totalList: [
         {
           id: "00001",
           name: "志愿团队1",
