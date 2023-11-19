@@ -85,6 +85,16 @@ export default {
                 this.oldPassword = '';
                 this.newPassword = '';
                 this.confirmPassword = '';
+            } else if (this.newPassword == '') {
+                ElMessage.error('新密码不能为空');
+            } else if (this.newPassword.length < 6) {
+                ElMessage.error('新密码长度不能小于6位');
+                this.newPassword = '';
+                this.confirmPassword = '';
+            } else if (this.newPassword == this.oldPassword) {
+                ElMessage.error('新密码不能与旧密码相同');
+                this.newPassword = '';
+                this.confirmPassword = '';
             } else if (this.newPassword != this.confirmPassword) {
                 ElMessage.error('两次输入的新密码不一致');
                 this.confirmPassword = '';
@@ -106,7 +116,7 @@ export default {
                         this.oldPassword = '';
                     } else if (res.data.code === 1) {
                         console.log("修改失败");
-                        ElMessage.error('新密码格式错误');
+                        ElMessage.error('密码格式错误');
                     }
                     this.newPassword = '';
                     this.confirmPassword = '';
@@ -128,7 +138,6 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .content-container {

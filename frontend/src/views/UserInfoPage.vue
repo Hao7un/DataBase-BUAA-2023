@@ -112,6 +112,7 @@ import {
   Postcard,
   DataAnalysis
 } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus';
 
 export default {
   created() {
@@ -171,6 +172,20 @@ export default {
       })
     },
     editUserInfo() {
+      if (this.telephone == '') {
+        ElMessage.error('电话不能为空');
+        return;
+      } else if (this.email == '') {
+        ElMessage.error('邮箱不能为空');
+        return;
+      } else if (this.telephone.length != 11) {
+        ElMessage.error('电话格式错误');
+        return;
+      } else if (this.email.indexOf('@') == -1) {
+        ElMessage.error('邮箱格式错误');
+        return;
+      }
+      
       this.axios.post('http://localhost:5173/user/info', {
         userId: this.userId,
         telephone: this.telephone,
@@ -181,6 +196,7 @@ export default {
           console.log(res);
           if (res.data.code === 0) {
             console.log("修改成功");
+            ElMessage.success('修改成功');
             this.telephone = res.data.telephone;
             this.email = res.data.email;
             this.userIntro = res.data.userIntro;
