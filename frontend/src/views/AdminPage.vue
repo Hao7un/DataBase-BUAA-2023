@@ -73,126 +73,6 @@ export default {
             teamIntro: "",
             imageURL: null,
             totalTeamList: [
-                {
-                    teamId: "666666",
-                    name: "志愿团队1",
-                    number: 10,
-                    date: "2023-11-10",
-                    hours: 10,
-                    hasApplication: false,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队2",
-                    number: 11,
-                    date: "2023-11-10",
-                    hours: 12,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队3",
-                    number: 12,
-                    date: "2023-11-10",
-                    hours: 14,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队4",
-                    number: 13,
-                    date: "2023-11-10",
-                    hours: 16,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队5",
-                    number: 14,
-                    date: "2023-11-10",
-                    hours: 18,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队6",
-                    number: 15,
-                    date: "2023-11-10",
-                    hours: 20,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队7",
-                    number: 16,
-                    date: "2023-11-10",
-                    hours: 22,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队8",
-                    number: 17,
-                    date: "2023-11-10",
-                    hours: 24,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队9",
-                    number: 18,
-                    date: "2023-11-10",
-                    hours: 26,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队10",
-                    number: 19,
-                    date: "2023-11-10",
-                    hours: 28,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队11",
-                    number: 20,
-                    date: "2023-11-10",
-                    hours: 30,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队12",
-                    number: 21,
-                    date: "2023-11-10",
-                    hours: 32,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队13",
-                    number: 22,
-                    date: "2023-11-10",
-                    hours: 34,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队14",
-                    number: 23,
-                    date: "2023-11-10",
-                    hours: 36,
-                    hasApplication: true,
-                },
-                {
-                    teamId: "",
-                    name: "志愿团队15",
-                    number: 24,
-                    date: "2023-11-10",
-                    hours: 38,
-                    hasApplication: true,
-                },
             ],
         }
 
@@ -208,7 +88,7 @@ export default {
             (async () => {
                 await this.axios({
                     method: 'post',
-                    url: '',
+                    url: 'http://localhost:8000/get_all_managed_teams',
                     data: submitParams,
                 })
                 .then(async (res) => {
@@ -267,7 +147,6 @@ export default {
             })
         },
         handleCreateTeamSubmit() {
-            let dateString = this.dateToString();
             const submitParams = {
                 userId: this.$store.state.userId,
                 teamName: this.teamName,
@@ -289,7 +168,7 @@ export default {
             (async () => {
                 await vm.axios({
                     method: 'post',
-                    url: '',
+                    url: 'http://localhost:8000/create_team',
                     data: submitParams,
                 })
                     .then(async(res) => {
@@ -328,6 +207,7 @@ export default {
 
 .table-container {
     margin-top: 35px;
+    width: 99%;
 }
 
 .sidebar-container {
@@ -348,7 +228,7 @@ export default {
 .content-container {
     display: flex;
     flex-direction: column;
-    margin-left: 250px;
+    margin-left: 350px;
 }
 
 .create-dialog-container {
