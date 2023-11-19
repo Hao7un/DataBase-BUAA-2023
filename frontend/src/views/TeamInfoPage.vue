@@ -6,6 +6,7 @@
     <p>团队领导：{{ teamLeader }}</p>
     <p>联系电话：{{ telephone }}</p>
     <p>电子邮件：{{ email }}</p>
+    <el-button v-if="!isTeamMember" type="primary" @click="applyForTeam">申请加入</el-button>
     <h2>项目列表</h2>
     <ul>
       <li v-for="project in projectList" :key="project.id">
@@ -15,15 +16,19 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus';
+
 export default {
     created() {
         this.teamId = this.$route.params.teamId;
         this.axios.post('http://localhost:5173/team/info', {
+            collegeId: this.collegeId,
             teamId: this.teamId
         })
             .then(res => {
                 console.log(res);
                 if (res.data.code === 0) {
+                    this.isTeamMember = res.data.isTeamMember;
                     this.teamName = res.data.teamName;
                     this.teamNumber = res.data.teamNumber;
                     this.teamIntro = res.data.teamIntro;
@@ -37,6 +42,7 @@ export default {
     },
     data() {
         return {
+            isTeamMember: false,
             teamId: '123',
             teamName: '志愿团队1',
             teamIntro: '这是一个志愿团队',
@@ -61,7 +67,25 @@ export default {
                 params: { projectId: id }
             });
         },
+        applyForTeam() {
+            this.axios.post('http://localhost:5173/team/info', {
+                collegeId: this.collegeId,
+                teamId: this.teamId,
+                applyTime: "2021-01-01 00:00:00"
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        ElMessage.success('申请成功');
+                    }
+                });
+        }
 
+    },
+    computed: {
+        collegeId() {
+            return this.$store.state.collegeId;
+        }
     }
 }
 </script>

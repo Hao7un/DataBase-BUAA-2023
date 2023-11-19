@@ -6,7 +6,7 @@
 
   ```javascript
   {
-      collegeId: ""
+      collegeId: "21371295"
   }
   ```
 
@@ -17,10 +17,10 @@
       code: 0,
       message: "",
       data: {
-          telephone: "",
-          email: "",
-          volunteerTime: "",
-          userIntro: ""
+          telephone: "18100000000",
+          email: "abcd@xyz.com",
+          volunteerTime: "20",
+          userIntro: "我是一个好人。"
       }
   }
   ```
@@ -32,10 +32,10 @@
 
   ```javascript
   {
-      collegeId: "",
-      telephone: "",
-      email: "",
-      userIntro: ""
+      collegeId: "21371295",
+      telephone: "18100000000",
+      email: "abcd@xyz.com",
+      userIntro: "我是一个好人。"
   }
   ```
 
@@ -55,8 +55,8 @@
 
   ```javascript
   {
-      collegeId: "",
-      newPassword: ""
+      collegeId: "21371295",
+      newPassword: "123456"
   }
   ```
 
@@ -85,7 +85,7 @@
 
   ```javascript
   {
-      collegeId: ""
+      collegeId: "21371295"
   }
   ```
 
@@ -98,10 +98,10 @@
       data: {
           teamList: [
               {
-                  id: "",
-                  name: "",
-                  number: "",
-                  hours: ""
+                  id: "00001",
+                  name: "志愿团队1",
+                  number: "50",
+                  hours: "150"
               }
           ]
       }
@@ -115,7 +115,8 @@
 
   ```javascript
   {
-      teamId: ""
+      collegeId: "21371295",
+      teamId: "00001"
   }
   ```
 
@@ -126,22 +127,44 @@
       code: 0,
       message: "",
       data: {
-          teamName: "",
-          teamNumber: "",
-          teamIntro: "",
-          foundationDate: "",
-          teamLeader: "",
-          telephone: "",
-          email: "",
+          isTeamMember: "0", // 0: 不是团队成员，1: 是团队成员
+          teamName: "志愿团队1",
+          teamNumber: "50",
+          teamIntro: "优秀团队。",
+          foundationDate: "YYYY-MM-DD",
+          teamLeader: "张昊翔",
+          telephone: "18100000000",
+          email: "abcd@xyz.com",
           projectList: [
               { 
-                  id: "", 
-                  name: "", 
-                  type: "", 
-                  hours: "" 
+                  id: "00001", 
+                  name: "志愿项目1", 
+                  type: "社区服务", 
+                  hours: "100" 
               }  
           ]
       }
+  }
+  ```
+
+### 申请加入团队
+
+* 发送请求：
+
+  ```javascript
+  {
+      collegeId: "21371295",
+      teamId: "00001",
+      applyTime: "YYYY-MM-DD HH:MM:SS"
+  }
+  ```
+
+* 申请成功
+
+  ```javascript
+  {
+      code: 0,
+      message: ""
   }
   ```
 

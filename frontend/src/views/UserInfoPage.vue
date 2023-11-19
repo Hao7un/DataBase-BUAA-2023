@@ -91,7 +91,7 @@
               志愿时长
             </div>
           </template>
-          {{ volunteerTime }}
+          {{ volunteerTime }}小时
         </el-descriptions-item>
       </el-descriptions>
 
@@ -132,7 +132,7 @@ export default {
     return {
       telephone: '18100000000',
       email: '21371295@buaa.edu.cn',
-      volunteerTime: '100h',
+      volunteerTime: '100',
       userIntro: '我是张昊翔，我来自北京航空航天大学'
     };
   },
