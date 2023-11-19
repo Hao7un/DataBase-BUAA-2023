@@ -40,7 +40,7 @@ import { ElMessage } from 'element-plus';
 export default {
     created() {
         this.teamId = this.$route.params.teamId;
-        this.axios.post('http://localhost:8000/get_team_details', {
+        this.axios.post('http://localhost:8000/user_get_specific_team_details', {
             userId: this.userId,
             teamId: this.teamId
         })
@@ -84,7 +84,7 @@ export default {
             });
         },
         applyForTeam() {
-            this.axios.post('http://localhost:8000/apply_to_join_team', {
+            this.axios.post('http://localhost:8000/user_apply_to_join_team', {
                 userId: this.userId,
                 teamId: this.teamId,
             })

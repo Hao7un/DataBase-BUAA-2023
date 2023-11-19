@@ -88,7 +88,7 @@ export default {
             (async () => {
                 await this.axios({
                     method: 'post',
-                    url: 'http://localhost:8000/get_all_managed_teams',
+                    url: 'http://localhost:8000/admin_get_all_teams',
                     data: submitParams,
                 })
                 .then(async (res) => {
@@ -168,7 +168,7 @@ export default {
             (async () => {
                 await vm.axios({
                     method: 'post',
-                    url: 'http://localhost:8000/create_team',
+                    url: 'http://localhost:8000/admin_create_team',
                     data: submitParams,
                 })
                     .then(async(res) => {

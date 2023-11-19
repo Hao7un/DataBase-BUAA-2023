@@ -1,7 +1,7 @@
 <template>
     <div class="main-container">
         <div class="sidebar-container">
-            <el-menu mode="vertical" default-active="my" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
+            <el-menu mode="vertical" default-active="join" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
                 <el-menu-item index="join" @click="changeToJoinTeamPage">
                     <span class="item-font" style="font-weight: bold;">加入团队</span>
                 </el-menu-item>
@@ -12,16 +12,22 @@
         </div>
         <div class="content-container">
             <div class="selector-container">
+                <div class="date-container">
+                    <span style="display: flex; align-items: center;">团队注册日期</span> &nbsp;&nbsp;
+                    <el-date-picker v-model="date" type="date" placeholder="输入日期" size="large" clearable>
+                    </el-date-picker>
+                    &nbsp; &nbsp; <span style="display: flex; align-items: center;">至今</span>
+                </div>
                 <div class="search-container">
                     <el-select v-model="number" placeholder="团队人数" clearable size="large" style="width: 200px">
-                        <el-option key="1" value="10人以下">10人以下</el-option>
-                        <el-option key="2" value="11至99人">11至99人</el-option>
-                        <el-option key="3" value="100人以上">100人以上</el-option>
+                        <el-option key="1-10" value="10人以下">10人以下</el-option>
+                        <el-option key="11-50" value="11至99人">11至99人</el-option>
+                        <el-option key="50以上" value="100人以上">100人以上</el-option>
                     </el-select>
                     &nbsp; &nbsp; &nbsp;
-                    <el-input v-model="keyword" placeholder="请输入团队名称" clearable size="large"
-                        style="width: 200px"></el-input>
+                    <el-input v-model="keyword" placeholder="输入团队名称" clearable size="large" style="width: 200px"></el-input>
                 </div>
+                <!-- <el-button size="large" type="primary" @click="searchSubmit"><span style="font-weight: bold; font-size: 15px; color:whitesmoke">搜 索</span></el-button> -->
             </div>
             <div class="teams-container">
                 <div class="info-container">
@@ -46,7 +52,7 @@
                     </div>
                 </div>
                 <div class="pagination-container">
-                    <el-pagination @current-change="handlePageChange" :page-size="8" :total="displayedList.length"
+                    <el-pagination @current-change="handlePageChange" :page-size="6" :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
@@ -59,23 +65,23 @@
 
 export default {
     created() {
-        this.axios.post('http://localhost:8000/user_get_all_my_teams', {
-            userId: this.$store.state.userId
-        })
+        this.axios.get('http://localhost:8000/user_get_all_teams_info')
             .then(res => {
                 console.log(res);
                 if (res.data.code === 0) {
-                    this.teamList = res.data.teamList;
+                    this.totalList = res.data.totalList;
                 }
             });
     },
     data() {
         return {
-            number: null,
-            keyword: null,
+            date: null,
+            keyword: "",
+            number: "",
             currentPage: 1,
-            teamList: [
-            ],
+            selectedTotalIndex: "",
+            totalList: [
+            ]
         }
     },
     computed: {
@@ -89,33 +95,44 @@ export default {
             else if (this.number === "100人以上") {
                 return [100, Infinity];
             }
+            else {
+                return [0, Infinity];
+            }
         },
         displayedList() {
             let startIndex = (this.currentPage - 1) * 8;
             let endIndex = startIndex + 8;
-            let filteredList = this.teamList;
-            if (this.keyword != null || this.number != null) {
-                if (this.keyword != null && this.number == null) {
-                    filteredList = filteredList.filter(item => {
-                        return item.name.includes(this.keyword)
-                    }
-                    );
-                } else if (this.keyword == null && this.number != null) {
-                    filteredList = filteredList.filter(item => {
-                        return item.number >= this.range[0] && item.number <= this.range[1]
-                    }
-                    );
-                } else {
-                    filteredList = filteredList.filter(item => {
-                        return item.name.includes(this.keyword) && item.number >= this.range[0] && item.number <= this.range[1]
-                    }
-                    );
+            let filteredList = this.totalList;
+            if (this.keyword != null && this.number != null) {
+                filteredList = filteredList.filter(item => {
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
                 }
+                );
             }
             return filteredList.slice(startIndex, endIndex);
         },
+        filteredList() {
+            let list = this.totalList;
+            if (this.keyword != null && this.number != null) {
+                list = list.filter(item => {
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
+                }
+                );
+            }
+            return list;
+        },
+        formatDateString() {
+            if (this.date == null) return "";
+            return this.formatDate(this.date);
+        },
     },
     methods: {
+        formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
         },
@@ -159,16 +176,23 @@ export default {
 }
 
 .selector-container {
+    height: 50px;
     display: flex;
     align-items: center;
-    margin-top: 30px;
-    margin-left: 400px;
+    margin-top: 25px;
+    margin-left: 180px;
 }
 
 .content-container {
     display: flex;
     flex-direction: column;
     margin-left: 15px;
+}
+
+.date-container {
+    display: flex;
+    width: 500px;
+    margin-left: 30px;
 }
 
 .teams-container {
@@ -180,7 +204,8 @@ export default {
 
 .search-container {
     display: flex;
-    margin-left: 110px;
+    justify-content: center;
+    margin-left: 100px;
     margin-right: 30px;
 }
 

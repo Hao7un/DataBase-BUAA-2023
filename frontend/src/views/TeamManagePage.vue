@@ -260,7 +260,7 @@ export default {
       (async () => {
           await vm.axios({
               method: 'post',
-              url: 'http://localhost:8000/get_managed_team_details',
+              url: 'http://localhost:8000/admin_get_specific_team_details',
               data: submitParams,
             })
               .then(async (res) => {
@@ -307,7 +307,7 @@ export default {
       (async () => {
           await vm.axios({
               method: 'post',
-              url: 'http://localhost:8000/update_team_info',
+              url: 'http://localhost:8000/admin_update_team_info',
               data: submitParams,
             })
               .then(async (res) => {
@@ -351,7 +351,7 @@ export default {
       (async () => {
           await vm.axios({
               method: 'post',
-              url: 'http://localhost:8000/review_team_application',
+              url: 'http://localhost:8000/admin_review_team_application',
               data: submitParams,
             })
               .then(async (res) => {
@@ -396,7 +396,7 @@ export default {
         (async () => {
             await vm.axios({
                 method: 'post',
-                url: 'http://localhost:8000/remove_team_member',
+                url: 'http://localhost:8000/admin_remove_team_member',
                 data: submitParams,
               })
                 .then(async (res) => {
