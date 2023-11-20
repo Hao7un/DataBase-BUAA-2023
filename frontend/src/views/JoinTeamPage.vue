@@ -20,9 +20,9 @@
                 </div>
                 <div class="search-container">
                     <el-select v-model="number" placeholder="团队人数" clearable size="large" style="width: 200px">
-                        <el-option key="1-10" value="10人以下">10人以下</el-option>
-                        <el-option key="11-50" value="11至99人">11至99人</el-option>
-                        <el-option key="50以上" value="100人以上">100人以上</el-option>
+                        <el-option key="1" value="10人以下">10人以下</el-option>
+                        <el-option key="2" value="11至99人">11至99人</el-option>
+                        <el-option key="3" value="100人以上">100人以上</el-option>
                     </el-select>
                     &nbsp; &nbsp; &nbsp;
                     <el-input v-model="keyword" placeholder="输入团队名称" clearable size="large" style="width: 200px"></el-input>
@@ -81,6 +81,16 @@ export default {
             currentPage: 1,
             selectedTotalIndex: "",
             totalList: [
+                { id: 1, name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100 },
+                { id: 2, name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50 },
+                { id: 3, name: "志愿团队3", date: "2023-11-03", number: 8, hours: 50 },
+                { id: 4, name: "志愿团队4", date: "2023-11-04", number: 25, hours: 50 },
+                { id: 5, name: "志愿团队5", date: "2023-11-05", number: 27, hours: 50 },
+                { id: 6, name: "志愿团队6", date: "2023-11-06", number: 30, hours: 50 },
+                { id: 7, name: "志愿团队7", date: "2023-11-07", number: 45, hours: 50 },
+                { id: 8, name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50 },
+                { id: 9, name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50 },
+                { id: 10, name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50 },
             ]
         }
     },
@@ -147,7 +157,7 @@ export default {
             })
         },
         changeToTeamInfoPage(id) {
-            console.log(id);
+            console.log('teamId:', id);
             this.$router.push({
                 name: 'teamInfo',
                 params: { teamId: id }

@@ -122,10 +122,10 @@ export default {
       .then(res => {
         console.log(res);
         if (res.data.code === 0) {
-          this.telephone = res.data.data.telephone;
-          this.email = res.data.data.email;
-          this.volunteerTime = res.data.data.volunteerTime;
-          this.userIntro = res.data.data.userIntro;
+          this.telephone = res.data.telephone;
+          this.email = res.data.email;
+          this.volunteerTime = res.data.volunteerTime;
+          this.userIntro = res.data.userIntro;
         }
       });
   },
@@ -185,7 +185,7 @@ export default {
         ElMessage.error('邮箱格式错误');
         return;
       }
-      
+
       this.axios.post('http://localhost:8000/update_user_info', {
         userId: this.userId,
         telephone: this.telephone,
