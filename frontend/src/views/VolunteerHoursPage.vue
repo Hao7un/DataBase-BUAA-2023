@@ -1,7 +1,8 @@
 <template>
     <div class="main-container">
         <div class="sidebar-container">
-            <el-menu mode="vertical" default-active="volunteerHours">
+            <el-menu mode="vertical" default-active="volunteerHours"
+            style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
                 <el-menu-item index="info" @click="changeToUserInfoPage">
                     <span class="item-font" style="font-weight: bold;">个人信息</span>
                 </el-menu-item>
@@ -52,6 +53,8 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
+    height: 1000px;
+    border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .content-container {
