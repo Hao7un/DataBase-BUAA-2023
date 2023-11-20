@@ -21,7 +21,7 @@
                 <h2>志 愿 项 目</h2>
             </div>
             <div class="block text-center">
-                <el-carousel height="400px" :interval="4000" type="card">
+                <el-carousel height="400px" :interval="5000" type="card">
                     <el-carousel-item v-for="project in projectList" :key="project.id" @click="changeToProjectInfoPage(project.id)">
                         <h3>{{ project.name }}</h3>
                         <p>项目类别：{{ project.type }}</p>
@@ -40,7 +40,7 @@ import { ElMessage } from 'element-plus';
 export default {
     created() {
         this.teamId = this.$route.params.teamId;
-        this.axios.post('http://localhost:8000/team/info', {
+        this.axios.post('http://localhost:8000/user_get_specific_team_details', {
             userId: this.userId,
             teamId: this.teamId
         })
@@ -61,20 +61,17 @@ export default {
     },
     data() {
         return {
-            isTeamMember: false,
-            teamId: '123',
-            teamName: '志愿团队1',
-            teamIntro: '这是一个志愿团队',
-            foundationDate: '2020-01-01',
-            number: '10',
-            teamLeader: '张昊翔',
-            telephone: '18100000000',
-            email: '1234@xyz.com',
+            isTeamMember: '',
+            teamId: '',
+            teamName: '',
+            teamIntro: '',
+            foundationDate: '',
+            number: '',
+            teamLeader: '',
+            telephone: '',
+            email: '',
             projectList: [
-                { id: 1, name: '项目1', type: '社区服务', hours: 100 },
-                { id: 2, name: '项目2', type: '体育比赛', hours: 50 },
-                { id: 3, name: '项目3', type: '科普讲解', hours: 50 },
-                { id: 4, name: '项目4', type: '支教助学', hours: 2000 },
+
             ],
         }
     },
@@ -87,7 +84,7 @@ export default {
             });
         },
         applyForTeam() {
-            this.axios.post('http://localhost:8000/team/info', {
+            this.axios.post('http://localhost:8000/user_apply_to_join_team', {
                 userId: this.userId,
                 teamId: this.teamId,
             })

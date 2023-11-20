@@ -116,25 +116,25 @@ import { ElMessage } from 'element-plus';
 
 export default {
   created() {
-    this.axios.post('http://localhost:8000/user/info', {
+    this.axios.post('http://localhost:8000/get_user_info', {
       userId: this.userId
     })
       .then(res => {
         console.log(res);
         if (res.data.code === 0) {
-          this.telephone = res.data.telephone;
-          this.email = res.data.email;
-          this.volunteerTime = res.data.volunteerTime;
-          this.userIntro = res.data.userIntro;
+          this.telephone = res.data.data.telephone;
+          this.email = res.data.data.email;
+          this.volunteerTime = res.data.data.volunteerTime;
+          this.userIntro = res.data.data.userIntro;
         }
       });
   },
   data() {
     return {
-      telephone: '18100000000',
-      email: '21371295@buaa.edu.cn',
+      telephone: '',
+      email: '',
       volunteerTime: '100',
-      userIntro: '我是张昊翔，我来自北京航空航天大学'
+      userIntro: ''
     };
   },
   computed: {
@@ -148,9 +148,9 @@ export default {
       return this.$store.state.userName;
     },
     userType() {
-      if (this.$store.state.userType == 0) {
+      if (this.$store.state.userType === "0") {
         return "普通用户";
-      } else if (this.$store.state.userType == 1) {
+      } else if (this.$store.state.userType === "1") {
         return "管理员";
       }
     }
@@ -186,7 +186,7 @@ export default {
         return;
       }
       
-      this.axios.post('http://localhost:8000/user/info', {
+      this.axios.post('http://localhost:8000/update_user_info', {
         userId: this.userId,
         telephone: this.telephone,
         email: this.email,

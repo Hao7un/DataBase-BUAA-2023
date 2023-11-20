@@ -103,7 +103,7 @@ export default {
             }
         },
         editPassword() {
-            this.axios.post('http://localhost:8000/user/password', {
+            this.axios.post('http://localhost:8000/change_password', {
                 userId: this.$store.state.userId,
                 newPassword: this.newPassword
             })

@@ -65,7 +65,7 @@
     </div>
     <div> 
       <v-dialog v-model="createApplicationDialogVisible" width="auto">
-        <el-table :data="applicationList" border style="width: 100%; border: 2px solid gray">
+        <el-table :data="applicationList" border style="width: 99%; border: 2px solid gray">
           <el-table-column prop="collegeId" label="学工号" width="200px" align="center"></el-table-column>
           <el-table-column prop="name" label="姓名" width="200px" align="center"></el-table-column>
           <el-table-column prop="date" label="申请日期" width="250px" align="center"></el-table-column>
@@ -116,7 +116,7 @@ export default {
       establishmentDate: this.$route.query.date,
       teamSize: this.$route.query.number,
       totalHours: this.$route.query.hours,
-      teamIntroduction: "我们是阳光志愿者团队，已经成立了五年。作为一支热心的志愿者团队，我们致力于为社区提供志愿服务。在过去的五年里，我们团队获得了多项荣誉和认可，其中包括社区服务卓越奖和当地政府的优秀志愿者团队表彰。如果您对我们的团队感兴趣或想了解更多信息，请随时与我们联系。期待与您一起创造美好的志愿服务经历！",
+      teamIntroduction: "",
       createApplicationDialogVisible: false,
       viewMembersDialogVisible: false,
       projects: [
@@ -260,7 +260,7 @@ export default {
       (async () => {
           await vm.axios({
               method: 'post',
-              url: '',
+              url: 'http://localhost:8000/admin_get_specific_team_details',
               data: submitParams,
             })
               .then(async (res) => {
@@ -307,7 +307,7 @@ export default {
       (async () => {
           await vm.axios({
               method: 'post',
-              url: '',
+              url: 'http://localhost:8000/admin_update_team_info',
               data: submitParams,
             })
               .then(async (res) => {
@@ -351,7 +351,7 @@ export default {
       (async () => {
           await vm.axios({
               method: 'post',
-              url: '',
+              url: 'http://localhost:8000/admin_review_team_application',
               data: submitParams,
             })
               .then(async (res) => {
@@ -396,14 +396,14 @@ export default {
         (async () => {
             await vm.axios({
                 method: 'post',
-                url: '',
+                url: 'http://localhost:8000/admin_remove_team_member',
                 data: submitParams,
               })
                 .then(async (res) => {
                     console.log(res);
                     if (res.data.code === 0) {
                         console.log('删除成员');
-                        vm.memberList.splice(index, 1);
+                        vm.members.splice(index, 1);
                         // 刷新团队页
                         vm.fetch();
                         ElMessage.success("已删除");
