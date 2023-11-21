@@ -3,10 +3,10 @@
         <div class="sidebar-container">
             <el-menu mode="vertical" default-active="my" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
                 <el-menu-item index="join" @click="changeToJoinProjectPage">
-                    <span class="item-font" style="font-weight: bold">加入项目</span>
+                    <span class="item-font" style="font-weight: bold">查看项目</span>
                 </el-menu-item>
                 <el-menu-item index="my" @click="changeToMyProjectPage">
-                    <span class="item-font" style="font-weight: bold">我的项目</span>
+                    <span class="item-font" style="font-weight: bold">我的收藏</span>
                 </el-menu-item>
             </el-menu>
         </div>

@@ -7,37 +7,64 @@
                         <img src="../assets/images/hand_shaking.png">
                     </div>
                     <div class="content-container">
-                        <h1>{{ teamName }}</h1>
-                        <el-button type="primary" :disabled="isTeamMember" @click="applyForTeam">
-                            <span v-if="isTeamMember"
-                                style="font-weight: bold; font-size: 15px; color:whitesmoke">已加入</span>
-                            <span v-else style="font-weight: bold; font-size: 15px; color:whitesmoke">申请加入</span>
-                        </el-button>
-                        <p>成立日期：{{ foundationDate }}</p>
-                        <p>团队人数：{{ number }}</p>
+                        <div class="high-container">
+                            <h1 style="margin-right: 20px;">{{ teamName }}</h1>
+
+                            <el-button size="large" type="primary" style="margin-top: 5px; margin-left: 40px;"
+                                :disabled="isTeamMember" @click="applyForTeam">
+                                <span v-if="isTeamMember"
+                                    style="font-weight: bold; font-size: 15px; color:whitesmoke">已加入</span>
+                                <span v-else style="font-weight: bold; font-size: 15px; color:whitesmoke">申请加入</span>
+                            </el-button>
+                            <br>
+                        </div>
+                        <div class="low-container">
+                            <p>成立日期：{{ foundationDate }}</p>
+                            <el-divider border-style="solid" direction="vertical" />
+                            <p>团队人数：{{ number }}</p>
+                        </div>
                     </div>
-                    <div class="intro-container">
-                        {{ teamIntro }}
-                    </div>
+                </div>
+                <div class="intro-container">
+                    <p style="font-size: 22px; font-weight: bold; margin-bottom: 8px;"><el-icon>
+                            <Document />
+                        </el-icon>团队简介</p>
+                    <p>{{ teamIntro }}</p>
                 </div>
             </div>
             <div class="leader-container">
-                <p>团队领导：{{ teamLeader }}</p>
-                <p>联系电话：{{ telephone }}</p>
-                <p>电子邮件：{{ email }}</p>
+                <p><el-icon>
+                        <User />
+                    </el-icon><strong> 团队负责人：</strong> {{ teamLeader }}</p>
+                <br>
+                <p><el-icon>
+                        <Iphone />
+                    </el-icon><strong> 负责人电话：</strong> {{ telephone }}</p>
+                <br>
+                <p><el-icon>
+                        <MessageBox />
+                    </el-icon><strong> 负责人邮箱：</strong> {{ email }}</p>
             </div>
         </div>
         <div class="project-container">
             <div class="title-container">
-                <h2>志 愿 项 目</h2>
+                <h2>志 愿 风 采</h2>
             </div>
-            <div class="block text-center">
+            <div class="text-center">
                 <el-carousel height="400px" :interval="5000" type="card">
                     <el-carousel-item v-for="project in projectList" :key="project.id"
                         @click="changeToProjectInfoPage(project.id)">
-                        <h3>{{ project.name }}</h3>
-                        <p>项目类别：{{ project.type }}</p>
-                        <p>总服务时长：{{ project.hours }} 小时</p>
+                        <h2 style="margin-top: 30px;">{{ project.name }}</h2>
+                        <div style="margin-bottom: 20px;">
+                            <img src="../assets/images/hand_shaking.png">
+                        </div>
+                        <p><el-icon>
+                                <Guide />
+                            </el-icon>项目类别：{{ project.type }}</p>
+                        <br>
+                        <p><el-icon>
+                                <Clock />
+                            </el-icon>总服务时长：{{ project.hours }} 小时</p>
                     </el-carousel-item>
                 </el-carousel>
             </div>
@@ -75,8 +102,8 @@ export default {
         return {
             isTeamMember: false,
             teamId: '123',
-            teamName: '志愿团队1',
-            teamIntro: '这是一个志愿团队',
+            teamName: '计算机学院志愿服务队',
+            teamIntro: '团队致力于发挥气象行业特色，常态化开展气象防灾减灾科普进社区、进校园公益项目，创办了独具特色的“气象科普”品牌。2022年，结合文明实践“一圈一带一群”建设，与徐汇区多个社区形成合作机制，定期为徐家汇商圈和社区居民开展科普讲座，惠及学生和市民千余人次，申报的“气象防灾减灾宣讲”入选为上海市文明实践百项重点项目。',
             foundationDate: '2020-01-01',
             number: '10',
             teamLeader: '张昊翔',
@@ -110,19 +137,17 @@ export default {
                     }
                 });
         }
-
     },
     computed: {
         userId() {
             return this.$store.state.userId;
         }
-    }
+    },
 }
 </script>
 
 <style scoped>
 .main-container {
-    margin-top: 30px;
     margin-left: 60px;
     margin-right: 60px;
     display: flex;
@@ -132,46 +157,66 @@ export default {
 .team-container {
     display: flex;
     flex-direction: row;
+    margin-bottom: 80px;
 }
 
 .left-container {
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
+    width: 1200px;
 }
 
 .info-container {
     display: flex;
     flex-direction: row;
+    margin-top: 20px;
 }
 
 .img-container {
     display: flex;
     width: 300px;
     height: 200px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     margin-left: 100px;
 }
 
 .content-container {
     display: flex;
-    flex-direction: row;
-    margin-top: 50px;
+    flex-direction: column;
+    margin-top: 20px;
     margin-left: 10px;
 }
 
-.intro-container {
+.high-container {
     display: flex;
-    margin-top: 50px;
-    margin-right: 100px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.low-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 30px;
+    font-size: 18px;
+    font-style: italic;
+}
+
+.intro-container {
+    padding-top: 10px;
+    font-size: 18px;
+    border-top: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .leader-container {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
-    margin-left: 100px;
-
+    margin-left: 50px;
+    padding-left: 30px;
+    padding-top: 50px;
+    font-size: 18px;
+    border-left: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .project-container {
@@ -186,8 +231,10 @@ export default {
 .title-container {
     text-align: center;
     color: darkslategrey;
+    font-size: 18px;
     margin-bottom: 10px;
 }
+
 
 .demonstration {
     color: var(--el-text-color-secondary);

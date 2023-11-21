@@ -104,15 +104,6 @@
 </template>
   
 <script>
-import {
-  Paperclip,
-  User,
-  School,
-  Iphone,
-  MessageBox,
-  Postcard,
-  DataAnalysis
-} from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus';
 
 export default {

@@ -13,7 +13,7 @@
         <div class="content-container">
             <div class="selector-container">
                 <div class="date-container">
-                    <span style="display: flex; align-items: center;">团队注册日期</span> &nbsp;&nbsp;
+                    <span style="display: flex; align-items: center;">团队成立日期：</span> &nbsp;&nbsp;
                     <el-date-picker v-model="date" type="date" placeholder="输入日期" size="large" clearable>
                     </el-date-picker>
                     &nbsp; &nbsp; <span style="display: flex; align-items: center;">至今</span>
