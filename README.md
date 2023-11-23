@@ -243,9 +243,30 @@
           name: "志愿项目1",
           type: "社区服务",
           team: "志愿团队1",
-          latestTime: "YYYY-MM-DD" // 上一次招募时间 
+          latestTime: "YYYY-MM-DD", // 上一次招募时间 
           status: "招募中" // 招募中、本月、本学期、上学期、本学年未招募
         }
     ] 
+  }
+  ```
+
+## ProjectInfoPage
+### 收藏项目
+
+* 发送请求：
+
+  ```javascript
+  {
+    userId: "00001",
+    projectId: "00001"
+  }
+  ```
+
+* 收藏成功
+
+  ```javascript
+  {
+    code: 0,
+    message: ""
   }
   ```
