@@ -64,7 +64,7 @@ export default {
         },
         changeToJoinProjectPage() {
             this.$router.push({
-            path: '/project/join'
+            path: '/project/all'
         })
         },
         checkRecruitmentTable() {

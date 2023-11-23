@@ -268,7 +268,7 @@ export default {
           this.$store.commit("setPassword", "123456");
           this.$store.commit("setUserName", "张昊翔");
           this.$store.commit("setUserType", "0");
-          this.$router.push({path: '/project/join'});
+          this.$router.push({path: '/project/all'});
 
           const submitParams = {
             collegeId: this.loginForm.account,
@@ -292,7 +292,7 @@ export default {
                 this.$store.commit("setIsAdmin", res.data.userType === "0" ? false : true);
                 this.$store.commit("setPassword", this.loginForm.password);
                 this.$store.commit("setUserType", res.data.userType);
-                this.$router.push({path: '/project/join'});
+                this.$router.push({path: '/project/all'});
               }
               /* 用户不存在 */
               else if (res.data.code === 1) {
@@ -340,7 +340,7 @@ export default {
                     this.$store.commit("setCollegeId", this.registerForm.account);
                     this.$store.commit("setIsAdmin", this.registerForm.userType === "普通用户" ? false : true);
                     this.$store.commit("setPassword", this.registerForm.password);
-                    this.$router.push({path: '/project/join'});
+                    this.$router.push({path: '/project/all'});
                   }
                   /* 重复注册 */
                   else if (res.data.code === 1) {

@@ -46,7 +46,7 @@ export default {
     changeToProject() {
       console.log("change to project");
       this.$router.push({
-        path: '/project/join'
+        path: '/project/all'
       });
     },
     changeToTeam() {

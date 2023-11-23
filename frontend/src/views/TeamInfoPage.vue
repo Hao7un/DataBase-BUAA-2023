@@ -55,8 +55,8 @@
                     <el-carousel-item v-for="project in projectList" :key="project.id"
                         @click="changeToProjectInfoPage(project.id)">
                         <h2 style="margin-top: 30px;">{{ project.name }}</h2>
-                        <div style="margin-bottom: 20px;">
-                            <img src="../assets/images/hand_shaking.png">
+                        <div style="margin-top: 20px; margin-bottom: 20px;">
+                            <img src="../assets/images/project.png">
                         </div>
                         <p><el-icon>
                                 <Guide />
@@ -240,16 +240,8 @@ export default {
     color: var(--el-text-color-secondary);
 }
 
-.el-carousel__item h3 {
-    color: #475669;
-    opacity: 0.75;
-    line-height: 150px;
-    margin: 0;
-    text-align: center;
-}
-
 .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
+    background-color: #a4b6c2;
 }
 
 .el-carousel__item:nth-child(2n + 1) {

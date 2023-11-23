@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="pagination-container">
-                    <el-pagination @current-change="handlePageChange" :page-size="8" :total="displayedList.length"
+                    <el-pagination @current-change="handlePageChange" :page-size="8" :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
@@ -71,10 +71,20 @@ export default {
     },
     data() {
         return {
-            number: null,
-            keyword: null,
+            number: "",
+            keyword: "",
             currentPage: 1,
             teamList: [
+                { id: 1, name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100 },
+                { id: 2, name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50 },
+                { id: 3, name: "志愿团队3", date: "2023-11-03", number: 8, hours: 50 },
+                { id: 4, name: "志愿团队4", date: "2023-11-04", number: 25, hours: 50 },
+                { id: 5, name: "志愿团队5", date: "2023-11-05", number: 27, hours: 50 },
+                { id: 6, name: "志愿团队6", date: "2023-11-06", number: 30, hours: 50 },
+                { id: 7, name: "志愿团队7", date: "2023-11-07", number: 45, hours: 50 },
+                { id: 8, name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50 },
+                { id: 9, name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50 },
+                { id: 10, name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50 },
             ],
         }
     },
@@ -88,6 +98,8 @@ export default {
             }
             else if (this.number === "100人以上") {
                 return [100, Infinity];
+            } else {
+                return [0, Infinity];
             }
         },
         displayedList() {
@@ -114,6 +126,28 @@ export default {
             }
             return filteredList.slice(startIndex, endIndex);
         },
+        filteredList() {
+            let list = this.teamList;
+            if (this.keyword != null || this.number != null) {
+                if (this.keyword != null && this.number == null) {
+                    list = list.filter(item => {
+                        return item.name.includes(this.keyword)
+                    }
+                    );
+                } else if (this.keyword == null && this.number != null) {
+                    list = list.filter(item => {
+                        return item.number >= this.range[0] && item.number <= this.range[1]
+                    }
+                    );
+                } else {
+                    list = list.filter(item => {
+                        return item.name.includes(this.keyword) && item.number >= this.range[0] && item.number <= this.range[1]
+                    }
+                    );
+                }
+            }
+            return list;
+        }
     },
     methods: {
         handlePageChange(currentPage) {

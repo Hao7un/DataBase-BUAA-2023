@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="pagination-container">
-                    <el-pagination @current-change="handlePageChange" :page-size="6" :total="filteredList.length"
+                    <el-pagination @current-change="handlePageChange" :page-size="8" :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
@@ -79,7 +79,6 @@ export default {
             keyword: "",
             number: "",
             currentPage: 1,
-            selectedTotalIndex: "",
             totalList: [
                 { id: 1, name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100 },
                 { id: 2, name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50 },
