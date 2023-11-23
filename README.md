@@ -151,7 +151,7 @@
   {
     code: 0,
     message: "",
-    isTeamMember: "0", // 0: 不是团队成员，1: 是团队成员
+    isTeamMember: true, // true: 是团队成员，false: 不是团队成员
     teamName: "志愿团队1",
     teamNumber: "50",
     teamIntro: "优秀团队。",
@@ -190,3 +190,32 @@
   }
   ```
 
+### AllProjectPage
+### 获取所有项目
+
+* 发送请求：
+
+  ```javascript
+  {
+
+  }
+  ```
+
+* 获取成功
+
+  ```javascript
+  {
+    code: 0,
+    message: "",
+    projectList: [
+        {
+          id: "00001",
+          name: "志愿项目1",
+          type: "社区服务",
+          team: "志愿团队1",
+          isMyTeam: true, // true: 是我的团队，false: 不是我的团队
+          status: "招募中" // 招募中、本月、本学期、上学期、本学年未招募
+        }
+    ] 
+  }
+  ```

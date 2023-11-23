@@ -261,7 +261,7 @@ export default {
 .team-name {
     text-align: center;
     height: 20%;
-    font-size: large;
+    font-size: 20px;
     font-weight: bold;
 }
 

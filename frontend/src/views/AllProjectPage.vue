@@ -13,17 +13,14 @@
         <div class="content-container">
             <div class="selector-container">
                 <div class="menu-container">
-                    <!-- <el-select v-model="statusRadio" placeholder="项目状态" clearable size="large" class="select-container">
+                    <el-select v-model="statusRadio" placeholder="上一次招募" clearable size="large" class="select-container">
                         <template #prefix>
-                            <el-icon class="icon-container"><Open /></el-icon>
+                            <el-icon class="icon-container">
+                                <Open />
+                            </el-icon>
                         </template>
-                        <el-option
-                            v-for="item in option2"
-                            :key="item.value"
-                            :value="item.value"
-                            
-                        ></el-option>
-                    </el-select> -->
+                        <el-option v-for="item in option2" :key="item.key" :value="item.value"></el-option>
+                    </el-select>
                 </div>
                 <div class="search-container">
                     <div class="search-item-container">
@@ -33,8 +30,7 @@
                                     <FolderOpened />
                                 </el-icon>
                             </template>
-                            <el-option v-for="item in option1" :key="item.key" :value="item.value"
-                                size="large"></el-option>
+                            <el-option v-for="item in option1" :key="item.key" :value="item.value" size="large"></el-option>
                         </el-select>
                     </div>
                     <div class="search-item-container">
@@ -55,9 +51,9 @@
                                 <img src="../assets/images/project.png">
                             </div>
                             <div class="card-info">
-                                <div class="info-item">项目名称：{{ item.name }}</div>
+                                <div class="team-name">{{ item.name }}</div>
                                 <div class="info-item">项目类别：{{ item.type }}</div>
-                                <div class="info-item">所属团队：{{ item.team }}</div>
+                                <div class="info-item">所属团队：<strong>{{ item.team }}</strong></div>
                             </div>
                         </el-card>
                     </div>
@@ -78,26 +74,26 @@ export default {
     data() {
         return {
             typeRadio: "",
-            date: "",
             projectName: "",
             teamName: "",
+            statusRadio: "",
             currentPage: 1,
             projectList: [
-                { id: 1, name: "志愿项目1", hours: 1, type: "社区服务", team: "志愿团队1" },
-                { id: 2, name: "志愿项目2", hours: 2, type: "科技科普", team: "志愿团队2" },
-                { id: 3, name: "志愿项目3", hours: 3, type: "支教助学", team: "志愿团队3" },
-                { id: 4, name: "志愿项目4", hours: 4, type: "体育赛事", team: "志愿团队4" },
-                { id: 5, name: "志愿项目5", hours: 5, type: "大型演出", team: "志愿团队5" },
-                { id: 6, name: "志愿项目6", hours: 6, type: "其它", team: "志愿团队6" },
-                { id: 7, name: "志愿项目7", hours: 7, type: "社区服务", team: "志愿团队7" },
-                { id: 8, name: "志愿项目8", hours: 8, type: "科技科普", team: "志愿团队8" },
-                { id: 9, name: "志愿项目9", hours: 9, type: "支教助学", team: "志愿团队9" },
-                { id: 10, name: "志愿项目10", hours: 10, type: "体育赛事", team: "志愿团队10" },
-                { id: 11, name: "志愿项目11", hours: 11, type: "大型演出", team: "志愿团队1" },
-                { id: 12, name: "志愿项目12", hours: 12, type: "其它", team: "志愿团队2" },
-                { id: 13, name: "志愿项目13", hours: 13, type: "社区服务", team: "志愿团队3" },
-                { id: 14, name: "志愿项目14", hours: 14, type: "科技科普", team: "志愿团队4" },
-                { id: 15, name: "志愿项目15", hours: 15, type: "支教助学", team: "志愿团队5" },
+                { id: 1, name: "志愿项目1", type: "社区服务", team: "志愿团队1", isMyTeam: false, status: "招募中" },
+                { id: 2, name: "志愿项目2", type: "科技科普", team: "志愿团队2", isMyTeam: true, status: "本学期" },
+                { id: 3, name: "志愿项目3", type: "支教助学", team: "志愿团队3", isMyTeam: false, status: "本月" },
+                { id: 4, name: "志愿项目4", type: "体育赛事", team: "志愿团队4", isMyTeam: false, status: "本学期" },
+                { id: 5, name: "志愿项目5", type: "大型演出", team: "志愿团队5", isMyTeam: false, status: "上学期" },
+                { id: 6, name: "志愿项目6", type: "其它", team: "志愿团队6", isMyTeam: false, status: "本学年未招募" },
+                { id: 7, name: "志愿项目7", type: "社区服务", team: "志愿团队7", isMyTeam: false, status: "招募中" },
+                { id: 8, name: "志愿项目8", type: "科技科普", team: "志愿团队8", isMyTeam: false, status: "本学年未招募" },
+                { id: 9, name: "志愿项目9", type: "支教助学", team: "志愿团队9", isMyTeam: false, status: "本月" },
+                { id: 10, name: "志愿项目10", type: "体育赛事", team: "志愿团队10", isMyTeam: true, status: "本学期" },
+                { id: 11, name: "志愿项目11", type: "大型演出", team: "志愿团队6", isMyTeam: false, status: "上学期" },
+                { id: 12, name: "志愿项目12", type: "其它", team: "志愿团队7", isMyTeam: false, status: "本学年未招募" },
+                { id: 13, name: "志愿项目13", type: "社区服务", team: "志愿团队8", isMyTeam: false, status: "招募中" },
+                { id: 14, name: "志愿项目14", type: "科技科普", team: "志愿团队9", isMyTeam: false, status: "招募中" },
+                { id: 15, name: "志愿项目15", type: "支教助学", team: "志愿团队10", isMyTeam: true, status: "本月" }
             ],
             option1: [
                 { key: 1, value: "社区服务" },
@@ -109,8 +105,11 @@ export default {
 
             ],
             option2: [
-                { name: "正在招募", value: "正在招募" },
-                { name: "已结项", value: "已结项" },
+                { key: 1, value: "招募中" },
+                { key: 2, value: "本月" },
+                { key: 3, value: "本学期" },
+                { key: 4, value: "上学期" },
+                { key: 5, value: "本学年未招募" },
             ]
         };
     },
@@ -119,9 +118,10 @@ export default {
             let startIndex = (this.currentPage - 1) * 12;
             let endIndex = startIndex + 12;
             let filteredList = this.projectList;
-            if (this.projectName != null && this.typeRadio != null) {
+            if (this.typeRadio != null && this.projectName != null && this.teamName != null && this.statusRadio != null) {
                 filteredList = filteredList.filter(item => {
-                    return item.name.includes(this.projectName) && item.type.includes(this.typeRadio);
+                    return item.type.includes(this.typeRadio) && item.name.includes(this.projectName)
+                        && item.team.includes(this.teamName) && item.status.includes(this.statusRadio);
                 }
                 )
             }
@@ -129,9 +129,10 @@ export default {
         },
         filteredList() {
             let list = this.projectList;
-            if (this.projectName != null && this.typeRadio != null) {
+            if (this.typeRadio != null && this.projectName != null && this.teamName != null && this.statusRadio != null) {
                 list = list.filter(item => {
-                    return item.name.includes(this.projectName) && item.type.includes(this.typeRadio);
+                    return item.type.includes(this.typeRadio) && item.name.includes(this.projectName)
+                        && item.team.includes(this.teamName) && item.status.includes(this.statusRadio);
                 }
                 )
             }
@@ -192,6 +193,7 @@ export default {
 .content-container {
     display: flex;
     flex-direction: column;
+    margin-left: 28px;
 }
 
 .selector-container {
@@ -204,7 +206,7 @@ export default {
 
 .menu-container {
     display: flex;
-    width: 590px;
+    margin-left: 80px;
 }
 
 .search-container {
@@ -246,7 +248,7 @@ export default {
 
 .inner-card {
     width: 100%;
-    height: 100%;
+    height: 120%;
 }
 
 .img-container {
@@ -269,68 +271,19 @@ export default {
     flex-direction: column;
 }
 
-.recruitment-table {
-    width: 800px;
-    height: 800px;
-    top: 50%;
-    left: 50%;
-    background: rgba(235, 233, 233, 0.8);
-    position: fixed;
-    z-index: 1;
-    transform: translate(-50%, -50%);
-    display: flex;
-}
-
 .pagination-container {
     margin-top: 50px;
     margin-bottom: 50px;
 }
 
-.recruitment-content {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-}
-
-.recruitment-top {
-    flex: 1;
-    display: flex;
-}
-
-.recruitment-img {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.recruitment-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.inner-info-item {
-    margin-bottom: 10px;
-}
-
-.recruitment-intro {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.quit-container {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
 .select-container {
     margin-left: 40px;
+}
+
+.team-name {
+    text-align: center;
+    height: 20%;
+    font-size: 22px;
+    font-weight: bold;
 }
 </style>

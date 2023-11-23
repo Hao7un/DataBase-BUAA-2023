@@ -243,7 +243,6 @@ export default {
     height: 100%;
 }
 
-
 .img-container {
     width: 100%;
     height: 60%;
@@ -261,7 +260,7 @@ export default {
 .team-name {
     text-align: center;
     height: 20%;
-    font-size: large;
+    font-size: 20px;
     font-weight: bold;
 }
 
