@@ -12,8 +12,8 @@
         </div>
         <div class="content-container">
             <div class="selector-container">
-                <div class="menu-container">
-                    <el-select v-model="statusRadio" placeholder="上一次招募" clearable size="large" class="select-container">
+                <div class="left-container">
+                    <el-select v-model="statusRadio" placeholder="最近招募" clearable size="large" class="select-container">
                         <template #prefix>
                             <el-icon class="icon-container">
                                 <Open />
@@ -21,9 +21,12 @@
                         </template>
                         <el-option v-for="item in option2" :key="item.key" :value="item.value"></el-option>
                     </el-select>
+                    <div class="switch-container">
+                        只看我的团队<el-switch v-model="onlyMyTeam" style="padding-left: 10px;"/>
+                    </div>
                 </div>
-                <div class="search-container">
-                    <div class="search-item-container">
+                <div class="right-container">
+                    <div class="right-item-container">
                         <el-select v-model="typeRadio" placeholder="项目类别" clearable size="large">
                             <template #prefix>
                                 <el-icon class="icon-container">
@@ -33,17 +36,17 @@
                             <el-option v-for="item in option1" :key="item.key" :value="item.value" size="large"></el-option>
                         </el-select>
                     </div>
-                    <div class="search-item-container">
+                    <div class="right-item-container">
                         <el-input v-model="teamName" placeholder="输入团队名称" clearable size="large"
                             style="width: 200px"></el-input>
                     </div>
-                    <div class="search-item-container">
+                    <div class="right-item-container">
                         <el-input v-model="projectName" placeholder="输入项目名称" clearable size="large"
                             style="width: 200px"></el-input>
                     </div>
                 </div>
             </div>
-            <div class="recruitments-container">
+            <div class="project-container">
                 <div class="info-container">
                     <div class="card" v-for="(item, index) in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToProjectInfoPage(item.id)">
@@ -51,7 +54,7 @@
                                 <img src="../assets/images/project.png">
                             </div>
                             <div class="card-info">
-                                <div class="team-name">{{ item.name }}</div>
+                                <div class="title-container">{{ item.name }}</div>
                                 <div class="info-item">项目类别：{{ item.type }}</div>
                                 <div class="info-item">所属团队：<strong>{{ item.team }}</strong></div>
                             </div>
@@ -71,9 +74,21 @@
 <script>
 
 export default {
+    created() {
+        this.axios.post('http://localhost:8000/', {
+            userId: this.$store.state.userId
+        })
+            .then(res => {
+                console.log(res);
+                if (res.data.code === 0) {
+                    this.projectList = res.data.projectList;
+                }
+            });
+    },
     data() {
         return {
             typeRadio: "",
+            onlyMyTeam: false,
             projectName: "",
             teamName: "",
             statusRadio: "",
@@ -118,6 +133,12 @@ export default {
             let startIndex = (this.currentPage - 1) * 12;
             let endIndex = startIndex + 12;
             let filteredList = this.projectList;
+            if (this.onlyMyTeam) {
+                filteredList = filteredList.filter(item => {
+                    return item.isMyTeam == true;
+                }
+                )
+            }
             if (this.typeRadio != null && this.projectName != null && this.teamName != null && this.statusRadio != null) {
                 filteredList = filteredList.filter(item => {
                     return item.type.includes(this.typeRadio) && item.name.includes(this.projectName)
@@ -129,6 +150,12 @@ export default {
         },
         filteredList() {
             let list = this.projectList;
+            if (this.onlyMyTeam) {
+                list = list.filter(item => {
+                    return item.isMyTeam == true;
+                }
+                )
+            }
             if (this.typeRadio != null && this.projectName != null && this.teamName != null && this.statusRadio != null) {
                 list = list.filter(item => {
                     return item.type.includes(this.typeRadio) && item.name.includes(this.projectName)
@@ -193,7 +220,7 @@ export default {
 .content-container {
     display: flex;
     flex-direction: column;
-    margin-left: 28px;
+    margin-left: 30px;
 }
 
 .selector-container {
@@ -204,25 +231,32 @@ export default {
     margin-top: 25px;
 }
 
-.menu-container {
+.left-container {
     display: flex;
-    margin-left: 80px;
+    margin-left: 35px;
 }
 
-.search-container {
+.switch-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap; /* 防止文本换行 */
+}
+
+.right-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 190px;
-    margin-right: 100px;
+    margin-left: 10px;
+    margin-right: 50px;
 }
 
-.search-item-container {
+.right-item-container {
     margin-left: 10px;
     margin-right: 30px;
 }
 
-.recruitments-container {
+.project-container {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -235,6 +269,7 @@ export default {
     align-content: flex-start;
     margin-top: 15px;
     margin-left: 50px;
+    margin-right: 50px;
     width: 1350px;
 }
 
@@ -248,12 +283,12 @@ export default {
 
 .inner-card {
     width: 100%;
-    height: 120%;
+    height: 100%;
 }
 
 .img-container {
     width: 100%;
-    height: 66.6%;
+    height: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -269,6 +304,7 @@ export default {
 .card-info {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .pagination-container {
@@ -277,10 +313,11 @@ export default {
 }
 
 .select-container {
-    margin-left: 40px;
+    margin-left: 20px;
+    margin-right: 30px;
 }
 
-.team-name {
+.title-container {
     text-align: center;
     height: 20%;
     font-size: 22px;

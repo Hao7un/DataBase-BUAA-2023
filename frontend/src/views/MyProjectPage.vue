@@ -12,8 +12,8 @@
         </div>
         <div class="content-container">
             <div class="selector-container">
-                <div class="menu-container">
-                    <el-select v-model="statusRadio" placeholder="上一次招募" clearable size="large" class="select-container">
+                <div class="left-container">
+                    <el-select v-model="statusRadio" placeholder="最近招募" clearable size="large" class="select-container">
                         <template #prefix>
                             <el-icon class="icon-container">
                                 <Open />
@@ -22,8 +22,8 @@
                         <el-option v-for="item in option2" :key="item.key" :value="item.value"></el-option>
                     </el-select>
                 </div>
-                <div class="search-container">
-                    <div class="search-item-container">
+                <div class="right-container">
+                    <div class="right-item-container">
                         <el-select v-model="typeRadio" placeholder="项目类别" clearable size="large">
                             <template #prefix>
                                 <el-icon class="icon-container">
@@ -33,17 +33,17 @@
                             <el-option v-for="item in option1" :key="item.key" :value="item.value" size="large"></el-option>
                         </el-select>
                     </div>
-                    <div class="search-item-container">
+                    <div class="right-item-container">
                         <el-input v-model="teamName" placeholder="输入团队名称" clearable size="large"
                             style="width: 200px"></el-input>
                     </div>
-                    <div class="search-item-container">
+                    <div class="right-item-container">
                         <el-input v-model="projectName" placeholder="输入项目名称" clearable size="large"
                             style="width: 200px"></el-input>
                     </div>
                 </div>
             </div>
-            <div class="recruitments-container">
+            <div class="project-container">
                 <div class="info-container">
                     <div class="card" v-for="(item, index) in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToProjectInfoPage(item.id)">
@@ -51,9 +51,11 @@
                                 <img src="../assets/images/project.png">
                             </div>
                             <div class="card-info">
-                                <div class="team-name">{{ item.name }}</div>
-                                <div class="info-item">项目类别：{{ item.type }}</div>
-                                <div class="info-item">所属团队：<strong>{{ item.team }}</strong></div>
+                                <div class="title-container">{{ item.name }}</div>
+                                <div class="info-item">项目类别：{{ item.type }}
+                                    <el-divider border-style="solid" direction="vertical" />所属团队：<strong>{{ item.team }}</strong>
+                                </div>
+                                <div class="info-item">上一次招募：{{ item.latestTime }}</div>
                             </div>
                         </el-card>
                     </div>
@@ -71,30 +73,40 @@
 <script>
 
 export default {
+    created() {
+        this.axios.post('http://localhost:8000/', {
+            userId: this.$store.state.userId
+        })
+            .then(res => {
+                console.log(res);
+                if (res.data.code === 0) {
+                    this.projectList = res.data.projectList;
+                }
+            });
+    },
     data() {
         return {
             typeRadio: "",
             projectName: "",
             teamName: "",
-            isMyTeam: false,
             statusRadio: "",
             currentPage: 1,
             projectList: [
-                { id: 1, name: "志愿项目1", type: "社区服务", team: "志愿团队1", status: "招募中", isMyTeam: false},
-                { id: 2, name: "志愿项目2", type: "科技科普", team: "志愿团队2", status: "本学期" },
-                { id: 3, name: "志愿项目3", type: "支教助学", team: "志愿团队3", status: "本月" },
-                { id: 4, name: "志愿项目4", type: "体育赛事", team: "志愿团队4", status: "本学期" },
-                { id: 5, name: "志愿项目5", type: "大型演出", team: "志愿团队5", status: "上学期" },
-                { id: 6, name: "志愿项目6", type: "其它", team: "志愿团队6", status: "本学年未招募" },
-                { id: 7, name: "志愿项目7", type: "社区服务", team: "志愿团队7", status: "招募中" },
-                { id: 8, name: "志愿项目8", type: "科技科普", team: "志愿团队8", status: "本学年未招募" },
-                { id: 9, name: "志愿项目9", type: "支教助学", team: "志愿团队9", status: "本月" },
-                { id: 10, name: "志愿项目10", type: "体育赛事", team: "志愿团队10", status: "本学期" },
-                { id: 11, name: "志愿项目11", type: "大型演出", team: "志愿团队6", status: "上学期" },
-                { id: 12, name: "志愿项目12", type: "其它", team: "志愿团队7", status: "本学年未招募" },
-                { id: 13, name: "志愿项目13", type: "社区服务", team: "志愿团队8", status: "招募中" },
-                { id: 14, name: "志愿项目14", type: "科技科普", team: "志愿团队9", status: "招募中" },
-                { id: 15, name: "志愿项目15", type: "支教助学", team: "志愿团队10", status: "本月" }
+                { id: 1, name: "志愿项目1", type: "社区服务", team: "志愿团队1", latestTime: "2023-11-21", status: "招募中" },
+                { id: 2, name: "志愿项目2", type: "科技科普", team: "志愿团队2", latestTime: "2023-09-01", status: "本学期" },
+                { id: 3, name: "志愿项目3", type: "支教助学", team: "志愿团队3", latestTime: "2023-11-01", status: "本月" },
+                { id: 4, name: "志愿项目4", type: "体育赛事", team: "志愿团队4", latestTime: "2023-09-01", status: "本学期" },
+                { id: 5, name: "志愿项目5", type: "大型演出", team: "志愿团队5", latestTime: "2023-04-01", status: "上学期" },
+                { id: 6, name: "志愿项目6", type: "其它", team: "志愿团队6", latestTime: "2022-01-01", status: "本学年未招募" },
+                { id: 7, name: "志愿项目7", type: "社区服务", team: "志愿团队7", latestTime: "2023-11-21", status: "招募中" },
+                { id: 8, name: "志愿项目8", type: "科技科普", team: "志愿团队8", latestTime: "2021-01-01", status: "本学年未招募" },
+                { id: 9, name: "志愿项目9", type: "支教助学", team: "志愿团队9", latestTime: "2023-11-01", status: "本月" },
+                { id: 10, name: "志愿项目10", type: "体育赛事", team: "志愿团队10", latestTime: "2023-10-01", status: "本学期" },
+                { id: 11, name: "志愿项目11", type: "大型演出", team: "志愿团队6", latestTime: "2023-05-01", status: "上学期" },
+                { id: 12, name: "志愿项目12", type: "其它", team: "志愿团队7", latestTime: "2021-01-01", status: "本学年未招募" },
+                { id: 13, name: "志愿项目13", type: "社区服务", team: "志愿团队8", latestTime: "2023-11-22", status: "招募中" },
+                { id: 14, name: "志愿项目14", type: "科技科普", team: "志愿团队9", latestTime: "2023-11-23", status: "招募中" },
+                { id: 15, name: "志愿项目15", type: "支教助学", team: "志愿团队10", latestTime: "2023-11-02", status: "本月" }
             ],
             option1: [
                 { key: 1, value: "社区服务" },
@@ -194,7 +206,7 @@ export default {
 .content-container {
     display: flex;
     flex-direction: column;
-    margin-left: 28px;
+    margin-left: 30px;
 }
 
 .selector-container {
@@ -205,25 +217,25 @@ export default {
     margin-top: 25px;
 }
 
-.menu-container {
+.left-container {
     display: flex;
-    margin-left: 80px;
+    margin-left: 35px;
 }
 
-.search-container {
+.right-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 190px;
-    margin-right: 100px;
+    margin-left: 10px;
+    margin-right: 50px;
 }
 
-.search-item-container {
+.right-item-container {
     margin-left: 10px;
     margin-right: 30px;
 }
 
-.recruitments-container {
+.project-container {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -236,6 +248,7 @@ export default {
     align-content: flex-start;
     margin-top: 15px;
     margin-left: 50px;
+    margin-right: 50px;
     width: 1350px;
 }
 
@@ -249,12 +262,12 @@ export default {
 
 .inner-card {
     width: 100%;
-    height: 120%;
+    height: 100%;
 }
 
 .img-container {
     width: 100%;
-    height: 66.6%;
+    height: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -270,6 +283,7 @@ export default {
 .card-info {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .pagination-container {
@@ -278,10 +292,11 @@ export default {
 }
 
 .select-container {
-    margin-left: 40px;
+    margin-left: 20px;
+    margin-right: 30px;
 }
 
-.team-name {
+.title-container {
     text-align: center;
     height: 20%;
     font-size: 22px;

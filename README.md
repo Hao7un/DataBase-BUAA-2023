@@ -190,14 +190,14 @@
   }
   ```
 
-### AllProjectPage
+## AllProjectPage
 ### 获取所有项目
 
 * 发送请求：
 
   ```javascript
   {
-
+    userId: "00001"
   }
   ```
 
@@ -213,7 +213,37 @@
           name: "志愿项目1",
           type: "社区服务",
           team: "志愿团队1",
-          isMyTeam: true, // true: 是我的团队，false: 不是我的团队
+          isMyTeam: true, // true: 是我所在的团队，false: 不是我所在的团队
+          status: "招募中" // 招募中、本月、本学期、上学期、本学年未招募
+        }
+    ] 
+  }
+  ```
+
+## MyProjectPage
+### 获取我收藏的项目
+
+* 发送请求：
+
+  ```javascript
+  {
+    userId: "00001"
+  }
+  ```
+
+* 获取成功
+
+  ```javascript
+  {
+    code: 0,
+    message: "",
+    projectList: [
+        {
+          id: "00001",
+          name: "志愿项目1",
+          type: "社区服务",
+          team: "志愿团队1",
+          latestTime: "YYYY-MM-DD" // 上一次招募时间 
           status: "招募中" // 招募中、本月、本学期、上学期、本学年未招募
         }
     ] 

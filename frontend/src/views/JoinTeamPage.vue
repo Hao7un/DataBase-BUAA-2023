@@ -190,7 +190,7 @@ export default {
     height: 50px;
     display: flex;
     align-items: center;
-    margin-top: 25px;
+    margin-top: 30px;
     margin-left: 180px;
 }
 
