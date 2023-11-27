@@ -27,7 +27,6 @@
                     &nbsp; &nbsp; &nbsp;
                     <el-input v-model="keyword" placeholder="输入团队名称" clearable size="large" style="width: 200px"></el-input>
                 </div>
-                <!-- <el-button size="large" type="primary" @click="searchSubmit"><span style="font-weight: bold; font-size: 15px; color:whitesmoke">搜 索</span></el-button> -->
             </div>
             <div class="teams-container">
                 <div class="info-container">

@@ -214,7 +214,7 @@
           type: "社区服务",
           team: "志愿团队1",
           isMyTeam: true, // true: 是我所在的团队，false: 不是我所在的团队
-          status: "招募中" // 招募中、本月、本学期、上学期、本学年未招募
+          latestTime: "YYYY-MM-DD", // 上一次招募结束时间 
         }
     ] 
   }
@@ -243,15 +243,14 @@
           name: "志愿项目1",
           type: "社区服务",
           team: "志愿团队1",
-          latestTime: "YYYY-MM-DD", // 上一次招募时间 
-          status: "招募中" // 招募中、本月、本学期、上学期、本学年未招募
+          latestTime: "YYYY-MM-DD", // 上一次招募结束时间 
         }
     ] 
   }
   ```
 
 ## ProjectInfoPage
-### 收藏项目
+### 获取项目信息
 
 * 发送请求：
 
@@ -262,7 +261,72 @@
   }
   ```
 
-* 收藏成功
+* 获取成功
+
+  ```javascript
+  {
+    code: 0,
+    message: "",
+    isCollect: true, // true: 已收藏，false: 未收藏
+    projectName: "志愿项目1",
+    projectType: "社区服务",
+    projectIntro: "优秀项目。",
+    latestTime: "YYYY-MM-DD", // 上一次招募结束时间
+    teamId: "00001",
+    teamName: "志愿团队1",
+    discussionList: [
+        {
+          questionPoster: "张三", 
+          questionTime: "YYYY-MM-DD", 
+          question: "需要什么技能？", 
+          replyTime: "YYYY-MM-DD", 
+          reply: "需要一定的技术基础。"
+        }
+    ],
+    tutorialList: [
+        {
+          time: "YYYY-MM-DD",
+          title: "注意事项",
+          content: "注意安全。"
+        }
+    ]
+  }
+  ```
+
+### 收藏/取消收藏项目
+
+* 发送请求：
+
+  ```javascript
+  {
+    userId: "00001",
+    projectId: "00001",
+    type: false  // true: 取消收藏 false: 收藏
+  }
+  ```
+
+* 收藏/取消收藏成功
+
+  ```javascript
+  {
+    code: 0,
+    message: ""
+  }
+  ```
+
+### 发布提问
+
+* 发送请求：
+
+  ```javascript
+  {
+    userId: "00001",
+    projectId: "00001",
+    question: "需要什么技能？"
+  }
+  ```
+
+* 提问成功
 
   ```javascript
   {
