@@ -13,21 +13,20 @@
         <div class="content-container">
             <div class="selector-container">
                 <div class="date-container">
-                    <span style="display: flex; align-items: center;">团队注册日期</span> &nbsp;&nbsp;
+                    <span style="display: flex; align-items: center;">团队成立日期：</span> &nbsp;&nbsp;
                     <el-date-picker v-model="date" type="date" placeholder="输入日期" size="large" clearable>
                     </el-date-picker>
                     &nbsp; &nbsp; <span style="display: flex; align-items: center;">至今</span>
                 </div>
                 <div class="search-container">
                     <el-select v-model="number" placeholder="团队人数" clearable size="large" style="width: 200px">
-                        <el-option key="1-10" value="10人以下">10人以下</el-option>
-                        <el-option key="11-50" value="11至99人">11至99人</el-option>
-                        <el-option key="50以上" value="100人以上">100人以上</el-option>
+                        <el-option key="1" value="10人以下">10人以下</el-option>
+                        <el-option key="2" value="11至99人">11至99人</el-option>
+                        <el-option key="3" value="100人以上">100人以上</el-option>
                     </el-select>
                     &nbsp; &nbsp; &nbsp;
                     <el-input v-model="keyword" placeholder="输入团队名称" clearable size="large" style="width: 200px"></el-input>
                 </div>
-                <!-- <el-button size="large" type="primary" @click="searchSubmit"><span style="font-weight: bold; font-size: 15px; color:whitesmoke">搜 索</span></el-button> -->
             </div>
             <div class="teams-container">
                 <div class="info-container">
@@ -52,7 +51,7 @@
                     </div>
                 </div>
                 <div class="pagination-container">
-                    <el-pagination @current-change="handlePageChange" :page-size="6" :total="filteredList.length"
+                    <el-pagination @current-change="handlePageChange" :page-size="8" :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
@@ -79,8 +78,17 @@ export default {
             keyword: "",
             number: "",
             currentPage: 1,
-            selectedTotalIndex: "",
             totalList: [
+                { id: 1, name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100 },
+                { id: 2, name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50 },
+                { id: 3, name: "志愿团队3", date: "2023-11-03", number: 8, hours: 50 },
+                { id: 4, name: "志愿团队4", date: "2023-11-04", number: 25, hours: 50 },
+                { id: 5, name: "志愿团队5", date: "2023-11-05", number: 27, hours: 50 },
+                { id: 6, name: "志愿团队6", date: "2023-11-06", number: 30, hours: 50 },
+                { id: 7, name: "志愿团队7", date: "2023-11-07", number: 45, hours: 50 },
+                { id: 8, name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50 },
+                { id: 9, name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50 },
+                { id: 10, name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50 },
             ]
         }
     },
@@ -105,7 +113,9 @@ export default {
             let filteredList = this.totalList;
             if (this.keyword != null && this.number != null) {
                 filteredList = filteredList.filter(item => {
-                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
+                    let itemDate = new Date(item.date);
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) 
+                    && itemDate >= this.date;
                 }
                 );
             }
@@ -115,24 +125,16 @@ export default {
             let list = this.totalList;
             if (this.keyword != null && this.number != null) {
                 list = list.filter(item => {
-                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
+                    let itemDate = new Date(item.date);
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) 
+                    && itemDate >= this.date;
                 }
                 );
             }
             return list;
         },
-        formatDateString() {
-            if (this.date == null) return "";
-            return this.formatDate(this.date);
-        },
     },
     methods: {
-        formatDate(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
         },
@@ -147,7 +149,7 @@ export default {
             })
         },
         changeToTeamInfoPage(id) {
-            console.log(id);
+            console.log('teamId:', id);
             this.$router.push({
                 name: 'teamInfo',
                 params: { teamId: id }
@@ -168,7 +170,7 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 1000px;
+    height: 1550px;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
@@ -181,7 +183,7 @@ export default {
     height: 50px;
     display: flex;
     align-items: center;
-    margin-top: 25px;
+    margin-top: 30px;
     margin-left: 180px;
 }
 
@@ -252,7 +254,7 @@ export default {
 .team-name {
     text-align: center;
     height: 20%;
-    font-size: large;
+    font-size: 20px;
     font-weight: bold;
 }
 

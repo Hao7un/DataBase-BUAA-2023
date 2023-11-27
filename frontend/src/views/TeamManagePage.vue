@@ -47,7 +47,7 @@
     </div>
     <el-divider style="width: 90%; margin-left: 100px;"/>
     <div class="content">
-      <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍（不超过500字）" :rows="5" clearable></el-input>
+      <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍（不超过500字）" :rows="5" :maxlength="500" show-word-limit clearable></el-input>
     </div>
     <el-divider style="width: 90%; margin-left: 100px;"/>
     <div class="footer">
@@ -71,8 +71,17 @@
               <el-option label="科技科普" key="科技科普" value="科技科普"></el-option>
               <el-option label="支教助学" key="支教助学" value="支教助学"></el-option>
               <el-option label="体育赛事" key="体育赛事" value="体育赛事"></el-option>
+              <el-option label="大型演出" key="大型演出" value="大型演出"></el-option>
               <el-option label="其它" key="其它" value="其它"></el-option>
             </el-select>
+          </template>
+          <template #default="scope">
+            <span v-if="scope.row.category === '1'">社区服务</span>
+            <span v-else-if="scope.row.category === '2'">科技科普</span>
+            <span v-else-if="scope.row.category === '3'">支教助学</span>
+            <span v-else-if="scope.row.category === '4'">体育赛事</span>
+            <span v-else-if="scope.row.category === '5'">大型演出</span>
+            <span v-else>其它</span>
           </template>
         </el-table-column>
         <el-table-column prop="createdDate" label="创建日期" align="center" sortable></el-table-column>
@@ -193,9 +202,10 @@ export default {
   computed: {
     displayedProjects() {
       let displayedProjects = this.projects;
-      if (this.projectNameKey != null && this.projectTypeKey != null) {
+      let newProjectTypeKey = this.projectTypeKey === "社区服务" ? "1" : this.projectTypeKey === "科技科普" ? "2" : this.projectTypeKey === "支教助学" ? "3" : this.projectTypeKey === "体育赛事" ? "4" : this.projectTypeKey === "大型演出" ? "5" : this.projectTypeKey === "其它" ? "6" : ""; 
+      if (this.projectNameKey != null && newProjectTypeKey != null) {
           displayedProjects = displayedProjects.filter(item => {
-            return item.name.includes(this.projectNameKey) && item.category.includes(this.projectTypeKey);
+            return item.name.includes(this.projectNameKey) && item.category.includes(newProjectTypeKey);
           })
       }
       return displayedProjects;
@@ -237,33 +247,39 @@ export default {
         {
           hasComments: false,
           name: "志愿项目1",
-          category: "社区服务",
+          category: "1",
           createdDate: "2023-11-17"
         },
         {
           hasComments: false,
           name: "志愿项目2",
-          category: "科技科普",
+          category: "2",
           createdDate: "2023-11-18"
         },
         {
           hasComments: false,
           name: "志愿项目3",
-          category: "支教助学",
+          category: "3",
           createdDate: "2023-11-19"
         },
         {
           hasComments: false,
           name: "志愿项目4",
-          category: "大型演出",
+          category: "4",
           createdDate: "2023-11-20"
         },
         {
           hasComments: false,
           name: "志愿项目5",
-          category: "体育赛事",
+          category: "5",
           createdDate: "2023-11-21"
         },
+        {
+          hasComments: false,
+          name: "志愿项目6",
+          category: "6",
+          createdDate: "2023-11-27"
+        }
       ],
       applicationList: [
         {
@@ -525,7 +541,7 @@ export default {
         // axios
         this.axios({
           method: 'post',
-          url: '',
+          url: 'http://localhost:8000/admin_create_project',
           data: submitParams,
         }).then((res) => {
           console.log(res);

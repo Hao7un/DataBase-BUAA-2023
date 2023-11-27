@@ -10,7 +10,6 @@ import store from './store'
 import 'vuetify/styles'
 
 import router from './router'
-import { Axios } from 'axios'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

@@ -1,7 +1,272 @@
 <template>
+    <div class="main-container">
+        <div class="team-container">
+            <div class="left-container">
+                <div class="info-container">
+                    <div class="img-container">
+                        <img src="../assets/images/project.png">
+                    </div>
+                    <div class="content-container">
+                        <div class="high-container">
+                            <h1 style="margin-right: 20px;">{{ projectName }}</h1>
 
+                            <el-button size="large" type="primary" style="margin-top: 5px; margin-left: 40px;"
+                                @click="collectProject">
+                                <span v-if="isCollect"
+                                    style="font-weight: bold; font-size: 15px; color:whitesmoke">取消收藏</span>
+                                <span v-else style="font-weight: bold; font-size: 15px; color:whitesmoke">收藏</span>
+                            </el-button>
+                            <br>
+                        </div>
+                        <div class="low-container">
+                            <p>所属团队：<el-button color="" text><strong @click="changeToTeamInfoPage(teamId)"
+                                        style="color: #110f0f; font-size: 18px;padding-bottom: 4px">
+                                        {{ teamName }}</strong>
+                                </el-button></p>
+                            <el-divider border-style="solid" direction="vertical" />
+                            <p>项目类别：{{ projectType }}</p>
+                        </div>
+                        <p style="font-size: 18px; font-style: italic;">{{ recruitmentStatus(latestTime) }}</p>
+                    </div>
+                </div>
+                <div class="intro-container">
+                    <p style="font-size: 22px; font-weight: bold; margin-bottom: 8px;"><el-icon>
+                            <Document />
+                        </el-icon>项目简介</p>
+                    <p>{{ projectIntro }}</p>
+                </div>
+            </div>
+            <div class="tutorial-container">
+                <div class="title-container">
+                    <h2>教程</h2>
+                </div>
+                <div v-for="(item, index) in tutorialList" :key="index">
+                    <p>{{ item.title }} {{ item.time }}</p>
+                    <p>{{ item.content }}</p>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="discussion-container">
+            <div class="title-container">
+                <h2>Q & A</h2>
+            </div>
+
+            <div v-for="(item, index) in discussionList" :key="index">
+                <p>提问：{{ item.questionPoster }} {{ item.questionTime }} <br> {{ item.question }}</p>
+
+                <p>回复：{{ projectLeader }} {{ item.replyTime }} <br> {{ item.reply }}</p>
+                <br>
+            </div>
+            <el-button v-if="!questionInput" type="primary" @click="showQuestionInput"
+                style="font-weight: bold; font-size: 18px; color:whitesmoke">我要提问</el-button>
+            <el-input v-if="questionInput" v-model="newQuestion" type="textarea" placeholder="输入你的问题" :maxlength="500" show-word-limit></el-input>
+            <br>
+            <el-button v-if="questionInput" type="primary" @click="askQuestion"
+                style="font-weight: bold; font-size: 18px; color:whitesmoke">完成</el-button>
+        </div>
+    </div>
 </template>
 
 <script>
+import { ElMessage } from 'element-plus';
 
+export default {
+    created() {
+        this.projectId = this.$route.params.projectId;
+        this.axios.post('http://localhost:8000/', {
+            userId: this.userId,
+            projectId: this.projectId
+        })
+            .then(res => {
+                console.log(res);
+                if (res.data.code === 0) {
+                    this.isCollect = res.data.isCollect;
+                    this.projectName = res.data.projectName;
+                    this.projectType = res.data.projectType;
+                    this.projectIntro = res.data.projectIntro;
+                    this.latestTime = res.data.latestTime;
+                    this.projectLeader = res.data.projectLeader;
+                    this.teamId = res.data.teamId;
+                    this.teamName = res.data.teamName;
+                    this.discussionList = res.data.discussionList;
+                    this.tutorialList = res.data.tutorialList;
+                }
+            });
+    },
+    data() {
+        return {
+            isCollect: false,
+            projectName: '气象防灾减灾宣讲',
+            projectType: '社区服务',
+            projectIntro: '团队致力于发挥气象行业特色，常态化开展气象防灾减灾科普进社区、进校园公益项目，创办了独具特色的“气象科普”品牌。2022年，结合文明实践“一圈一带一群”建设，与徐汇区多个社区形成合作机制，定期为徐家汇商圈和社区居民开展科普讲座，惠及学生和市民千余人次，申报的“气象防灾减灾宣讲”入选为上海市文明实践百项重点项目。',
+            latestTime: '2023-11-01',
+            projectLeader: '张昊翔',
+            teamId: '1',
+            teamName: '计算机学院志愿服务队',
+            discussionList: [
+                { questionPoster: '张三', questionTime: '2021-01-01', question: '这个项目需要什么技能？', replyTime: '2021-01-02', reply: '不需要什么技能，只要你有热情就可以了。' },
+                { questionPoster: '李四', questionTime: '2021-01-03', question: '这个项目需要什么技能？', replyTime: '2021-01-04', reply: '不需要什么技能，只要你有热情就可以了。' },
+                { questionPoster: '王五', questionTime: '2021-01-05', question: '这个项目需要什么技能？', replyTime: '2021-01-06', reply: '不需要什么技能，只要你有热情就可以了。' },
+            ],
+            tutorialList: [
+                { time: '2021-01-01', title: '注意事项', content: '请大家注意安全。' },
+                { time: '2021-01-02', title: '注意事项', content: '请大家注意安全。' },
+            ],
+            newQuestion: '',
+            questionInput: false,
+        }
+    },
+    methods: {
+        changeToTeamInfoPage(id) {
+            console.log('teamId:', id);
+            this.$router.push({
+                name: 'teamInfo',
+                params: { teamId: id }
+            });
+        },
+        recruitmentStatus(latestTime) {
+            if (latestTime === 'N/A') {
+                return '暂未招募';
+            } else {
+                const now = new Date();
+                const latest = new Date(latestTime);
+                if (now < latest) return '招募中';
+                else return '最近招募：' + latestTime;
+            }
+        },
+        collectProject() {
+            this.axios.post('http://localhost:8000/', {
+                userId: this.userId,
+                projectId: this.projectId,
+                type: this.isCollect
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.isCollect = !this.isCollect;
+                        if (this.isCollect) ElMessage.success('已收藏');
+                        else ElMessage.success('已取消收藏');
+                    }
+                });
+        },
+        showQuestionInput() {
+            this.questionInput = true;
+        },
+        askQuestion() {
+            if (this.newQuestion === '') {
+                ElMessage.error('问题不能为空');
+                return;
+            }
+            this.axios.post('http://localhost:8000/', {
+                userId: this.userId,
+                projectId: this.projectId,
+                question: this.newQuestion
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        ElMessage.success('提问成功，请等待负责人回复');
+                        this.newQuestion = '';
+                        this.showQuestionInput = false;
+                    }
+                });
+        }
+    },
+    computed: {
+        userId() {
+            return this.$store.state.userId;
+        }
+    },
+}
 </script>
+
+<style scoped>
+.main-container {
+    margin-left: 60px;
+    margin-right: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.team-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 80px;
+}
+
+.left-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    width: 1200px;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.img-container {
+    display: flex;
+    width: 300px;
+    height: 200px;
+    margin-bottom: 30px;
+    margin-left: 100px;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.high-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.low-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.intro-container {
+    padding-top: 10px;
+    font-size: 18px;
+    border-top: 2px solid rgb(114, 110, 104, 0.2);
+}
+
+.tutorial-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    padding-top: 50px;
+    padding-left: 80px;
+    font-size: 18px;
+    border-left: 2px solid rgb(114, 110, 104, 0.2);
+}
+
+.discussion-container {
+    margin-top: 30px;
+    margin-bottom: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: block;
+    flex-direction: column;
+}
+
+.title-container {
+    text-align: center;
+    color: rgb(47, 67, 67);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+</style>

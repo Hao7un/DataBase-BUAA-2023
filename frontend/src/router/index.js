@@ -20,9 +20,9 @@ const router = createRouter({
             component: () => import('../views/HomePage.vue'),
             children: [
                 {
-                    path: '/project/join',
-                    name: 'joinProject',
-                    component: () => import('../views/JoinProjectPage.vue')
+                    path: '/project/all',
+                    name: 'allProject',
+                    component: () => import('../views/AllProjectPage.vue')
                 },
                 {
                     path: '/project/my',
@@ -86,9 +86,10 @@ const router = createRouter({
                 },
                 {
                     path: '/admin/projectinfo',
-                    name: 'projectInfo',
+                    name: 'projectAdmin',
                     component: () => import('../views/ProjectManagePage.vue')
-                }
+                },
+                
             ]
         },
     ]

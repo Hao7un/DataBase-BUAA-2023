@@ -1,7 +1,8 @@
 <template>
     <div class="main-container">
         <div class="sidebar-container">
-            <el-menu mode="vertical" default-active="volunteerHours">
+            <el-menu mode="vertical" default-active="volunteerHours"
+                style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
                 <el-menu-item index="info" @click="changeToUserInfoPage">
                     <span class="item-font" style="font-weight: bold;">个人信息</span>
                 </el-menu-item>
@@ -13,8 +14,13 @@
                 </el-menu-item>
             </el-menu>
         </div>
-        <div class="content-container">
-            <h1>TO BE DONE</h1>
+        <div class="grid-container">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item">5</div>
+            <div class="grid-item">6</div>
         </div>
     </div>
 </template>
@@ -56,14 +62,21 @@ export default {
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
-.content-container {
-    display: block;
-    flex-direction: column;
-    margin-left: 300px;
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto; /* 定义了三列，每列的宽度为 auto */
+  grid-gap: 10px; /* 定义了网格线之间的间距 */
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
 }
 
 .item-font {
-  font-size: 18px;
-  margin-left: 10px;
+    font-size: 18px;
+    margin-left: 10px;
 }
 </style>

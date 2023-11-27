@@ -1,7 +1,8 @@
 <template>
   <div class="main-container">
     <div class="sidebar-container">
-      <el-menu mode="vertical" default-active="info">
+      <el-menu mode="vertical" default-active="info"
+      style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
         <el-menu-item index="info" @click="changeToUserInfoPage">
           <span class="item-font" style="font-weight: bold;">个人信息</span>
         </el-menu-item>
@@ -80,13 +81,13 @@
               个人简介
             </div>
           </template>
-          <el-input type="textarea" v-model="userIntro"></el-input>
+          <el-input type="textarea" v-model="userIntro" :maxlength="500" show-word-limit></el-input>
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
             <div class="cell-item">
               <el-icon>
-                <DataAnalysis />
+                <DataLine />
               </el-icon>
               志愿时长
             </div>
@@ -103,15 +104,6 @@
 </template>
   
 <script>
-import {
-  Paperclip,
-  User,
-  School,
-  Iphone,
-  MessageBox,
-  Postcard,
-  DataAnalysis
-} from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus';
 
 export default {
@@ -122,10 +114,10 @@ export default {
       .then(res => {
         console.log(res);
         if (res.data.code === 0) {
-          this.telephone = res.data.data.telephone;
-          this.email = res.data.data.email;
-          this.volunteerTime = res.data.data.volunteerTime;
-          this.userIntro = res.data.data.userIntro;
+          this.telephone = res.data.telephone;
+          this.email = res.data.email;
+          this.volunteerTime = res.data.volunteerTime;
+          this.userIntro = res.data.userIntro;
         }
       });
   },
@@ -185,7 +177,7 @@ export default {
         ElMessage.error('邮箱格式错误');
         return;
       }
-      
+
       this.axios.post('http://localhost:8000/update_user_info', {
         userId: this.userId,
         telephone: this.telephone,
@@ -226,7 +218,7 @@ export default {
   flex-direction: column;
   padding-top: 20px;
   margin-left: 20px;
-  height: 1000px;
+  height: 800px;
   border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
