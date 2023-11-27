@@ -753,7 +753,8 @@ export default {
                         if (res.data.code === 0) {
                             console.log(回复成功);
                             ElMessage.success("回复成功");
-                            this.comments.splice(index, 1);
+                            // 刷新评论列表
+                            this.fetch();
                             this.replyCommentVisible = false;
                         }
                         else {
