@@ -114,7 +114,9 @@ export default {
             let filteredList = this.totalList;
             if (this.keyword != null && this.number != null) {
                 filteredList = filteredList.filter(item => {
-                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
+                    let itemDate = new Date(item.date);
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) 
+                    && itemDate >= this.date;
                 }
                 );
             }
@@ -124,24 +126,16 @@ export default {
             let list = this.totalList;
             if (this.keyword != null && this.number != null) {
                 list = list.filter(item => {
-                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) && item.date.includes(this.formatDateString);
+                    let itemDate = new Date(item.date);
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) 
+                    && itemDate >= this.date;
                 }
                 );
             }
             return list;
         },
-        formatDateString() {
-            if (this.date == null) return "";
-            return this.formatDate(this.date);
-        },
     },
     methods: {
-        formatDate(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
         },

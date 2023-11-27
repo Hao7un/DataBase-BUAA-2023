@@ -22,7 +22,7 @@
                         <el-option v-for="item in option2" :key="item.key" :value="item.value"></el-option>
                     </el-select>
                     <div class="switch-container">
-                        只看我的团队<el-switch v-model="onlyMyTeam" style="padding-left: 10px;"/>
+                        只看我的团队<el-switch v-model="onlyMyTeam" style="padding-left: 10px;" />
                     </div>
                 </div>
                 <div class="right-container">
@@ -240,7 +240,8 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-    white-space: nowrap; /* 防止文本换行 */
+    white-space: nowrap;
+    /* 防止文本换行 */
 }
 
 .right-container {

@@ -60,11 +60,11 @@
                         </div>
                         <p><el-icon>
                                 <Guide />
-                            </el-icon>项目类别：{{ project.type }}</p>
+                            </el-icon> 项目类别：{{ project.type }}</p>
                         <br>
                         <p><el-icon>
-                                <Clock />
-                            </el-icon>总服务时长：{{ project.hours }} 小时</p>
+                                <Calendar />
+                            </el-icon> 招募次数：{{ project.times }} </p>
                     </el-carousel-item>
                 </el-carousel>
             </div>
@@ -110,10 +110,10 @@ export default {
             telephone: '18100000000',
             email: '1234@xyz.com',
             projectList: [
-                { id: 1, name: '项目1', type: '社区服务', hours: 100 },
-                { id: 2, name: '项目2', type: '体育比赛', hours: 50 },
-                { id: 3, name: '项目3', type: '科普讲解', hours: 50 },
-                { id: 4, name: '项目4', type: '支教助学', hours: 2000 },
+                { id: 1, name: '项目1', type: '社区服务', times: 10 },
+                { id: 2, name: '项目2', type: '体育比赛', times: 5 },
+                { id: 3, name: '项目3', type: '科普讲解', times: 3 },
+                { id: 4, name: '项目4', type: '支教助学', times: 20 },
             ],
         }
     },

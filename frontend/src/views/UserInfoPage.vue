@@ -87,7 +87,7 @@
           <template #label>
             <div class="cell-item">
               <el-icon>
-                <DataAnalysis />
+                <DataLine />
               </el-icon>
               志愿时长
             </div>
