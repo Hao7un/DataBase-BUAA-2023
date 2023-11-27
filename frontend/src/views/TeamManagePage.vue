@@ -12,7 +12,7 @@
         <img src="../assets/images/hand_shaking.png">
       </div>
       <el-divider direction="vertical" style="height: 200px;" />
-      <div class="team-info">
+      <div class="team-info-container">
         <div class="team-info">
           <h3 style="display: flex; justify-content: center; margin-bottom: 10px; font-weight: bold;">团队信息</h3>
           <el-descriptions column="2" border>
@@ -32,7 +32,7 @@
         </div>
         <div class="team-info-buttons">
           <div class="team-info-button">
-            <el-badge :value="this.applicationList.length" :hidden="applicationNum === 0" :max="99">
+            <el-badge :value="this.applicationList.length" :max="99">
               <v-btn size="x-large" @click="viewApplications" rounded="lg">查看申请</v-btn>
             </el-badge>
           </div>
@@ -47,28 +47,52 @@
     </div>
     <el-divider style="width: 90%; margin-left: 100px;"/>
     <div class="content">
-      <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍（不超过500字）" :rows="5"></el-input>
+      <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍（不超过500字）" :rows="5" clearable></el-input>
     </div>
     <el-divider style="width: 90%; margin-left: 100px;"/>
     <div class="footer">
       <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-        <v-btn size="large" @click="showCreateDialog">创建项目</v-btn>
+        <v-btn size="large" @click="showCreateProjectDialog">创建项目</v-btn>
       </div>
-      <el-table :data="projects" style="width: 80%; margin: 0 auto;" border max-height="550">
-        <el-table-column prop="name" label="项目名称" align="center"></el-table-column>
-        <el-table-column prop="category" label="所属类别" align="center"></el-table-column>
-        <el-table-column prop="createdDate" label="创建日期" align="center"></el-table-column>
+      <el-table :data="displayedProjects" style="width: 80%; margin: 0 auto;" border max-height="550">
+        <template #empty>
+          <p>无匹配数据</p>
+        </template>
+        <el-table-column prop="name" label="项目名称" align="center">
+          <template #header>项目名称
+            <el-input v-model="projectNameKey" placeholder="输入项目名称" style="width: 260px;" clearable></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="category" label="所属类别" align="center" size="large">
+          <template #header>
+            <div>所属类别</div>
+            <el-select v-model="projectTypeKey" placeholder="选择所属项目" clearable>
+              <el-option label="社区服务" key="社区服务" value="社区服务"></el-option>
+              <el-option label="科技科普" key="科技科普" value="科技科普"></el-option>
+              <el-option label="支教助学" key="支教助学" value="支教助学"></el-option>
+              <el-option label="体育赛事" key="体育赛事" value="体育赛事"></el-option>
+              <el-option label="其它" key="其它" value="其它"></el-option>
+            </el-select>
+          </template>
+        </el-table-column>
+        <el-table-column prop="createdDate" label="创建日期" align="center" sortable></el-table-column>
         <el-table-column label="查看详情" align="center">
-            <el-button type="link">点击查看</el-button>
+            <template #default="scope">
+                <el-button type="link" size="small" @click="viewProjectDetails(scope.row)">
+                  <el-badge is-dot :hidden="scope.row.hasComments === false">
+                    <span>点击查看</span>
+                  </el-badge>
+                </el-button>
+            </template>
         </el-table-column>
       </el-table>
     </div>
     <div> 
       <v-dialog v-model="createApplicationDialogVisible" width="auto">
-        <el-table :data="applicationList" border style="width: 99%; border: 2px solid gray">
+        <el-table :data="applicationList" border style="width: 99%; border: 2px solid gray" :default-sort="[{ prop: 'date', order: 'descending' }]">
           <el-table-column prop="collegeId" label="学工号" width="200px" align="center"></el-table-column>
           <el-table-column prop="name" label="姓名" width="200px" align="center"></el-table-column>
-          <el-table-column prop="date" label="申请日期" width="250px" align="center"></el-table-column>
+          <el-table-column prop="date" label="申请日期" width="250px" align="center" sortable></el-table-column>
           <el-table-column label="操作" width="200px" align="center">
             <template #default="scope">
               <el-button @click="handleAccept(scope.$index, scope.row, 'true')" type="primary"><span style="color: white;">通过</span></el-button>
@@ -82,18 +106,79 @@
       <v-dialog v-model="viewMembersDialogVisible" width="auto" max-height="600">
         <div class="members-container">
           <h2 style="margin: 20px 0; display: flex; justify-content: center;">成员列表</h2>
-          <el-table :data="members" style=" display: flex; justify-content: center; align-items: center;">
-            <el-table-column prop="collegeId" label="学工号" align="center"></el-table-column>
-            <el-table-column prop="name" label="姓名" align="center"></el-table-column>
-            <el-table-column prop="telephone" label="联系电话" align="center"></el-table-column>
-            <el-table-column prop="joinDate" label="加入日期" align="center"></el-table-column>
-            <!-- <el-table-column prop="hours" label="在本团队贡献的小时数" align="center"></el-table-column> -->
+          <el-table :data="displayedMembers" style=" display: flex; justify-content: center; align-items: center;">
+            <template #empty>
+                <p>暂无成员</p>
+            </template>
+            <el-table-column prop="collegeId" label="学工号" align="center">
+              <template #header>
+                <div>学工号</div>
+                <el-input v-model="collegeIdKey" clearable placeholder="输入学工号"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="name" label="姓名" align="center">
+              <template #header>
+                <div>姓名</div>
+                <el-input v-model="memberNameKey" clearable placeholder="输入姓名"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="telephone" label="联系电话" align="center">
+              <template #header>
+                <div>联系电话</div>
+                <el-input v-model="telephoneKey" clearable placeholder="输入联系电话"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="joinDate" label="加入日期" align="center" sortable></el-table-column>
             <el-table-column label="操作" align="center">
               <template #default="scope">
                 <el-button type="warning" @click="handleDelete(scope.$index, scope.row)"><span style="color: white;">删除</span></el-button>
               </template>
             </el-table-column>
           </el-table>
+        </div>
+      </v-dialog>
+      <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="600">
+        <div class="create-dialog-container">
+          <div class="create-item">
+            <h3 style="margin-bottom: 15px;">项目名称</h3>
+            <el-input v-model="projectName" clearable>
+              <template #prefix>
+                <el-icon><Postcard /></el-icon>
+              </template>
+            </el-input>
+          </div>
+          <div class="create-item">
+            <h3 style="margin-bottom: 15px;">项目简介</h3>
+            <el-input type="textarea" v-model="projectIntro" clearable :maxlength="500" :autosize="{minRows: 2}" show-word-limit></el-input>
+          </div>
+          <div class="create-item">
+            <h3 style="margin-bottom: 15px;">项目类别</h3>
+            <el-radio-group v-model="projectType">
+              <el-radio label="1" border size="small">社区服务</el-radio>
+              <el-radio label="2" border size="small">科技科普</el-radio>
+              <el-radio label="3" border size="small" style="margin-top: 8px;">支教助学</el-radio>
+              <el-radio label="4" border size="small" style="margin-top: 8px;">体育赛事</el-radio>
+              <el-radio label="5" border size="small" style="margin-top: 8px;">大型演出</el-radio>
+            </el-radio-group>
+          </div>
+          <div class="create-item">
+            <h3 style="margin-bottom: 15px;">上传项目图片</h3>
+            <el-upload
+              class="upload-container"
+              list-type="picture-card"
+              action="#"
+              :auto-upload="false"
+              :show-file-list="true"
+              :on-success="handlePictureSuccess"
+              :before-upload="beforePictureUpload"
+              limit=1  
+            >
+
+            </el-upload>
+          </div>
+          <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+            <el-button size="large" @click="handleCreateProjectSubmit">提交</el-button>
+          </div>
         </div>
       </v-dialog>
     </div>
@@ -105,45 +190,79 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import store from '../store'
 
 export default {
+  computed: {
+    displayedProjects() {
+      let displayedProjects = this.projects;
+      if (this.projectNameKey != null && this.projectTypeKey != null) {
+          displayedProjects = displayedProjects.filter(item => {
+            return item.name.includes(this.projectNameKey) && item.category.includes(this.projectTypeKey);
+          })
+      }
+      return displayedProjects;
+    },
+    displayedMembers() {
+      let displayedMembers = this.members;
+      if (this.memberNameKey != null && this.collegeIdKey != null && this.telephoneKey != null) {
+        displayedMembers = displayedMembers.filter(item => {
+          return item.name.includes(this.memberNameKey) && item.telephone.includes(this.telephoneKey) && item.collegeId.includes(this.collegeIdKey);
+        })
+      }
+      return displayedMembers;
+    }
+  },
   created() {
-    // 根据teamId获取各详细信息：申请表、成员表、团队介绍、（项目列表）
     this.fetch();
   },
   data() {
     return {
       teamId: this.$route.query.id,
       teamName: this.$route.query.name,
-      establishmentDate: this.$route.query.date,
       teamSize: this.$route.query.number,
+      establishmentDate: this.$route.query.date,
       totalHours: this.$route.query.hours,
       teamIntroduction: "",
       createApplicationDialogVisible: false,
       viewMembersDialogVisible: false,
+      createProjectDialogVisible: false,
+      projectName: "",
+      projectIntro: "",
+      projectType: "",
+      // 搜索功能
+      projectNameKey: "",
+      projectTypeKey: "",
+      collegeIdKey: "",
+      memberNameKey: "",
+      telephoneKey: "",
       projects: [
         {
+          hasComments: false,
           name: "志愿项目1",
           category: "社区服务",
           createdDate: "2023-11-17"
         },
         {
+          hasComments: false,
           name: "志愿项目2",
           category: "科技科普",
-          createdDate: "2023-11-17"
+          createdDate: "2023-11-18"
         },
         {
+          hasComments: false,
           name: "志愿项目3",
           category: "支教助学",
-          createdDate: "2023-11-17"
+          createdDate: "2023-11-19"
         },
         {
+          hasComments: false,
           name: "志愿项目4",
           category: "大型演出",
-          createdDate: "2023-11-17"
+          createdDate: "2023-11-20"
         },
         {
+          hasComments: false,
           name: "志愿项目5",
           category: "体育赛事",
-          createdDate: "2023-11-17"
+          createdDate: "2023-11-21"
         },
       ],
       applicationList: [
@@ -155,97 +274,42 @@ export default {
         {
           collegeId: "21370001",
           name: "bbb",
-          date: "2023-11-17",
+          date: "2023-11-18",
         },
         {
           collegeId: "21370002",
           name: "ccc",
-          date: "2023-11-17",
+          date: "2023-11-19",
         },
         {
           collegeId: "21370003",
           name: "ddd",
-          date: "2023-11-17",
+          date: "2023-11-20",
         },
       ],
       members: [
         {
-          collegeId: "21379999",
-          name: "aa",
-          telephone: "13710000000",
+          collegeId: "21371372",
+          name: "严皓钧",
+          telephone: "13710000001",
           joinDate: "2023-11-18",
           hours: 1,
         },
         {
-          collegeId: "21379998",
-          name: "bb",
-          telephone: "13710000000",
-          joinDate: "2023-11-18",
+          collegeId: "21371401",
+          name: "王乐",
+          telephone: "13710000002",
+          joinDate: "2023-11-19",
           hours: 1,
         },
         {
-          collegeId: "21379997",
-          name: "cc",
-          telephone: "13710000000",
-          joinDate: "2023-11-18",
+          collegeId: "21371295",
+          name: "张昊翔",
+          telephone: "13710000003",
+          joinDate: "2023-11-20",
           hours: 1,
         },
-        {
-          collegeId: "21379996",
-          name: "dd",
-          telephone: "13710000000",
-          joinDate: "2023-11-18",
-          hours: 1,
-        },
-        {
-          collegeId: "21379995",
-          name: "ee",
-          telephone: "13710000000",
-          joinDate: "2023-11-18",
-          hours: 1,
-        },
-        {
-          collegeId: "21379996",
-          name: "dd",
-          telephone: "13710000000",
-          joinDate: "2023-11-18",
-          hours: 1,
-        },
-        {
-          collegeId: "21379995",
-          name: "ee",
-          telephone: "13710000000",
-          joinDate: "2023-11-18",
-          hours: 1,
-        },
-        {
-          collegeId: "21379996",
-          name: "dd",
-          telephone: "13710000000",
-          joinDate: "2023-11-18",
-          hours: 1,
-        },
-        {
-          collegeId: "21379995",
-          name: "ee",
-          telephone: "13710000000",
-          joinDate: "2023-11-18",
-          hours: 1,
-        },
-        {
-          collegeId: "21379996",
-          name: "dd",
-          telephone: "13710000000",
-          joinDate: "2023-11-18",
-          hours: 1,
-        },
-        {
-          collegeId: "21379995",
-          name: "ee",
-          telephone: "13710000000",
-          joinDate: "2023-11-18",
-          hours: 1,
-        }
+
       ],
     };
   },
@@ -271,7 +335,7 @@ export default {
                       vm.teamIntroduction = res.data.teamIntro;
                       vm.applicationList = res.data.applicationList;
                       vm.members = res.data.memberList;
-                      // 暂时没有项目列表，所以项目列表目前是写死的
+                      vm.projects = res.data.projects;
                   }
                   else {
                       console.log('请求失败, 错误码code不是0');
@@ -282,8 +346,28 @@ export default {
     viewMembers() {
       this.viewMembersDialogVisible = true;
     },
-    viewProjectDetails(project) {
-      
+    showCreateProjectDialog() {
+      this.createProjectDialogVisible = true;
+    },
+    viewProjectDetails(row) {
+      let fatherTeam = {
+          id: this.teamId,
+          name: this.teamName,
+          establishmentDate: this.establishmentDate,
+          size: this.teamSize,
+          totalHours: this.totalHours,
+      };
+      this.$router.push({
+        path: '/admin/projectinfo',
+        query: {
+          id: row.id,
+          name: row.name,
+          type: row.category,
+          createdDate: row.createdDate,
+          // 还要传递所属团队
+          fatherTeam: JSON.stringify(fatherTeam),
+        }
+      })
     },
     handleSave() {
       const submitParams = {
@@ -420,6 +504,47 @@ export default {
         this.viewMembersDialogVisible = true;
       });
     },
+    handleCreateProjectSubmit() {
+      this.createProjectDialogVisible = false;
+      if (this.projectName === "" || this.projectType === "" || this.projectIntro === "") {
+        ElMessageBox.alert("请填写完整的项目信息", "注意", {
+          confirmButtonText: "OK",
+          type: "warning",
+        }).then(() => {
+          this.createProjectDialogVisible = true;
+        })
+      }
+      else {
+        const submitParams = {
+          teamId: this.teamId,
+          projectName: this.projectName,
+          projectIntro: this.projectIntro,
+          projectType: this.projectType,
+
+        };
+        // axios
+        this.axios({
+          method: 'post',
+          url: '',
+          data: submitParams,
+        }).then((res) => {
+          console.log(res);
+          if (res.data.code === 0) {
+            console.log("创建项目成功");
+            // 刷新项目列表
+            this.fetch();
+            ElMessage.success("成功创建项目");
+          }
+          else if (res.data.code === 1) {
+            ElMessage.error("项目名已被注册");
+            console.log("项目名称重复");
+          }
+          else {
+            console.log("创建失败, 错误码不是 0 或 1");
+          }
+        })
+      }
+    }
   }
 };
 </script>
@@ -455,6 +580,13 @@ export default {
   max-height: 100%;
 }
 
+.team-info-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-right: 50px;
+}
+
 .team-info {
   flex: 1;
   display: flex;
@@ -465,28 +597,14 @@ export default {
 .team-info-buttons {
   display: flex;
   flex-direction: row;
-  margin-top: 5px;
   margin-left: 60px;
+  margin-top: 10px;
 }
 
 .team-info-button {
   margin-bottom: 5px;
   margin-right: 30px;
   margin-left: 30px;
-}
-
-.team-info-item {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.team-info-item label {
-  margin-right: 10px;
-}
-
-.team-info-buttons {
-  margin-top: 10px;
 }
 
 .content {
@@ -509,4 +627,19 @@ footer {
   flex-direction: column;
   background: white;
 }
+
+.create-dialog-container {
+  display: flex;
+  height: 800px;
+  width: 500px;
+  background: white;
+  flex-direction: column;
+}
+
+.create-item {
+  margin-top: 50px;
+  margin-left: 50px;
+  width: 70%;
+}
+
 </style>
