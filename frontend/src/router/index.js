@@ -84,7 +84,11 @@ const router = createRouter({
                     name: 'teamDetail',
                     component: () => import('../views/TeamManagePage.vue')
                 },
-                
+                {
+                    path: '/admin/projectinfo',
+                    name: 'projectInfo',
+                    component: () => import('../views/ProjectManagePage.vue')
+                }
             ]
         },
     ]
