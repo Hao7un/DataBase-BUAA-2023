@@ -525,7 +525,7 @@ export default {
         // axios
         this.axios({
           method: 'post',
-          url: '',
+          url: 'http://localhost:8000/admin_create_project',
           data: submitParams,
         }).then((res) => {
           console.log(res);

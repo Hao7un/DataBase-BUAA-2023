@@ -445,7 +445,7 @@ export default {
 
             this.axios({
                 method: 'post',
-                url: '',
+                url: 'http://localhost:8000/admin_get_project_details',
                 data: submitParams,
             })
                 .then((res) => {
@@ -483,7 +483,7 @@ export default {
 
             this.axios({
                 method: 'post',
-                url: '',
+                url: 'http://localhost:8000/admin_update_project_info',
                 data: submitParams,
             })
                 .then((res) => {
@@ -582,7 +582,7 @@ export default {
 
                 this.axios({
                     method: 'post',
-                    url: '',
+                    url: 'http://localhost:8000/admin_create_recruitment',
                     data: submitParams,
                 })
                     .then((res) => {
@@ -624,7 +624,7 @@ export default {
                 };
                 this.axios({
                     method: 'post',
-                    url: '',
+                    url: 'http://localhost:8000/admin_create_tutorial',
                     data: submitParams,
                 })
                     .then((res) => {
@@ -656,7 +656,7 @@ export default {
 
                 this.axios({
                     method: 'post',
-                    url: '',
+                    url: 'http://localhost:8000/admin_delete_tutorial',
                     data: submitParams,
                 })
                     .then((res) => {
@@ -705,7 +705,7 @@ export default {
                     
                     this.axios({
                         method: 'post',
-                        url: '',
+                        url: 'http://localhost:8000/admin_update_tutorial',
                         data: submitParams,
                     })
                         .then((res) => {
@@ -745,7 +745,7 @@ export default {
 
                 this.axios({
                     method: 'post',
-                    url: '',
+                    url: 'http://localhost:8000/admin_reply_question',
                     data: submitParams,
                 })
                     .then((res) => {

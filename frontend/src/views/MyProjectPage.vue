@@ -75,7 +75,7 @@
 
 export default {
     created() {
-        this.axios.post('http://localhost:8000/', {
+        this.axios.post('http://localhost:8000/user_get_favorite_projects', {
             userId: this.$store.state.userId
         })
             .then(res => {
