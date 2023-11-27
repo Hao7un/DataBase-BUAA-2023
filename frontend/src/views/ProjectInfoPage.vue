@@ -26,7 +26,7 @@
                             <el-divider border-style="solid" direction="vertical" />
                             <p>项目类别：{{ projectType }}</p>
                         </div>
-                        <p style="font-size: 18px; font-style: italic;">上一次招募结束：{{ latestTime }}</p>
+                        <p style="font-size: 18px; font-style: italic;">{{ recruitmentStatus(latestTime) }}</p>
                     </div>
                 </div>
                 <div class="intro-container">
@@ -122,6 +122,16 @@ export default {
                 name: 'teamInfo',
                 params: { teamId: id }
             });
+        },
+        recruitmentStatus(latestTime) {
+            if (latestTime === 'N/A') {
+                return '暂未招募';
+            } else {
+                const now = new Date();
+                const latest = new Date(latestTime);
+                if (now < latest) return '招募中';
+                else return '最近招募：' + latestTime;
+            }
         },
         collectProject() {
             this.axios.post('http://localhost:8000/', {

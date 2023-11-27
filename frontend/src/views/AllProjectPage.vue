@@ -87,28 +87,28 @@ export default {
     },
     data() {
         return {
+            statusRadio: "",
             typeRadio: "",
             onlyMyTeam: false,
             projectName: "",
             teamName: "",
-            statusRadio: "",
             currentPage: 1,
             projectList: [
-                { id: 1, name: "志愿项目1", type: "社区服务", team: "志愿团队1", isMyTeam: false, status: "招募中" },
-                { id: 2, name: "志愿项目2", type: "科技科普", team: "志愿团队2", isMyTeam: true, status: "本学期" },
-                { id: 3, name: "志愿项目3", type: "支教助学", team: "志愿团队3", isMyTeam: false, status: "本月" },
-                { id: 4, name: "志愿项目4", type: "体育赛事", team: "志愿团队4", isMyTeam: false, status: "本学期" },
-                { id: 5, name: "志愿项目5", type: "大型演出", team: "志愿团队5", isMyTeam: false, status: "上学期" },
-                { id: 6, name: "志愿项目6", type: "其它", team: "志愿团队6", isMyTeam: false, status: "本学年未招募" },
-                { id: 7, name: "志愿项目7", type: "社区服务", team: "志愿团队7", isMyTeam: false, status: "招募中" },
-                { id: 8, name: "志愿项目8", type: "科技科普", team: "志愿团队8", isMyTeam: false, status: "本学年未招募" },
-                { id: 9, name: "志愿项目9", type: "支教助学", team: "志愿团队9", isMyTeam: false, status: "本月" },
-                { id: 10, name: "志愿项目10", type: "体育赛事", team: "志愿团队10", isMyTeam: true, status: "本学期" },
-                { id: 11, name: "志愿项目11", type: "大型演出", team: "志愿团队6", isMyTeam: false, status: "上学期" },
-                { id: 12, name: "志愿项目12", type: "其它", team: "志愿团队7", isMyTeam: false, status: "本学年未招募" },
-                { id: 13, name: "志愿项目13", type: "社区服务", team: "志愿团队8", isMyTeam: false, status: "招募中" },
-                { id: 14, name: "志愿项目14", type: "科技科普", team: "志愿团队9", isMyTeam: false, status: "招募中" },
-                { id: 15, name: "志愿项目15", type: "支教助学", team: "志愿团队10", isMyTeam: true, status: "本月" }
+                { id: 1, name: "志愿项目1", type: "社区服务", team: "志愿团队1", isMyTeam: false, latestTime: "2023-12-21" },
+                { id: 2, name: "志愿项目2", type: "科技科普", team: "志愿团队2", isMyTeam: true, latestTime: "2023-09-01" },
+                { id: 3, name: "志愿项目3", type: "支教助学", team: "志愿团队3", isMyTeam: false, latestTime: "2023-11-01" },
+                { id: 4, name: "志愿项目4", type: "体育赛事", team: "志愿团队4", isMyTeam: false, latestTime: "2023-09-01" },
+                { id: 5, name: "志愿项目5", type: "大型演出", team: "志愿团队5", isMyTeam: false, latestTime: "2023-04-01" },
+                { id: 6, name: "志愿项目6", type: "其它", team: "志愿团队6", isMyTeam: false, latestTime: "2022-01-01" },
+                { id: 7, name: "志愿项目7", type: "社区服务", team: "志愿团队7", isMyTeam: false, latestTime: "2023-11-21" },
+                { id: 8, name: "志愿项目8", type: "科技科普", team: "志愿团队8", isMyTeam: false, latestTime: "2021-01-01" },
+                { id: 9, name: "志愿项目9", type: "支教助学", team: "志愿团队9", isMyTeam: false, latestTime: "2023-11-01" },
+                { id: 10, name: "志愿项目10", type: "体育赛事", team: "志愿团队10", isMyTeam: true, latestTime: "2023-10-01" },
+                { id: 11, name: "志愿项目11", type: "大型演出", team: "志愿团队6", isMyTeam: false, latestTime: "2023-05-01" },
+                { id: 12, name: "志愿项目12", type: "其它", team: "志愿团队7", isMyTeam: false, latestTime: "2021-01-01" },
+                { id: 13, name: "志愿项目13", type: "社区服务", team: "志愿团队8", isMyTeam: false, latestTime: "2023-11-22" },
+                { id: 14, name: "志愿项目14", type: "科技科普", team: "志愿团队9", isMyTeam: false, latestTime: "2023-11-23" },
+                { id: 15, name: "志愿项目15", type: "支教助学", team: "志愿团队10", isMyTeam: false, latestTime: "N/A" }
             ],
             option1: [
                 { key: 1, value: "社区服务" },
@@ -123,8 +123,8 @@ export default {
                 { key: 1, value: "招募中" },
                 { key: 2, value: "本月" },
                 { key: 3, value: "本学期" },
-                { key: 4, value: "上学期" },
-                { key: 5, value: "本学年未招募" },
+                { key: 4, value: "上学期及以前" },
+                { key: 5, value: "暂未招募" },
             ]
         };
     },
@@ -141,8 +141,9 @@ export default {
             }
             if (this.typeRadio != null && this.projectName != null && this.teamName != null && this.statusRadio != null) {
                 filteredList = filteredList.filter(item => {
+                    let itemStatus = this.getProjectStatus(item.latestTime);
                     return item.type.includes(this.typeRadio) && item.name.includes(this.projectName)
-                        && item.team.includes(this.teamName) && item.status.includes(this.statusRadio);
+                        && item.team.includes(this.teamName) && itemStatus.includes(this.statusRadio);
                 }
                 )
             }
@@ -158,8 +159,9 @@ export default {
             }
             if (this.typeRadio != null && this.projectName != null && this.teamName != null && this.statusRadio != null) {
                 list = list.filter(item => {
+                    let itemStatus = this.getProjectStatus(item.latestTime);
                     return item.type.includes(this.typeRadio) && item.name.includes(this.projectName)
-                        && item.team.includes(this.teamName) && item.status.includes(this.statusRadio);
+                        && item.team.includes(this.teamName) && itemStatus.includes(this.statusRadio);
                 }
                 )
             }
@@ -187,6 +189,23 @@ export default {
                 params: { projectId: id }
             });
         },
+        getProjectStatus(time) {
+            let currentTime = new Date();
+            if (time == "N/A") {
+                return "暂未招募";
+            } else {
+                let latestTime = new Date(time);
+                if (currentTime < latestTime) {
+                    return "招募中";
+                } else if (currentTime.getFullYear() == latestTime.getFullYear() && currentTime.getMonth() == latestTime.getMonth()) {
+                    return "本月";
+                } else if (currentTime.getFullYear() == latestTime.getFullYear() && Math.floor(currentTime.getMonth() / 6) == Math.floor(latestTime.getMonth() / 6)) {
+                    return "本学期";
+                } else {
+                    return "上学期及以前";
+                }
+            }
+        }
     }
 }
 

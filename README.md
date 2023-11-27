@@ -243,7 +243,7 @@
           name: "志愿项目1",
           type: "社区服务",
           team: "志愿团队1",
-          latestTime: "YYYY-MM-DD", // 上一次招募结束时间 
+          latestTime: "YYYY-MM-DD", // 上一次招募结束时间，N/A: 未发布招募
         }
     ] 
   }
@@ -271,7 +271,7 @@
     projectName: "志愿项目1",
     projectType: "社区服务",
     projectIntro: "优秀项目。",
-    latestTime: "YYYY-MM-DD", // 上一次招募结束时间
+    latestTime: "YYYY-MM-DD", // 上一次招募结束时间，N/A: 未发布招募
     teamId: "00001",
     teamName: "志愿团队1",
     discussionList: [
@@ -301,7 +301,7 @@
   {
     userId: "00001",
     projectId: "00001",
-    type: false  // true: 取消收藏 false: 收藏
+    type: false  // true: 取消收藏，false: 收藏
   }
   ```
 
