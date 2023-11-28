@@ -156,6 +156,7 @@
     teamNumber: "50",
     teamIntro: "优秀团队。",
     foundationDate: "YYYY-MM-DD",
+    joinDate: "YYYY-MM-DD",
     teamLeader: "张昊翔",
     telephone: "18100000000",
     email: "abcd@xyz.com",

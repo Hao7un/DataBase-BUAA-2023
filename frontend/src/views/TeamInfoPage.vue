@@ -13,7 +13,7 @@
                             <el-button size="large" type="primary" style="margin-top: 5px; margin-left: 40px;"
                                 :disabled="isTeamMember" @click="applyForTeam">
                                 <span v-if="isTeamMember"
-                                    style="font-weight: bold; font-size: 15px; color:whitesmoke">已加入</span>
+                                    style="font-weight: bold; font-size: 15px; color:whitesmoke">加入于{{ joinDate }}</span>
                                 <span v-else style="font-weight: bold; font-size: 15px; color:whitesmoke">申请加入</span>
                             </el-button>
                             <br>
@@ -91,6 +91,7 @@ export default {
                     this.teamNumber = res.data.teamNumber;
                     this.teamIntro = res.data.teamIntro;
                     this.foundationDate = res.data.foundationDate;
+                    this.joinDate = res.data.joinDate;
                     this.teamLeader = res.data.teamLeader;
                     this.telephone = res.data.telephone;
                     this.email = res.data.email;
@@ -100,11 +101,12 @@ export default {
     },
     data() {
         return {
-            isTeamMember: false,
+            isTeamMember: true,
             teamName: '计算机学院志愿服务队',
             teamNumber: '10',
             teamIntro: '团队致力于发挥气象行业特色，常态化开展气象防灾减灾科普进社区、进校园公益项目，创办了独具特色的“气象科普”品牌。2022年，结合文明实践“一圈一带一群”建设，与徐汇区多个社区形成合作机制，定期为徐家汇商圈和社区居民开展科普讲座，惠及学生和市民千余人次，申报的“气象防灾减灾宣讲”入选为上海市文明实践百项重点项目。',
             foundationDate: '2020-01-01',
+            joinDate: '2023-01-01',
             teamLeader: '张昊翔',
             telephone: '18100000000',
             email: '1234@xyz.com',

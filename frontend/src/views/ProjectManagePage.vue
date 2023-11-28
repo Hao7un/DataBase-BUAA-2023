@@ -44,7 +44,7 @@
         </div>
         <el-divider style="width: 90%; margin-left: 100px;" />
         <div class="content">
-            <el-input type="textarea" v-model="projectIntro" placeholder="输入项目简介（不超过500字）" :autosize="{minRows: 5}" clearable></el-input>
+            <el-input type="textarea" v-model="projectIntro" placeholder="输入项目简介（不超过500字）" :autosize="{minRows: 5}" clearable :maxlength="500" show-word-limit></el-input>
         </div>
         <el-divider style="width: 90%; margin-left: 100px;" />
         <div class="footer">
@@ -55,13 +55,13 @@
                 <template #empty>
                     <p>无匹配数据</p>
                 </template>
-                <el-table-column prop="state" label="招募状态" align="center" :cell-style="setCellStyle">
+                <el-table-column prop="state" label="招募状态" align="center">
                     <template #header>
                         <div>招募状态</div>
                         <el-select v-model="statusKey" clearable placeholder="选择招募状态">
                             <el-option label="即将招募" key="即将招募" value="即将招募"></el-option>
                             <el-option label="招募中" key="招募中" value="招募中"></el-option>
-                            <el-option label="结束招募" key="结束招募" value="结束招募"></el-option>
+                            <el-option label="招募结束" key="招募结束" value="招募结束"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="create-item">
                         <h3 style="margin-bottom: 15px;">教程内容</h3>
-                        <el-input v-model="tutorialContent" type="textarea" clearable :autosize="{minRows: 12}" style="width: 70%;"></el-input>
+                        <el-input v-model="tutorialContent" type="textarea" clearable :autosize="{minRows: 12}" style="width: 70%;" show-word-limit :maxlength="500"></el-input>
                     </div> 
                     <div style="display: flex; justify-content: center; margin-bottom: 30px; margin-top: 40px">
                         <el-button @click="handleCreateTutorial">提交</el-button>
@@ -229,7 +229,7 @@
                             <el-input v-model="selectedTutorial.tag" clearable style="width: 150px;"></el-input>
                         </el-form-item>
                         <div style="margin-left: 50px; margin-bottom: 10px; margin-top: 25px">教程内容：</div>
-                        <el-input v-model="selectedTutorial.content" clearable type="textarea" :autosize="{minRows: 12}" style="width: 75%; margin-left: 100px"></el-input>
+                        <el-input v-model="selectedTutorial.content" clearable type="textarea" :autosize="{minRows: 12}" style="width: 75%; margin-left: 100px" :maxlength="500" show-word-limit></el-input>
                     </el-form>
                 </div>
             </el-dialog>
@@ -262,7 +262,7 @@
                 <h3 style="display: flex; justify-content: center; margin-bottom: 10px">回复留言</h3>
                 <div>问题：{{ this.selectedComment.content }}</div>
                 <div style="margin-top: 15px">回复：
-                    <el-input style="width: 550px; margin-top: 10px" type="textarea" v-model="replyContent"></el-input>
+                    <el-input style="width: 550px; margin-top: 10px" type="textarea" v-model="replyContent" :maxlength="500" show-word-limit></el-input>
                 </div>
                 <el-button style="margin-left: 230px; margin-top: 25px;" @click="replyCommentSubmit">提交回复</el-button>
             </el-dialog>
@@ -278,8 +278,36 @@ import store from '../store'
 
 export default {
     computed: {
+        recruitmentList() {
+            let recruitmentList = [];
+            for (let i = 0; i < this.recruitements.length; i++) {
+                let item = this.recruitements[i];
+                let element = {
+                    state: "",
+                    launchTime: item.launchTime,
+                    deadline: item.deadline,
+                    startTime: item.startTime,
+                    endTime: item.endTime,
+                    location: item.location,
+                    type: item.type,
+                    hours: item.hours,
+                    number: item.number,
+                }
+                if (Date.now() < new Date(item.launchTime)) {
+                    element.state = "即将招募";
+                }
+                else if (Date.now() < new Date(item.deadline)) {
+                    element.state = "招募中";
+                }
+                else {
+                    element.state = "招募结束";
+                }
+                recruitmentList.push(element);
+            }
+            return recruitmentList;
+        },
         displayedRecruitments() {
-            let displayedRecruitments = this.recruitements;
+            let displayedRecruitments = this.recruitmentList;
             if (this.typeKey != null && this.locationKey != null && this.statusKey != null) {
                 displayedRecruitments = displayedRecruitments.filter(item => {
                     return item.state.includes(this.statusKey) && item.type.includes(this.typeKey) && item.location.includes(this.locationKey);
@@ -295,7 +323,7 @@ export default {
                 })
             }
             return displayedTutorials;
-        }
+        },
     },
     created() {
         this.fetch();
@@ -341,7 +369,7 @@ export default {
             tutorialTagKey: "",
             recruitements: [
                 {
-                    state: "即将招募",
+                    state: "",
                     launchTime: "2023-11-24 12:22",
                     deadline: "2023-11-24 13:00",
                     startTime: "2023-11-25 16:08",
@@ -352,9 +380,9 @@ export default {
                     number: 10,
                 },
                 {
-                    state: "招募中",
+                    state: "",
                     launchTime: "2023-11-23 12:23",
-                    deadline: "2023-11-23 14:00",
+                    deadline: "2023-11-28 14:00",
                     startTime: "2023-11-24 16:09",
                     endTime: "2023-11-24 18:00",
                     location: "田径场",
@@ -363,8 +391,8 @@ export default {
                     number: 20,
                 },
                 {
-                    state: "结束招募",
-                    launchTime: "2023-11-23 12:24",
+                    state: "",
+                    launchTime: "2023-11-29 12:24",
                     deadline: "2023-11-23 15:00",
                     startTime: "2023-11-24 16:10",
                     endTime: "2023-11-24 17:30",
@@ -517,7 +545,7 @@ export default {
             else if (row.state === '即将招募' && columnIndex == 0) {
                 return { 'color' : 'orange' }
             }
-            else if (row.state === "结束招募" && columnIndex == 0) {
+            else if (row.state === "招募结束" && columnIndex == 0) {
                 return { 'color': 'red' }
             }
         },
@@ -751,7 +779,7 @@ export default {
                     .then((res) => {
                         console.log(res);
                         if (res.data.code === 0) {
-                            console.log(回复成功);
+                            console.log("回复成功");
                             ElMessage.success("回复成功");
                             // 刷新评论列表
                             this.fetch();
