@@ -156,7 +156,7 @@
     teamNumber: "50",
     teamIntro: "优秀团队。",
     foundationDate: "YYYY-MM-DD",
-    joinDate: "YYYY-MM-DD",
+    joinDate: "YYYY-MM-DD", // N/A: 未加入团队
     teamLeader: "张昊翔",
     telephone: "18100000000",
     email: "abcd@xyz.com",
@@ -288,6 +288,7 @@
         {
           time: "YYYY-MM-DD",
           title: "注意事项",
+          tag: "培训",
           content: "注意安全。"
         }
     ]
@@ -333,5 +334,94 @@
   {
     code: 0,
     message: ""
+  }
+  ```
+
+## JoinRecruitmentPage
+### 获取可见招募信息
+**仅包含团队内部招募和公开招募**
+
+* 发送请求：
+
+  ```javascript
+  {
+    userId: "00001"
+  }
+  ```
+
+* 获取成功
+
+  ```javascript
+  {
+    code: 0,
+    message: "",
+    recruitmentList: [
+        {
+          id: "00001",
+          launchTime: "YYYY-MM-DD HH:MM", // 招募发布时间
+          dueTime: "YYYY-MM-DD HH:MM", // 招募结束时间
+          startTime: "YYYY-MM-DD HH:MM", // 活动开始时间
+          endTime: "YYYY-MM-DD HH:MM", // 活动结束时间
+          location: "操场",
+          volunteerHour: "5",
+          status: "招募中", // 招募中/结束招募
+          type: "团队内部招募", // 仅限团体成员/公共
+          maxNumber: "50",
+          currentNumber: "30",
+          projectId: "00001",
+          projectName: "志愿项目1",
+          projectType: "社区服务"
+        }
+    ] 
+  }
+  ```
+
+## MyRecruitmentPage
+### 获取我参加的招募信息
+
+* 发送请求：
+
+  ```javascript
+  {
+    userId: "00001"
+  }
+  ```
+
+* 获取成功
+
+  ```javascript
+  {
+    code: 0,
+    message: "",
+    futureRecruitmentList: [
+        {
+          id: "00001",
+          startTime: "YYYY-MM-DD HH:MM", // 活动开始时间
+          endTime: "YYYY-MM-DD HH:MM", // 活动结束时间
+          location: "操场",
+          volunteerHour: "5",
+          type: "团队内部招募", // 仅限团体成员/公共
+          maxNumber: "50",
+          currentNumber: "30",
+          projectId: "00001",
+          projectName: "志愿项目1",
+          projectType: "社区服务"
+        }
+    ],
+    pastRecruitmentList: [
+        {
+          id: "00001",
+          startTime: "YYYY-MM-DD HH:MM", // 活动开始时间
+          endTime: "YYYY-MM-DD HH:MM", // 活动结束时间
+          location: "操场",
+          volunteerHour: "5",
+          type: "团队内部招募", // 仅限团体成员/公共
+          maxNumber: "50",
+          currentNumber: "30",
+          projectId: "00001",
+          projectName: "志愿项目1",
+          projectType: "社区服务"
+        }
+    ] 
   }
   ```
