@@ -402,7 +402,7 @@
           volunteerHour: "5",
           type: "团队内部招募", // 仅限团体成员/公共
           maxNumber: "50",
-          currentNumber: "30",
+          participantNumber: "30",
           projectId: "00001",
           projectName: "志愿项目1",
           projectType: "社区服务"
@@ -417,7 +417,7 @@
           volunteerHour: "5",
           type: "团队内部招募", // 仅限团体成员/公共
           maxNumber: "50",
-          currentNumber: "30",
+          participantNumber: "30",
           projectId: "00001",
           projectName: "志愿项目1",
           projectType: "社区服务"
