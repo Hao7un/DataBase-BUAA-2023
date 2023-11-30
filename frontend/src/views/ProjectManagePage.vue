@@ -9,7 +9,7 @@
         <h2 class="title">项目详情</h2>
         <div class="header">
             <div class="project-avatar">
-                <img src="../assets/images/project.png">
+                <img src="../assets/images/project.png" id="avatar">
             </div>
             <el-divider direction="vertical" style="height: 200px;"></el-divider>
             <div class="project-info-container">
@@ -327,6 +327,7 @@ export default {
     },
     created() {
         this.fetch();
+        this.fetchPicture();
     },
     data() {
         return {
@@ -466,6 +467,33 @@ export default {
         }
     },
     methods: {
+        fetchPicture() {
+            const submitParams = {
+                projectId: this.projectId,
+
+            };
+
+            this.axios({
+                method: 'post',
+                url: 'http://localhost:8000/',
+                data: submitParams,
+            })
+                .then((res) => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        var avatar = document.getElementById('avatar');
+                        var img = res.data.avatar;
+                        avatar.src = "data:image/jpeg;base64," + btoa(
+                            new Uint8Array(img).reduce(function(img, byte) {
+                                return img + String.fromCharCode(byte);
+                            }, '')
+                        );
+                    }
+                    else {
+                        console.log("获取项目图片失败, 错误码不是0");
+                    }
+                })
+        },
         fetch() {
             const submitParams = {
                 projectId: this.projectId,
@@ -567,7 +595,7 @@ export default {
             })
         },
         handleCreateRecruitmentSubmit() {
-            console.log(this.maxNumber + " " + this.hours);
+            console.log(typeof(this.type));
             if (this.startTime === "" || this.location === "" || this.type === "" || this.deadline === "" || this.endTime === "") {
                 this.createRecruitmentVisible = false;
                 ElMessageBox.alert("请填写完整的招募信息", "注意", {
@@ -605,7 +633,10 @@ export default {
                     type: this.type,
                     hours: this.hours,
                     maxNumber: this.maxNumber,
-
+                    message: {
+                        title: "您收藏的项目发布了新的招募",
+                        content: "您关注的 " + this.projectName + " 项目发布了新的招募, 招募开始时间为 " + startTime,
+                    }
                 };
 
                 this.axios({
@@ -769,6 +800,10 @@ export default {
                     questionId: this.selectedComment.questionId,
                     userId: this.$store.state.userId,
                     replyContent: this.replyContent,
+                    message: {
+                        title: "您的问题得到了回复",
+                        content: "您的问题' " + this.selectedComment.content + " '得到了回复: " + this.replyContent,
+                    }
                 };
 
                 this.axios({

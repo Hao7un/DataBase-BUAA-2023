@@ -62,7 +62,10 @@
                     </div>
                 </div>
                 <div class="pagination-container">
-                    <el-pagination @current-change="handlePageChange" :page-size="12" :total="filteredList.length"
+                    <el-pagination 
+                        @current-change="handlePageChange" 
+                        :page-size="12" 
+                        :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
@@ -227,6 +230,7 @@ export default {
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
+
 .item-font {
     font-size: 18px;
     margin-left: 10px;
@@ -239,7 +243,7 @@ export default {
 .content-container {
     display: flex;
     flex-direction: column;
-    margin-left: 30px;
+    margin-left: 15px; /* 这里保证了主内容区不会被挤开 */
 }
 
 .selector-container {
