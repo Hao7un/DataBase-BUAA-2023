@@ -196,7 +196,6 @@
 
 <script>
 import { ElMessage, ElMessageBox } from 'element-plus';
-import store from '../store'
 
 export default {
   computed: {
