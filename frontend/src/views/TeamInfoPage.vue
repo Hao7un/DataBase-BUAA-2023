@@ -60,7 +60,7 @@
                         </div>
                         <p><el-icon>
                                 <Guide />
-                            </el-icon> 项目类别：{{ project.type }}</p>
+                            </el-icon> 项目类别：{{ projectType(project.type) }}</p>
                         <br>
                         <p><el-icon>
                                 <Calendar />
@@ -112,10 +112,10 @@ export default {
             telephone: '18100000000',
             email: '1234@xyz.com',
             projectList: [
-                { id: 1, name: '项目1', type: '社区服务', times: 10 },
-                { id: 2, name: '项目2', type: '体育比赛', times: 5 },
-                { id: 3, name: '项目3', type: '科普讲解', times: 3 },
-                { id: 4, name: '项目4', type: '支教助学', times: 20 },
+                { id: 1, name: '项目1', type: '1', times: 10 },
+                { id: 2, name: '项目2', type: '2', times: 5 },
+                { id: 3, name: '项目3', type: '3', times: 3 },
+                { id: 4, name: '项目4', type: '4', times: 20 },
             ],
         }
     },
@@ -138,12 +138,28 @@ export default {
                         ElMessage.success('申请成功');
                     }
                 });
+        },
+        projectType(type) {
+            switch (type) {
+                case '1':
+                    return '社区服务';
+                case '2':
+                    return '科技科普';
+                case '3':
+                    return '支教助学';
+                case '4':
+                    return '体育赛事';
+                case '5':
+                    return '大型演出';
+                case '6':
+                    return '其它';
+            }
         }
     },
     computed: {
         userId() {
             return this.$store.state.userId;
-        }
+        },
     },
 }
 </script>

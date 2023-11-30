@@ -164,7 +164,7 @@
         { 
           id: "00001", 
           name: "志愿项目1", 
-          type: "社区服务", 
+          type: "1", // 1: 社区服务，2: 科技科普，3: 支教助学，4: 体育赛事，5: 大型演出，6: 其它
           times: "10" 
         }  
     ]
@@ -212,7 +212,7 @@
         {
           id: "00001",
           name: "志愿项目1",
-          type: "社区服务",
+          type: "1", // 1: 社区服务，2: 科技科普，3: 支教助学，4: 体育赛事，5: 大型演出，6: 其它
           team: "志愿团队1",
           isMyTeam: true, // true: 是我所在的团队，false: 不是我所在的团队
           latestTime: "YYYY-MM-DD", // 上一次招募结束时间 
@@ -242,7 +242,7 @@
         {
           id: "00001",
           name: "志愿项目1",
-          type: "社区服务",
+          type: "1", // 1: 社区服务，2: 科技科普，3: 支教助学，4: 体育赛事，5: 大型演出，6: 其它
           team: "志愿团队1",
           latestTime: "YYYY-MM-DD", // 上一次招募结束时间，N/A: 未发布招募
         }
@@ -270,7 +270,7 @@
     message: "",
     isCollect: true, // true: 已收藏，false: 未收藏
     projectName: "志愿项目1",
-    projectType: "社区服务",
+    projectType: "1" // 1: 社区服务，2: 科技科普，3: 支教助学，4: 体育赛事，5: 大型演出，6: 其它
     projectIntro: "优秀项目。",
     latestTime: "YYYY-MM-DD", // 上一次招募结束时间，N/A: 未发布招募
     teamId: "00001",
@@ -365,12 +365,12 @@
           location: "操场",
           volunteerHour: "5",
           isAttend: true, // true: 已报名，false: 未报名
-          type: "仅限团体成员", // 仅限团体成员/公共
+          type: "1", // 1: 面向公共招募，2: 仅限团队内部
           maxNumber: "50",
           currentNumber: "30",
           projectId: "00001",
           projectName: "志愿项目1",
-          projectType: "社区服务"
+          projectType: "1" // 1: 社区服务，2: 科技科普，3: 支教助学，4: 体育赛事，5: 大型演出，6: 其它
         }
     ] 
   }
@@ -420,12 +420,12 @@
           endTime: "YYYY-MM-DD HH:MM", // 活动结束时间
           location: "操场",
           volunteerHour: "5",
-          type: "团队内部招募", // 仅限团体成员/公共
+          type: "1", // 1: 面向公共招募，2: 仅限团队内部
           maxNumber: "50",
           participantNumber: "30",
           projectId: "00001",
           projectName: "志愿项目1",
-          projectType: "社区服务"
+          projectType: "1" // 1: 社区服务，2: 科技科普，3: 支教助学，4: 体育赛事，5: 大型演出，6: 其它
         }
     ],
     pastRecruitmentList: [
@@ -435,13 +435,23 @@
           endTime: "YYYY-MM-DD HH:MM", // 活动结束时间
           location: "操场",
           volunteerHour: "5",
-          type: "团队内部招募", // 仅限团体成员/公共
+          type: "1", // 1: 面向公共招募，2: 仅限团队内部
           maxNumber: "50",
           participantNumber: "30",
           projectId: "00001",
           projectName: "志愿项目1",
-          projectType: "社区服务"
+          projectType: "1" // 1: 社区服务，2: 科技科普，3: 支教助学，4: 体育赛事，5: 大型演出，6: 其它
         }
     ] 
   }
   ```
+
+1 社区服务
+2 科技科普
+3 支教助学
+4 体育赛事
+5 大型演出
+6 其它
+
+1 面向公共招募
+2 仅限团队内部

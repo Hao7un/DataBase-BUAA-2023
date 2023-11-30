@@ -17,8 +17,8 @@
                     <div>
                         <h3>{{ item.projectName }}</h3>
                         <p>项目类型：{{ item.projectType }}</p>
-                        <p>招募时间：{{ item.startTime }} ~ {{ item.endTime }}</p>
-                        <p>招募地点：{{ item.location }}</p>
+                        <p>活动时间：{{ item.startTime }} ~ {{ item.endTime }}</p>
+                        <p>活动地点：{{ item.location }}</p>
                         <p>招募人数：{{ item.participantNumber }} / {{ item.maxNumber }}</p>
                         <p>志愿时长：{{ item.volunteerHour }}</p>
                         <p>招募类型：{{ item.type }}</p>
@@ -33,8 +33,8 @@
                     <div>
                         <h3>{{ item.projectName }}</h3>
                         <p>项目类型：{{ item.projectType }}</p>
-                        <p>招募时间：{{ item.startTime }} ~ {{ item.endTime }}</p>
-                        <p>招募地点：{{ item.location }}</p>
+                        <p>活动时间：{{ item.startTime }} ~ {{ item.endTime }}</p>
+                        <p>活动地点：{{ item.location }}</p>
                         <p>招募人数：{{ item.participantNumber }} / {{ item.maxNumber }}</p>
                         <p>志愿时长：{{ item.volunteerHour }}</p>
                         <p>招募类型：{{ item.type }}</p>
