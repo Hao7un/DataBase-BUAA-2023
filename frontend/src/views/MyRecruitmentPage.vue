@@ -49,7 +49,7 @@
 <script>
 export default {
     created() {
-        this.axios.post('http://localhost:8000/', {
+        this.axios.post('http://localhost:8000/user_get_my_recruitments', {
             userId: this.userId
         })
             .then(res => {

@@ -472,22 +472,16 @@ export default {
                 projectId: this.projectId,
 
             };
-
             this.axios({
                 method: 'post',
-                url: 'http://localhost:8000/',
+                url: 'http://localhost:8000/get_project_avatar',
                 data: submitParams,
             })
                 .then((res) => {
                     console.log(res);
-                    if (res.data.code === 0) {
+                    if (res.data) {
                         var avatar = document.getElementById('avatar');
-                        var img = res.data.avatar;
-                        avatar.src = "data:image/jpeg;base64," + btoa(
-                            new Uint8Array(img).reduce(function(img, byte) {
-                                return img + String.fromCharCode(byte);
-                            }, '')
-                        );
+                        avatar.src = "data:image/jpeg;base64," + res.data;
                     }
                     else {
                         console.log("获取项目图片失败, 错误码不是0");
@@ -860,9 +854,12 @@ export default {
 }
 
 .project-avatar img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 350px;
+    max-height: 200px;
+    width: auto;
+    height: auto;
 }
+
 
 .project-info-container {
     flex: 1;

@@ -99,7 +99,7 @@ import { ElMessage } from 'element-plus';
 
 export default {
     created() {
-        this.axios.post('http://localhost:8000/', {
+        this.axios.post('http://localhost:8000/user_get_recruitment_list', {
             userId: this.userId
         })
             .then(res => {
@@ -204,7 +204,7 @@ export default {
             this.attendId = id;
         },
         attendRecruitment() {
-            this.axios.post('http://localhost:8000/', {
+            this.axios.post('http://localhost:8000/user_apply_for_recruitment', {
                 userId: this.userId,
                 recruitmentId: this.attendId
             })

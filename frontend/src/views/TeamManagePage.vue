@@ -342,7 +342,7 @@ export default {
 
       this.axios({
         method: 'post',
-        url: 'http://localhost:8000/',
+        url: 'http://localhost:8000/get_team_avatar',
         data: submitParams,
       })
         .then((res) => {
@@ -569,19 +569,24 @@ export default {
       else {
         const formData = new FormData();
         formData.append("projectAvatar", this.fileToUpload);
-        const submitParams = {
-          teamId: this.teamId,
-          projectName: this.projectName,
-          projectIntro: this.projectIntro,
-          projectType: this.projectType,
-          avatar: formData,
+        // console.log(formData.get("projectAvatar"));
+        formData.append("teamId", this.teamId);
+        formData.append("projectName", this.projectName);
+        formData.append("projectIntro", this.projectIntro);
+        formData.append("projectType", this.projectType);
+        // const submitParams = {
+        //   teamId: this.teamId,
+        //   projectName: this.projectName,
+        //   projectIntro: this.projectIntro,
+        //   projectType: this.projectType,
+        //   avatar: formData,
 
-        };
+        // };
 
         this.axios({
           method: 'post',
           url: 'http://localhost:8000/admin_create_project',
-          data: submitParams,
+          data: formData,
         })
         .then((res) => {
           console.log(res);

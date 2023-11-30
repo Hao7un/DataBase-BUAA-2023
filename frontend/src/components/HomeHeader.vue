@@ -199,7 +199,7 @@ export default {
 
       this.axios({
         method: 'post',
-        url: 'http://localhost:8000/',
+        url: 'http://localhost:8000/user_get_message',
         data: submitParams,
       })
         .then((res) => {
@@ -226,7 +226,7 @@ export default {
 
       this.axios({
         method: 'post',
-        url: 'http://localhost:8000/',
+        url: 'http://localhost:8000/user_read_message',
         data: submitParams,
       })
         .then((res) => {

@@ -74,7 +74,7 @@ import { ElMessage } from 'element-plus';
 export default {
     created() {
         this.projectId = this.$route.params.projectId;
-        this.axios.post('http://localhost:8000/', {
+        this.axios.post('http://localhost:8000/user_get_specific_project', {
             userId: this.userId,
             projectId: this.projectId
         })
@@ -153,7 +153,7 @@ export default {
             }
         },
         collectProject() {
-            this.axios.post('http://localhost:8000/', {
+            this.axios.post('http://localhost:8000/user_toggle_favorite_project', {
                 userId: this.userId,
                 projectId: this.projectId,
                 type: this.isCollect
@@ -175,7 +175,7 @@ export default {
                 ElMessage.error('问题不能为空');
                 return;
             }
-            this.axios.post('http://localhost:8000/', {
+            this.axios.post('http://localhost:8000/user_post_question', {
                 userId: this.userId,
                 projectId: this.projectId,
                 question: this.newQuestion
