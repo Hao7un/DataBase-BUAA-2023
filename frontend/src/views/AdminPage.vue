@@ -81,7 +81,6 @@ export default {
         }
     },
     created() {
-        // 根据试验，应该可以在created中调用methods中定义的方法
         this.fetch();
     },
     data() {
@@ -114,7 +113,6 @@ export default {
 
     },
     methods: {
-        // 这里尝试过，应该可以在created中调用methods中定义的方法
         fetch() {
             const submitParams = {
                 userId: this.$store.state.userId,
@@ -187,19 +185,15 @@ export default {
             }
         },
         handleCreateTeamSubmit() {
-            // 上传图片？？？
             const formData = new FormData();
             formData.append("teamAvatar", this.fileToUpload);
-            formData.append("userId", this.$store.state.userId);
-            formData.append("teamName", this.teamName);
-            formData.append("teamIntro", this.teamIntro);
-            console.log(formData.get('teamAvatar'));
+            // console.log(formData.get('teamAvatar'));
             const submitParams = {
                 userId: this.$store.state.userId,
                 teamName: this.teamName,
                 teamIntro: this.teamIntro,
-                // picture: null
-                // 暂时不能上传图片
+                avatar: formData,
+
             }
             if (this.teamName === '') {
                 this.createDialogVisible = false;
@@ -237,6 +231,7 @@ export default {
                         }
                     })
             })();
+
         }
     },
 }

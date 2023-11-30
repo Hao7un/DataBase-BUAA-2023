@@ -9,7 +9,7 @@
     <h2 class="title">团队详情</h2>
     <div class="header">
       <div class="team-avatar">
-        <img src="../assets/images/hand_shaking.png">
+        <img src="../assets/images/hand_shaking.png" id="avatar">
       </div>
       <el-divider direction="vertical" style="height: 200px;" />
       <div class="team-info-container">
@@ -47,7 +47,7 @@
     </div>
     <el-divider style="width: 90%; margin-left: 100px;"/>
     <div class="content">
-      <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍（不超过500字）" :rows="5" :maxlength="500" show-word-limit clearable></el-input>
+      <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍(不超过500字)" :rows="5" :maxlength="500" show-word-limit clearable></el-input>
     </div>
     <el-divider style="width: 90%; margin-left: 100px;"/>
     <div class="footer">
@@ -146,7 +146,7 @@
           </el-table>
         </div>
       </v-dialog>
-      <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="600">
+      <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="800">
         <div class="create-dialog-container">
           <div class="create-item">
             <h3 style="margin-bottom: 15px;">项目名称</h3>
@@ -173,17 +173,16 @@
           <div class="create-item">
             <h3 style="margin-bottom: 15px;">上传项目图片</h3>
             <el-upload
-              class="upload-container"
-              list-type="picture-card"
-              action="#"
-              :auto-upload="false"
-              :show-file-list="true"
-              :on-success="handlePictureSuccess"
-              :before-upload="beforePictureUpload"
-              limit=1  
+                class="avatar-uploader"
+                action="#"
+                :show-file-list="false"
+                :auto-upload="false"
+                :on-change="uploadFile"
             >
-
+              <el-image v-if="imageUrl" :src="imageUrl" style="width: 199px; height: 199px" fit="contain" />
+              <el-icon v-if="!imageUrl"><Plus /></el-icon>
             </el-upload>
+
           </div>
           <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
             <el-button size="large" @click="handleCreateProjectSubmit">提交</el-button>
@@ -222,6 +221,7 @@ export default {
   },
   created() {
     this.fetch();
+    this.fetchPicture();
   },
   data() {
     return {
@@ -243,6 +243,9 @@ export default {
       collegeIdKey: "",
       memberNameKey: "",
       telephoneKey: "",
+      // 图片
+      imageUrl: null,
+      fileToUpload: null,
       projects: [
         {
           hasComments: false,
@@ -330,6 +333,34 @@ export default {
     };
   },
   methods: {
+    fetchPicture() {
+      const submitParams = {
+        teamId: this.teamId,
+
+      };
+
+      this.axios({
+        method: 'post',
+        url: 'http://localhost:8000/',
+        data: submitParams,
+      })
+        .then((res) => {
+          console.log(res);
+          if (res.data.code === 0) {
+            var avatar = document.getElementById('avatar');
+            var img = res.data.avatar;
+            avatar.src = "data:image/jpeg;base64," + btoa(
+                new Uint8Array(img).reduce(function(img, byte) {
+                    return img + String.fromCharCode(byte);
+              }, '')
+            );
+          }
+          else {
+            console.log("获取团队头像失败, 错误码不是0");
+          }
+        })
+
+    },
     fetch() {
       const submitParams = {
         teamId: this.teamId,
@@ -445,6 +476,10 @@ export default {
         userId: row.userId,
         teamId: this.teamId,
         approved: approved,
+        message: {
+          title: "您的团队审核结果已出",
+          content: "您申请加入 " + this.teamName + " 团队的请求" + (approved === "true" ? "已通过" : "被拒绝"),
+        }
       };
 
       const vm = this;
@@ -531,19 +566,23 @@ export default {
         })
       }
       else {
+        const formData = new FormData();
+        formData.append("projectAvatar", this.fileToUpload);
         const submitParams = {
           teamId: this.teamId,
           projectName: this.projectName,
           projectIntro: this.projectIntro,
           projectType: this.projectType,
+          avatar: formData,
 
         };
-        // axios
+
         this.axios({
           method: 'post',
           url: 'http://localhost:8000/admin_create_project',
           data: submitParams,
-        }).then((res) => {
+        })
+        .then((res) => {
           console.log(res);
           if (res.data.code === 0) {
             console.log("创建项目成功");
@@ -559,13 +598,35 @@ export default {
             console.log("创建失败, 错误码不是 0 或 1");
           }
         })
+
       }
-    }
+    },
+    uploadFile(file) {
+      const isJPG = file.raw.type === 'image/jpeg';
+      const isPNG = file.raw.type === 'image/png';
+      if (!isJPG && !isPNG) {
+          ElMessage.error("只能上传JPG或PNG格式的文件");
+          return false;
+      }
+      else if (file.size / 1024 / 1024 > 2) {
+          ElMessage.error("图片大小不能超过2MB");
+          return false;
+      }
+      else {
+          this.imageUrl = URL.createObjectURL(file.raw);
+          this.fileToUpload = file.raw;
+          return true;
+      }
+    },
   }
 };
 </script>
 
 <style scoped>
+.team-management {
+  height: 1000px;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -656,6 +717,16 @@ footer {
   margin-top: 50px;
   margin-left: 50px;
   width: 70%;
+}
+
+.avatar-uploader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed black;
+    width: 201px;
+    height: 201px;
+    
 }
 
 </style>
