@@ -6,7 +6,7 @@
                     <span class="item-font" style="font-weight: bold;">参与招募</span>
                 </el-menu-item>
                 <el-menu-item index="my" @click="changeToMyRecruitmentPage">
-                    <span class="item-font" style="font-weight: bold;">招募统计</span>
+                    <span class="item-font" style="font-weight: bold;">我的活动</span>
                 </el-menu-item>
             </el-menu>
         </div>
@@ -20,6 +20,7 @@
                                 <th style="background-color: #e8e8e4">状态</th>
                                 <th style="background-color: #e8e8e4">所属项目</th>
                                 <th style="background-color: #e8e8e4">招募时间</th>
+                                <th style="background-color: #e8e8e4">进行时间</th>
                                 <th style="background-color: #e8e8e4">面向群体</th>
                                 <th style="background-color: #e8e8e4">招募地点</th>
                                 <th style="background-color: #e8e8e4">志愿时长</th>
@@ -36,12 +37,8 @@
                                     <el-input v-model="keyword" placeholder="搜索项目名称" clearable></el-input>
                                 </th>
                                 <th style="width: 200px;">
-                                    <el-date-picker
-                                    v-model="date"
-                                    type="date"
-                                    placeholder="搜索招募时间"
-                                    clearable
-                                ></el-date-picker>
+                                    <el-date-picker v-model="date" type="date" placeholder="搜索招募时间"
+                                        clearable></el-date-picker>
                                 </th>
                                 <th style="width: 150px;">
                                     <el-select v-model="type" placeholder="选择面向群体" clearable>
@@ -53,34 +50,65 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in displayedList" @click="handleClickRow(item)">
-                                <td style="text-align:center"><div :class="item.status === '招募中' ? 'green-status' : 'grey-status' " style="width: 75px; height: 25px; margin-left: 37px;">{{ item.status }}</div></td>
-                                <td style="text-align:center">{{ item.project }}</td>
-                                <td style="text-align:center">{{ item.date }}</td>
-                                <td style="text-align:center"><div :class="item.type === '面向公共招募' ? 'blue-type' : 'orange-type' " style="width: 120px; height: 25px; margin-left: 15px;">{{ item.type }}</div></td>
+                            <tr v-for="item in displayedList" @click="openDialog(item.id)">
+                                <td style="text-align:center">
+                                    <div :class="item.isAttend ? 'green-status' : 'grey-status'"
+                                        style="width: 75px; height: 25px; margin-left: 37px;">{{ item.projectType }}</div>
+                                </td>
+                                <td style="text-align:center">{{ item.projectName }}</td>
+                                <td style="text-align:center">{{ item.launchTime }}-{{ item.dueTime }}</td>
+                                <td style="text-align:center">{{ item.startTime }}-{{ item.endTime }}</td>
+                                <td style="text-align:center">
+                                    <div :class="item.type === '公共' ? 'blue-type' : 'orange-type'"
+                                        style="width: 120px; height: 25px; margin-left: 15px;">{{ item.type }}</div>
+                                </td>
                                 <td style="text-align:center">{{ item.location }}</td>
-                                <td style="text-align:center">{{ item.hours }} 小时</td>
-                                <td style="text-align:center" :class="item.number === item.totalNumber ? 'red-number' : 'green-number' ">{{ item.number }} / {{ item.totalNumber }}</td>
+                                <td style="text-align:center">{{ item.volunteerHour }} 小时</td>
+                                <td style="text-align:center"
+                                    :class="item.currentNumber === item.maxNumber ? 'red-number' : 'green-number'">{{
+                                        item.currentNumber }} / {{ item.maxNumber }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="pagination-container">
-                    <el-pagination 
-                        @current-change="handlePageChange"
-                        :page-size="20"
-                        :total="filteredList.length"
+                    <el-pagination @current-change="handlePageChange" :page-size="20" :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
+
+                <el-dialog v-model="dialogVisible" title="注意" width="30%" align-center center draggable>
+                    <span class="text-font">你即将报名此次招募。</span>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="dialogVisible = false">取消</el-button>
+                            <el-button type="primary" @click="attendRecruitment">
+                                <span style="color:whitesmoke">确认</span>
+                            </el-button>
+                        </span>
+                    </template>
+                </el-dialog>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { ElMessage } from 'element-plus';
+
 
 export default {
+    created() {
+        this.axios.post('http://localhost:8000/', {
+            userId: this.userId
+        })
+            .then(res => {
+                console.log(res);
+                if (res.data.code === 0) {
+                    this.recruitmentList = res.data.recruitmentList;
+                }
+            });
+    },
     data() {
         return {
             currentPage: 1,
@@ -89,52 +117,32 @@ export default {
             date: null,
             type: "",
             hours: null,
-            totalList: [
-                {status: "招募中", project: "项目1", date: "2023-10-21 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 1, totalNumber: 11},
-                {status: "招募中", project: "项目2", date: "2023-10-22 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 12, totalNumber: 12},
-                {status: "招募中", project: "项目3", date: "2023-10-23 23:59", location: "田径场", type: "仅限团队内部", hours: 16, number: 3, totalNumber: 13},
-                {status: "招募中", project: "项目4", date: "2023-10-24 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 4, totalNumber: 14},
-                {status: "招募中", project: "项目5", date: "2023-10-25 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 15},
-                {status: "招募中", project: "项目6", date: "2023-10-26 23:59", location: "田径场", type: "仅限团队内部", hours: 16, number: 5, totalNumber: 10},
-                {status: "招募中", project: "项目7", date: "2023-10-27 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目8", date: "2023-10-28 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目9", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 10, totalNumber: 10},
-                {status: "结束招募", project: "项目10", date: "2023-10-30 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 10, totalNumber: 10},
-                {status: "结束招募", project: "项目11", date: "2023-10-31 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目12", date: "2023-10-29 23:59", location: "田径场", type: "仅限团队内部", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目13", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目14", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目15", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目16", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目17", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目18", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目19", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目20", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目21", date: "2023-10-29 23:59", location: "田径场", type: "仅限团队内部", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目22", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目23", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
-                {status: "结束招募", project: "项目24", date: "2023-10-29 23:59", location: "田径场", type: "面向公共招募", hours: 16, number: 5, totalNumber: 10},
+            recruitmentList: [
+                { id: "00001", launchTime: "YYYY-MM-DD HH:MM", dueTime: "YYYY-MM-DD HH:MM", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", isAttend: true, type: "公共", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "社区服务" },
             ],
-            selectedRow: null,
+            dialogVisible: false,
+            attendId: "00001"
         }
     },
     computed: {
         displayedList() {
             let startIndex = (this.currentPage - 1) * 20;
             let endIndex = startIndex + 20;
-            let filteredList = this.totalList;
+            let filteredList = this.recruitmentList;
             if (this.keyword != null && this.status != null && this.type != null) {
                 filteredList = filteredList.filter(item => {
-                    return item.project.includes(this.keyword) && item.status.includes(this.status) && item.type.includes(this.type) && item.date.includes(this.formatDateString);
+                    return item.projectName.includes(this.keyword) && item.type.includes(this.type)
+                        && item.launchTime.includes(this.formatDateString);
                 });
             }
             return filteredList.slice(startIndex, endIndex);
         },
         filteredList() {
-            let list = this.totalList;
+            let list = this.recruitmentList;
             if (this.keyword != null && this.status != null && this.type != null) {
                 list = list.filter(item => {
-                    return item.project.includes(this.keyword) && item.status.includes(this.status) && item.type.includes(this.type) && item.date.includes(this.formatDateString);
+                    return item.projectName.includes(this.keyword) && item.type.includes(this.type)
+                        && item.launchTime.includes(this.formatDateString);
                 });
             }
             return list;
@@ -143,6 +151,9 @@ export default {
             if (this.date == null) return "";
             return this.formatDate(this.date);
         },
+        userId() {
+            return this.$store.state.userId;
+        }
     },
     methods: {
         formatDate(date) {
@@ -150,9 +161,6 @@ export default {
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');
             return `${year}-${month}-${day}`;
-        },
-        handleClickRow(row) {
-            console.log(row.status, row.project, row.date, row.location, row.type, row.hours, row.number);
         },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
@@ -167,6 +175,23 @@ export default {
                 path: '/recruitment/my'
             })
         },
+        openDialog(id) {
+            this.dialogVisible = true;
+            this.attendId = id;
+        },
+        attendRecruitment() {
+            this.axios.post('http://localhost:8000/', {
+                userId: this.userId,
+                recruitmentId: this.attendId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.dialogVisible = false;
+                        ElMessage.success('报名成功');
+                    }
+                });
+        }
     },
 }
 </script>
@@ -231,7 +256,8 @@ table tr:hover {
     cursor: pointer;
 }
 
-th, td {
+th,
+td {
     border: 2px solid black;
     height: 35px;
 }
@@ -242,15 +268,15 @@ th, td {
 }
 
 .green-status {
-  background: green;
-  color: white;
-  border-radius: 5px;
+    background: green;
+    color: white;
+    border-radius: 5px;
 }
 
 .grey-status {
-  background: grey;
-  color: white;
-  border-radius: 5px;
+    background: grey;
+    color: white;
+    border-radius: 5px;
 }
 
 .blue-type {
@@ -272,5 +298,4 @@ th, td {
 .green-number {
     color: green;
 }
-
 </style>

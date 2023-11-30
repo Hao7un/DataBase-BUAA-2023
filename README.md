@@ -364,8 +364,8 @@
           endTime: "YYYY-MM-DD HH:MM", // 活动结束时间
           location: "操场",
           volunteerHour: "5",
-          status: "招募中", // 招募中/结束招募
-          type: "团队内部招募", // 仅限团体成员/公共
+          isAttend: true, // true: 已报名，false: 未报名
+          type: "仅限团体成员", // 仅限团体成员/公共
           maxNumber: "50",
           currentNumber: "30",
           projectId: "00001",
@@ -373,6 +373,26 @@
           projectType: "社区服务"
         }
     ] 
+  }
+  ```
+
+### 报名招募
+
+* 发送请求：
+
+  ```javascript
+  {
+    userId: "00001",
+    recruitmentId: "00001"
+  }
+  ```
+
+* 报名成功
+
+  ```javascript
+  {
+    code: 0,
+    message: ""
   }
   ```
 

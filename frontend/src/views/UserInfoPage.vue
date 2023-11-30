@@ -1,8 +1,7 @@
 <template>
   <div class="main-container">
     <div class="sidebar-container">
-      <el-menu mode="vertical" default-active="info"
-      style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
+      <el-menu mode="vertical" default-active="info" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
         <el-menu-item index="info" @click="changeToUserInfoPage">
           <span class="item-font" style="font-weight: bold;">个人信息</span>
         </el-menu-item>

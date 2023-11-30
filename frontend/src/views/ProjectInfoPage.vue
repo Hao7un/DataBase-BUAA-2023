@@ -41,7 +41,7 @@
                     <h2>教程</h2>
                 </div>
                 <div v-for="(item, index) in tutorialList" :key="index">
-                    <p>{{ item.title }} {{ item.time }}</p>
+                    <p>{{ item.title }} {{ item.time }}<el-tag>{{ item.tag }}</el-tag></p>
                     <p>{{ item.content }}</p>
                     <br>
                 </div>
@@ -96,6 +96,7 @@ export default {
     },
     data() {
         return {
+            projectId: '00001',
             isCollect: false,
             projectName: '气象防灾减灾宣讲',
             projectType: '社区服务',
@@ -110,8 +111,8 @@ export default {
                 { questionPoster: '王五', questionTime: '2021-01-05', question: '这个项目需要什么技能？', replyTime: '2021-01-06', reply: '不需要什么技能，只要你有热情就可以了。' },
             ],
             tutorialList: [
-                { time: '2021-01-01', title: '注意事项', content: '请大家注意安全。' },
-                { time: '2021-01-02', title: '注意事项', content: '请大家注意安全。' },
+                { time: '2021-01-01', title: '注意事项', tag:'a', content: '请大家注意安全。' },
+                { time: '2021-01-02', title: '注意事项', tag:'b', content: '请大家注意安全。' },
             ],
             newQuestion: '',
             questionInput: false,
