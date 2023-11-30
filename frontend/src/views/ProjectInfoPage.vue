@@ -24,7 +24,7 @@
                                         {{ teamName }}</strong>
                                 </el-button></p>
                             <el-divider border-style="solid" direction="vertical" />
-                            <p>项目类别：{{ projectType }}</p>
+                            <p>项目类别：{{ showProjectType(projectType) }}</p>
                         </div>
                         <p style="font-size: 18px; font-style: italic;">{{ recruitmentStatus(latestTime) }}</p>
                     </div>
@@ -99,7 +99,7 @@ export default {
             projectId: '00001',
             isCollect: false,
             projectName: '气象防灾减灾宣讲',
-            projectType: '社区服务',
+            projectType: '1',
             projectIntro: '团队致力于发挥气象行业特色，常态化开展气象防灾减灾科普进社区、进校园公益项目，创办了独具特色的“气象科普”品牌。2022年，结合文明实践“一圈一带一群”建设，与徐汇区多个社区形成合作机制，定期为徐家汇商圈和社区居民开展科普讲座，惠及学生和市民千余人次，申报的“气象防灾减灾宣讲”入选为上海市文明实践百项重点项目。',
             latestTime: '2023-11-01',
             projectLeader: '张昊翔',
@@ -134,6 +134,22 @@ export default {
                 const latest = new Date(latestTime);
                 if (now < latest) return '招募中';
                 else return '最近招募：' + latestTime;
+            }
+        },
+        showProjectType(type) {
+            switch (type) {
+                case '1':
+                    return '社区服务';
+                case '2':
+                    return '科技科普';
+                case '3':
+                    return '支教助学';
+                case '4':
+                    return '体育赛事';
+                case '5':
+                    return '大型演出';
+                case '6':
+                    return '其它';
             }
         },
         collectProject() {

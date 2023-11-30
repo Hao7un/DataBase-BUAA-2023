@@ -112,7 +112,7 @@
       </v-dialog>
     </div>
     <div>
-      <v-dialog v-model="viewMembersDialogVisible" width="auto" max-height="600">
+      <v-dialog v-model="viewMembersDialogVisible" width="800px" max-height="600">
         <div class="members-container">
           <h2 style="margin: 20px 0; display: flex; justify-content: center;">成员列表</h2>
           <el-table :data="displayedMembers" style=" display: flex; justify-content: center; align-items: center;">
@@ -146,11 +146,11 @@
           </el-table>
         </div>
       </v-dialog>
-      <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="800">
+      <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="1000">
         <div class="create-dialog-container">
           <div class="create-item">
             <h3 style="margin-bottom: 15px;">项目名称</h3>
-            <el-input v-model="projectName" clearable>
+            <el-input v-model="projectName" clearable style="width: 150px;">
               <template #prefix>
                 <el-icon><Postcard /></el-icon>
               </template>
@@ -158,7 +158,7 @@
           </div>
           <div class="create-item">
             <h3 style="margin-bottom: 15px;">项目简介</h3>
-            <el-input type="textarea" v-model="projectIntro" clearable :maxlength="500" :autosize="{minRows: 2}" show-word-limit></el-input>
+            <el-input type="textarea" v-model="projectIntro" clearable :maxlength="500" :autosize="{minRows: 2}" show-word-limit style="width: 400px;"></el-input>
           </div>
           <div class="create-item">
             <h3 style="margin-bottom: 15px;">项目类别</h3>
@@ -168,6 +168,7 @@
               <el-radio label="3" border size="small" style="margin-top: 8px;">支教助学</el-radio>
               <el-radio label="4" border size="small" style="margin-top: 8px;">体育赛事</el-radio>
               <el-radio label="5" border size="small" style="margin-top: 8px;">大型演出</el-radio>
+              <el-radio label="6" border size="small" style="margin-top: 8px;">其它类别</el-radio>
             </el-radio-group>
           </div>
           <div class="create-item">
@@ -179,7 +180,7 @@
                 :auto-upload="false"
                 :on-change="uploadFile"
             >
-              <el-image v-if="imageUrl" :src="imageUrl" style="width: 199px; height: 199px" fit="contain" />
+              <el-image v-if="imageUrl" :src="imageUrl" style="width: 190px; height: 190px" fit="contain" />
               <el-icon v-if="!imageUrl"><Plus /></el-icon>
             </el-upload>
 
@@ -716,7 +717,7 @@ footer {
 .create-item {
   margin-top: 50px;
   margin-left: 50px;
-  width: 70%;
+  width: 90%;
 }
 
 .avatar-uploader {
@@ -724,8 +725,8 @@ footer {
     justify-content: center;
     align-items: center;
     border: 1px dashed black;
-    width: 201px;
-    height: 201px;
+    width: 185px;
+    height: 185px;
     
 }
 

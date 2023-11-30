@@ -53,14 +53,14 @@
                             <tr v-for="item in displayedList" @click="openDialog(item.id)">
                                 <td style="text-align:center">
                                     <div :class="item.isAttend ? 'green-status' : 'grey-status'"
-                                        style="width: 75px; height: 25px; margin-left: 37px;">{{ item.projectType }}</div>
+                                        style="width: 75px; height: 25px; margin-left: 37px;">{{ showProjectType(item.projectType) }}</div>
                                 </td>
                                 <td style="text-align:center">{{ item.projectName }}</td>
                                 <td style="text-align:center">{{ item.launchTime }}-{{ item.dueTime }}</td>
                                 <td style="text-align:center">{{ item.startTime }}-{{ item.endTime }}</td>
                                 <td style="text-align:center">
                                     <div :class="item.type === '公共' ? 'blue-type' : 'orange-type'"
-                                        style="width: 120px; height: 25px; margin-left: 15px;">{{ item.type }}</div>
+                                        style="width: 120px; height: 25px; margin-left: 15px;">{{ showRecruitmentType(item.type) }}</div>
                                 </td>
                                 <td style="text-align:center">{{ item.location }}</td>
                                 <td style="text-align:center">{{ item.volunteerHour }} 小时</td>
@@ -118,7 +118,7 @@ export default {
             type: "",
             hours: null,
             recruitmentList: [
-                { id: "00001", launchTime: "YYYY-MM-DD HH:MM", dueTime: "YYYY-MM-DD HH:MM", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", isAttend: true, type: "公共", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "社区服务" },
+                { id: "00001", launchTime: "YYYY-MM-DD HH:MM", dueTime: "YYYY-MM-DD HH:MM", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", isAttend: true, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "1" },
             ],
             dialogVisible: false,
             attendId: "00001"
@@ -174,6 +174,30 @@ export default {
             this.$router.push({
                 path: '/recruitment/my'
             })
+        },
+        showRecruitmentType(type) {
+            switch (type) {
+                case '1':
+                    return '面向公共招募';
+                case '2':
+                    return '仅限团队内部';
+            }
+        },
+        showProjectType(type) {
+            switch (type) {
+                case '1':
+                    return '社区服务';
+                case '2':
+                    return '科技科普';
+                case '3':
+                    return '支教助学';
+                case '4':
+                    return '体育赛事';
+                case '5':
+                    return '大型演出';
+                case '6':
+                    return '其它';
+            }
         },
         openDialog(id) {
             this.dialogVisible = true;

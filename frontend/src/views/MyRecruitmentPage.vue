@@ -16,12 +16,12 @@
                 <div class="recruitment-container">
                     <div>
                         <h3>{{ item.projectName }}</h3>
-                        <p>项目类型：{{ item.projectType }}</p>
+                        <p>项目类型：{{ showProjectType(item.projectType) }}</p>
                         <p>活动时间：{{ item.startTime }} ~ {{ item.endTime }}</p>
                         <p>活动地点：{{ item.location }}</p>
                         <p>招募人数：{{ item.participantNumber }} / {{ item.maxNumber }}</p>
                         <p>志愿时长：{{ item.volunteerHour }}</p>
-                        <p>招募类型：{{ item.type }}</p>
+                        <p>招募类型：{{ showRecruitmentType(item.type) }}</p>
                     </div>
                 </div>
             </div>
@@ -32,12 +32,12 @@
                 <div class="recruitment-container">
                     <div>
                         <h3>{{ item.projectName }}</h3>
-                        <p>项目类型：{{ item.projectType }}</p>
+                        <p>项目类型：{{ showProjectType(item.projectType) }}</p>
                         <p>活动时间：{{ item.startTime }} ~ {{ item.endTime }}</p>
                         <p>活动地点：{{ item.location }}</p>
                         <p>招募人数：{{ item.participantNumber }} / {{ item.maxNumber }}</p>
                         <p>志愿时长：{{ item.volunteerHour }}</p>
-                        <p>招募类型：{{ item.type }}</p>
+                        <p>招募类型：{{ showRecruitmentType(item.type) }}</p>
                     </div>
                 </div>
             </div>
@@ -63,19 +63,19 @@ export default {
     data() {
         return {
             futureRecruitmentList: [
-                { id: "00008", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00001", projectName: "志愿项目8", projectType: "社区服务" },
-                { id: "00009", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00002", projectName: "志愿项目9", projectType: "社区服务" },
-                { id: "00010", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00003", projectName: "志愿项目10", projectType: "社区服务" },
-                { id: "00011", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00004", projectName: "志愿项目11", projectType: "社区服务" },
+                { id: "00008", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "00001", projectName: "志愿项目8", projectType: "1" },
+                { id: "00009", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "00002", projectName: "志愿项目9", projectType: "2" },
+                { id: "00010", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "00003", projectName: "志愿项目10", projectType: "3" },
+                { id: "00011", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "00004", projectName: "志愿项目11", projectType: "4" },
             ],
             pastRecruitmentList: [
-                { id: "00001", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "社区服务" },
-                { id: "00002", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00002", projectName: "志愿项目2", projectType: "社区服务" },
-                { id: "00003", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00003", projectName: "志愿项目3", projectType: "社区服务" },
-                { id: "00004", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00004", projectName: "志愿项目4", projectType: "社区服务" },
-                { id: "00005", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00005", projectName: "志愿项目5", projectType: "社区服务" },
-                { id: "00006", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00006", projectName: "志愿项目6", projectType: "社区服务" },
-                { id: "00007", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "团队内部招募", maxNumber: "50", participantNumber: "30", projectId: "00007", projectName: "志愿项目7", projectType: "社区服务" },
+                { id: "00001", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "5" },
+                { id: "00002", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "00002", projectName: "志愿项目2", projectType: "6" },
+                { id: "00003", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "00003", projectName: "志愿项目3", projectType: "1" },
+                { id: "00004", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "00004", projectName: "志愿项目4", projectType: "2" },
+                { id: "00005", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "00005", projectName: "志愿项目5", projectType: "3" },
+                { id: "00006", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "00006", projectName: "志愿项目6", projectType: "5" },
+                { id: "00007", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "00007", projectName: "志愿项目7", projectType: "4" },
             ],
         };
     },
@@ -89,7 +89,31 @@ export default {
             this.$router.push({
                 path: '/recruitment/my'
             });
-        }
+        },
+        showRecruitmentType(type) {
+            switch (type) {
+                case '1':
+                    return '面向公共招募';
+                case '2':
+                    return '仅限团队内部';
+            }
+        },
+        showProjectType(type) {
+            switch (type) {
+                case '1':
+                    return '社区服务';
+                case '2':
+                    return '科技科普';
+                case '3':
+                    return '支教助学';
+                case '4':
+                    return '体育赛事';
+                case '5':
+                    return '大型演出';
+                case '6':
+                    return '其它';
+            }
+        },
     },
     computed: {
         userId() {
