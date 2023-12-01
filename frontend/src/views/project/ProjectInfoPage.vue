@@ -4,7 +4,7 @@
             <div class="left-container">
                 <div class="info-container">
                     <div class="img-container">
-                        <img src="../assets/images/project.png">
+                        <img src="../../assets/images/project.png">
                     </div>
                     <div class="content-container">
                         <div class="high-container">

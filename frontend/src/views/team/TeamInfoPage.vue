@@ -4,7 +4,7 @@
             <div class="left-container">
                 <div class="info-container">
                     <div class="img-container">
-                        <img src="../assets/images/hand_shaking.png">
+                        <img src="../../assets/images/hand_shaking.png">
                     </div>
                     <div class="content-container">
                         <div class="high-container">
@@ -56,7 +56,7 @@
                         @click="changeToProjectInfoPage(project.id)">
                         <h2 style="margin-top: 30px;">{{ project.name }}</h2>
                         <div style="margin-top: 20px; margin-bottom: 20px;">
-                            <img src="../assets/images/project.png">
+                            <img src="../../assets/images/project.png">
                         </div>
                         <p><el-icon>
                                 <Guide />

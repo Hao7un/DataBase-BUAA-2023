@@ -51,7 +51,7 @@
                     <div class="card" v-for="item in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToProjectInfoPage(item.id)">
                             <div class="img-container">
-                                <img src="../assets/images/project.png">
+                                <img src="../../assets/images/project.png">
                             </div>
                             <div class="card-info">
                                 <div class="title-container">{{ item.name }}</div>

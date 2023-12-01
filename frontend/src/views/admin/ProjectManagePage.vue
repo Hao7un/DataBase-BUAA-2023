@@ -9,7 +9,7 @@
         <h2 class="title">项目详情</h2>
         <div class="header">
             <div class="project-avatar">
-                <img src="../assets/images/project.png" id="avatar">
+                <img src="../../assets/images/project.png" id="avatar">
             </div>
             <el-divider direction="vertical" style="height: 200px;"></el-divider>
             <div class="project-info-container">

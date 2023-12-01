@@ -9,7 +9,7 @@
     <h2 class="title">团队详情</h2>
     <div class="header">
       <div class="team-avatar">
-        <img src="../assets/images/hand_shaking.png" id="avatar">
+        <img src="../../assets/images/hand_shaking.png" id="avatar">
       </div>
       <el-divider direction="vertical" style="height: 200px;" />
       <div class="team-info-container">

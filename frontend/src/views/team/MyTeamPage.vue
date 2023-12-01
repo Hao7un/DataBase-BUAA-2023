@@ -28,7 +28,7 @@
                     <div class="card" v-for="(item, index) in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToTeamInfoPage(item.id)">
                             <div class="img-container">
-                                <img src="../assets/images/hand_shaking.png">
+                                <img src="../../assets/images/hand_shaking.png">
                             </div>
                             <div class="card-info">
                                 <div class="team-name">{{ item.name }}</div>
