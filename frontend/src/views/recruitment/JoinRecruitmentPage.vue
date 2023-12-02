@@ -17,68 +17,86 @@
                     <table class="table-style" border>
                         <thead>
                             <tr>
-                                <th style="background-color: #e8e8e4">状态</th>
                                 <th style="background-color: #e8e8e4">所属项目</th>
-                                <th style="background-color: #e8e8e4">招募时间</th>
-                                <th style="background-color: #e8e8e4">进行时间</th>
+                                <th style="background-color: #e8e8e4">项目类别</th>
+                                <th style="background-color: #e8e8e4">活动时间</th>
+                                <th style="background-color: #e8e8e4">活动地点</th>
                                 <th style="background-color: #e8e8e4">面向群体</th>
-                                <th style="background-color: #e8e8e4">招募地点</th>
                                 <th style="background-color: #e8e8e4">志愿时长</th>
+                                <th style="background-color: #e8e8e4">招募时间</th>
                                 <th style="background-color: #e8e8e4">招募人数</th>
+                                <th style="background-color: #e8e8e4">状态</th>
                             </tr>
                             <tr>
-                                <th style="width: 150px;">
-                                    <el-select v-model="status" clearable placeholder="选择招募状态">
-                                        <el-option key="招募中" value="招募中">招募中</el-option>
-                                        <el-option key="结束招募" value="结束招募">结束招募</el-option>
+                                <th style="width: 250px;">
+                                    <el-input v-model="keyword" placeholder="输入项目名称" clearable></el-input>
+                                </th>
+                                <th style="width: 130px;">
+                                    <el-select v-model="typeP" placeholder="选择项目类别" clearable>
+                                        <el-option key="1" value="社区服务">社区服务</el-option>
+                                        <el-option key="2" value="科技科普">科技科普</el-option>
+                                        <el-option key="3" value="支教助学">支教助学</el-option>
+                                        <el-option key="4" value="体育赛事">体育赛事</el-option>
+                                        <el-option key="5" value="大型演出">大型演出</el-option>
+                                        <el-option key="6" value="其它">其它</el-option>
                                     </el-select>
                                 </th>
-                                <th style="width: 180px;">
-                                    <el-input v-model="keyword" placeholder="搜索项目名称" clearable></el-input>
-                                </th>
-                                <th style="width: 200px;">
-                                    <el-date-picker v-model="date" type="date" placeholder="搜索招募时间"
+                                <th style="width: 160px;">
+                                    <el-date-picker v-model="date" type="date" placeholder="选择活动日期"
                                         clearable></el-date-picker>
                                 </th>
-                                <th style="width: 150px;">
-                                    <el-select v-model="type" placeholder="选择面向群体" clearable>
-                                        <el-option key="面向公共招募" value="面向公共招募">面向公共招募</el-option>
-                                        <el-option key="仅限团队内部" value="仅限团队内部">仅限团队内部</el-option>
+                                <th style="width: 100px;">
+                                </th>
+                                <th style="width: 130px;">
+                                    <el-select v-model="typeR" placeholder="选择面向群体" clearable>
+                                        <el-option key="1" value="面向公共招募">面向公共招募</el-option>
+                                        <el-option key="2" value="仅限团队内部">仅限团队内部</el-option>
                                     </el-select>
                                 </th>
-                                <th colspan="3" style="width: 500px;"></th>
+                                <th style="width: 100px;">
+                                </th>
+                                <th style="width: 160px;">
+                                </th>
+                                <th style="width: 100px;">
+                                </th>
+                                <th style="width: 100px;">
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="item in displayedList" @click="openDialog(item.id)">
-                                <td style="text-align:center">
-                                    <div :class="item.isAttend ? 'green-status' : 'grey-status'"
-                                        style="width: 75px; height: 25px; margin-left: 37px;">{{ showProjectType(item.projectType) }}</div>
-                                </td>
-                                <td style="text-align:center">{{ item.projectName }}</td>
-                                <td style="text-align:center">{{ item.launchTime }}-{{ item.dueTime }}</td>
-                                <td style="text-align:center">{{ item.startTime }}-{{ item.endTime }}</td>
-                                <td style="text-align:center">
-                                    <div :class="item.type === '公共' ? 'blue-type' : 'orange-type'"
-                                        style="width: 120px; height: 25px; margin-left: 15px;">{{ showRecruitmentType(item.type) }}</div>
-                                </td>
+                                <td style="text-align:center; font-weight:bold;">{{ item.projectName }}</td>
+                                <td style="text-align:center">{{ showProjectType(item.projectType) }}</td>
+                                <td style="text-align:center">开始<br>{{ item.startTime }}<br>结束<br>{{ item.endTime }}</td>
                                 <td style="text-align:center">{{ item.location }}</td>
+                                <td style="text-align:center">
+                                    <div :class="item.type === '1' ? 'public-type' : 'private-type'">
+                                        {{ showRecruitmentType(item.type) }}</div>
+                                </td>
                                 <td style="text-align:center">{{ item.volunteerHour }} 小时</td>
-                                <td style="text-align:center"
-                                    :class="item.currentNumber === item.maxNumber ? 'red-number' : 'green-number'">{{
-                                        item.currentNumber }} / {{ item.maxNumber }}</td>
+                                <td style="text-align:center;">开始<br>{{ item.launchTime }}<br>结束<br>{{ item.dueTime }}</td>
+                                <td style="text-align:center;"
+                                    :class="item.currentNumber === item.maxNumber ? 'red-number' : 'green-number'">
+                                    {{ item.currentNumber }} / {{ item.maxNumber }}
+                                </td>
+                                <td style="text-align:center">
+                                    <el-button size="large" type="primary">
+                                        <span v-if="isCollect"
+                                            style="font-weight: bold; font-size: 13px; color:whitesmoke">已报满</span>
+                                        <span v-else style="font-weight: bold; font-size: 13px; color:whitesmoke">报名</span>
+                                    </el-button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="pagination-container">
-                    <el-pagination @current-change="handlePageChange" :page-size="20" :total="filteredList.length"
+                    <el-pagination @current-change="handlePageChange" :page-size="10" :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
-
                 <el-dialog v-model="dialogVisible" title="注意" width="30%" align-center center draggable>
-                    <span class="text-font">你即将报名此次招募。</span>
+                    <span class="text-font">请确认此次招募的时间与地点，报名后无法退出。</span>
                     <template #footer>
                         <span class="dialog-footer">
                             <el-button @click="dialogVisible = false">取消</el-button>
@@ -112,13 +130,16 @@ export default {
     data() {
         return {
             currentPage: 1,
-            status: "",
             keyword: "",
             date: null,
-            type: "",
-            hours: null,
+            typeP: "",
+            typeR: "",
             recruitmentList: [
-                { id: "00001", launchTime: "YYYY-MM-DD HH:MM", dueTime: "YYYY-MM-DD HH:MM", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", isAttend: true, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "1" },
+                { id: "00005", launchTime: "2023-12-08 21:00", dueTime: "2023-12-09 21:00", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", isAttend: true, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目5", projectType: "1" },
+                { id: "00004", launchTime: "2023-12-01 21:00", dueTime: "2023-12-10 21:00", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目4", projectType: "2" },
+                { id: "00003", launchTime: "2023-12-01 12:00", dueTime: "2023-12-12 21:00", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "操场", volunteerHour: "5", isAttend: true, type: "2", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目3", projectType: "3" },
+                { id: "00002", launchTime: "2023-12-01 10:00", dueTime: "2023-12-02 11:00", startTime: "2023-12-02 19:00", endTime: "2023-12-02 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "2", maxNumber: "50", currentNumber: "50", projectId: "00001", projectName: "志愿项目2", projectType: "4" },
+                { id: "00001", launchTime: "2023-11-01 21:00", dueTime: "2023-11-02 21:00", startTime: "2023-12-01 19:00", endTime: "2023-12-01 21:00", location: "操场", volunteerHour: "5", isAttend: true, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "5" },
             ],
             dialogVisible: false,
             attendId: "00001"
@@ -126,23 +147,27 @@ export default {
     },
     computed: {
         displayedList() {
-            let startIndex = (this.currentPage - 1) * 20;
-            let endIndex = startIndex + 20;
+            let startIndex = (this.currentPage - 1) * 10;
+            let endIndex = startIndex + 10;
             let filteredList = this.recruitmentList;
-            if (this.keyword != null && this.status != null && this.type != null) {
+            if (this.keyword != null && this.typeP != null && this.typeR != null) {
                 filteredList = filteredList.filter(item => {
-                    return item.projectName.includes(this.keyword) && item.type.includes(this.type)
-                        && item.launchTime.includes(this.formatDateString);
+                    let itemTypeP = this.showProjectType(item.projectType);
+                    let itemTypeR = this.showRecruitmentType(item.type);
+                    return item.projectName.includes(this.keyword) && itemTypeP.includes(this.typeP)
+                        && itemTypeR.includes(this.typeR) && item.startTime.includes(this.formatDateString);
                 });
             }
             return filteredList.slice(startIndex, endIndex);
         },
         filteredList() {
             let list = this.recruitmentList;
-            if (this.keyword != null && this.status != null && this.type != null) {
+            if (this.keyword != null && this.typeP != null && this.typeR != null) {
                 list = list.filter(item => {
-                    return item.projectName.includes(this.keyword) && item.type.includes(this.type)
-                        && item.launchTime.includes(this.formatDateString);
+                    let itemTypeP = this.showProjectType(item.projectType);
+                    let itemTypeR = this.showRecruitmentType(item.type);
+                    return item.projectName.includes(this.keyword) && itemTypeP.includes(this.typeP)
+                        && itemTypeR.includes(this.typeR) && item.startTime.includes(this.formatDateString);
                 });
             }
             return list;
@@ -231,7 +256,7 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 1000px;
+    height: 1300px;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
@@ -242,7 +267,6 @@ export default {
 
 .content-container {
     display: flex;
-    height: 1000px;
     flex-direction: column;
 }
 
@@ -267,14 +291,9 @@ export default {
     justify-content: flex-start;
     align-content: flex-start;
     margin-top: 30px;
-    margin-left: 130px;
-    height: 700px;
-    width: 1350px;
+    margin-left: 100px;
 }
 
-.table-container {
-    width: 100%;
-}
 
 table tr:hover {
     cursor: pointer;
@@ -287,29 +306,17 @@ td {
 }
 
 .pagination-container {
-    margin-top: 150px;
+    margin-top: 80px;
     margin-bottom: 50px;
 }
 
-.green-status {
-    background: green;
+.public-type {
+    background: rgb(12, 168, 53);
     color: white;
     border-radius: 5px;
 }
 
-.grey-status {
-    background: grey;
-    color: white;
-    border-radius: 5px;
-}
-
-.blue-type {
-    background: rgb(78, 78, 249);
-    color: white;
-    border-radius: 5px;
-}
-
-.orange-type {
+.private-type {
     background: orange;
     color: white;
     border-radius: 5px;
@@ -321,5 +328,14 @@ td {
 
 .green-number {
     color: green;
+}
+
+.text-font {
+    font-size: 16px;
+    color: #000;
+}
+
+.dialog-footer button:first-child {
+    margin-right: 10px;
 }
 </style>
