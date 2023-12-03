@@ -11,11 +11,14 @@
             </el-menu>
         </div>
         <div class="content-container">
-            <h2>即将进行的活动</h2>
-            <div v-for="item in futureRecruitmentList" :key="item.id">
+            <el-radio-group v-model="selectedActivity">
+                <el-radio label="upcoming" size="large" style="font-weight: bold;" border>即将进行的活动</el-radio>
+                <el-radio label="past" size="large" style="font-weight: bold;" border>已经结束的活动</el-radio>
+            </el-radio-group>
+            <div v-if="selectedActivity === 'upcoming'" v-for="item in futureRecruitmentList" :key="item.id">
                 <div class="recruitment-container">
                     <div>
-                        <h3>{{ item.projectName }}</h3>
+                        <h2>{{ item.projectName }}</h2>
                         <p>项目类型：{{ showProjectType(item.projectType) }}</p>
                         <p>活动时间：{{ item.startTime }} ~ {{ item.endTime }}</p>
                         <p>活动地点：{{ item.location }}</p>
@@ -26,12 +29,10 @@
                 </div>
             </div>
 
-            <br>
-            <h2>已经结束的活动</h2>
-            <div v-for="item in pastRecruitmentList" :key="item.id">
+            <div v-else v-for="item in pastRecruitmentList" :key="item.id">
                 <div class="recruitment-container">
                     <div>
-                        <h3>{{ item.projectName }}</h3>
+                        <h2>{{ item.projectName }}</h2>
                         <p>项目类型：{{ showProjectType(item.projectType) }}</p>
                         <p>活动时间：{{ item.startTime }} ~ {{ item.endTime }}</p>
                         <p>活动地点：{{ item.location }}</p>
@@ -62,6 +63,7 @@ export default {
     },
     data() {
         return {
+            selectedActivity: 'upcoming',
             futureRecruitmentList: [
                 { id: "00008", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "00001", projectName: "志愿项目8", projectType: "1" },
                 { id: "00009", startTime: "YYYY-MM-DD HH:MM", endTime: "YYYY-MM-DD HH:MM", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "00002", projectName: "志愿项目9", projectType: "2" },
@@ -142,8 +144,8 @@ export default {
 .content-container {
     display: flex;
     flex-direction: column;
-    margin-left: 20px;
-    margin-top: 20px;
+    margin-left: 80px;
+    margin-top: 50px;
 }
 
 .recruitment-container {

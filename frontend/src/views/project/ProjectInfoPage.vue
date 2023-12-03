@@ -39,7 +39,7 @@
             </div>
             <div class="tutorial-container">
                 <div class="title-container">
-                    <h2>教程</h2>
+                    <p>教程</p>
                 </div>
                 <div v-for="(item, index) in tutorialList" :key="index">
                     <p>{{ item.title }} {{ item.time }}<el-tag>{{ item.tag }}</el-tag></p>
@@ -48,23 +48,23 @@
                 </div>
             </div>
         </div>
-        <div class="discussion-container">
+        <div class="qa-container">
             <div class="title-container">
-                <h2>Q & A</h2>
+                <p>Q & A</p>
             </div>
 
-            <div v-for="(item, index) in discussionList" :key="index">
-                <p>提问：{{ item.questionPoster }} {{ item.questionTime }} <br> {{ item.question }}</p>
-
-                <p>回复：{{ projectLeader }} {{ item.replyTime }} <br> {{ item.reply }}</p>
+            <div v-for="(item, index) in discussionList" :key="index" class="discussion-container">
+                <p><el-icon><ChatDotRound /></el-icon> {{ item.questionPoster }} <br> {{ item.question }} <br> {{ item.questionTime }}</p>
                 <br>
+                <p><el-icon><Checked /></el-icon> {{ projectLeader }} <el-tag>负责人</el-tag> <br> {{ item.reply }} <br> {{ item.replyTime }}</p>
             </div>
-            <el-button v-if="!questionInput" type="primary" @click="showQuestionInput"
-                style="font-weight: bold; font-size: 18px; color:whitesmoke">我要提问</el-button>
-            <el-input v-if="questionInput" v-model="newQuestion" type="textarea" placeholder="输入你的问题"></el-input>
             <br>
+            <el-button v-if="!questionInput" type="primary" @click="showQuestionInput"
+                style="font-weight: bold; font-size: 16px; color:whitesmoke">我要提问</el-button>
+            <el-input v-if="questionInput" v-model="newQuestion" type="textarea" placeholder="输入你的问题"
+                style="margin-bottom: 20px;"></el-input>
             <el-button v-if="questionInput" type="primary" @click="askQuestion"
-                style="font-weight: bold; font-size: 18px; color:whitesmoke">完成</el-button>
+                style="font-weight: bold; font-size: 16px; color:whitesmoke">完成</el-button>
         </div>
     </div>
 </template>
@@ -273,19 +273,28 @@ export default {
     border-left: 2px solid rgb(114, 110, 104, 0.2);
 }
 
-.discussion-container {
+.qa-container {
     margin-top: 30px;
     margin-bottom: 100px;
     margin-left: 10px;
     margin-right: 10px;
     display: block;
+}
+
+.discussion-container {
+    font-size: 20px;
+    margin-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
     flex-direction: column;
+    border-bottom: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .title-container {
     text-align: center;
     color: rgb(47, 67, 67);
-    font-size: 20px;
+    font-size: 28px;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 </style>
