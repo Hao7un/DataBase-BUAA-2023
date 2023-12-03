@@ -4,7 +4,7 @@
             <div class="left-container">
                 <div class="info-container">
                     <div class="img-container">
-                        <img src="../assets/images/project.png">
+                        <img src="../../assets/images/project.png">
                     </div>
                     <div class="content-container">
                         <div class="high-container">
@@ -24,7 +24,7 @@
                                         {{ teamName }}</strong>
                                 </el-button></p>
                             <el-divider border-style="solid" direction="vertical" />
-                            <p>项目类别：{{ projectType }}</p>
+                            <p>项目类别：{{ showProjectType(projectType) }}</p>
                         </div>
                         <p style="font-size: 18px; font-style: italic;">{{ recruitmentStatus(latestTime) }}</p>
                     </div>
@@ -41,7 +41,7 @@
                     <h2>教程</h2>
                 </div>
                 <div v-for="(item, index) in tutorialList" :key="index">
-                    <p>{{ item.title }} {{ item.time }}</p>
+                    <p>{{ item.title }} {{ item.time }}<el-tag>{{ item.tag }}</el-tag></p>
                     <p>{{ item.content }}</p>
                     <br>
                 </div>
@@ -60,7 +60,7 @@
             </div>
             <el-button v-if="!questionInput" type="primary" @click="showQuestionInput"
                 style="font-weight: bold; font-size: 18px; color:whitesmoke">我要提问</el-button>
-            <el-input v-if="questionInput" v-model="newQuestion" type="textarea" placeholder="输入你的问题" :maxlength="500" show-word-limit></el-input>
+            <el-input v-if="questionInput" v-model="newQuestion" type="textarea" placeholder="输入你的问题"></el-input>
             <br>
             <el-button v-if="questionInput" type="primary" @click="askQuestion"
                 style="font-weight: bold; font-size: 18px; color:whitesmoke">完成</el-button>
@@ -74,7 +74,7 @@ import { ElMessage } from 'element-plus';
 export default {
     created() {
         this.projectId = this.$route.params.projectId;
-        this.axios.post('http://localhost:8000/', {
+        this.axios.post('http://localhost:8000/user_get_specific_project', {
             userId: this.userId,
             projectId: this.projectId
         })
@@ -96,9 +96,10 @@ export default {
     },
     data() {
         return {
+            projectId: '00001',
             isCollect: false,
             projectName: '气象防灾减灾宣讲',
-            projectType: '社区服务',
+            projectType: '1',
             projectIntro: '团队致力于发挥气象行业特色，常态化开展气象防灾减灾科普进社区、进校园公益项目，创办了独具特色的“气象科普”品牌。2022年，结合文明实践“一圈一带一群”建设，与徐汇区多个社区形成合作机制，定期为徐家汇商圈和社区居民开展科普讲座，惠及学生和市民千余人次，申报的“气象防灾减灾宣讲”入选为上海市文明实践百项重点项目。',
             latestTime: '2023-11-01',
             projectLeader: '张昊翔',
@@ -110,8 +111,8 @@ export default {
                 { questionPoster: '王五', questionTime: '2021-01-05', question: '这个项目需要什么技能？', replyTime: '2021-01-06', reply: '不需要什么技能，只要你有热情就可以了。' },
             ],
             tutorialList: [
-                { time: '2021-01-01', title: '注意事项', content: '请大家注意安全。' },
-                { time: '2021-01-02', title: '注意事项', content: '请大家注意安全。' },
+                { time: '2021-01-01', title: '注意事项', tag:'a', content: '请大家注意安全。' },
+                { time: '2021-01-02', title: '注意事项', tag:'b', content: '请大家注意安全。' },
             ],
             newQuestion: '',
             questionInput: false,
@@ -135,8 +136,24 @@ export default {
                 else return '最近招募：' + latestTime;
             }
         },
+        showProjectType(type) {
+            switch (type) {
+                case '1':
+                    return '社区服务';
+                case '2':
+                    return '科技科普';
+                case '3':
+                    return '支教助学';
+                case '4':
+                    return '体育赛事';
+                case '5':
+                    return '大型演出';
+                case '6':
+                    return '其它';
+            }
+        },
         collectProject() {
-            this.axios.post('http://localhost:8000/', {
+            this.axios.post('http://localhost:8000/user_toggle_favorite_project', {
                 userId: this.userId,
                 projectId: this.projectId,
                 type: this.isCollect
@@ -158,7 +175,7 @@ export default {
                 ElMessage.error('问题不能为空');
                 return;
             }
-            this.axios.post('http://localhost:8000/', {
+            this.axios.post('http://localhost:8000/user_post_question', {
                 userId: this.userId,
                 projectId: this.projectId,
                 question: this.newQuestion

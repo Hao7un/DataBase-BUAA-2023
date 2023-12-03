@@ -1,7 +1,7 @@
 <template>
     <div class="main-container">
         <div class="sidebar-container">
-            <el-menu mode="vertical" default-active="all" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
+            <el-menu mode="vertical" default-active="my" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
                 <el-menu-item index="all" @click="changeToAllProjectPage">
                     <span class="item-font" style="font-weight: bold">查看项目</span>
                 </el-menu-item>
@@ -21,9 +21,6 @@
                         </template>
                         <el-option v-for="item in option2" :key="item.key" :value="item.value"></el-option>
                     </el-select>
-                    <div class="switch-container">
-                        只看我的团队<el-switch v-model="onlyMyTeam" style="padding-left: 10px;" />
-                    </div>
                 </div>
                 <div class="right-container">
                     <div class="right-item-container">
@@ -48,24 +45,24 @@
             </div>
             <div class="project-container">
                 <div class="info-container">
-                    <div class="card" v-for="(item, index) in displayedList">
+                    <div class="card" v-for="item in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToProjectInfoPage(item.id)">
                             <div class="img-container">
-                                <img src="../assets/images/project.png">
+                                <img src="../../assets/images/project.png">
                             </div>
                             <div class="card-info">
                                 <div class="title-container">{{ item.name }}</div>
-                                <div class="info-item">项目类别：{{ item.type }}</div>
-                                <div class="info-item">所属团队：<strong>{{ item.team }}</strong></div>
+                                <div class="info-item">项目类别：{{ projectType(item.type) }}
+                                    <el-divider border-style="solid" direction="vertical" />所属团队：<strong>{{ item.team
+                                    }}</strong>
+                                </div>
+                                <div class="info-item">{{ recruitmentStatus(item.latestTime) }}</div>
                             </div>
                         </el-card>
                     </div>
                 </div>
                 <div class="pagination-container">
-                    <el-pagination 
-                        @current-change="handlePageChange" 
-                        :page-size="12" 
-                        :total="filteredList.length"
+                    <el-pagination @current-change="handlePageChange" :page-size="12" :total="filteredList.length"
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
@@ -78,7 +75,7 @@
 
 export default {
     created() {
-        this.axios.post('http://localhost:8000/user_get_all_projects', {
+        this.axios.post('http://localhost:8000/user_get_favorite_projects', {
             userId: this.$store.state.userId
         })
             .then(res => {
@@ -90,28 +87,27 @@ export default {
     },
     data() {
         return {
-            statusRadio: "",
             typeRadio: "",
-            onlyMyTeam: false,
             projectName: "",
             teamName: "",
+            statusRadio: "",
             currentPage: 1,
             projectList: [
-                { id: 1, name: "志愿项目1", type: "社区服务", team: "志愿团队1", isMyTeam: false, latestTime: "2023-12-21" },
-                { id: 2, name: "志愿项目2", type: "科技科普", team: "志愿团队2", isMyTeam: true, latestTime: "2023-09-01" },
-                { id: 3, name: "志愿项目3", type: "支教助学", team: "志愿团队3", isMyTeam: false, latestTime: "2023-11-01" },
-                { id: 4, name: "志愿项目4", type: "体育赛事", team: "志愿团队4", isMyTeam: false, latestTime: "2023-09-01" },
-                { id: 5, name: "志愿项目5", type: "大型演出", team: "志愿团队5", isMyTeam: false, latestTime: "2023-04-01" },
-                { id: 6, name: "志愿项目6", type: "其它", team: "志愿团队6", isMyTeam: false, latestTime: "2022-01-01" },
-                { id: 7, name: "志愿项目7", type: "社区服务", team: "志愿团队7", isMyTeam: false, latestTime: "2023-11-21" },
-                { id: 8, name: "志愿项目8", type: "科技科普", team: "志愿团队8", isMyTeam: false, latestTime: "2021-01-01" },
-                { id: 9, name: "志愿项目9", type: "支教助学", team: "志愿团队9", isMyTeam: false, latestTime: "2023-11-01" },
-                { id: 10, name: "志愿项目10", type: "体育赛事", team: "志愿团队10", isMyTeam: true, latestTime: "2023-10-01" },
-                { id: 11, name: "志愿项目11", type: "大型演出", team: "志愿团队6", isMyTeam: false, latestTime: "2023-05-01" },
-                { id: 12, name: "志愿项目12", type: "其它", team: "志愿团队7", isMyTeam: false, latestTime: "2021-01-01" },
-                { id: 13, name: "志愿项目13", type: "社区服务", team: "志愿团队8", isMyTeam: false, latestTime: "2023-11-22" },
-                { id: 14, name: "志愿项目14", type: "科技科普", team: "志愿团队9", isMyTeam: false, latestTime: "2023-11-23" },
-                { id: 15, name: "志愿项目15", type: "支教助学", team: "志愿团队10", isMyTeam: false, latestTime: "N/A" }
+                { id: 1, name: "志愿项目1", type: "1", team: "志愿团队1", latestTime: "2023-12-21" },
+                { id: 2, name: "志愿项目2", type: "2", team: "志愿团队2", latestTime: "2023-09-01" },
+                { id: 3, name: "志愿项目3", type: "3", team: "志愿团队3", latestTime: "2023-11-01" },
+                { id: 4, name: "志愿项目4", type: "4", team: "志愿团队4", latestTime: "2023-09-01" },
+                { id: 5, name: "志愿项目5", type: "5", team: "志愿团队5", latestTime: "2023-04-01" },
+                { id: 6, name: "志愿项目6", type: "6", team: "志愿团队6", latestTime: "2022-01-01" },
+                { id: 7, name: "志愿项目7", type: "3", team: "志愿团队7", latestTime: "2023-11-21" },
+                { id: 8, name: "志愿项目8", type: "5", team: "志愿团队8", latestTime: "2021-01-01" },
+                { id: 9, name: "志愿项目9", type: "1", team: "志愿团队9", latestTime: "2023-11-01" },
+                { id: 10, name: "志愿项目10", type: "4", team: "志愿团队10", latestTime: "2023-10-01" },
+                { id: 11, name: "志愿项目11", type: "2", team: "志愿团队6", latestTime: "2023-05-01" },
+                { id: 12, name: "志愿项目12", type: "3", team: "志愿团队7", latestTime: "2021-01-01" },
+                { id: 13, name: "志愿项目13", type: "5", team: "志愿团队8", latestTime: "2023-11-22" },
+                { id: 14, name: "志愿项目14", type: "1", team: "志愿团队9", latestTime: "2023-11-23" },
+                { id: 15, name: "志愿项目15", type: "2", team: "志愿团队10", latestTime: "N/A" }
             ],
             option1: [
                 { key: 1, value: "社区服务" },
@@ -136,16 +132,11 @@ export default {
             let startIndex = (this.currentPage - 1) * 12;
             let endIndex = startIndex + 12;
             let filteredList = this.projectList;
-            if (this.onlyMyTeam) {
-                filteredList = filteredList.filter(item => {
-                    return item.isMyTeam == true;
-                }
-                )
-            }
             if (this.typeRadio != null && this.projectName != null && this.teamName != null && this.statusRadio != null) {
                 filteredList = filteredList.filter(item => {
-                    let itemStatus = this.getProjectStatus(item.latestTime);
-                    return item.type.includes(this.typeRadio) && item.name.includes(this.projectName)
+                    let itemStatus = this.projectStatus(item.latestTime);
+                    let itemType = this.projectType(item.type);
+                    return itemType.includes(this.typeRadio) && item.name.includes(this.projectName)
                         && item.team.includes(this.teamName) && itemStatus.includes(this.statusRadio);
                 }
                 )
@@ -154,22 +145,17 @@ export default {
         },
         filteredList() {
             let list = this.projectList;
-            if (this.onlyMyTeam) {
-                list = list.filter(item => {
-                    return item.isMyTeam == true;
-                }
-                )
-            }
             if (this.typeRadio != null && this.projectName != null && this.teamName != null && this.statusRadio != null) {
                 list = list.filter(item => {
-                    let itemStatus = this.getProjectStatus(item.latestTime);
-                    return item.type.includes(this.typeRadio) && item.name.includes(this.projectName)
+                    let itemStatus = this.projectStatus(item.latestTime);
+                    let itemType = this.projectType(item.type);
+                    return itemType.includes(this.typeRadio) && item.name.includes(this.projectName)
                         && item.team.includes(this.teamName) && itemStatus.includes(this.statusRadio);
                 }
                 )
             }
             return list;
-        }
+        },
     },
     methods: {
         handlePageChange(currentPage) {
@@ -192,12 +178,12 @@ export default {
                 params: { projectId: id }
             });
         },
-        getProjectStatus(time) {
-            let currentTime = new Date();
+        projectStatus(time) {
+            const currentTime = new Date();
             if (time == "N/A") {
                 return "暂未招募";
             } else {
-                let latestTime = new Date(time);
+                const latestTime = new Date(time);
                 if (currentTime < latestTime) {
                     return "招募中";
                 } else if (currentTime.getFullYear() == latestTime.getFullYear() && currentTime.getMonth() == latestTime.getMonth()) {
@@ -207,6 +193,32 @@ export default {
                 } else {
                     return "上学期及以前";
                 }
+            }
+        },
+        recruitmentStatus(latestTime) {
+            if (latestTime === 'N/A') {
+                return '暂未招募';
+            } else {
+                const now = new Date();
+                const latest = new Date(latestTime);
+                if (now < latest) return '招募中';
+                else return '上一次招募：' + latestTime;
+            }
+        },
+        projectType(type) {
+            switch (type) {
+                case '1':
+                    return '社区服务';
+                case '2':
+                    return '科技科普';
+                case '3':
+                    return '支教助学';
+                case '4':
+                    return '体育赛事';
+                case '5':
+                    return '大型演出';
+                case '6':
+                    return '其它';
             }
         }
     }
@@ -230,7 +242,6 @@ export default {
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
-
 .item-font {
     font-size: 18px;
     margin-left: 10px;
@@ -243,7 +254,7 @@ export default {
 .content-container {
     display: flex;
     flex-direction: column;
-    margin-left: 15px; /* 这里保证了主内容区不会被挤开 */
+    margin-left: 30px;
 }
 
 .selector-container {
@@ -257,14 +268,6 @@ export default {
 .left-container {
     display: flex;
     margin-left: 35px;
-}
-
-.switch-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    white-space: nowrap;
-    /* 防止文本换行 */
 }
 
 .right-container {

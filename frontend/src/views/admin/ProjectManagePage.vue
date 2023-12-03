@@ -1,4 +1,15 @@
 <template>
+<div class="main-container">
+    <div class="sidebar-container">
+      <el-menu mode="vertical" default-active="join" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
+          <el-menu-item index="join" @click="changeToJoinRecruitmentPage">
+              <span class="item-font" style="font-weight: bold;">项目详情</span>
+          </el-menu-item>
+          <el-menu-item index="my" @click="changeToMyRecruitmentPage">
+              <span class="item-font" style="font-weight: bold;">招募管理</span>
+          </el-menu-item>
+      </el-menu>
+    </div>
     <div class="project-management">
         <v-btn class="back-button" @click="handleBack">
             <template v-slot:prepend>
@@ -9,7 +20,7 @@
         <h2 class="title">项目详情</h2>
         <div class="header">
             <div class="project-avatar">
-                <img src="../assets/images/project.png" id="avatar">
+                <img src="../../assets/images/project.png" id="avatar">
             </div>
             <el-divider direction="vertical" style="height: 200px;"></el-divider>
             <div class="project-info-container">
@@ -89,11 +100,11 @@
             </el-table>
         </div>
         <div>
-            <el-dialog v-model="createRecruitmentVisible" width="500px">
+            <v-dialog v-model="createRecruitmentVisible" width="600px">
                 <div class="create-recruitment-dialog-container">
                     <div class="create-item">
                         <h3 style="margin-bottom: 10px;">活动地点</h3>
-                        <el-input v-model="location" clearable>
+                        <el-input v-model="location" clearable style="width: 250px;">
                             <template #prefix>
                                 <el-icon><Location /></el-icon>
                             </template>
@@ -151,10 +162,10 @@
                         <el-button size="large" @click="handleCreateRecruitmentSubmit">提交</el-button>
                     </div>
                 </div>
-            </el-dialog>
+            </v-dialog>
         </div>
         <div>
-            <v-dialog v-model="createTutorialVisible" width="600px" style="z-index: 10000000;">
+            <v-dialog v-model="createTutorialVisible" width="550px">
                 <div class="create-tutorial-dialog-container">
                     <div class="create-item">
                         <h3 style="margin-bottom: 15px;">教程标题</h3>
@@ -176,14 +187,19 @@
                         <h3 style="margin-bottom: 15px;">教程内容</h3>
                         <el-input v-model="tutorialContent" type="textarea" clearable :autosize="{minRows: 12}" style="width: 70%;" show-word-limit :maxlength="500"></el-input>
                     </div> 
-                    <div style="display: flex; justify-content: center; margin-bottom: 30px; margin-top: 40px">
+                    <div style="display: flex; margin-bottom: 30px; margin-top: 40px;">
                         <el-button @click="handleCreateTutorial">提交</el-button>
                     </div>
                 </div>
             </v-dialog>
         </div>
-        <div>
-            <el-dialog v-model="viewTutorialsVisible" style="height: 550px; width: 750px; border: 2px solid black;" :modal="false">
+    </div>
+    <div>
+        <v-dialog v-model="viewTutorialsVisible">
+            <div style="height: 600px; width: 800px; border: 2px solid black; background: white; margin-left: 450px;">
+                <div style="margin-left: 715px; margin-top: 10px;">
+                    <v-btn @click="viewTutorialsVisible = !viewTutorialsVisible">退出</v-btn>
+                </div>
                 <div class="tutorial-topbar">
                     <v-btn size="large" @click="viewCreateTutorial">发布教程</v-btn>
                 </div>
@@ -216,10 +232,12 @@
                         </el-table-column>
                     </el-table>
                 </div>
-            </el-dialog>
-        </div>
-        <div>
-            <el-dialog v-model="viewTutorialDetailVisible" style="height: 550px; width: 750px; background-color: white;" @close="closeEditTutorialDialog">
+            </div>
+        </v-dialog>
+    </div>
+    <div>
+        <v-dialog v-model="viewTutorialDetailVisible">
+            <div style="height: 600px; width: 800px; background-color: white; padding-top: 50px; margin-left: 450px;">
                 <div class="edit-tutorial-dialog-container">
                     <el-form>
                         <el-form-item label="教程标题： " style="margin-left: 50px;">
@@ -229,14 +247,17 @@
                             <el-input v-model="selectedTutorial.tag" clearable style="width: 150px;"></el-input>
                         </el-form-item>
                         <div style="margin-left: 50px; margin-bottom: 10px; margin-top: 25px">教程内容：</div>
-                        <el-input v-model="selectedTutorial.content" clearable type="textarea" :autosize="{minRows: 12}" style="width: 75%; margin-left: 100px" :maxlength="500" show-word-limit></el-input>
+                        <el-input v-model="selectedTutorial.content" clearable type="textarea" :autosize="{minRows: 12}" style="width: 600px; margin-left: 100px" :maxlength="500" show-word-limit></el-input>
                     </el-form>
                 </div>
-            </el-dialog>
-        </div>
-        <div>
-            <el-dialog v-model="viewCommentsVisible" :modal="false" style="border: 2px solid black; width: 600px;">
-                <h2 style="text-align: center; margin-bottom: 10px;">提问清单</h2>
+                <div style="display: flex; justify-content: center; margin-top: 40px;"><v-btn @click="closeEditTutorialDialog">编辑完成</v-btn></div>
+            </div>
+        </v-dialog>
+    </div>
+    <div>
+        <v-dialog v-model="viewCommentsVisible">
+            <div style="background-color: white; width: 800px; border: 2px solid black; margin-left: 400px;">
+                <h2 style="text-align: center; margin-bottom: 20px; margin-top: 20px;">提问清单</h2>
                 <v-list>
                     <v-list-item
                         v-for="(item, i) in this.comments"
@@ -255,26 +276,30 @@
                     </div>
                     </v-list-item>
                 </v-list>
-            </el-dialog>
-        </div>
-        <div>
-            <el-dialog v-model="replyCommentVisible" style="width: 600px; height: 300px; margin-top: 470px;">
-                <h3 style="display: flex; justify-content: center; margin-bottom: 10px">回复留言</h3>
-                <div>问题：{{ this.selectedComment.content }}</div>
-                <div style="margin-top: 15px">回复：
-                    <el-input style="width: 550px; margin-top: 10px" type="textarea" v-model="replyContent" :maxlength="500" show-word-limit></el-input>
-                </div>
-                <el-button style="margin-left: 230px; margin-top: 25px;" @click="replyCommentSubmit">提交回复</el-button>
-            </el-dialog>
-        </div>
+            </div>
+        </v-dialog>
     </div>
-    
+</div>
+<div>
+    <v-dialog v-model="replyCommentVisible" style="margin-left: 500px; margin-bottom: 200px;">
+        <div style="width: 600px; height: 300px; margin-top: 470px; background: white;">
+            <div style="margin-left: 520px; margin-top: 10px">
+                <v-btn @click="replyCommentVisible = !replyCommentVisible; viewCommentsVisible = !viewCommentsVisible">取消</v-btn>
+            </div>
+            <h3 style="display: flex; justify-content: center; margin-bottom: 10px;">回复留言</h3>
+            <div style="margin-left: 15px;">问题：{{ this.selectedComment.content }}</div>
+            <div style="margin-top: 15px; margin-left: 15px;">回复：
+                <el-input style="width: 550px; margin-top: 10px" type="textarea" v-model="replyContent" :maxlength="500" show-word-limit></el-input>
+            </div>
+            <el-button style="margin-left: 250px; margin-top: 25px; margin-bottom: 10px;" @click="replyCommentSubmit">提交回复</el-button>
+        </div>
+    </v-dialog>
+</div>
 </template>
 
 
 <script>
 import { ElMessage, ElMessageBox } from 'element-plus';
-import store from '../store'
 
 export default {
     computed: {
@@ -472,25 +497,19 @@ export default {
                 projectId: this.projectId,
 
             };
-
             this.axios({
                 method: 'post',
-                url: 'http://localhost:8000/',
+                url: 'http://localhost:8000/get_project_avatar',
                 data: submitParams,
             })
                 .then((res) => {
                     console.log(res);
-                    if (res.data.code === 0) {
+                    if (res.data) {
                         var avatar = document.getElementById('avatar');
-                        var img = res.data.avatar;
-                        avatar.src = "data:image/jpeg;base64," + btoa(
-                            new Uint8Array(img).reduce(function(img, byte) {
-                                return img + String.fromCharCode(byte);
-                            }, '')
-                        );
+                        avatar.src = "data:image/jpeg;base64," + res.data;
                     }
                     else {
-                        console.log("获取项目图片失败, 错误码不是0");
+                        console.log("获取项目图片失败");
                     }
                 })
         },
@@ -666,6 +685,7 @@ export default {
         handleCreateTutorial() {
             if (this.tutorialTitle === "" || this.tutorialTag === "" || this.tutorialContent === "") {
                 this.createTutorialVisible = false;
+                this.viewTutorialsVisible = false;
                 ElMessageBox.alert("请填写完整的教程信息", "注意", {
                     confirmButtonText: "OK",
                     type: "warning",
@@ -674,6 +694,8 @@ export default {
                 })
             }
             else {
+                this.viewTutorialsVisible = true;
+                this.createTutorialVisible = false;
                 const submitParams = {
                     projectId: this.projectId,
                     tutorialTitle: this.tutorialTitle,
@@ -744,6 +766,7 @@ export default {
         closeEditTutorialDialog() {
             if (this.selectedTutorial.title === "" || this.selectedTutorial.tag === "" || this.selectedTutorial.content === "") {
                 this.viewTutorialDetailVisible = false;
+                this.viewTutorialsVisible = false;
                 ElMessageBox.alert("请填写完整的教程信息", "注意", {
                     confirmButtonText: "OK",
                     type: "warning",
@@ -754,6 +777,7 @@ export default {
                 })
             }
             else {
+                    this.viewTutorialDetailVisible = false;
                     const submitParams = {
                         tutorialId: this.selectedTutorial.id,
                         newTutorialTitle: this.selectedTutorial.title,
@@ -784,14 +808,17 @@ export default {
         },
         handleReplyComment(item, index) {
             this.replyCommentVisible = true;
+            this.viewCommentsVisible = false;
             this.selectedComment = item;
         },
         replyCommentSubmit() {
             if (this.replyContent === "") {
+                this.replyCommentVisible = false;
                 ElMessageBox.alert("回复内容不能为空", "注意", {
                     confirmButtonText: "OK",
                     type: 'warning',
                 }).then(() => {
+                    this.viewCommentsVisible = true;
                     return;
                 })
             }
@@ -834,11 +861,35 @@ export default {
 
 
 <style scoped>
+.main-container {
+    display: flex;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+}
+
+.sidebar-container {
+    display: flex;
+    width: 205px;
+    flex-direction: column;
+    padding-top: 20px;
+    margin-left: 20px;
+    height: 1000px;
+    border-right: 2px solid rgb(114, 110, 104, 0.2);
+}
+
+.project-management {
+    height: 1000px;
+    width: 100%;
+}
+
+.item-font {
+    font-size: 18px;
+    margin-left: 10px;
 }
 
 .back-button {
@@ -860,9 +911,12 @@ export default {
 }
 
 .project-avatar img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 350px;
+    max-height: 200px;
+    width: auto;
+    height: auto;
 }
+
 
 .project-info-container {
     flex: 1;
@@ -920,6 +974,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    background: white;
 }
 
 .tutorial-container {
@@ -927,12 +982,13 @@ export default {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    background: white;
 }
 
 .create-recruitment-dialog-container {
     display: flex;
-    height: 750px;
-    width: 300px;
+    height: 800px;
+    width: 550px;
     background-color: white;
     flex-direction: column;
 }
@@ -945,10 +1001,14 @@ export default {
 
 .create-tutorial-dialog-container {
     display: flex;
-    /* height: 99%;
-    width: 99%; */
+    height: 99%;
+    width: 80%;
     background-color: white;
     flex-direction: column;
+}
+
+.edit-tutorial-dialog-container {
+    display: flex;
 }
 
 </style>

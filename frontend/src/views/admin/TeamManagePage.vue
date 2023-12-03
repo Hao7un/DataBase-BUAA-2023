@@ -1,4 +1,15 @@
 <template>
+  <div class="main-container">
+    <div class="sidebar-container">
+      <el-menu mode="vertical" default-active="join" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
+          <el-menu-item index="join" @click="changeToJoinRecruitmentPage">
+              <span class="item-font" style="font-weight: bold;">团队详情</span>
+          </el-menu-item>
+          <el-menu-item index="my" @click="changeToMyRecruitmentPage">
+              <span class="item-font" style="font-weight: bold;">项目管理</span>
+          </el-menu-item>
+      </el-menu>
+    </div>
   <div class="team-management">
     <v-btn class="back-button" @click="handleBack">
       <template v-slot:prepend>
@@ -9,7 +20,7 @@
     <h2 class="title">团队详情</h2>
     <div class="header">
       <div class="team-avatar">
-        <img src="../assets/images/hand_shaking.png" id="avatar">
+        <img src="../../assets/images/hand_shaking.png" id="avatar">
       </div>
       <el-divider direction="vertical" style="height: 200px;" />
       <div class="team-info-container">
@@ -112,7 +123,7 @@
       </v-dialog>
     </div>
     <div>
-      <v-dialog v-model="viewMembersDialogVisible" width="auto" max-height="600">
+      <v-dialog v-model="viewMembersDialogVisible" width="800px" max-height="600">
         <div class="members-container">
           <h2 style="margin: 20px 0; display: flex; justify-content: center;">成员列表</h2>
           <el-table :data="displayedMembers" style=" display: flex; justify-content: center; align-items: center;">
@@ -146,11 +157,11 @@
           </el-table>
         </div>
       </v-dialog>
-      <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="800">
+      <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="1000">
         <div class="create-dialog-container">
           <div class="create-item">
             <h3 style="margin-bottom: 15px;">项目名称</h3>
-            <el-input v-model="projectName" clearable>
+            <el-input v-model="projectName" clearable style="width: 150px;">
               <template #prefix>
                 <el-icon><Postcard /></el-icon>
               </template>
@@ -158,7 +169,7 @@
           </div>
           <div class="create-item">
             <h3 style="margin-bottom: 15px;">项目简介</h3>
-            <el-input type="textarea" v-model="projectIntro" clearable :maxlength="500" :autosize="{minRows: 2}" show-word-limit></el-input>
+            <el-input type="textarea" v-model="projectIntro" clearable :maxlength="500" :autosize="{minRows: 2}" show-word-limit style="width: 400px;"></el-input>
           </div>
           <div class="create-item">
             <h3 style="margin-bottom: 15px;">项目类别</h3>
@@ -168,6 +179,7 @@
               <el-radio label="3" border size="small" style="margin-top: 8px;">支教助学</el-radio>
               <el-radio label="4" border size="small" style="margin-top: 8px;">体育赛事</el-radio>
               <el-radio label="5" border size="small" style="margin-top: 8px;">大型演出</el-radio>
+              <el-radio label="6" border size="small" style="margin-top: 8px;">其它类别</el-radio>
             </el-radio-group>
           </div>
           <div class="create-item">
@@ -179,7 +191,7 @@
                 :auto-upload="false"
                 :on-change="uploadFile"
             >
-              <el-image v-if="imageUrl" :src="imageUrl" style="width: 199px; height: 199px" fit="contain" />
+              <el-image v-if="imageUrl" :src="imageUrl" style="width: 190px; height: 190px" fit="contain" />
               <el-icon v-if="!imageUrl"><Plus /></el-icon>
             </el-upload>
 
@@ -191,11 +203,11 @@
       </v-dialog>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
 import { ElMessage, ElMessageBox } from 'element-plus';
-import store from '../store'
 
 export default {
   computed: {
@@ -341,22 +353,17 @@ export default {
 
       this.axios({
         method: 'post',
-        url: 'http://localhost:8000/',
+        url: 'http://localhost:8000/get_team_avatar',
         data: submitParams,
       })
         .then((res) => {
           console.log(res);
-          if (res.data.code === 0) {
+          if (res.data) {
             var avatar = document.getElementById('avatar');
-            var img = res.data.avatar;
-            avatar.src = "data:image/jpeg;base64," + btoa(
-                new Uint8Array(img).reduce(function(img, byte) {
-                    return img + String.fromCharCode(byte);
-              }, '')
-            );
+            avatar.src = "data:image/jpeg;base64," + res.data;
           }
           else {
-            console.log("获取团队头像失败, 错误码不是0");
+            console.log("获取团队头像失败");
           }
         })
 
@@ -521,6 +528,11 @@ export default {
         type: 'warning'
       }).then(() => {
 
+        if (row.userId === this.$store.state.userId) {
+          ElMessage.error("无法删除管理员!");
+          return;
+        }
+
         const submitParams = {
           userId: row.userId,
           teamId: this.teamId,
@@ -568,19 +580,16 @@ export default {
       else {
         const formData = new FormData();
         formData.append("projectAvatar", this.fileToUpload);
-        const submitParams = {
-          teamId: this.teamId,
-          projectName: this.projectName,
-          projectIntro: this.projectIntro,
-          projectType: this.projectType,
-          avatar: formData,
-
-        };
+        // console.log(formData.get("projectAvatar"));
+        formData.append("teamId", this.teamId);
+        formData.append("projectName", this.projectName);
+        formData.append("projectIntro", this.projectIntro);
+        formData.append("projectType", this.projectType);
 
         this.axios({
           method: 'post',
           url: 'http://localhost:8000/admin_create_project',
-          data: submitParams,
+          data: formData,
         })
         .then((res) => {
           console.log(res);
@@ -623,8 +632,28 @@ export default {
 </script>
 
 <style scoped>
+.main-container {
+  display: flex;
+}
+
 .team-management {
-  height: 1000px;
+  height: 500px;
+  width: 100%;
+}
+
+.sidebar-container {
+    display: flex;
+    width: 205px;
+    flex-direction: column;
+    padding-top: 20px;
+    margin-left: 20px;
+    height: 1000px;
+    border-right: 2px solid rgb(114, 110, 104, 0.2);
+}
+
+.item-font {
+    font-size: 18px;
+    margin-left: 10px;
 }
 
 .header {
@@ -653,8 +682,10 @@ export default {
 }
 
 .team-avatar img {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 350px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
 }
 
 .team-info-container {
@@ -716,7 +747,7 @@ footer {
 .create-item {
   margin-top: 50px;
   margin-left: 50px;
-  width: 70%;
+  width: 90%;
 }
 
 .avatar-uploader {
@@ -724,8 +755,8 @@ footer {
     justify-content: center;
     align-items: center;
     border: 1px dashed black;
-    width: 201px;
-    height: 201px;
+    width: 185px;
+    height: 185px;
     
 }
 
