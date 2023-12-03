@@ -4,7 +4,7 @@
             <div class="left-container">
                 <div class="info-container">
                     <div class="img-container">
-                        <img src="../../assets/images/project.png">
+                        <img src="../../assets/images/inf.png">
                     </div>
                     <div class="content-container">
                         <div class="high-container">
@@ -19,22 +19,22 @@
                             <br>
                         </div>
                         <div class="low-container">
-                            <p>所属团队：<el-button text><strong style="color: #110f0f; font-size: 18px; padding-bottom: 4px"
+                            <p>所属团队:<el-button text><strong style="color: #110f0f; font-size: 20px; padding-bottom: 4px"
                                         @click="changeToTeamInfoPage(teamId)">
                                         {{ teamName }}</strong>
                                 </el-button></p>
                             <el-divider border-style="solid" direction="vertical" />
-                            <p>项目类别：<el-tag style="font-size: 18px; padding-bottom: 3px;">{{ showProjectType(projectType)
-                            }}</el-tag></p>
+                            <p> &nbsp; 项目类别：<el-tag style="font-size: 16px; font-weight: bold; padding-bottom: 4px;">
+                                    {{ showProjectType(projectType) }}</el-tag></p>
                         </div>
-                        <p style="font-size: 18px; font-style: italic;">{{ recruitmentStatus(latestTime) }}</p>
+                        <p style="font-size: 18px; color: rgb(65, 64, 64);">{{ recruitmentStatus(latestTime) }}</p>
                     </div>
                 </div>
                 <div class="intro-container">
                     <p style="font-size: 22px; font-weight: bold; margin-bottom: 8px;"><el-icon>
                             <Document />
                         </el-icon>项目简介</p>
-                    <p style="line-height: 30px;" v-html="projectIntroWithBreaks"></p>
+                    <p style="line-height: 30px;" v-html="contentWithBreaks(projectIntro)"></p>
                 </div>
             </div>
             <div class="tutorial-container">
@@ -54,9 +54,18 @@
             </div>
 
             <div v-for="(item, index) in discussionList" :key="index" class="discussion-container">
-                <p><el-icon><ChatDotRound /></el-icon> {{ item.questionPoster }} <br> {{ item.question }} <br> {{ item.questionTime }}</p>
+                <p><el-icon>
+                        <ChatDotRound />
+                    </el-icon> {{ item.questionPoster }}
+                <p v-html="contentWithBreaks(item.question)"></p>
+                <span style="font-size: 16px; color: grey;">{{ item.questionTime }}</span></p>
                 <br>
-                <p><el-icon><Checked /></el-icon> {{ projectLeader }} <el-tag>负责人</el-tag> <br> {{ item.reply }} <br> {{ item.replyTime }}</p>
+                <p><el-icon>
+                        <Checked />
+                    </el-icon> {{ projectLeader }} <el-tag
+                        style="font-size: 16px; font-weight: bold; margin-left: 15px; padding-bottom: 2px;">负责人</el-tag>
+                <p v-html="contentWithBreaks(item.reply)"></p>
+                <span style="font-size: 16px; color: grey;">{{ item.replyTime }}</span></p>
             </div>
             <br>
             <el-button v-if="!questionInput" type="primary" @click="showQuestionInput"
@@ -108,7 +117,7 @@ export default {
             teamName: '计算机学院志愿服务队',
             discussionList: [
                 { questionPoster: '张三', questionTime: '2021-01-01', question: '这个项目需要什么技能？', replyTime: '2021-01-02', reply: '不需要什么技能，只要你有热情就可以了。' },
-                { questionPoster: '李四', questionTime: '2021-01-03', question: '这个项目需要什么技能？', replyTime: '2021-01-04', reply: '不需要什么技能，只要你有热情就可以了。' },
+                { questionPoster: '李四', questionTime: '2021-01-03', question: '这个项目需要什么技能？', replyTime: '2021-01-04', reply: '不需要什么技能。\n只要你有热情就可以了。' },
                 { questionPoster: '王五', questionTime: '2021-01-05', question: '这个项目需要什么技能？', replyTime: '2021-01-06', reply: '不需要什么技能，只要你有热情就可以了。' },
             ],
             tutorialList: [
@@ -187,14 +196,14 @@ export default {
                         this.showQuestionInput = false;
                     }
                 });
+        },
+        contentWithBreaks(content) {
+            return content.replace(/\n/g, '<br>');
         }
     },
     computed: {
         userId() {
             return this.$store.state.userId;
-        },
-        projectIntroWithBreaks() {
-            return this.projectIntro.replace(/\n/g, '<br>');
         }
     },
 }
@@ -254,7 +263,7 @@ export default {
     align-items: center;
     margin-top: 30px;
     margin-bottom: 20px;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .intro-container {
@@ -276,18 +285,21 @@ export default {
 .qa-container {
     margin-top: 30px;
     margin-bottom: 100px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 150px;
+    margin-right: 150px;
     display: block;
 }
 
 .discussion-container {
-    font-size: 20px;
-    margin-top: 30px;
+    font-size: 18px;
+    margin-top: 50px;
+    padding-top: 30px;
     padding-bottom: 30px;
+    padding-left: 200px;
     display: flex;
     flex-direction: column;
-    border-bottom: 2px solid rgb(114, 110, 104, 0.2);
+    border: 2px solid rgb(114, 110, 104, 0.2);
+    border-radius: 50px;
 }
 
 .title-container {
