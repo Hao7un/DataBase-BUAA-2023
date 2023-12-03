@@ -160,6 +160,7 @@ export default {
     methods: {
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
+            window.scrollTo(0, 0);
         },
         changeToMyProjectPage() {
             this.$router.push({

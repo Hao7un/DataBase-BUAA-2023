@@ -211,6 +211,7 @@ export default {
         },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
+            window.scrollTo(0, 0);
         },
         changeToJoinRecruitmentPage() {
             this.$router.push({

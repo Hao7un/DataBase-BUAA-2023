@@ -1,13 +1,13 @@
 <template>
     <div class="main-container">
-        <div class="team-container">
+        <div class="top-container">
             <div class="left-container">
                 <div class="info-container">
                     <div class="img-container">
                         <img src="../../assets/images/inf.png">
                     </div>
                     <div class="content-container">
-                        <div class="high-container">
+                        <div class="row1-container">
                             <h1 style="margin-right: 20px;">{{ projectName }}</h1>
 
                             <el-button size="large" type="primary" style="margin-top: 5px; margin-left: 40px;"
@@ -18,7 +18,7 @@
                             </el-button>
                             <br>
                         </div>
-                        <div class="low-container">
+                        <div class="row2-container">
                             <p>所属团队:<el-button text><strong style="color: #110f0f; font-size: 20px; padding-bottom: 4px"
                                         @click="changeToTeamInfoPage(teamId)">
                                         {{ teamName }}</strong>
@@ -37,21 +37,19 @@
                     <p style="line-height: 30px;" v-html="contentWithBreaks(projectIntro)"></p>
                 </div>
             </div>
-            <div class="tutorial-container">
-                <div class="title-container">
-                    <p>教程</p>
-                </div>
-                <div v-for="(item, index) in tutorialList" :key="index">
-                    <p>{{ item.title }} {{ item.time }}<el-tag>{{ item.tag }}</el-tag></p>
-                    <p>{{ item.content }}</p>
-                    <br>
+            <div class="right-container">
+                <div class="title-container">教程</div>
+
+                <div v-for="(item, index) in tutorialList" :key="index" class="tutorial-container"  @click="showTutorialContent">
+                    <p>{{ item.title }}<el-tag
+                            style="font-size: 16px; font-weight: bold; margin-left: 10px; padding-bottom: 3px;">
+                            {{ item.tag }}</el-tag></p>
+                    <span style="font-size: 16px; color: grey;">{{ item.time }}</span>
                 </div>
             </div>
         </div>
-        <div class="qa-container">
-            <div class="title-container">
-                <p>Q & A</p>
-            </div>
+        <div class="bottom-container">
+            <div class="title-container">Q & A</div>
 
             <div v-for="(item, index) in discussionList" :key="index" class="discussion-container">
                 <p><el-icon>
@@ -116,14 +114,21 @@ export default {
             teamId: '1',
             teamName: '计算机学院志愿服务队',
             discussionList: [
-                { questionPoster: '张三', questionTime: '2021-01-01', question: '这个项目需要什么技能？', replyTime: '2021-01-02', reply: '不需要什么技能，只要你有热情就可以了。' },
-                { questionPoster: '李四', questionTime: '2021-01-03', question: '这个项目需要什么技能？', replyTime: '2021-01-04', reply: '不需要什么技能。\n只要你有热情就可以了。' },
-                { questionPoster: '王五', questionTime: '2021-01-05', question: '这个项目需要什么技能？', replyTime: '2021-01-06', reply: '不需要什么技能，只要你有热情就可以了。' },
+                { questionPoster: '张三', questionTime: '2023-01-01', question: '这个项目需要什么技能？', replyTime: '2021-01-02', reply: '不需要什么技能，只要你有热情就可以了。' },
+                { questionPoster: '李四', questionTime: '2023-01-03', question: '这个项目需要什么技能？', replyTime: '2021-01-04', reply: '不需要什么技能。\n只要你有热情就可以了。' },
+                { questionPoster: '王五', questionTime: '2023-01-05', question: '这个项目需要什么技能？', replyTime: '2021-01-06', reply: '不需要什么技能，只要你有热情就可以了。' },
             ],
             tutorialList: [
                 { time: '2023-01-01', title: '宣讲内容', tag: '培训', content: '请大家注意安全。' },
                 { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
+                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
+                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
+                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
+                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
+                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
+                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
             ],
+            tutorialContent: false,
             newQuestion: '',
             questionInput: false,
         }
@@ -175,6 +180,9 @@ export default {
                     }
                 });
         },
+        showTutorialContent() {
+            this.tutorialContent = true;
+        },
         showQuestionInput() {
             this.questionInput = true;
         },
@@ -217,17 +225,17 @@ export default {
     flex-direction: column;
 }
 
-.team-container {
+.top-container {
     display: flex;
     flex-direction: row;
-    margin-bottom: 80px;
+    margin-bottom: 30px;
 }
 
 .left-container {
     display: flex;
     flex-direction: column;
     margin-top: 30px;
-    width: 1200px;
+    width: 1100px;
 }
 
 .info-container {
@@ -241,7 +249,7 @@ export default {
     width: 300px;
     height: 200px;
     margin-bottom: 30px;
-    margin-left: 100px;
+    margin-left: 50px;
 }
 
 .content-container {
@@ -251,13 +259,13 @@ export default {
     margin-left: 10px;
 }
 
-.high-container {
+.row1-container {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.low-container {
+.row2-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -272,17 +280,32 @@ export default {
     border-top: 2px solid rgb(114, 110, 104, 0.2);
 }
 
-.tutorial-container {
+.right-container {
     display: flex;
     flex-direction: column;
     margin-left: 30px;
     padding-top: 50px;
-    padding-left: 80px;
+    padding-left: 30px;
+    padding-right: 30px;
     font-size: 18px;
     border-left: 2px solid rgb(114, 110, 104, 0.2);
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 500px;
 }
 
-.qa-container {
+.tutorial-container {
+    width: 400px;
+    margin-bottom: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 90px;
+    border: 2px solid rgb(114, 110, 104, 0.2);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.bottom-container {
     margin-top: 30px;
     margin-bottom: 100px;
     margin-left: 150px;
@@ -307,6 +330,6 @@ export default {
     color: rgb(47, 67, 67);
     font-size: 28px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 </style>

@@ -152,6 +152,7 @@ export default {
     methods: {
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
+            window.scrollTo(0, 0);
         },
         changeToJoinTeamPage() {
             this.$router.push({
