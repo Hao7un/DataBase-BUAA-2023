@@ -101,7 +101,7 @@ export default {
     },
     data() {
         return {
-            teamId: '00001',
+            teamId: '1',
             isTeamMember: true,
             teamName: '计算机学院志愿服务队',
             teamNumber: '10',

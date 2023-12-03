@@ -59,11 +59,16 @@
                                 <th style="width: 160px;">
                                 </th>
                                 <th style="width: 100px;">
-                                </th>
-                                <th style="width: 100px;">
-                                    <el-button type="success" @click="refresh">
+                                    <el-button type="success" @click="refresh(true)">
                                         <span style="font-weight: bold; font-size: 14px; color:whitesmoke">刷新</span>
                                     </el-button>
+                                </th>
+                                <th style="width: 130px;">
+                                    <el-select v-model="status" placeholder="选择招募状态" clearable>
+                                        <el-option key="1" value="可报名">可报名</el-option>
+                                        <el-option key="2" value="未开始">未开始</el-option>
+                                        <el-option key="3" value="已截止">已截止</el-option>
+                                    </el-select>
                                 </th>
                             </tr>
                         </thead>
@@ -107,7 +112,7 @@
             </div>
         </div>
         <el-dialog v-model="dialogVisible" title="注意" width="30%" align-center center draggable>
-            <span class="text-font">请确认此次招募的时间与地点，报名后无法退出。</span>
+            <span class="text-font">请确认此次志愿活动的时间与地点，报名后无法退出。</span>
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="dialogVisible = false">取消</el-button>
@@ -143,12 +148,13 @@ export default {
             date: null,
             typeP: "",
             typeR: "",
+            status: "",
             recruitmentList: [
-                { id: "00005", launchTime: "2023-12-08 21:00", dueTime: "2023-12-09 21:00", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目5", projectType: "1" },
-                { id: "00004", launchTime: "2023-12-01 21:00", dueTime: "2023-12-10 21:00", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "新主楼G1000", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目4", projectType: "2" },
-                { id: "00003", launchTime: "2023-12-01 12:00", dueTime: "2023-12-12 21:00", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "操场", volunteerHour: "5", isAttend: true, type: "2", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目3", projectType: "3" },
-                { id: "00002", launchTime: "2023-12-01 10:00", dueTime: "2023-12-02 11:00", startTime: "2023-12-02 19:00", endTime: "2023-12-02 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "2", maxNumber: "50", currentNumber: "50", projectId: "00001", projectName: "志愿项目2", projectType: "4" },
-                { id: "00001", launchTime: "2023-11-01 21:00", dueTime: "2023-11-02 21:00", startTime: "2023-12-01 19:00", endTime: "2023-12-01 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "5" },
+                { id: "5", launchTime: "2023-12-08 21:00", dueTime: "2023-12-09 21:00", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "1", projectName: "志愿项目5", projectType: "1" },
+                { id: "4", launchTime: "2023-12-01 21:00", dueTime: "2023-12-10 21:00", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "新主楼G1000", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "1", projectName: "志愿项目4", projectType: "2" },
+                { id: "3", launchTime: "2023-12-01 12:00", dueTime: "2023-12-12 21:00", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "操场", volunteerHour: "5", isAttend: true, type: "2", maxNumber: "50", currentNumber: "30", projectId: "1", projectName: "志愿项目3", projectType: "3" },
+                { id: "2", launchTime: "2023-12-01 10:00", dueTime: "2023-12-02 11:00", startTime: "2023-12-02 19:00", endTime: "2023-12-02 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "2", maxNumber: "50", currentNumber: "50", projectId: "1", projectName: "志愿项目2", projectType: "4" },
+                { id: "1", launchTime: "2023-11-01 21:00", dueTime: "2023-11-02 21:00", startTime: "2023-12-01 19:00", endTime: "2023-12-01 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "1", projectName: "志愿项目1", projectType: "5" },
             ],
             dialogVisible: false,
             attendId: ""
@@ -159,24 +165,26 @@ export default {
             let startIndex = (this.currentPage - 1) * 10;
             let endIndex = startIndex + 10;
             let filteredList = this.recruitmentList;
-            if (this.keyword != null && this.place != null && this.typeP != null && this.typeR != null) {
+            if (this.keyword != null && this.place != null && this.typeP != null && this.typeR != null && this.status != null) {
                 filteredList = filteredList.filter(item => {
                     let itemTypeP = this.showProjectType(item.projectType);
                     let itemTypeR = this.showRecruitmentType(item.type);
                     return item.projectName.includes(this.keyword) && item.location.includes(this.place) && itemTypeP.includes(this.typeP)
-                        && itemTypeR.includes(this.typeR) && item.startTime.includes(this.formatDateString);
+                        && itemTypeR.includes(this.typeR) && this.showRecruitmentStatus(item.id).includes(this.status) 
+                        && item.startTime.includes(this.formatDateString);
                 });
             }
             return filteredList.slice(startIndex, endIndex);
         },
         filteredList() {
             let list = this.recruitmentList;
-            if (this.keyword != null && this.place != null && this.typeP != null && this.typeR != null) {
+            if (this.keyword != null && this.place != null && this.typeP != null && this.typeR != null && this.status != null) {
                 list = list.filter(item => {
                     let itemTypeP = this.showProjectType(item.projectType);
                     let itemTypeR = this.showRecruitmentType(item.type);
                     return item.projectName.includes(this.keyword) && item.location.includes(this.place) && itemTypeP.includes(this.typeP)
-                        && itemTypeR.includes(this.typeR) && item.startTime.includes(this.formatDateString);
+                        && itemTypeR.includes(this.typeR) && this.showRecruitmentStatus(item.id).includes(this.status) 
+                        && item.startTime.includes(this.formatDateString);
                 });
             }
             return list;
@@ -191,7 +199,7 @@ export default {
         }
     },
     methods: {
-        refresh() {
+        refresh(showMessage) {
             this.axios.post('http://localhost:8000/user_get_recruitment_list', {
                 userId: this.userId
             })
@@ -199,7 +207,7 @@ export default {
                     console.log(res);
                     if (res.data.code === 0) {
                         this.recruitmentList = res.data.recruitmentList;
-                        ElMessage.success('刷新成功');
+                        if (showMessage) ElMessage.success('刷新成功');
                     }
                 });
         },
@@ -265,7 +273,7 @@ export default {
             else if (new Date(recruitment.launchTime) > new Date())
                 return '未开始';
             else
-                return '报名';
+                return '可报名';
         },
         shouldDisableButton(id) {
             let recruitment = this.recruitmentList.find(item => item.id === id);
@@ -289,8 +297,13 @@ export default {
                         recruitment.isAttend = true;
                         ElMessage.success('报名成功');
                     }
-                    else {
+                    else if (res.data.code === 1) {
                         ElMessage.error('人数已满');
+                        this.refresh(false);
+                    }
+                    else if (res.data.code === 2) {
+                        ElMessage.error('与已报名的活动时间冲突');
+                        this.refresh(false);
                     }
                 });
             this.dialogVisible = false;
@@ -345,7 +358,7 @@ export default {
     justify-content: flex-start;
     align-content: flex-start;
     margin-top: 30px;
-    margin-left: 80px;
+    margin-left: 60px;
 }
 
 th,
@@ -404,7 +417,7 @@ td {
     background-color: grey;
 }
 
-.报名 {
+.可报名 {
     background-color: #409EFF;
 }
 </style>
