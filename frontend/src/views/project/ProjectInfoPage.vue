@@ -40,7 +40,8 @@
             <div class="right-container">
                 <div class="title-container">教程</div>
 
-                <div v-for="(item, index) in tutorialList" :key="index" class="tutorial-container"  @click="showTutorialContent">
+                <div v-for="(item, index) in tutorialList" :key="index" class="tutorial-container"
+                    @click="showTutorialContent">
                     <p>{{ item.title }}<el-tag
                             style="font-size: 16px; font-weight: bold; margin-left: 10px; padding-bottom: 3px;">
                             {{ item.tag }}</el-tag></p>
@@ -73,6 +74,16 @@
             <el-button v-if="questionInput" type="primary" @click="askQuestion"
                 style="font-weight: bold; font-size: 16px; color:whitesmoke">完成</el-button>
         </div>
+        <el-dialog v-model="tutorialContent" title="注意" width="30%" align-center center draggable>
+            <span class="text-font">请确认此次招募的时间与地点，报名后无法退出。</span>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button type="primary" @click="tutorialContent = false">
+                        <span style="color:whitesmoke; font-weight: bold;">关闭</span>
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
@@ -119,14 +130,11 @@ export default {
                 { questionPoster: '王五', questionTime: '2023-01-05', question: '这个项目需要什么技能？', replyTime: '2021-01-06', reply: '不需要什么技能，只要你有热情就可以了。' },
             ],
             tutorialList: [
-                { time: '2023-01-01', title: '宣讲内容', tag: '培训', content: '请大家注意安全。' },
-                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
-                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
-                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
-                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
-                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
-                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
-                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
+                { id: '1', time: '2023-01-01', title: '宣讲内容', tag: '培训', content: '请大家注意安全。' },
+                { id: '2', time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
+                { id: '3', time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
+                { id: '4', time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
+                { id: '5', time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
             ],
             tutorialContent: false,
             newQuestion: '',
@@ -291,7 +299,7 @@ export default {
     border-left: 2px solid rgb(114, 110, 104, 0.2);
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 500px;
+    max-height: 400px;
 }
 
 .tutorial-container {

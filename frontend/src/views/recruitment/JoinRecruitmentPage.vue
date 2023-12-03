@@ -104,19 +104,19 @@
                         layout="prev, pager, next">
                     </el-pagination>
                 </div>
-                <el-dialog v-model="dialogVisible" title="注意" width="30%" align-center center draggable>
-                    <span class="text-font">请确认此次招募的时间与地点，报名后无法退出。</span>
-                    <template #footer>
-                        <span class="dialog-footer">
-                            <el-button @click="dialogVisible = false">取消</el-button>
-                            <el-button type="primary" @click="attendRecruitment">
-                                <span style="color:whitesmoke">确认</span>
-                            </el-button>
-                        </span>
-                    </template>
-                </el-dialog>
             </div>
         </div>
+        <el-dialog v-model="dialogVisible" title="注意" width="30%" align-center center draggable>
+            <span class="text-font">请确认此次招募的时间与地点，报名后无法退出。</span>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="attendRecruitment">
+                        <span style="color:whitesmoke">确认</span>
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 

@@ -27,26 +27,21 @@
                 show-password />
 
             <div style="margin-top: 30px;">
-
                 <el-button type="primary" round size="large" @click="checkPassword">
                     <span style="font-weight: bold; font-size: 15px; color:whitesmoke">完成</span></el-button>
             </div>
-
-            <el-dialog v-model="dialogVisible" title="注意" width="30%" align-center center draggable>
-                <span class="text-font">你的密码将被修改。</span>
-                <template #footer>
-                    <span class="dialog-footer">
-                        <el-button @click="dialogVisible = false">取消</el-button>
-                        <el-button type="primary" @click="editPassword">
-                            <span style="color:whitesmoke">确认</span>
-                        </el-button>
-                    </span>
-                </template>
-            </el-dialog>
         </div>
-
-
-
+        <el-dialog v-model="dialogVisible" title="注意" width="30%" align-center center draggable>
+            <span class="text-font">你的密码将被修改。</span>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="editPassword">
+                        <span style="color:whitesmoke">确认</span>
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
@@ -146,7 +141,8 @@ export default {
     display: block;
     flex-direction: column;
     margin-top: 50px;
-    margin-left: 300px;
+    margin-left: 400px;
+    width: 500px;
 }
 
 .item-font {

@@ -224,7 +224,8 @@ export default {
 .content-container {
   display: block;
   flex-direction: column;
-  margin-left: 300px;
+  margin-left: 400px;
+  width: 500px;
 }
 
 .item-font {
