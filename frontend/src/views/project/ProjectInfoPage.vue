@@ -24,7 +24,8 @@
                                         {{ teamName }}</strong>
                                 </el-button></p>
                             <el-divider border-style="solid" direction="vertical" />
-                            <p>项目类别：{{ showProjectType(projectType) }}</p>
+                            <p>项目类别：<el-tag style="font-size: 18px; padding-bottom: 3px;">{{ showProjectType(projectType)
+                            }}</el-tag></p>
                         </div>
                         <p style="font-size: 18px; font-style: italic;">{{ recruitmentStatus(latestTime) }}</p>
                     </div>
@@ -33,7 +34,7 @@
                     <p style="font-size: 22px; font-weight: bold; margin-bottom: 8px;"><el-icon>
                             <Document />
                         </el-icon>项目简介</p>
-                    <p>{{ projectIntro }}</p>
+                    <p style="line-height: 30px;" v-html="projectIntroWithBreaks"></p>
                 </div>
             </div>
             <div class="tutorial-container">
@@ -100,7 +101,7 @@ export default {
             isCollect: false,
             projectName: '气象防灾减灾宣讲',
             projectType: '1',
-            projectIntro: '团队致力于发挥气象行业特色，常态化开展气象防灾减灾科普进社区、进校园公益项目，创办了独具特色的“气象科普”品牌。2022年，结合文明实践“一圈一带一群”建设，与徐汇区多个社区形成合作机制，定期为徐家汇商圈和社区居民开展科普讲座，惠及学生和市民千余人次，申报的“气象防灾减灾宣讲”入选为上海市文明实践百项重点项目。',
+            projectIntro: '团队致力于发挥气象行业特色，常态化开展气象防灾减灾科普进社区、进校园公益项目，创办了独具特色的“气象科普”品牌。\n2022年，结合文明实践“一圈一带一群”建设，与徐汇区多个社区形成合作机制，定期为徐家汇商圈和社区居民开展科普讲座，惠及学生和市民千余人次，申报的“气象防灾减灾宣讲”入选为上海市文明实践百项重点项目。',
             latestTime: '2023-11-01',
             projectLeader: '张昊翔',
             teamId: '1',
@@ -111,8 +112,8 @@ export default {
                 { questionPoster: '王五', questionTime: '2021-01-05', question: '这个项目需要什么技能？', replyTime: '2021-01-06', reply: '不需要什么技能，只要你有热情就可以了。' },
             ],
             tutorialList: [
-                { time: '2021-01-01', title: '注意事项', tag: 'a', content: '请大家注意安全。' },
-                { time: '2021-01-02', title: '注意事项', tag: 'b', content: '请大家注意安全。' },
+                { time: '2023-01-01', title: '宣讲内容', tag: '培训', content: '请大家注意安全。' },
+                { time: '2023-05-02', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
             ],
             newQuestion: '',
             questionInput: false,
@@ -191,6 +192,9 @@ export default {
     computed: {
         userId() {
             return this.$store.state.userId;
+        },
+        projectIntroWithBreaks() {
+            return this.projectIntro.replace(/\n/g, '<br>');
         }
     },
 }

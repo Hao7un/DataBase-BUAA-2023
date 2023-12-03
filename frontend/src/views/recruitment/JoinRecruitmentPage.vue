@@ -46,6 +46,7 @@
                                         clearable></el-date-picker>
                                 </th>
                                 <th style="width: 140px;">
+                                    <el-input v-model="place" placeholder="输入活动地点" clearable></el-input>
                                 </th>
                                 <th style="width: 130px;">
                                     <el-select v-model="typeR" placeholder="选择面向群体" clearable>
@@ -138,6 +139,7 @@ export default {
         return {
             currentPage: 1,
             keyword: "",
+            place: "",
             date: null,
             typeP: "",
             typeR: "",
@@ -149,7 +151,7 @@ export default {
                 { id: "00001", launchTime: "2023-11-01 21:00", dueTime: "2023-11-02 21:00", startTime: "2023-12-01 19:00", endTime: "2023-12-01 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "5" },
             ],
             dialogVisible: false,
-            attendId: "00001"
+            attendId: ""
         };
     },
     computed: {
@@ -157,11 +159,11 @@ export default {
             let startIndex = (this.currentPage - 1) * 10;
             let endIndex = startIndex + 10;
             let filteredList = this.recruitmentList;
-            if (this.keyword != null && this.typeP != null && this.typeR != null) {
+            if (this.keyword != null && this.place != null && this.typeP != null && this.typeR != null) {
                 filteredList = filteredList.filter(item => {
                     let itemTypeP = this.showProjectType(item.projectType);
                     let itemTypeR = this.showRecruitmentType(item.type);
-                    return item.projectName.includes(this.keyword) && itemTypeP.includes(this.typeP)
+                    return item.projectName.includes(this.keyword) && item.location.includes(this.place) && itemTypeP.includes(this.typeP)
                         && itemTypeR.includes(this.typeR) && item.startTime.includes(this.formatDateString);
                 });
             }
@@ -169,11 +171,11 @@ export default {
         },
         filteredList() {
             let list = this.recruitmentList;
-            if (this.keyword != null && this.typeP != null && this.typeR != null) {
+            if (this.keyword != null && this.place != null && this.typeP != null && this.typeR != null) {
                 list = list.filter(item => {
                     let itemTypeP = this.showProjectType(item.projectType);
                     let itemTypeR = this.showRecruitmentType(item.type);
-                    return item.projectName.includes(this.keyword) && itemTypeP.includes(this.typeP)
+                    return item.projectName.includes(this.keyword) && item.location.includes(this.place) && itemTypeP.includes(this.typeP)
                         && itemTypeR.includes(this.typeR) && item.startTime.includes(this.formatDateString);
                 });
             }
@@ -256,7 +258,7 @@ export default {
             if (recruitment.isAttend)
                 return '已报名';
             else if (recruitment.currentNumber >= recruitment.maxNumber)
-                return '已招满';
+                return '已满员';
             else if (new Date(recruitment.dueTime) < new Date())
                 return '已截止';
             else if (new Date(recruitment.launchTime) > new Date())
@@ -389,7 +391,7 @@ td {
     background-color: green;
 }
 
-.已招满 {
+.已满员 {
     background-color: orange;
 }
 
