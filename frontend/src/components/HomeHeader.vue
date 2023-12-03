@@ -104,6 +104,10 @@ export default {
   created() {
     this.fetch();
   },
+  mounted() {
+    this.fetch();
+    setInterval(this.fetch, 5000);
+  },
   data() {
     return {
       activeMenu: "project",
@@ -181,12 +185,20 @@ export default {
       if (this.showNotRead === true) {
         const startIndex = (this.currentPage - 1) * 3;
         const endIndex = startIndex + 3;
-        return this.notReadMessages.slice(startIndex, endIndex);
+        return this.notReadMessages.sort((a, b) => {
+          const dateA = new Date(a.time);
+          const dateB = new Date(b.time);
+          return dateB - dateA;          
+        }).slice(startIndex, endIndex);
       }
       else {
         const startIndex = (this.currentPage - 1) * 3;
         const endIndex = startIndex + 3;
-        return this.messages.slice(startIndex, endIndex);
+        return this.messages.sort((a, b) => {
+          const dateA = new Date(a.time);
+          const dateB = new Date(b.time);
+          return dateB - dateA;          
+        }).slice(startIndex, endIndex);
       }
     },
   },
@@ -245,6 +257,7 @@ export default {
     },
     changeToRecruit() {
       console.log("change to recruit");
+      
       this.$router.push({
         path: '/recruitment/join'
       });

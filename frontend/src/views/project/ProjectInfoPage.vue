@@ -74,7 +74,7 @@
             <el-button v-if="questionInput" type="primary" @click="askQuestion"
                 style="font-weight: bold; font-size: 16px; color:whitesmoke">完成</el-button>
         </div>
-        <el-dialog v-model="tutorialContent" title="注意" width="30%" align-center center draggable>
+        <!-- <el-dialog v-model="tutorialContent" title="注意" width="30%" align-center center draggable>
             <span class="text-font">请确认此次招募的时间与地点，报名后无法退出。</span>
             <template #footer>
                 <span class="dialog-footer">
@@ -83,7 +83,7 @@
                     </el-button>
                 </span>
             </template>
-        </el-dialog>
+        </el-dialog> -->
     </div>
 </template>
 

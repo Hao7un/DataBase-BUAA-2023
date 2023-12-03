@@ -1,6 +1,5 @@
 <template>
     <div class="main-container">
-
         <div class="content-container">
             <div class="create-button-container">
                 <v-btn size="x-large" @click="showCreateDialog">创建团队</v-btn>
@@ -186,14 +185,10 @@ export default {
         handleCreateTeamSubmit() {
             const formData = new FormData();
             formData.append("teamAvatar", this.fileToUpload);
-            // console.log(formData.get('teamAvatar'));
-            const submitParams = {
-                userId: this.$store.state.userId,
-                teamName: this.teamName,
-                teamIntro: this.teamIntro,
-                avatar: formData,
+            formData.append("userId", this.$store.state.userId);
+            formData.append("teamName", this.teamName);
+            formData.append("teamIntro", this.teamIntro);
 
-            }
             if (this.teamName === '') {
                 this.createDialogVisible = false;
                 ElMessageBox.alert("团队名不能为空", "注意", {
@@ -210,7 +205,7 @@ export default {
                 await vm.axios({
                     method: 'post',
                     url: 'http://localhost:8000/admin_create_team',
-                    data: submitParams,
+                    data: formData,
                 })
                     .then(async(res) => {
                         console.log(res);

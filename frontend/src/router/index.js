@@ -89,6 +89,11 @@ const router = createRouter({
                     name: 'projectAdmin',
                     component: () => import('../views/admin/ProjectManagePage.vue')
                 },
+                {
+                    path: '/admin/projectlist',
+                    name: 'projectlist',
+                    component: () => import('../views/admin/ProjectListPage.vue')
+                }
                 
             ]
         },

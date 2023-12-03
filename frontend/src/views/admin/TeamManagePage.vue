@@ -1,4 +1,15 @@
 <template>
+  <div class="main-container">
+    <div class="sidebar-container">
+      <el-menu mode="vertical" default-active="info" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
+          <el-menu-item index="info" @click="changeToTeamManagePage">
+              <span class="item-font" style="font-weight: bold;">团队详情</span>
+          </el-menu-item>
+          <el-menu-item index="list" @click="changeToProjectListPage">
+              <span class="item-font" style="font-weight: bold;">项目管理</span>
+          </el-menu-item>
+      </el-menu>
+    </div>
   <div class="team-management">
     <v-btn class="back-button" @click="handleBack">
       <template v-slot:prepend>
@@ -192,6 +203,7 @@
       </v-dialog>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -346,17 +358,12 @@ export default {
       })
         .then((res) => {
           console.log(res);
-          if (res.data.code === 0) {
+          if (res.data) {
             var avatar = document.getElementById('avatar');
-            var img = res.data.avatar;
-            avatar.src = "data:image/jpeg;base64," + btoa(
-                new Uint8Array(img).reduce(function(img, byte) {
-                    return img + String.fromCharCode(byte);
-              }, '')
-            );
+            avatar.src = "data:image/jpeg;base64," + res.data;
           }
           else {
-            console.log("获取团队头像失败, 错误码不是0");
+            console.log("获取团队头像失败");
           }
         })
 
@@ -389,6 +396,18 @@ export default {
                   }
               });
           })();
+    },
+    changeToProjectListPage() {
+      this.$router.push({
+        path: '/admin/projectlist'
+        // params
+      })
+    },
+    changeToTeamManagePage() {
+      this.$router.push({
+        path: '/admin/teaminfo'
+
+      })
     },
     viewMembers() {
       this.viewMembersDialogVisible = true;
@@ -521,6 +540,11 @@ export default {
         type: 'warning'
       }).then(() => {
 
+        if (row.userId === this.$store.state.userId) {
+          ElMessage.error("无法删除管理员!");
+          return;
+        }
+
         const submitParams = {
           userId: row.userId,
           teamId: this.teamId,
@@ -573,14 +597,6 @@ export default {
         formData.append("projectName", this.projectName);
         formData.append("projectIntro", this.projectIntro);
         formData.append("projectType", this.projectType);
-        // const submitParams = {
-        //   teamId: this.teamId,
-        //   projectName: this.projectName,
-        //   projectIntro: this.projectIntro,
-        //   projectType: this.projectType,
-        //   avatar: formData,
-
-        // };
 
         this.axios({
           method: 'post',
@@ -628,8 +644,28 @@ export default {
 </script>
 
 <style scoped>
+.main-container {
+  display: flex;
+}
+
 .team-management {
-  height: 1000px;
+  height: 500px;
+  width: 100%;
+}
+
+.sidebar-container {
+    display: flex;
+    width: 205px;
+    flex-direction: column;
+    padding-top: 20px;
+    margin-left: 20px;
+    height: 1000px;
+    border-right: 2px solid rgb(114, 110, 104, 0.2);
+}
+
+.item-font {
+    font-size: 18px;
+    margin-left: 10px;
 }
 
 .header {
@@ -658,8 +694,10 @@ export default {
 }
 
 .team-avatar img {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 350px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
 }
 
 .team-info-container {
