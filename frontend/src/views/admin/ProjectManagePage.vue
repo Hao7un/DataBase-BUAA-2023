@@ -654,7 +654,7 @@ export default {
                     maxNumber: this.maxNumber,
                     message: {
                         title: "您收藏的项目发布了新的招募",
-                        content: "您关注的 " + this.projectName + " 项目发布了新的招募, 招募开始时间为 " + startTime,
+                        content: "您关注的 " + this.projectName + " 项目发布了新的招募, 招募开始时间为 " + this.startTime,
                     }
                 };
 
