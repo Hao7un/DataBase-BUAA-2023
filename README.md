@@ -279,16 +279,16 @@
     discussionList: [
         {
           questionPoster: "张三", 
-          questionTime: "YYYY-MM-DD", 
+          questionTime: "YYYY-MM-DD HH:MM", 
           question: "需要什么技能？", 
-          replyTime: "YYYY-MM-DD", 
+          replyTime: "YYYY-MM-DD HH:MM", 
           reply: "需要一定的技术基础。"
         }
     ],
     tutorialList: [
         {
           id: "1",
-          time: "YYYY-MM-DD",
+          time: "YYYY-MM-DD HH:MM",
           title: "注意事项",
           tag: "培训",
           content: "注意安全。"
