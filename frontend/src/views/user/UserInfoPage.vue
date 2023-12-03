@@ -25,7 +25,7 @@
               学工号
             </div>
           </template>
-          {{ collegeId }}
+          <span style="font-size: 16px; color: #000;">{{ collegeId }}</span>
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -36,7 +36,7 @@
               姓名
             </div>
           </template>
-          {{ userName }}
+          <span style="font-size: 16px; color: #000;">{{ userName }}</span>
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -47,7 +47,7 @@
               用户类型
             </div>
           </template>
-          <el-tag>{{ userType }}</el-tag>
+          <el-tag style="font-size: 16px;">{{ userType }}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -58,7 +58,7 @@
               电话
             </div>
           </template>
-          <el-input type="text" v-model="telephone"></el-input>
+          <br><el-input type="text" v-model="telephone" style="font-size: 16px;"></el-input>
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -69,7 +69,7 @@
               邮箱
             </div>
           </template>
-          <el-input type="text" v-model="email"></el-input>
+          <br><el-input type="text" v-model="email" style="font-size: 16px;"></el-input>
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -80,7 +80,7 @@
               个人简介
             </div>
           </template>
-          <el-input type="textarea" v-model="userIntro"></el-input>
+          <br><el-input type="textarea" v-model="userIntro" style="font-size: 16px;"></el-input>
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -91,7 +91,7 @@
               志愿时长
             </div>
           </template>
-          {{ volunteerTime }}小时
+          <span style="font-size: 16px; color: #000;">{{ volunteerTime }} 小时</span>
         </el-descriptions-item>
       </el-descriptions>
 
@@ -199,7 +199,7 @@ export default {
 .cell-item {
   display: flex;
   align-items: center;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: bold;
 }
 

@@ -396,6 +396,15 @@
   }
   ```
 
+* 报名失败
+
+  ```javascript
+  {
+    code: 1,
+    message: ""
+  }
+  ```
+
 ## MyRecruitmentPage
 ### 获取我参加的招募信息
 

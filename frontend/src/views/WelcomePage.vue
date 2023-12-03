@@ -261,8 +261,6 @@ export default {
       this.$refs.loginForm.validate(async (valid) => {
         /* 登录判断逻辑 */
         if (valid) {
-          console.log("登录成功");
-          ElMessage.success("登录成功");
           this.$store.commit("setCollegeId", "21371295");
           this.$store.commit("setPassword", "123456");
           this.$store.commit("setUserName", "张昊翔");

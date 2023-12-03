@@ -218,7 +218,6 @@ export default {
     align-items: center;
     margin-top: 30px;
     font-size: 18px;
-    font-style: italic;
 }
 
 .intro-container {

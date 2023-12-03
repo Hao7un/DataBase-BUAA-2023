@@ -199,9 +199,7 @@ export default {
             if (latestTime === 'N/A') {
                 return '暂未招募';
             } else {
-                const now = new Date();
-                const latest = new Date(latestTime);
-                if (now < latest) return '招募中';
+                if (new Date() < new Date(latestTime)) return '招募中';
                 else return '上一次招募：' + latestTime;
             }
         },

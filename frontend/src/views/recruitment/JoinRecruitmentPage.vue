@@ -45,7 +45,7 @@
                                     <el-date-picker v-model="date" type="date" placeholder="选择活动日期"
                                         clearable></el-date-picker>
                                 </th>
-                                <th style="width: 100px;">
+                                <th style="width: 140px;">
                                 </th>
                                 <th style="width: 130px;">
                                     <el-select v-model="typeR" placeholder="选择面向群体" clearable>
@@ -60,12 +60,19 @@
                                 <th style="width: 100px;">
                                 </th>
                                 <th style="width: 100px;">
+                                    <el-button type="success" @click="refresh">
+                                        <span style="font-weight: bold; font-size: 14px; color:whitesmoke">刷新</span>
+                                    </el-button>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in displayedList" @click="openDialog(item.id)">
-                                <td style="text-align:center; font-weight:bold;">{{ item.projectName }}</td>
+                            <tr v-for="item in displayedList">
+                                <td style="text-align:center">
+                                    <el-button text><strong style="color: #110f0f; font-size: 17px;"
+                                            @click="changeToProjectInfoPage(item.projectId)">{{ item.projectName }}
+                                        </strong></el-button>
+                                </td>
                                 <td style="text-align:center">{{ showProjectType(item.projectType) }}</td>
                                 <td style="text-align:center">开始<br>{{ item.startTime }}<br>结束<br>{{ item.endTime }}</td>
                                 <td style="text-align:center">{{ item.location }}</td>
@@ -76,14 +83,15 @@
                                 <td style="text-align:center">{{ item.volunteerHour }} 小时</td>
                                 <td style="text-align:center;">开始<br>{{ item.launchTime }}<br>结束<br>{{ item.dueTime }}</td>
                                 <td style="text-align:center;"
-                                    :class="item.currentNumber === item.maxNumber ? 'red-number' : 'green-number'">
+                                    :class="item.currentNumber >= item.maxNumber ? 'red-number' : 'green-number'">
                                     {{ item.currentNumber }} / {{ item.maxNumber }}
                                 </td>
                                 <td style="text-align:center">
-                                    <el-button size="large" type="primary">
-                                        <span v-if="isCollect"
-                                            style="font-weight: bold; font-size: 13px; color:whitesmoke">已报满</span>
-                                        <span v-else style="font-weight: bold; font-size: 13px; color:whitesmoke">报名</span>
+                                    <el-button :class="showRecruitmentStatus(item.id)" size="large"
+                                        :disabled="shouldDisableButton(item.id)"
+                                        style="font-weight: bold; font-size: 14px; color:whitesmoke"
+                                        @click="openDialog(item.id)">
+                                        {{ showRecruitmentStatus(item.id) }}
                                     </el-button>
                                 </td>
                             </tr>
@@ -114,7 +122,6 @@
 <script>
 import { ElMessage } from 'element-plus';
 
-
 export default {
     created() {
         this.axios.post('http://localhost:8000/user_get_recruitment_list', {
@@ -135,15 +142,15 @@ export default {
             typeP: "",
             typeR: "",
             recruitmentList: [
-                { id: "00005", launchTime: "2023-12-08 21:00", dueTime: "2023-12-09 21:00", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", isAttend: true, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目5", projectType: "1" },
-                { id: "00004", launchTime: "2023-12-01 21:00", dueTime: "2023-12-10 21:00", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目4", projectType: "2" },
+                { id: "00005", launchTime: "2023-12-08 21:00", dueTime: "2023-12-09 21:00", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目5", projectType: "1" },
+                { id: "00004", launchTime: "2023-12-01 21:00", dueTime: "2023-12-10 21:00", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "新主楼G1000", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目4", projectType: "2" },
                 { id: "00003", launchTime: "2023-12-01 12:00", dueTime: "2023-12-12 21:00", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "操场", volunteerHour: "5", isAttend: true, type: "2", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目3", projectType: "3" },
                 { id: "00002", launchTime: "2023-12-01 10:00", dueTime: "2023-12-02 11:00", startTime: "2023-12-02 19:00", endTime: "2023-12-02 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "2", maxNumber: "50", currentNumber: "50", projectId: "00001", projectName: "志愿项目2", projectType: "4" },
-                { id: "00001", launchTime: "2023-11-01 21:00", dueTime: "2023-11-02 21:00", startTime: "2023-12-01 19:00", endTime: "2023-12-01 21:00", location: "操场", volunteerHour: "5", isAttend: true, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "5" },
+                { id: "00001", launchTime: "2023-11-01 21:00", dueTime: "2023-11-02 21:00", startTime: "2023-12-01 19:00", endTime: "2023-12-01 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "00001", projectName: "志愿项目1", projectType: "5" },
             ],
             dialogVisible: false,
             attendId: "00001"
-        }
+        };
     },
     computed: {
         displayedList() {
@@ -173,7 +180,8 @@ export default {
             return list;
         },
         formatDateString() {
-            if (this.date == null) return "";
+            if (this.date == null)
+                return "";
             return this.formatDate(this.date);
         },
         userId() {
@@ -181,6 +189,18 @@ export default {
         }
     },
     methods: {
+        refresh() {
+            this.axios.post('http://localhost:8000/user_get_recruitment_list', {
+                userId: this.userId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.recruitmentList = res.data.recruitmentList;
+                        ElMessage.success('刷新成功');
+                    }
+                });
+        },
         formatDate(date) {
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -193,12 +213,19 @@ export default {
         changeToJoinRecruitmentPage() {
             this.$router.push({
                 path: '/recruitment/join'
-            })
+            });
         },
         changeToMyRecruitmentPage() {
             this.$router.push({
                 path: '/recruitment/my'
-            })
+            });
+        },
+        changeToProjectInfoPage(id) {
+            console.log('projectId:', id);
+            this.$router.push({
+                name: 'projectInfo',
+                params: { projectId: id }
+            });
         },
         showRecruitmentType(type) {
             switch (type) {
@@ -224,6 +251,24 @@ export default {
                     return '其它';
             }
         },
+        showRecruitmentStatus(id) {
+            let recruitment = this.recruitmentList.find(item => item.id === id);
+            if (recruitment.isAttend)
+                return '已报名';
+            else if (recruitment.currentNumber >= recruitment.maxNumber)
+                return '已招满';
+            else if (new Date(recruitment.dueTime) < new Date())
+                return '已截止';
+            else if (new Date(recruitment.launchTime) > new Date())
+                return '未开始';
+            else
+                return '报名';
+        },
+        shouldDisableButton(id) {
+            let recruitment = this.recruitmentList.find(item => item.id === id);
+            return recruitment.isAttend || recruitment.currentNumber >= recruitment.maxNumber
+                || new Date(recruitment.dueTime) < new Date() || new Date(recruitment.launchTime) > new Date();
+        },
         openDialog(id) {
             this.dialogVisible = true;
             this.attendId = id;
@@ -236,10 +281,16 @@ export default {
                 .then(res => {
                     console.log(res);
                     if (res.data.code === 0) {
-                        this.dialogVisible = false;
+                        let recruitment = this.recruitmentList.find(item => item.id === this.attendId);
+                        recruitment.currentNumber = parseInt(recruitment.currentNumber) + 1;
+                        recruitment.isAttend = true;
                         ElMessage.success('报名成功');
                     }
+                    else {
+                        ElMessage.error('人数已满');
+                    }
                 });
+            this.dialogVisible = false;
         }
     },
 }
@@ -291,12 +342,7 @@ export default {
     justify-content: flex-start;
     align-content: flex-start;
     margin-top: 30px;
-    margin-left: 100px;
-}
-
-
-table tr:hover {
-    cursor: pointer;
+    margin-left: 80px;
 }
 
 th,
@@ -337,5 +383,25 @@ td {
 
 .dialog-footer button:first-child {
     margin-right: 10px;
+}
+
+.已报名 {
+    background-color: green;
+}
+
+.已招满 {
+    background-color: orange;
+}
+
+.已截止 {
+    background-color: grey;
+}
+
+.未开始 {
+    background-color: grey;
+}
+
+.报名 {
+    background-color: #409EFF;
 }
 </style>

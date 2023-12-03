@@ -19,8 +19,8 @@
                             <br>
                         </div>
                         <div class="low-container">
-                            <p>所属团队：<el-button color="" text><strong @click="changeToTeamInfoPage(teamId)"
-                                        style="color: #110f0f; font-size: 18px;padding-bottom: 4px">
+                            <p>所属团队：<el-button text><strong style="color: #110f0f; font-size: 18px; padding-bottom: 4px"
+                                        @click="changeToTeamInfoPage(teamId)">
                                         {{ teamName }}</strong>
                                 </el-button></p>
                             <el-divider border-style="solid" direction="vertical" />
@@ -111,8 +111,8 @@ export default {
                 { questionPoster: '王五', questionTime: '2021-01-05', question: '这个项目需要什么技能？', replyTime: '2021-01-06', reply: '不需要什么技能，只要你有热情就可以了。' },
             ],
             tutorialList: [
-                { time: '2021-01-01', title: '注意事项', tag:'a', content: '请大家注意安全。' },
-                { time: '2021-01-02', title: '注意事项', tag:'b', content: '请大家注意安全。' },
+                { time: '2021-01-01', title: '注意事项', tag: 'a', content: '请大家注意安全。' },
+                { time: '2021-01-02', title: '注意事项', tag: 'b', content: '请大家注意安全。' },
             ],
             newQuestion: '',
             questionInput: false,
@@ -130,9 +130,7 @@ export default {
             if (latestTime === 'N/A') {
                 return '暂未招募';
             } else {
-                const now = new Date();
-                const latest = new Date(latestTime);
-                if (now < latest) return '招募中';
+                if (new Date() < new Date(latestTime)) return '招募中';
                 else return '最近招募：' + latestTime;
             }
         },
