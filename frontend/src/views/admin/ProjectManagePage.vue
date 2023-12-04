@@ -1,11 +1,11 @@
 <template>
 <div class="main-container">
     <div class="sidebar-container">
-      <el-menu mode="vertical" default-active="join" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
-          <el-menu-item index="join" @click="changeToJoinRecruitmentPage">
+      <el-menu mode="vertical" default-active="info" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
+          <el-menu-item index="info" @click="changeToProjectManagePage">
               <span class="item-font" style="font-weight: bold;">项目详情</span>
           </el-menu-item>
-          <el-menu-item index="my" @click="changeToMyRecruitmentPage">
+          <el-menu-item index="list" @click="changeToRecruitmentManangePage">
               <span class="item-font" style="font-weight: bold;">招募管理</span>
           </el-menu-item>
       </el-menu>
@@ -100,7 +100,7 @@
             </el-table>
         </div>
         <div>
-            <v-dialog v-model="createRecruitmentVisible" width="600px">
+            <v-dialog v-model="createRecruitmentVisible" width="600px" style="z-index: 6;">
                 <div class="create-recruitment-dialog-container">
                     <div class="create-item">
                         <h3 style="margin-bottom: 10px;">活动地点</h3>
@@ -118,7 +118,7 @@
                             format="YYYY-MM-DD HH:mm"
                             value-format="YYYY-MM-DD HH:mm"
                             :disabled-date="disabledDates"
-                            @focus="focus"
+                            @focus="this.focus"
                         ></el-date-picker>
                     </div>
                     <div class="create-item">
@@ -129,7 +129,7 @@
                             format="YYYY-MM-DD HH:mm"
                             value-format="YYYY-MM-DD HH:mm"
                             :disabled-date="disabledDates"
-                            @focus="focus"
+                            @focus="this.focus"
                     ></el-date-picker>
                     </div>
                     <div class="create-item">
@@ -140,7 +140,7 @@
                             format="YYYY-MM-DD HH:mm"
                             value-format="YYYY-MM-DD HH:mm"
                             :disabled-date="disabledDates"
-                            @focus="focus"
+                            @focus="this.focus"
                     ></el-date-picker>
                     </div>
                     <div class="create-item">
@@ -356,13 +356,13 @@ export default {
     },
     data() {
         return {
-            fatherTeam: null,
-            projectId: this.$route.query.id,
-            projectName: this.$route.query.name,
-            createdDate: this.$route.query.createdDate,
-            projectType: this.$route.query.type,
-            // 发布招募
+            teamId: this.$route.query.teamId,
+            projectId: this.$route.query.projectId,
+            projectName: "",
+            createdDate: "",
             projectIntro: "",
+            projectType: "",
+            // 发布招募
             startTime: "",
             deadline: "",
             endTime: "",
@@ -395,7 +395,6 @@ export default {
             tutorialTagKey: "",
             recruitements: [
                 {
-                    state: "",
                     launchTime: "2023-11-24 12:22",
                     deadline: "2023-11-24 13:00",
                     startTime: "2023-11-25 16:08",
@@ -406,7 +405,6 @@ export default {
                     number: 10,
                 },
                 {
-                    state: "",
                     launchTime: "2023-11-23 12:23",
                     deadline: "2023-11-28 14:00",
                     startTime: "2023-11-24 16:09",
@@ -417,7 +415,6 @@ export default {
                     number: 20,
                 },
                 {
-                    state: "",
                     launchTime: "2023-11-29 12:24",
                     deadline: "2023-11-23 15:00",
                     startTime: "2023-11-24 16:10",
@@ -516,6 +513,7 @@ export default {
         fetch() {
             const submitParams = {
                 projectId: this.projectId,
+
             };
 
             this.axios({
@@ -527,9 +525,13 @@ export default {
                     console.log(res);
                     if (res.data.code === 0) {
                         console.log("获取项目信息成功");
+                        this.projectName = res.data.projectName;
+                        this.projectType = res.data.projectType;
                         this.projectIntro = res.data.projectIntro;
+                        this.createdDate = res.data.createdDate;
                         this.comments = res.data.comments;
                         this.tutorials = res.data.tutorials;
+                        //
                         this.recruitements = res.data.recruitments;
                     }
                     else {
@@ -537,6 +539,24 @@ export default {
                     }
                 })
 
+        },
+        changeToProjectManagePage() {
+            this.$router.push({
+                path: '/admin/projectinfo',
+                query: {
+                    projectId: this.projectId,
+                    teamId: this.teamId,
+                }
+            })
+        },
+        changeToRecruitmentManangePage() {
+            this.$router.push({
+                path: '/admin/recruitment',
+                query: {
+                    projectId: this.projectId,
+                    teamId: this.teamId,
+                }
+            })
         },
         handleSave() {
             const submitParams = {
@@ -573,15 +593,10 @@ export default {
                 })
         },
         handleBack() {
-            this.fatherTeam = JSON.parse(this.$route.query.fatherTeam);
             this.$router.push({
                 path: '/admin/teaminfo',
                 query: {
-                    id: this.fatherTeam.id,
-                    name: this.fatherTeam.name,
-                    number: this.fatherTeam.size,
-                    date: this.fatherTeam.establishmentDate,
-                    hours: this.fatherTeam.totalHours,
+                    teamId: this.teamId,
                 },
             })
         },

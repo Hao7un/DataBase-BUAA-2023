@@ -58,10 +58,10 @@
     </div>
     <el-divider style="width: 90%; margin-left: 100px;"/>
     <div class="content">
-      <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍(不超过500字)" :rows="5" :maxlength="500" show-word-limit clearable></el-input>
+      <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍(不超过500字)" :rows="15" :maxlength="500" show-word-limit clearable></el-input>
     </div>
-    <el-divider style="width: 90%; margin-left: 100px;"/>
-    <div class="footer">
+    <!-- <el-divider style="width: 90%; margin-left: 100px;"/> -->
+    <!-- <div class="footer">
       <div style="display: flex; justify-content: center; margin-bottom: 10px;">
         <v-btn size="large" @click="showCreateProjectDialog">创建项目</v-btn>
       </div>
@@ -106,7 +106,7 @@
             </template>
         </el-table-column>
       </el-table>
-    </div>
+    </div> -->
     <div> 
       <v-dialog v-model="createApplicationDialogVisible" width="auto">
         <el-table :data="applicationList" border style="width: 99%; border: 2px solid gray" :default-sort="[{ prop: 'date', order: 'descending' }]">
@@ -157,7 +157,7 @@
           </el-table>
         </div>
       </v-dialog>
-      <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="1000">
+      <!-- <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="1000">
         <div class="create-dialog-container">
           <div class="create-item">
             <h3 style="margin-bottom: 15px;">项目名称</h3>
@@ -200,7 +200,7 @@
             <el-button size="large" @click="handleCreateProjectSubmit">提交</el-button>
           </div>
         </div>
-      </v-dialog>
+      </v-dialog> -->
     </div>
   </div>
   </div>
@@ -237,11 +237,11 @@ export default {
   },
   data() {
     return {
-      teamId: this.$route.query.id,
-      teamName: this.$route.query.name,
-      teamSize: this.$route.query.number,
-      establishmentDate: this.$route.query.date,
-      totalHours: this.$route.query.hours,
+      teamId: this.$route.query.teamId,
+      teamName: "",
+      teamSize: "",
+      establishmentDate: "",
+      totalHours: "",
       teamIntroduction: "",
       createApplicationDialogVisible: false,
       viewMembersDialogVisible: false,
@@ -380,16 +380,21 @@ export default {
               method: 'post',
               url: 'http://localhost:8000/admin_get_specific_team_details',
               data: submitParams,
+
             })
               .then(async (res) => {
                   console.log('获取团队详情');
                   console.log(res);
                   if (res.data.code === 0) {
                       console.log('请求成功');
+                      vm.teamName = res.data.teamName;
+                      vm.teamIntro = res.data.teamIntro;
+                      vm.teamSize = res.data.teamSize;
+                      vm.totalHours = res.data.totalHours;
+                      vm.establishmentDate = res.data.establishmentDate;
                       vm.teamIntroduction = res.data.teamIntro;
                       vm.applicationList = res.data.applicationList;
                       vm.members = res.data.memberList;
-                      vm.projects = res.data.projects;
                   }
                   else {
                       console.log('请求失败, 错误码code不是0');
@@ -399,42 +404,46 @@ export default {
     },
     changeToProjectListPage() {
       this.$router.push({
-        path: '/admin/projectlist'
-        // params
+        path: '/admin/projectlist',
+        query: {
+          teamId: this.teamId,
+        }
       })
     },
     changeToTeamManagePage() {
       this.$router.push({
-        path: '/admin/teaminfo'
-
+        path: '/admin/teaminfo',
+        query: {
+          teamId: this.teamId,
+        }
       })
     },
     viewMembers() {
       this.viewMembersDialogVisible = true;
     },
-    showCreateProjectDialog() {
-      this.createProjectDialogVisible = true;
-    },
-    viewProjectDetails(row) {
-      let fatherTeam = {
-          id: this.teamId,
-          name: this.teamName,
-          establishmentDate: this.establishmentDate,
-          size: this.teamSize,
-          totalHours: this.totalHours,
-      };
-      this.$router.push({
-        path: '/admin/projectinfo',
-        query: {
-          id: row.id,
-          name: row.name,
-          type: row.category,
-          createdDate: row.createdDate,
-          // 还要传递所属团队
-          fatherTeam: JSON.stringify(fatherTeam),
-        }
-      })
-    },
+    // showCreateProjectDialog() {
+    //   this.createProjectDialogVisible = true;
+    // },
+    // viewProjectDetails(row) {
+    //   let fatherTeam = {
+    //       id: this.teamId,
+    //       name: this.teamName,
+    //       establishmentDate: this.establishmentDate,
+    //       size: this.teamSize,
+    //       totalHours: this.totalHours,
+    //   };
+    //   this.$router.push({
+    //     path: '/admin/projectinfo',
+    //     query: {
+    //       id: row.id,
+    //       name: row.name,
+    //       type: row.category,
+    //       createdDate: row.createdDate,
+    //       // 还要传递所属团队
+    //       fatherTeam: JSON.stringify(fatherTeam),
+    //     }
+    //   })
+    // },
     handleSave() {
       const submitParams = {
         teamId: this.teamId,
@@ -659,7 +668,7 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 1000px;
+    height: 900px;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 

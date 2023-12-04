@@ -136,16 +136,6 @@ export default {
                 });
             })();
         },
-        changeToJoinTeamPage() {
-            this.$router.push({
-                path: '/team/join'
-            })
-        },
-        changeToMyTeamPage() {
-            this.$router.push({
-                path: '/team/myteam'
-            })
-        },
         showCreateDialog() {
             this.createDialogVisible = true;
             console.log("显示创建团队对话");
@@ -157,11 +147,7 @@ export default {
             this.$router.push({
                 path: '/admin/teaminfo',
                 query: {
-                    id: row.teamId,
-                    name: row.name,
-                    number: row.number,
-                    hours: row.hours,
-                    date: row.date,
+                    teamId: row.teamId,
                 }
             })
         },
