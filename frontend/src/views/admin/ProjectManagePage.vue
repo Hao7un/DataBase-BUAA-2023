@@ -1,11 +1,11 @@
 <template>
 <div class="main-container">
     <div class="sidebar-container">
-      <el-menu mode="vertical" default-active="join" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
-          <el-menu-item index="join" @click="changeToJoinRecruitmentPage">
+      <el-menu mode="vertical" default-active="info" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
+          <el-menu-item index="info" @click="changeToProjectManagePage">
               <span class="item-font" style="font-weight: bold;">项目详情</span>
           </el-menu-item>
-          <el-menu-item index="my" @click="changeToMyRecruitmentPage">
+          <el-menu-item index="list" @click="changeToRecruitmentManangePage">
               <span class="item-font" style="font-weight: bold;">招募管理</span>
           </el-menu-item>
       </el-menu>
@@ -20,7 +20,9 @@
         <h2 class="title">项目详情</h2>
         <div class="header">
             <div class="project-avatar">
-                <img src="../../assets/images/project.png" id="avatar">
+                <el-tooltip placement="right" content="更换头像" effect="light">
+                    <img src="../../assets/images/project.png" id="avatar" @click="setAvatarVisible = true">
+                </el-tooltip>
             </div>
             <el-divider direction="vertical" style="height: 200px;"></el-divider>
             <div class="project-info-container">
@@ -55,114 +57,7 @@
         </div>
         <el-divider style="width: 90%; margin-left: 100px;" />
         <div class="content">
-            <el-input type="textarea" v-model="projectIntro" placeholder="输入项目简介（不超过500字）" :autosize="{minRows: 5}" clearable :maxlength="500" show-word-limit></el-input>
-        </div>
-        <el-divider style="width: 90%; margin-left: 100px;" />
-        <div class="footer">
-            <div style="display: flex; justify-content: center; margin-bottom: 10px">
-                <v-btn size="large" @click="viewCreateRecruitment">发布招募</v-btn>
-            </div>
-            <el-table :data="displayedRecruitments" style="width: 99%; margin: 0 auto;" border max-height="550" :cell-style="setCellStyle">
-                <template #empty>
-                    <p>无匹配数据</p>
-                </template>
-                <el-table-column prop="state" label="招募状态" align="center">
-                    <template #header>
-                        <div>招募状态</div>
-                        <el-select v-model="statusKey" clearable placeholder="选择招募状态">
-                            <el-option label="即将招募" key="即将招募" value="即将招募"></el-option>
-                            <el-option label="招募中" key="招募中" value="招募中"></el-option>
-                            <el-option label="招募结束" key="招募结束" value="招募结束"></el-option>
-                        </el-select>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="location" label="活动地点" align="center">
-                    <template #header>
-                        <div>活动地点</div>
-                        <el-input v-model="locationKey" clearable placeholder="输入活动地点"></el-input>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="type" label="面向群体" align="center">
-                    <template #header>
-                        <div>面向群体</div>
-                        <el-select v-model="typeKey" clearable placeholder="选择面向人群">
-                            <el-option label="面向公共招募" key="面向公共招募" value="面向公共招募"></el-option>
-                            <el-option label="仅限团队内部" key="仅限团队内部" value="仅限团队内部"></el-option>
-                        </el-select>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="launchTime" label="发布时间" align="center" sortable></el-table-column>
-                <el-table-column prop="deadline" label="招募结束时间" align="center" sortable></el-table-column>
-                <el-table-column prop="startTime" label="活动开始时间" align="center" sortable></el-table-column>
-                <el-table-column prop="endTime" label="活动结束时间" align="center" sortable></el-table-column>
-                <el-table-column prop="hours" label="志愿时长" align="center" sortable></el-table-column>
-                <el-table-column prop="number" label="招募人数上限" align="center" sortable></el-table-column>
-            </el-table>
-        </div>
-        <div>
-            <v-dialog v-model="createRecruitmentVisible" width="600px">
-                <div class="create-recruitment-dialog-container">
-                    <div class="create-item">
-                        <h3 style="margin-bottom: 10px;">活动地点</h3>
-                        <el-input v-model="location" clearable style="width: 250px;">
-                            <template #prefix>
-                                <el-icon><Location /></el-icon>
-                            </template>
-                        </el-input>
-                    </div>
-                    <div class="create-item">
-                        <h3 style="margin-bottom: 10px;">活动开始时间</h3>
-                        <el-date-picker
-                            v-model="startTime"
-                            type="datetime"
-                            format="YYYY-MM-DD HH:mm"
-                            value-format="YYYY-MM-DD HH:mm"
-                            :disabled-date="disabledDates"
-                            @focus="focus"
-                        ></el-date-picker>
-                    </div>
-                    <div class="create-item">
-                        <h3 style="margin-bottom: 10px;">活动结束时间</h3>
-                        <el-date-picker
-                            v-model="endTime"
-                            type="datetime"
-                            format="YYYY-MM-DD HH:mm"
-                            value-format="YYYY-MM-DD HH:mm"
-                            :disabled-date="disabledDates"
-                            @focus="focus"
-                    ></el-date-picker>
-                    </div>
-                    <div class="create-item">
-                        <h3 style="margin-bottom: 10px;">招募结束时间</h3>
-                        <el-date-picker
-                            v-model="deadline"
-                            type="datetime"
-                            format="YYYY-MM-DD HH:mm"
-                            value-format="YYYY-MM-DD HH:mm"
-                            :disabled-date="disabledDates"
-                            @focus="focus"
-                    ></el-date-picker>
-                    </div>
-                    <div class="create-item">
-                        <h3 style="margin-bottom: 10px;">面向群体</h3>
-                        <el-radio-group v-model="type">
-                            <el-radio label="1" border size="middle">面向公共招募</el-radio>
-                            <el-radio label="2" border size="middle">仅限团队内部</el-radio>
-                        </el-radio-group>
-                    </div>
-                    <div class="create-item">
-                        <h3 style="margin-bottom: 10px;">招募人数上限</h3>
-                        <el-input-number v-model="maxNumber" size="small" :min="1"></el-input-number>
-                    </div>
-                    <div class="create-item">
-                        <h3 style="margin-bottom: 10px;">志愿时长</h3>
-                        <el-input-number v-model="hours" size="small" :min="1"></el-input-number>
-                    </div>
-                    <div style="margin-left: 200px; margin-top: 30px; margin-bottom: 20px;">
-                        <el-button size="large" @click="handleCreateRecruitmentSubmit">提交</el-button>
-                    </div>
-                </div>
-            </v-dialog>
+            <el-input type="textarea" v-model="projectIntro" placeholder="输入项目简介(不超过500字)" :rows="15" clearable :maxlength="500" show-word-limit></el-input>
         </div>
         <div>
             <v-dialog v-model="createTutorialVisible" width="550px">
@@ -295,6 +190,25 @@
         </div>
     </v-dialog>
 </div>
+<div>
+    <v-dialog v-model="setAvatarVisible">
+      <div class="setAvatar-container">
+        <el-button @click="setAvatarVisible = false" style="margin-top: 10px; margin-left: 200px">退出</el-button>
+        <h3 style="margin-bottom: 20px; margin-top: 20px;">上传新头像</h3>
+        <el-upload
+              class="avatar-uploader"
+              action="#"
+              :show-file-list="false"
+              :auto-upload="false"
+              :on-change="uploadFile"
+          >
+          <el-image v-if="imageUrl" :src="imageUrl" style="width: 218px; height: 218px" fit="contain" />
+          <el-icon v-if="!imageUrl"><Plus /></el-icon>
+        </el-upload>
+        <el-button @click="handleSetProjectAvatarSubmit" size="large" style="margin-top: 30px;">点击上传</el-button>
+      </div>
+    </v-dialog>
+  </div>
 </template>
 
 
@@ -303,43 +217,6 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default {
     computed: {
-        recruitmentList() {
-            let recruitmentList = [];
-            for (let i = 0; i < this.recruitements.length; i++) {
-                let item = this.recruitements[i];
-                let element = {
-                    state: "",
-                    launchTime: item.launchTime,
-                    deadline: item.deadline,
-                    startTime: item.startTime,
-                    endTime: item.endTime,
-                    location: item.location,
-                    type: item.type,
-                    hours: item.hours,
-                    number: item.number,
-                }
-                if (Date.now() < new Date(item.launchTime)) {
-                    element.state = "即将招募";
-                }
-                else if (Date.now() < new Date(item.deadline)) {
-                    element.state = "招募中";
-                }
-                else {
-                    element.state = "招募结束";
-                }
-                recruitmentList.push(element);
-            }
-            return recruitmentList;
-        },
-        displayedRecruitments() {
-            let displayedRecruitments = this.recruitmentList;
-            if (this.typeKey != null && this.locationKey != null && this.statusKey != null) {
-                displayedRecruitments = displayedRecruitments.filter(item => {
-                    return item.state.includes(this.statusKey) && item.type.includes(this.typeKey) && item.location.includes(this.locationKey);
-                })
-            }
-            return displayedRecruitments;
-        },
         displayedTutorials() {
             let displayedTutorials = this.tutorials;
             if (this.tutorialNameKey != null && this.tutorialTagKey != null) {
@@ -356,20 +233,12 @@ export default {
     },
     data() {
         return {
-            fatherTeam: null,
-            projectId: this.$route.query.id,
-            projectName: this.$route.query.name,
-            createdDate: this.$route.query.createdDate,
-            projectType: this.$route.query.type,
-            // 发布招募
+            teamId: this.$route.query.teamId,
+            projectId: this.$route.query.projectId,
+            projectName: "",
+            createdDate: "",
             projectIntro: "",
-            startTime: "",
-            deadline: "",
-            endTime: "",
-            location: "",
-            type: "",
-            hours: "",
-            maxNumber: 0,
+            projectType: "",
             // 新建教程
             tutorialTitle: "",
             tutorialTag: "",
@@ -378,56 +247,21 @@ export default {
             selectedTutorial: null,
             // 查看教程
             // 各种visible
-            createRecruitmentVisible: false,
             viewTutorialsVisible: false,
             createTutorialVisible: false,
             viewTutorialDetailVisible: false,
             viewCommentsVisible: false,
             replyCommentVisible: false,
             selectedComment: null,
+            setAvatarVisible: false,
             // 各种visible
             // 搜索功能
-            statusKey: "",
             replyContent: "",
-            locationKey: "",
-            typeKey: "",
             tutorialNameKey: "",
             tutorialTagKey: "",
-            recruitements: [
-                {
-                    state: "",
-                    launchTime: "2023-11-24 12:22",
-                    deadline: "2023-11-24 13:00",
-                    startTime: "2023-11-25 16:08",
-                    endTime: "2023-11-25 17:00",
-                    location: "校医院",
-                    type: "面向公共招募",
-                    hours: 16,
-                    number: 10,
-                },
-                {
-                    state: "",
-                    launchTime: "2023-11-23 12:23",
-                    deadline: "2023-11-28 14:00",
-                    startTime: "2023-11-24 16:09",
-                    endTime: "2023-11-24 18:00",
-                    location: "田径场",
-                    type: "面向公共招募",
-                    hours: 4,
-                    number: 20,
-                },
-                {
-                    state: "",
-                    launchTime: "2023-11-29 12:24",
-                    deadline: "2023-11-23 15:00",
-                    startTime: "2023-11-24 16:10",
-                    endTime: "2023-11-24 17:30",
-                    location: "晨兴音乐厅",
-                    type: "仅限团队内部",
-                    hours: 8,
-                    number: 100,
-                },
-            ],
+            // 头像
+            imageUrl: null,
+            fileToUpload: null,
             comments: [
                 {
                     questionId: "1",
@@ -516,6 +350,7 @@ export default {
         fetch() {
             const submitParams = {
                 projectId: this.projectId,
+
             };
 
             this.axios({
@@ -527,16 +362,36 @@ export default {
                     console.log(res);
                     if (res.data.code === 0) {
                         console.log("获取项目信息成功");
+                        this.projectName = res.data.projectName;
+                        this.projectType = res.data.projectType;
                         this.projectIntro = res.data.projectIntro;
+                        this.createdDate = res.data.createdDate;
                         this.comments = res.data.comments;
                         this.tutorials = res.data.tutorials;
-                        this.recruitements = res.data.recruitments;
                     }
                     else {
                         console.log("获取失败, 错误码不是0");
                     }
                 })
 
+        },
+        changeToProjectManagePage() {
+            this.$router.push({
+                path: '/admin/projectinfo',
+                query: {
+                    projectId: this.projectId,
+                    teamId: this.teamId,
+                }
+            })
+        },
+        changeToRecruitmentManangePage() {
+            this.$router.push({
+                path: '/admin/recruitment',
+                query: {
+                    projectId: this.projectId,
+                    teamId: this.teamId,
+                }
+            })
         },
         handleSave() {
             const submitParams = {
@@ -567,40 +422,25 @@ export default {
                         console.log("保存成功");
                         ElMessage.success("修改成功");
                     }
+                    else if (res.data.code === 1) {
+                        console.log("保存失败, 项目名重复");
+                        ElMessage.error("修改失败, 项目名称已被使用")
+                    }
                     else {
                         console.log("保存失败, 错误码不是0");
                     }
                 })
         },
         handleBack() {
-            this.fatherTeam = JSON.parse(this.$route.query.fatherTeam);
             this.$router.push({
                 path: '/admin/teaminfo',
                 query: {
-                    id: this.fatherTeam.id,
-                    name: this.fatherTeam.name,
-                    number: this.fatherTeam.size,
-                    date: this.fatherTeam.establishmentDate,
-                    hours: this.fatherTeam.totalHours,
+                    teamId: this.teamId,
                 },
             })
         },
-        setCellStyle({ row, column, rowIndex, columnIndex }) {
-            if (row.state === "招募中" && columnIndex == 0) {
-                return { 'color': 'green' }
-            }
-            else if (row.state === '即将招募' && columnIndex == 0) {
-                return { 'color' : 'orange' }
-            }
-            else if (row.state === "招募结束" && columnIndex == 0) {
-                return { 'color': 'red' }
-            }
-        },
         viewComments() {
             this.viewCommentsVisible = true;
-        },
-        viewCreateRecruitment() {
-            this.createRecruitmentVisible = true;
         },
         viewTutorial() {
             this.viewTutorialsVisible = true;
@@ -612,72 +452,6 @@ export default {
             this.$nextTick(() => {
                 document.getElementsByClassName('el-picker-panel__link-btn')[0].setAttribute('style', 'display:none');
             })
-        },
-        handleCreateRecruitmentSubmit() {
-            console.log(typeof(this.type));
-            if (this.startTime === "" || this.location === "" || this.type === "" || this.deadline === "" || this.endTime === "") {
-                this.createRecruitmentVisible = false;
-                ElMessageBox.alert("请填写完整的招募信息", "注意", {
-                    confirmButtonText: 'OK',
-                    type: 'warning'
-                }).then(() => {
-                    this.createRecruitmentVisible = true;
-                })
-            }
-            else if (this.maxNumber === null) {
-                this.createRecruitmentVisible = false;
-                ElMessageBox.alert("招募人数上限不能为空", "注意", {
-                    confirmButtonText: 'OK',
-                    type: 'warning'
-                }).then(() => {
-                    this.createRecruitmentVisible = true;
-                })
-            }
-            else if (this.hours === null) {
-                this.createRecruitmentVisible = false;
-                ElMessageBox.alert("志愿时长不能为空", "注意", {
-                    confirmButtonText: 'OK',
-                    type: 'warning'
-                }).then(() => {
-                    this.createRecruitmentVisible = true;
-                })
-            }
-            else {
-                const submitParams = {
-                    projectId: this.projectId,
-                    startTime: this.startTime,
-                    deadline: this.deadline,
-                    endTime: this.endTime,
-                    location: this.location,
-                    type: this.type,
-                    hours: this.hours,
-                    maxNumber: this.maxNumber,
-                    message: {
-                        title: "您收藏的项目发布了新的招募",
-                        content: "您关注的 " + this.projectName + " 项目发布了新的招募, 招募开始时间为 " + this.startTime,
-                    }
-                };
-
-                this.axios({
-                    method: 'post',
-                    url: 'http://localhost:8000/admin_create_recruitment',
-                    data: submitParams,
-                })
-                    .then((res) => {
-                        console.log(res);
-                        if (res.data.code === 0) {
-                            console.log("发布招募成功");
-                            // 刷新招募列表
-                            this.fetch();
-                            this.createRecruitmentVisible = false;
-                            ElMessage.success("创建成功")
-                        }
-                        else {
-                            console.log("发布招募失败, 错误码不是0");
-                        }
-                    })
-            }
-
         },
         viewCreateTutorial() {
             this.createTutorialVisible = true;
@@ -852,7 +626,40 @@ export default {
                         }
                     })
             }
-        }
+        },
+        uploadFile(file) {
+            const isJPG = file.raw.type === 'image/jpeg';
+            const isPNG = file.raw.type === 'image/png';
+            if (!isJPG && !isPNG) {
+                ElMessage.error("只能上传JPG或PNG格式的文件");
+                return false;
+            }
+            else if (file.size / 1024 / 1024 > 2) {
+                ElMessage.error("图片大小不能超过2MB");
+                return false;
+            }
+            else {
+                this.imageUrl = URL.createObjectURL(file.raw);
+                this.fileToUpload = file.raw;
+                return true;
+            }
+      },
+        handleSetProjectAvatarSubmit() {
+            const formData = new FormData();
+            formData.append("projectAvatar", this.fileToUpload);
+
+            this.axios({
+                method: 'post',
+                url: 'http://localhost:8000/',
+                data: formData
+            })
+                .then((res) => {
+                console.log(res);
+                // 刷新头像
+                this.fetchPicture();
+                this.setAvatarVisible = false;
+            })
+      }
         
     }
 }
@@ -869,7 +676,11 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 40px;
+}
+
+#avatar:hover {
+  cursor: pointer;
 }
 
 .sidebar-container {
@@ -878,7 +689,7 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 1000px;
+    height: 900px;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
@@ -894,7 +705,7 @@ export default {
 
 .back-button {
     margin-left: 25px;
-    margin-top: 5px;
+    margin-top: 25px;
 }
 
 .title {
@@ -952,23 +763,6 @@ export default {
     margin: 0 auto;
 }
 
-.footer {
-  width: 80%;
-  margin: 0 auto; 
-}
-
-.green-status {
-  background: green;
-  color: white;
-  border-radius: 5px;
-}
-
-.grey-status {
-  background: grey;
-  color: white;
-  border-radius: 5px;
-}
-
 .tutorial-topbar {
     height: 100px;
     display: flex;
@@ -983,14 +777,6 @@ export default {
     justify-content: center;
     align-items: flex-start;
     background: white;
-}
-
-.create-recruitment-dialog-container {
-    display: flex;
-    height: 800px;
-    width: 550px;
-    background-color: white;
-    flex-direction: column;
 }
 
 .create-item {
@@ -1009,6 +795,26 @@ export default {
 
 .edit-tutorial-dialog-container {
     display: flex;
+}
+
+.avatar-uploader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed black;
+    width: 220px;
+    height: 220px;
+    
+}
+
+.setAvatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  height: 450px;
+  width: 300px;
+  margin-left: 700px;
 }
 
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="main-container">
     <div class="sidebar-container">
-      <el-menu mode="vertical" default-active="join" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
-          <el-menu-item index="join" @click="changeToJoinRecruitmentPage">
+      <el-menu mode="vertical" default-active="info" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
+          <el-menu-item index="info" @click="changeToTeamManagePage">
               <span class="item-font" style="font-weight: bold;">团队详情</span>
           </el-menu-item>
-          <el-menu-item index="my" @click="changeToMyRecruitmentPage">
+          <el-menu-item index="list" @click="changeToProjectListPage">
               <span class="item-font" style="font-weight: bold;">项目管理</span>
           </el-menu-item>
       </el-menu>
@@ -20,7 +20,9 @@
     <h2 class="title">团队详情</h2>
     <div class="header">
       <div class="team-avatar">
-        <img src="../../assets/images/hand_shaking.png" id="avatar">
+        <el-tooltip placement="right" content="更换头像" effect="light">
+          <img src="../../assets/images/hand_shaking.png" id="avatar" @click="setAvatarVisible = true">
+        </el-tooltip>
       </div>
       <el-divider direction="vertical" style="height: 200px;" />
       <div class="team-info-container">
@@ -58,54 +60,7 @@
     </div>
     <el-divider style="width: 90%; margin-left: 100px;"/>
     <div class="content">
-      <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍(不超过500字)" :rows="5" :maxlength="500" show-word-limit clearable></el-input>
-    </div>
-    <el-divider style="width: 90%; margin-left: 100px;"/>
-    <div class="footer">
-      <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-        <v-btn size="large" @click="showCreateProjectDialog">创建项目</v-btn>
-      </div>
-      <el-table :data="displayedProjects" style="width: 80%; margin: 0 auto;" border max-height="550">
-        <template #empty>
-          <p>无匹配数据</p>
-        </template>
-        <el-table-column prop="name" label="项目名称" align="center">
-          <template #header>项目名称
-            <el-input v-model="projectNameKey" placeholder="输入项目名称" style="width: 260px;" clearable></el-input>
-          </template>
-        </el-table-column>
-        <el-table-column prop="category" label="所属类别" align="center" size="large">
-          <template #header>
-            <div>所属类别</div>
-            <el-select v-model="projectTypeKey" placeholder="选择所属项目" clearable>
-              <el-option label="社区服务" key="社区服务" value="社区服务"></el-option>
-              <el-option label="科技科普" key="科技科普" value="科技科普"></el-option>
-              <el-option label="支教助学" key="支教助学" value="支教助学"></el-option>
-              <el-option label="体育赛事" key="体育赛事" value="体育赛事"></el-option>
-              <el-option label="大型演出" key="大型演出" value="大型演出"></el-option>
-              <el-option label="其它" key="其它" value="其它"></el-option>
-            </el-select>
-          </template>
-          <template #default="scope">
-            <span v-if="scope.row.category === '1'">社区服务</span>
-            <span v-else-if="scope.row.category === '2'">科技科普</span>
-            <span v-else-if="scope.row.category === '3'">支教助学</span>
-            <span v-else-if="scope.row.category === '4'">体育赛事</span>
-            <span v-else-if="scope.row.category === '5'">大型演出</span>
-            <span v-else>其它</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="createdDate" label="创建日期" align="center" sortable></el-table-column>
-        <el-table-column label="查看详情" align="center">
-            <template #default="scope">
-                <el-button type="link" size="small" @click="viewProjectDetails(scope.row)">
-                  <el-badge is-dot :hidden="scope.row.hasComments === false">
-                    <span>点击查看</span>
-                  </el-badge>
-                </el-button>
-            </template>
-        </el-table-column>
-      </el-table>
+      <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍(不超过500字)" :rows="15" :maxlength="500" show-word-limit clearable></el-input>
     </div>
     <div> 
       <v-dialog v-model="createApplicationDialogVisible" width="auto">
@@ -157,48 +112,23 @@
           </el-table>
         </div>
       </v-dialog>
-      <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="1000">
-        <div class="create-dialog-container">
-          <div class="create-item">
-            <h3 style="margin-bottom: 15px;">项目名称</h3>
-            <el-input v-model="projectName" clearable style="width: 150px;">
-              <template #prefix>
-                <el-icon><Postcard /></el-icon>
-              </template>
-            </el-input>
-          </div>
-          <div class="create-item">
-            <h3 style="margin-bottom: 15px;">项目简介</h3>
-            <el-input type="textarea" v-model="projectIntro" clearable :maxlength="500" :autosize="{minRows: 2}" show-word-limit style="width: 400px;"></el-input>
-          </div>
-          <div class="create-item">
-            <h3 style="margin-bottom: 15px;">项目类别</h3>
-            <el-radio-group v-model="projectType">
-              <el-radio label="1" border size="small">社区服务</el-radio>
-              <el-radio label="2" border size="small">科技科普</el-radio>
-              <el-radio label="3" border size="small" style="margin-top: 8px;">支教助学</el-radio>
-              <el-radio label="4" border size="small" style="margin-top: 8px;">体育赛事</el-radio>
-              <el-radio label="5" border size="small" style="margin-top: 8px;">大型演出</el-radio>
-              <el-radio label="6" border size="small" style="margin-top: 8px;">其它类别</el-radio>
-            </el-radio-group>
-          </div>
-          <div class="create-item">
-            <h3 style="margin-bottom: 15px;">上传项目图片</h3>
-            <el-upload
+    </div>
+    <div>
+      <v-dialog v-model="setAvatarVisible">
+        <div class="setAvatar-container">
+          <el-button @click="setAvatarVisible = false" style="margin-top: 10px; margin-left: 200px">退出</el-button>
+          <h3 style="margin-bottom: 20px; margin-top: 20px;">上传新头像</h3>
+          <el-upload
                 class="avatar-uploader"
                 action="#"
                 :show-file-list="false"
                 :auto-upload="false"
                 :on-change="uploadFile"
             >
-              <el-image v-if="imageUrl" :src="imageUrl" style="width: 190px; height: 190px" fit="contain" />
-              <el-icon v-if="!imageUrl"><Plus /></el-icon>
-            </el-upload>
-
-          </div>
-          <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-            <el-button size="large" @click="handleCreateProjectSubmit">提交</el-button>
-          </div>
+            <el-image v-if="imageUrl" :src="imageUrl" style="width: 218px; height: 218px" fit="contain" />
+            <el-icon v-if="!imageUrl"><Plus /></el-icon>
+          </el-upload>
+          <el-button @click="handleSetTeamAvatarSubmit" size="large" style="margin-top: 30px;">点击上传</el-button>
         </div>
       </v-dialog>
     </div>
@@ -211,16 +141,6 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default {
   computed: {
-    displayedProjects() {
-      let displayedProjects = this.projects;
-      let newProjectTypeKey = this.projectTypeKey === "社区服务" ? "1" : this.projectTypeKey === "科技科普" ? "2" : this.projectTypeKey === "支教助学" ? "3" : this.projectTypeKey === "体育赛事" ? "4" : this.projectTypeKey === "大型演出" ? "5" : this.projectTypeKey === "其它" ? "6" : ""; 
-      if (this.projectNameKey != null && newProjectTypeKey != null) {
-          displayedProjects = displayedProjects.filter(item => {
-            return item.name.includes(this.projectNameKey) && item.category.includes(newProjectTypeKey);
-          })
-      }
-      return displayedProjects;
-    },
     displayedMembers() {
       let displayedMembers = this.members;
       if (this.memberNameKey != null && this.collegeIdKey != null && this.telephoneKey != null) {
@@ -237,11 +157,11 @@ export default {
   },
   data() {
     return {
-      teamId: this.$route.query.id,
-      teamName: this.$route.query.name,
-      teamSize: this.$route.query.number,
-      establishmentDate: this.$route.query.date,
-      totalHours: this.$route.query.hours,
+      teamId: this.$route.query.teamId,
+      teamName: "",
+      teamSize: "",
+      establishmentDate: "",
+      totalHours: "",
       teamIntroduction: "",
       createApplicationDialogVisible: false,
       viewMembersDialogVisible: false,
@@ -258,44 +178,8 @@ export default {
       // 图片
       imageUrl: null,
       fileToUpload: null,
-      projects: [
-        {
-          hasComments: false,
-          name: "志愿项目1",
-          category: "1",
-          createdDate: "2023-11-17"
-        },
-        {
-          hasComments: false,
-          name: "志愿项目2",
-          category: "2",
-          createdDate: "2023-11-18"
-        },
-        {
-          hasComments: false,
-          name: "志愿项目3",
-          category: "3",
-          createdDate: "2023-11-19"
-        },
-        {
-          hasComments: false,
-          name: "志愿项目4",
-          category: "4",
-          createdDate: "2023-11-20"
-        },
-        {
-          hasComments: false,
-          name: "志愿项目5",
-          category: "5",
-          createdDate: "2023-11-21"
-        },
-        {
-          hasComments: false,
-          name: "志愿项目6",
-          category: "6",
-          createdDate: "2023-11-27"
-        }
-      ],
+      setAvatarVisible: false,
+      fileToUpload: null,
       applicationList: [
         {
           collegeId: "21370000",
@@ -380,16 +264,20 @@ export default {
               method: 'post',
               url: 'http://localhost:8000/admin_get_specific_team_details',
               data: submitParams,
+
             })
               .then(async (res) => {
                   console.log('获取团队详情');
                   console.log(res);
                   if (res.data.code === 0) {
                       console.log('请求成功');
+                      vm.teamName = res.data.teamName;
+                      vm.teamSize = res.data.teamSize;
+                      vm.totalHours = res.data.totalHours;
+                      vm.establishmentDate = res.data.establishmentDate;
                       vm.teamIntroduction = res.data.teamIntro;
                       vm.applicationList = res.data.applicationList;
                       vm.members = res.data.memberList;
-                      vm.projects = res.data.projects;
                   }
                   else {
                       console.log('请求失败, 错误码code不是0');
@@ -397,31 +285,24 @@ export default {
               });
           })();
     },
-    viewMembers() {
-      this.viewMembersDialogVisible = true;
-    },
-    showCreateProjectDialog() {
-      this.createProjectDialogVisible = true;
-    },
-    viewProjectDetails(row) {
-      let fatherTeam = {
-          id: this.teamId,
-          name: this.teamName,
-          establishmentDate: this.establishmentDate,
-          size: this.teamSize,
-          totalHours: this.totalHours,
-      };
+    changeToProjectListPage() {
       this.$router.push({
-        path: '/admin/projectinfo',
+        path: '/admin/projectlist',
         query: {
-          id: row.id,
-          name: row.name,
-          type: row.category,
-          createdDate: row.createdDate,
-          // 还要传递所属团队
-          fatherTeam: JSON.stringify(fatherTeam),
+          teamId: this.teamId,
         }
       })
+    },
+    changeToTeamManagePage() {
+      this.$router.push({
+        path: '/admin/teaminfo',
+        query: {
+          teamId: this.teamId,
+        }
+      })
+    },
+    viewMembers() {
+      this.viewMembersDialogVisible = true;
     },
     handleSave() {
       const submitParams = {
@@ -567,66 +448,39 @@ export default {
         this.viewMembersDialogVisible = true;
       });
     },
-    handleCreateProjectSubmit() {
-      this.createProjectDialogVisible = false;
-      if (this.projectName === "" || this.projectType === "" || this.projectIntro === "") {
-        ElMessageBox.alert("请填写完整的项目信息", "注意", {
-          confirmButtonText: "OK",
-          type: "warning",
-        }).then(() => {
-          this.createProjectDialogVisible = true;
-        })
-      }
-      else {
+      uploadFile(file) {
+          const isJPG = file.raw.type === 'image/jpeg';
+          const isPNG = file.raw.type === 'image/png';
+          if (!isJPG && !isPNG) {
+              ElMessage.error("只能上传JPG或PNG格式的文件");
+              return false;
+          }
+          else if (file.size / 1024 / 1024 > 2) {
+              ElMessage.error("图片大小不能超过2MB");
+              return false;
+          }
+          else {
+              this.imageUrl = URL.createObjectURL(file.raw);
+              this.fileToUpload = file.raw;
+              return true;
+          }
+      },
+      handleSetTeamAvatarSubmit() {
         const formData = new FormData();
-        formData.append("projectAvatar", this.fileToUpload);
-        // console.log(formData.get("projectAvatar"));
-        formData.append("teamId", this.teamId);
-        formData.append("projectName", this.projectName);
-        formData.append("projectIntro", this.projectIntro);
-        formData.append("projectType", this.projectType);
+        formData.append("teamAvatar", this.fileToUpload);
 
         this.axios({
           method: 'post',
-          url: 'http://localhost:8000/admin_create_project',
-          data: formData,
+          url: 'http://localhost:8000/',
+          data: formData
         })
-        .then((res) => {
-          console.log(res);
-          if (res.data.code === 0) {
-            console.log("创建项目成功");
-            // 刷新项目列表
-            this.fetch();
-            ElMessage.success("成功创建项目");
-          }
-          else if (res.data.code === 1) {
-            ElMessage.error("项目名已被注册");
-            console.log("项目名称重复");
-          }
-          else {
-            console.log("创建失败, 错误码不是 0 或 1");
-          }
-        })
-
+            .then((res) => {
+              console.log(res);
+              // 刷新头像
+              this.fetchPicture();
+              this.setAvatarVisible = false;
+            })
       }
-    },
-    uploadFile(file) {
-      const isJPG = file.raw.type === 'image/jpeg';
-      const isPNG = file.raw.type === 'image/png';
-      if (!isJPG && !isPNG) {
-          ElMessage.error("只能上传JPG或PNG格式的文件");
-          return false;
-      }
-      else if (file.size / 1024 / 1024 > 2) {
-          ElMessage.error("图片大小不能超过2MB");
-          return false;
-      }
-      else {
-          this.imageUrl = URL.createObjectURL(file.raw);
-          this.fileToUpload = file.raw;
-          return true;
-      }
-    },
   }
 };
 </script>
@@ -636,9 +490,14 @@ export default {
   display: flex;
 }
 
+#avatar:hover {
+  cursor: pointer;
+}
+
 .team-management {
   height: 500px;
   width: 100%;
+  margin-top: 20px;
 }
 
 .sidebar-container {
@@ -647,7 +506,7 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 1000px;
+    height: 900px;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
@@ -688,6 +547,16 @@ export default {
   height: auto;
 }
 
+.setAvatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  height: 450px;
+  width: 300px;
+  margin-left: 700px;
+}
+
 .team-info-container {
   flex: 1;
   display: flex;
@@ -721,11 +590,6 @@ export default {
   margin: 0 auto;
 }
 
-footer {
-  width: 80%;
-  margin: 0 auto;
-}
-
 .members-container {
   height: 600px;
   width: 1000px;
@@ -736,27 +600,13 @@ footer {
   background: white;
 }
 
-.create-dialog-container {
-  display: flex;
-  height: 800px;
-  width: 500px;
-  background: white;
-  flex-direction: column;
-}
-
-.create-item {
-  margin-top: 50px;
-  margin-left: 50px;
-  width: 90%;
-}
-
 .avatar-uploader {
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px dashed black;
-    width: 185px;
-    height: 185px;
+    width: 220px;
+    height: 220px;
     
 }
 

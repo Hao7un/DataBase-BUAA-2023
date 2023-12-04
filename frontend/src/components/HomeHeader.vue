@@ -37,7 +37,7 @@
           style=" width: 500px; height: 300px; margin-left: 600px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);"
         >
         <div class="message-container">
-          <h2 style="text-align: center; margin: 10px 0">收件箱</h2>
+          <h2 style="text-align: center; margin: 10px 0"><el-icon><MessageBox /></el-icon>&nbsp;&nbsp;收件箱</h2>
           <v-list>
             <v-list-item
               v-for="(message, index) in displayedMessages" 
@@ -106,7 +106,7 @@ export default {
   },
   mounted() {
     this.fetch();
-    setInterval(this.fetch, 5000);
+    // setInterval(this.fetch, 5000);
   },
   data() {
     return {
