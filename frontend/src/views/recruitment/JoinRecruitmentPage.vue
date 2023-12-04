@@ -150,10 +150,10 @@ export default {
             typeR: "",
             status: "",
             recruitmentList: [
-                { id: "5", launchTime: "2023-12-08 21:00", dueTime: "2023-12-09 21:00", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "1", projectName: "志愿项目5", projectType: "1" },
-                { id: "4", launchTime: "2023-12-01 21:00", dueTime: "2023-12-10 21:00", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "新主楼G1000", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "1", projectName: "志愿项目4", projectType: "2" },
-                { id: "3", launchTime: "2023-12-01 12:00", dueTime: "2023-12-12 21:00", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "操场", volunteerHour: "5", isAttend: true, type: "2", maxNumber: "50", currentNumber: "30", projectId: "1", projectName: "志愿项目3", projectType: "3" },
-                { id: "2", launchTime: "2023-12-01 10:00", dueTime: "2023-12-02 11:00", startTime: "2023-12-02 19:00", endTime: "2023-12-02 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "2", maxNumber: "50", currentNumber: "50", projectId: "1", projectName: "志愿项目2", projectType: "4" },
+                { id: "5", launchTime: "2023-12-08 21:00", dueTime: "2023-12-09 21:00", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "5", projectName: "志愿项目5", projectType: "1" },
+                { id: "4", launchTime: "2023-12-01 21:00", dueTime: "2023-12-10 21:00", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "新主楼G1000", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "4", projectName: "志愿项目4", projectType: "2" },
+                { id: "3", launchTime: "2023-12-01 12:00", dueTime: "2023-12-12 21:00", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "操场", volunteerHour: "5", isAttend: true, type: "2", maxNumber: "50", currentNumber: "30", projectId: "3", projectName: "志愿项目3", projectType: "3" },
+                { id: "2", launchTime: "2023-12-01 10:00", dueTime: "2023-12-02 11:00", startTime: "2023-12-02 19:00", endTime: "2023-12-02 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "2", maxNumber: "50", currentNumber: "50", projectId: "2", projectName: "志愿项目2", projectType: "4" },
                 { id: "1", launchTime: "2023-11-01 21:00", dueTime: "2023-11-02 21:00", startTime: "2023-12-01 19:00", endTime: "2023-12-01 21:00", location: "操场", volunteerHour: "5", isAttend: false, type: "1", maxNumber: "50", currentNumber: "30", projectId: "1", projectName: "志愿项目1", projectType: "5" },
             ],
             dialogVisible: false,
@@ -296,12 +296,10 @@ export default {
                         recruitment.currentNumber = parseInt(recruitment.currentNumber) + 1;
                         recruitment.isAttend = true;
                         ElMessage.success('报名成功');
-                    }
-                    else if (res.data.code === 1) {
+                    } else if (res.data.code === 1) {
                         ElMessage.error('人数已满');
                         this.refresh(false);
-                    }
-                    else if (res.data.code === 2) {
+                    } else if (res.data.code === 2) {
                         ElMessage.error('与已报名的活动时间冲突');
                         this.refresh(false);
                     }
@@ -323,7 +321,8 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 1300px;
+    height: auto;
+    min-height: 750px;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 

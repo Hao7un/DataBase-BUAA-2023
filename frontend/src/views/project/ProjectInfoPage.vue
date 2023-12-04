@@ -3,6 +3,14 @@
         <div class="top-container">
             <div class="left-container">
                 <div class="info-container">
+                    <v-btn class="back-button" @click="handleBack">
+                        <template v-slot:prepend>
+                            <el-icon>
+                                <Back />
+                            </el-icon>
+                        </template>
+                        返回
+                    </v-btn>
                     <div class="img-container">
                         <img src="../../assets/images/inf.png">
                     </div>
@@ -147,6 +155,9 @@ export default {
         }
     },
     methods: {
+        handleBack() {
+            this.$router.go(-1);
+        },
         changeToTeamInfoPage(id) {
             console.log('teamId:', id);
             this.$router.push({
@@ -158,8 +169,10 @@ export default {
             if (latestTime === 'N/A') {
                 return '暂未招募';
             } else {
-                if (new Date() < new Date(latestTime)) return '招募中';
-                else return '最近招募：' + latestTime;
+                if (new Date() < new Date(latestTime)) 
+                    return '招募中';
+                else 
+                    return '最近招募：' + latestTime;
             }
         },
         showProjectType(type) {
@@ -188,8 +201,10 @@ export default {
                     console.log(res);
                     if (res.data.code === 0) {
                         this.isCollect = !this.isCollect;
-                        if (this.isCollect) ElMessage.success('已收藏');
-                        else ElMessage.success('已取消收藏');
+                        if (this.isCollect) 
+                            ElMessage.success('已收藏');
+                        else 
+                            ElMessage.success('已取消收藏');
                     }
                 });
         },
@@ -199,23 +214,31 @@ export default {
         },
         getTutorialTime() {
             let tutorial = this.tutorialList.find(item => item.id === this.tutorialId);
-            if (!tutorial) return '';
-            else return tutorial.time;
+            if (!tutorial) 
+                return '';
+            else 
+                return tutorial.time;
         },
         getTutorialTitle() {
             let tutorial = this.tutorialList.find(item => item.id === this.tutorialId);
-            if (!tutorial) return '';
-            else return tutorial.title;
+            if (!tutorial) 
+                return '';
+            else 
+                return tutorial.title;
         },
         getTutorialTag() {
             let tutorial = this.tutorialList.find(item => item.id === this.tutorialId);
-            if (!tutorial) return '';
-            else return tutorial.tag;
+            if (!tutorial) 
+                return '';
+            else 
+                return tutorial.tag;
         },
         getTutorialContent() {
             let tutorial = this.tutorialList.find(item => item.id === this.tutorialId);
-            if (!tutorial) return '';
-            else return tutorial.content;
+            if (!tutorial) 
+                return '';
+            else 
+                return tutorial.content;
         },
         showQuestionInput() {
             this.questionInput = true;
@@ -253,8 +276,8 @@ export default {
 
 <style scoped>
 .main-container {
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 40px;
+    margin-right: 40px;
     display: flex;
     flex-direction: column;
 }
@@ -275,13 +298,18 @@ export default {
 .info-container {
     display: flex;
     flex-direction: row;
-    margin-top: 20px;
+}
+
+.back-button {
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .img-container {
     display: flex;
     width: 300px;
     height: 200px;
+    margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 50px;
 }
@@ -289,7 +317,7 @@ export default {
 .content-container {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: 10px;
 }
 

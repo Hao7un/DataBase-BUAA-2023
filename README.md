@@ -191,6 +191,15 @@
   }
   ```
 
+* 重复申请
+
+  ```javascript
+  {
+    code: 1,
+    message: ""
+  }
+  ```
+
 ## AllProjectPage
 ### 获取所有项目
 

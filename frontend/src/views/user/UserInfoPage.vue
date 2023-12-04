@@ -58,7 +58,7 @@
               电话
             </div>
           </template>
-          <br><el-input type="text" v-model="telephone" style="font-size: 16px;"></el-input>
+          <el-input type="text" v-model="telephone" class="input-container"></el-input>
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -69,7 +69,7 @@
               邮箱
             </div>
           </template>
-          <br><el-input type="text" v-model="email" style="font-size: 16px;"></el-input>
+          <el-input type="text" v-model="email" class="input-container"></el-input>
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -80,7 +80,7 @@
               个人简介
             </div>
           </template>
-          <br><el-input type="textarea" v-model="userIntro" style="font-size: 16px;"></el-input>
+          <el-input type="textarea" v-model="userIntro" class="input-container"></el-input>
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -217,7 +217,8 @@ export default {
   flex-direction: column;
   padding-top: 20px;
   margin-left: 20px;
-  height: 800px;
+  height: auto;
+  min-height: 750px;
   border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
@@ -231,6 +232,11 @@ export default {
 .item-font {
   font-size: 18px;
   margin-left: 10px;
+}
+
+.input-container {
+  margin-top: 10px;
+  font-size: 16px;
 }
 </style>
   

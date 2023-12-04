@@ -3,6 +3,14 @@
         <div class="team-container">
             <div class="left-container">
                 <div class="info-container">
+                    <v-btn class="back-button" @click="handleBack">
+                        <template v-slot:prepend>
+                            <el-icon>
+                                <Back />
+                            </el-icon>
+                        </template>
+                        返回
+                    </v-btn>
                     <div class="img-container">
                         <img src="../../assets/images/hand_shaking.png">
                     </div>
@@ -120,6 +128,9 @@ export default {
         }
     },
     methods: {
+        handleBack() {
+            this.$router.go(-1);
+        },
         changeToProjectInfoPage(id) {
             console.log('projectId:', id);
             this.$router.push({
@@ -135,7 +146,9 @@ export default {
                 .then(res => {
                     console.log(res);
                     if (res.data.code === 0) {
-                        ElMessage.success('申请成功');
+                        ElMessage.success('申请成功，请等待负责人通过');
+                    } else {
+                        ElMessage.error('请勿重复申请');
                     }
                 });
         },
@@ -191,13 +204,18 @@ export default {
 .info-container {
     display: flex;
     flex-direction: row;
-    margin-top: 20px;
+}
+
+.back-button {
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .img-container {
     display: flex;
     width: 300px;
     height: 200px;
+    margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 100px;
 }
@@ -205,7 +223,7 @@ export default {
 .content-container {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: 10px;
 }
 

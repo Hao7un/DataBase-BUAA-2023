@@ -92,11 +92,9 @@ export default {
         range() {
             if (this.number === "10人以下") {
                 return [1, 10];
-            }
-            else if (this.number === "11至99人") {
+            } else if (this.number === "11至99人") {
                 return [11, 99];
-            }
-            else if (this.number === "100人以上") {
+            } else if (this.number === "100人以上") {
                 return [100, Infinity];
             } else {
                 return [0, Infinity];
@@ -186,7 +184,8 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 1500px;
+    height: auto;
+    min-height: 750px;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
