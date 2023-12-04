@@ -18,7 +18,9 @@
             <div v-if="selectedActivity === 'upcoming'" v-for="item in futureRecruitmentList" :key="item.id">
                 <div class="recruitment-container">
                     <div>
-                        <h2>{{ item.projectName }}</h2>
+                        <el-button text><span class="project-name" @click="changeToProjectInfoPage(item.projectId)">
+                                {{ item.projectName }}
+                            </span></el-button>
                         <p>项目类型：{{ showProjectType(item.projectType) }}</p>
                         <p>活动时间：{{ item.startTime }} ~ {{ item.endTime }}</p>
                         <p>活动地点：{{ item.location }}</p>
@@ -32,7 +34,9 @@
             <div v-else v-for="item in pastRecruitmentList" :key="item.id">
                 <div class="recruitment-container">
                     <div>
-                        <h2>{{ item.projectName }}</h2>
+                        <el-button text><span class="project-name" @click="changeToProjectInfoPage(item.projectId)">
+                                {{ item.projectName }}
+                            </span></el-button>
                         <p>项目类型：{{ showProjectType(item.projectType) }}</p>
                         <p>活动时间：{{ item.startTime }} ~ {{ item.endTime }}</p>
                         <p>活动地点：{{ item.location }}</p>
@@ -65,17 +69,17 @@ export default {
         return {
             selectedActivity: 'upcoming',
             futureRecruitmentList: [
-                { id: "10", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目10", projectType: "1" },
-                { id: "9", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "新主楼G1000", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目9", projectType: "2" },
-                { id: "8", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目3", projectType: "3" },
-                { id: "7", startTime: "2023-12-02 19:00", endTime: "2023-12-02 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "50", projectId: "1", projectName: "志愿项目2", projectType: "4" },
+                { id: "10", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "10", projectName: "志愿项目10", projectType: "1" },
+                { id: "9", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "新主楼G1000", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "9", projectName: "志愿项目9", projectType: "2" },
+                { id: "8", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "3", projectName: "志愿项目3", projectType: "3" },
+                { id: "7", startTime: "2023-12-02 19:00", endTime: "2023-12-02 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "50", projectId: "2", projectName: "志愿项目2", projectType: "4" },
                 { id: "6", startTime: "2023-12-01 19:00", endTime: "2023-12-01 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目1", projectType: "5" },
             ],
             pastRecruitmentList: [
-                { id: "5", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目5", projectType: "1" },
-                { id: "4", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "新主楼G1000", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目4", projectType: "2" },
-                { id: "3", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目3", projectType: "3" },
-                { id: "2", startTime: "2023-12-02 19:00", endTime: "2023-12-02 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "50", projectId: "1", projectName: "志愿项目2", projectType: "4" },
+                { id: "5", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "5", projectName: "志愿项目5", projectType: "1" },
+                { id: "4", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "新主楼G1000", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "4", projectName: "志愿项目4", projectType: "2" },
+                { id: "3", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "3", projectName: "志愿项目3", projectType: "3" },
+                { id: "2", startTime: "2023-12-02 19:00", endTime: "2023-12-02 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "50", projectId: "2", projectName: "志愿项目2", projectType: "4" },
                 { id: "1", startTime: "2023-12-01 19:00", endTime: "2023-12-01 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目1", projectType: "5" },
             ],
         };
@@ -89,6 +93,13 @@ export default {
         changeToMyRecruitmentPage() {
             this.$router.push({
                 path: '/recruitment/my'
+            });
+        },
+        changeToProjectInfoPage(id) {
+            console.log('projectId:', id);
+            this.$router.push({
+                name: 'projectInfo',
+                params: { projectId: id }
             });
         },
         showRecruitmentType(type) {
@@ -156,6 +167,12 @@ export default {
     margin-bottom: 20px;
     padding-bottom: 20px;
     border-bottom: 2px solid rgb(114, 110, 104, 0.2);
+}
+
+.project-name {
+    font-weight: bold;
+    font-size: 20px;
+    color: #110f0f;
 }
 
 .item-font {
