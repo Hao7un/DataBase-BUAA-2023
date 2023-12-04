@@ -163,6 +163,7 @@ export default {
             })
         },
         changeToTeamInfoPage(id) {
+            this.$store.commit("setLastMenu", "team");
             console.log(id);
             this.$router.push({
                 name: 'teamInfo',

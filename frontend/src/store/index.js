@@ -16,6 +16,8 @@ const store = createStore({
             password: null,
             userIntro: null,
             totalHours: null,
+            activeMenu: null,
+            lastMenu: null,
         }
     },
     mutations: {
@@ -52,8 +54,13 @@ const store = createStore({
         setTotalHours(state, totalHours) {
             state.totalHours = totalHours;
         },
+        setActiveMenu(state, activeMenu) {
+            state.activeMenu = activeMenu;
+        },
+        setLastMenu(state, lastMenu) {
+            state.lastMenu = lastMenu;
+        }
     },
-
 })
 
 export default store;

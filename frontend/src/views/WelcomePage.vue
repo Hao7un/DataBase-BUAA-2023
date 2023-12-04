@@ -265,6 +265,7 @@ export default {
           this.$store.commit("setPassword", "123456");
           this.$store.commit("setUserName", "张昊翔");
           this.$store.commit("setUserType", "0");
+          this.$store.commit("setActiveMenu", "project");
           this.$router.push({path: '/project/all'});
 
           const submitParams = {
@@ -289,6 +290,7 @@ export default {
                 this.$store.commit("setIsAdmin", res.data.userType === "0" ? false : true);
                 this.$store.commit("setPassword", this.loginForm.password);
                 this.$store.commit("setUserType", res.data.userType);
+                this.$store.commit("setActiveMenu", "project");
                 this.$router.push({path: '/project/all'});
               }
               /* 用户不存在 */

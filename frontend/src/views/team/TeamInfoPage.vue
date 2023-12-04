@@ -129,9 +129,12 @@ export default {
     },
     methods: {
         handleBack() {
+            this.$store.commit("setActiveMenu", this.lastMenu);
             this.$router.go(-1);
         },
         changeToProjectInfoPage(id) {
+            this.$store.commit("setActiveMenu", "project");
+            this.$store.commit("setLastMenu", "team");
             console.log('projectId:', id);
             this.$router.push({
                 name: 'projectInfo',
@@ -172,6 +175,9 @@ export default {
     computed: {
         userId() {
             return this.$store.state.userId;
+        },
+        lastMenu() {
+            return this.$store.state.lastMenu;
         },
         teamIntroWithBreaks() {
             return this.teamIntro.replace(/\n/g, '<br>');

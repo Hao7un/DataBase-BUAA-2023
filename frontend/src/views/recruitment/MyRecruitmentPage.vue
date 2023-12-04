@@ -96,6 +96,8 @@ export default {
             });
         },
         changeToProjectInfoPage(id) {
+            this.$store.commit("setActiveMenu", "project");
+            this.$store.commit("setLastMenu", "recruit");
             console.log('projectId:', id);
             this.$router.push({
                 name: 'projectInfo',

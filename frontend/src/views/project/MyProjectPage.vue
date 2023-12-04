@@ -173,6 +173,7 @@ export default {
             })
         },
         changeToProjectInfoPage(id) {
+            this.$store.commit("setLastMenu", "project");
             console.log('projectId:', id);
             this.$router.push({
                 name: 'projectInfo',
