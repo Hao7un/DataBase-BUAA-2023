@@ -261,49 +261,49 @@ export default {
       this.$refs.loginForm.validate(async (valid) => {
         /* 登录判断逻辑 */
         if (valid) {
-          // console.log("登录成功");
-          // ElMessage.success("登录成功");
+          console.log("登录成功");
+          ElMessage.success("登录成功");
           // this.$store.commit("setCollegeId", "21371295");
           // this.$store.commit("setPassword", "123456");
           // this.$store.commit("setUserName", "张昊翔");
           // this.$store.commit("setUserType", "0");
-          // this.$router.push({path: '/project/all'});
+          this.$router.push({path: '/project/all'});
 
           const submitParams = {
             collegeId: this.loginForm.account,
             password: this.loginForm.password,
           }
 
-          await this.axios({
-            method: 'post',
-            url: 'http://localhost:8000/login_info',
-            data: submitParams,
-          })
-            .then(async(res) => {
-              console.log(res);
-              /* 登陆成功 */
-              if (res.data.code === 0) {
-                console.log("登录成功");
-                ElMessage.success('登录成功');
-                this.$store.commit("setUserId", res.data.userId);
-                this.$store.commit("setUserName", res.data.userName);
-                this.$store.commit("setCollegeId", this.loginForm.account);
-                this.$store.commit("setIsAdmin", res.data.userType === "0" ? false : true);
-                this.$store.commit("setPassword", this.loginForm.password);
-                this.$store.commit("setUserType", res.data.userType);
-                this.$router.push({path: '/project/all'});
-              }
-              /* 用户不存在 */
-              else if (res.data.code === 1) {
-                console.log("用户不存在");
-                ElMessage.error('该用户不存在！');
-              }
-              /* 密码错误 */
-              else if (res.data.code === 2) {
-                console.log("密码错误");
-                ElMessage.error('密码错误！');
-              }
-            })
+          // await this.axios({
+          //   method: 'post',
+          //   url: 'http://localhost:8000/login_info',
+          //   data: submitParams,
+          // })
+          //   .then(async(res) => {
+          //     console.log(res);
+          //     /* 登陆成功 */
+          //     if (res.data.code === 0) {
+          //       console.log("登录成功");
+          //       ElMessage.success('登录成功');
+          //       this.$store.commit("setUserId", res.data.userId);
+          //       this.$store.commit("setUserName", res.data.userName);
+          //       this.$store.commit("setCollegeId", this.loginForm.account);
+          //       this.$store.commit("setIsAdmin", res.data.userType === "0" ? false : true);
+          //       this.$store.commit("setPassword", this.loginForm.password);
+          //       this.$store.commit("setUserType", res.data.userType);
+          //       this.$router.push({path: '/project/all'});
+          //     }
+          //     /* 用户不存在 */
+          //     else if (res.data.code === 1) {
+          //       console.log("用户不存在");
+          //       ElMessage.error('该用户不存在！');
+          //     }
+          //     /* 密码错误 */
+          //     else if (res.data.code === 2) {
+          //       console.log("密码错误");
+          //       ElMessage.error('密码错误！');
+          //     }
+          //   })
         }
         else {
           ElMessage.error("请填写正确的登录信息");

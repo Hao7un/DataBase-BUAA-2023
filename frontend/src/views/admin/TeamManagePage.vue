@@ -63,18 +63,21 @@
       <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍(不超过500字)" :rows="15" :maxlength="500" show-word-limit clearable></el-input>
     </div>
     <div> 
-      <v-dialog v-model="createApplicationDialogVisible" width="auto">
-        <el-table :data="applicationList" border style="width: 99%; border: 2px solid gray" :default-sort="[{ prop: 'date', order: 'descending' }]">
-          <el-table-column prop="collegeId" label="学工号" width="200px" align="center"></el-table-column>
-          <el-table-column prop="name" label="姓名" width="200px" align="center"></el-table-column>
-          <el-table-column prop="date" label="申请日期" width="250px" align="center" sortable></el-table-column>
-          <el-table-column label="操作" width="200px" align="center">
-            <template #default="scope">
-              <el-button @click="handleAccept(scope.$index, scope.row, 'true')" type="primary"><span style="color: white;">通过</span></el-button>
-              <el-button @click="handleAccept(scope.$index, scope.row, 'false')" type="warning"><span style="color: white;">拒绝</span></el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+      <v-dialog v-model="createApplicationDialogVisible" width="900px" max-height="600">
+        <div class="applications-container">
+          <h2 style="margin: 20px 0; display: flex; justify-content: center;">申请列表</h2>
+          <el-table :data="applicationList" border style="width: 99%; display: flex; justify-content: center; align-items: center;">
+            <el-table-column prop="collegeId" label="学工号" width="200px" align="center"></el-table-column>
+            <el-table-column prop="name" label="姓名" width="200px" align="center"></el-table-column>
+            <el-table-column prop="date" label="申请日期" width="250px" align="center" sortable></el-table-column>
+            <el-table-column label="操作" width="200px" align="center">
+              <template #default="scope">
+                <el-button @click="handleAccept(scope.$index, scope.row, 'true')" type="primary"><span style="color: white;">通过</span></el-button>
+                <el-button @click="handleAccept(scope.$index, scope.row, 'false')" type="warning"><span style="color: white;">拒绝</span></el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </v-dialog>
     </div>
     <div>
@@ -598,6 +601,16 @@ export default {
   display: flex;
   flex-direction: column;
   background: white;
+}
+
+.applications-container {
+  height: 400px;
+  width: 900px;
+  margin: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
 }
 
 .avatar-uploader {

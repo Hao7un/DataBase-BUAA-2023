@@ -79,7 +79,8 @@
         </div>
         </v-navigation-drawer>
         <v-dialog v-model="viewMessageVisible" style="margin-left: 500px;">
-          <div style="width: 600px; height: 200px; background: white; display: flex; flex-direction: column;">
+          <div style="width: 600px; height: 200px; background: white; display: flex; flex-direction: column; border: 2px solid black">
+            <el-icon style="margin-top: 10px; margin-left: 10px;" size="x-large"><Bell /></el-icon>
             <div style="height: 50px; display: flex; align-items: center; justify-content: center; padding-left: 10px">
               <div style="font-weight: bold;">
                 {{ this.selectedMessage.title }}
