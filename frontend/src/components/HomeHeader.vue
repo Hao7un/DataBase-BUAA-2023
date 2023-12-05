@@ -24,8 +24,9 @@
         <el-avatar :size="45" :src="avatar" fit="cover"></el-avatar>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="changeToUser()">个人主页</el-dropdown-item>
-            <el-dropdown-item @click="logout()">退出登录</el-dropdown-item>
+            <el-dropdown-item @click="changeToUserInfoPage">个人信息</el-dropdown-item>
+            <el-dropdown-item @click="changeToVolunteerTimePage">志愿统计</el-dropdown-item>
+            <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -284,11 +285,18 @@ export default {
         path: '/team/join'
       });
     },
-    changeToUser() {
+    changeToUserInfoPage() {
       this.$store.commit("setActiveMenu", "none");
-      console.log("change to user");
+      console.log("change to user info");
       this.$router.push({
         path: '/user/info'
+      });
+    },
+    changeToVolunteerTimePage() {
+      this.$store.commit("setActiveMenu", "none");
+      console.log("change to volunteer time");
+      this.$router.push({
+        path: '/user/volunteer-time'
       });
     },
     changeToManagement() {

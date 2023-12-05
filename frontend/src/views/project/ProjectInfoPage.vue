@@ -424,6 +424,6 @@ export default {
 }
 
 .dialog-footer button:first-child {
-    margin-right: 10px;
+    margin-right: 50px;
 }
 </style>

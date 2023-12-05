@@ -65,14 +65,9 @@ const router = createRouter({
                     component: () => import('../views/user/UserInfoPage.vue')
                 },
                 {
-                    path: '/user/password',
-                    name: 'password',
-                    component: () => import('../views/user/PasswordPage.vue')
-                },
-                {
-                    path: '/user/volunteer-hours',
-                    name: 'volunteerHours',
-                    component: () => import('../views/user/VolunteerHoursPage.vue')
+                    path: '/user/volunteer-time',
+                    name: 'volunteerTime',
+                    component: () => import('../views/user/VolunteerTimePage.vue')
                 },
                 {
                     path: '/admin/manage',

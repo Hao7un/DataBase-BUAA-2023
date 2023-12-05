@@ -93,7 +93,7 @@
                                     {{ item.currentNumber }} / {{ item.maxNumber }}
                                 </td>
                                 <td style="text-align:center">
-                                    <el-button :class="showRecruitmentStatus(item.id)" size="large"
+                                    <el-button :class="showRecruitmentStatus(item.id)" size="large" round
                                         :disabled="shouldDisableButton(item.id)"
                                         style="font-weight: bold; font-size: 14px; color:whitesmoke"
                                         @click="openDialog(item.id)">
@@ -117,7 +117,7 @@
                 <span class="dialog-footer">
                     <el-button @click="dialogVisible = false">取消</el-button>
                     <el-button type="primary" @click="attendRecruitment">
-                        <span style="color:whitesmoke">确认</span>
+                        <span style="color:whitesmoke; font-weight: bold;">报名</span>
                     </el-button>
                 </span>
             </template>
@@ -170,7 +170,7 @@ export default {
                     let itemTypeP = this.showProjectType(item.projectType);
                     let itemTypeR = this.showRecruitmentType(item.type);
                     return item.projectName.includes(this.keyword) && item.location.includes(this.place) && itemTypeP.includes(this.typeP)
-                        && itemTypeR.includes(this.typeR) && this.showRecruitmentStatus(item.id).includes(this.status) 
+                        && itemTypeR.includes(this.typeR) && this.showRecruitmentStatus(item.id).includes(this.status)
                         && item.startTime.includes(this.formatDateString);
                 });
             }
@@ -183,7 +183,7 @@ export default {
                     let itemTypeP = this.showProjectType(item.projectType);
                     let itemTypeR = this.showRecruitmentType(item.type);
                     return item.projectName.includes(this.keyword) && item.location.includes(this.place) && itemTypeP.includes(this.typeP)
-                        && itemTypeR.includes(this.typeR) && this.showRecruitmentStatus(item.id).includes(this.status) 
+                        && itemTypeR.includes(this.typeR) && this.showRecruitmentStatus(item.id).includes(this.status)
                         && item.startTime.includes(this.formatDateString);
                 });
             }
@@ -399,7 +399,7 @@ td {
 }
 
 .dialog-footer button:first-child {
-    margin-right: 10px;
+    margin-right: 50px;
 }
 
 .已报名 {

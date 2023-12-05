@@ -1,15 +1,12 @@
 <template>
     <div class="main-container">
         <div class="sidebar-container">
-            <el-menu mode="vertical" default-active="volunteerHours"
+            <el-menu mode="vertical" default-active="volunteerTime"
                 style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
                 <el-menu-item index="info" @click="changeToUserInfoPage">
                     <span class="item-font" style="font-weight: bold;">个人信息</span>
                 </el-menu-item>
-                <el-menu-item index="password" @click="changeToPasswordPage">
-                    <span class="item-font" style="font-weight: bold;">修改密码</span>
-                </el-menu-item>
-                <el-menu-item index="volunteerHours" @click="changeToVolunteerHoursPage">
+                <el-menu-item index="volunteerTime" @click="changeToVolunteerTimePage">
                     <span class="item-font" style="font-weight: bold;">志愿统计</span>
                 </el-menu-item>
             </el-menu>
@@ -33,14 +30,9 @@ export default {
                 path: '/user/info'
             })
         },
-        changeToPasswordPage() {
+        changeToVolunteerTimePage() {
             this.$router.push({
-                path: '/user/password'
-            })
-        },
-        changeToVolunteerHoursPage() {
-            this.$router.push({
-                path: '/user/volunteer-hours'
+                path: '/user/volunteer-time'
             })
         }
     }
