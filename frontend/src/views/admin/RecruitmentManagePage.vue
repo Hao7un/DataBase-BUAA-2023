@@ -72,7 +72,8 @@
                                 <div style="display: flex; justify-content: space-between; width: 99%;">
                                     <div>招募编号: &nbsp;{{ card.id }}</div>
                                     <div><el-icon><Clock /></el-icon>&nbsp;招募状态: &nbsp;{{ card.state }}</div>
-                                    <div><el-icon><Unlock /></el-icon>&nbsp;面向群体: &nbsp;{{ card.type }}</div>
+                                    <div v-if="card.type === '1'"><el-icon><Unlock /></el-icon>&nbsp;面向群体: &nbsp;面向公共招募</div>
+                                    <div v-else="card.type === '2'"><el-icon><Unlock /></el-icon>&nbsp;面向群体: &nbsp;仅限团队内部</div>
                                     <div><el-icon><Calendar /></el-icon>&nbsp;发布时间: &nbsp;{{ card.startTime }}</div>
                                 </div>
                                 <span v-if="!card.showDetails" style="margin-left: 20px;"><el-icon><ArrowDownBold /></el-icon></span>

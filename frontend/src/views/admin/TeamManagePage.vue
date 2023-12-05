@@ -275,7 +275,7 @@ export default {
                   if (res.data.code === 0) {
                       console.log('请求成功');
                       vm.teamName = res.data.teamName;
-                      vm.teamSize = res.data.teamSize;
+                      vm.teamSize = res.data.memberList.length;
                       vm.totalHours = res.data.totalHours;
                       vm.establishmentDate = res.data.establishmentDate;
                       vm.teamIntroduction = res.data.teamIntro;

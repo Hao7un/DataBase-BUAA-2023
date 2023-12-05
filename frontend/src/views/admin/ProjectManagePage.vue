@@ -33,7 +33,12 @@
                             <el-input placeholder="输入项目名称" v-model="projectName" clearable></el-input>
                         </el-descriptions-item>
                         <el-descriptions-item label="项目类别" width="150px">
-                            <el-tag>{{ projectType }}</el-tag>
+                            <el-tag v-if="projectType === '1'">社区服务</el-tag>
+                            <el-tag v-else-if="projectType === '2'">科技科普</el-tag>
+                            <el-tag v-else-if="projectType === '3'">支教助学</el-tag>
+                            <el-tag v-else-if="projectType === '4'">体育赛事</el-tag>
+                            <el-tag v-else-if="projectType === '5'">大型演出</el-tag>
+                            <el-tag v-else>其它类别</el-tag>
                         </el-descriptions-item>
                         <el-descriptions-item label="创建时间">
                             {{ createdDate }}

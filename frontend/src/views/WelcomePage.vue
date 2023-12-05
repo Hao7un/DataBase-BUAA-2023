@@ -269,10 +269,10 @@ export default {
           // this.$store.commit("setUserType", "0");
           // this.$router.push({path: '/project/all'});
 
-          const submitParams = {
-            collegeId: this.loginForm.account,
-            password: this.loginForm.password,
-          }
+          // const submitParams = {
+          //   collegeId: this.loginForm.account,
+          //   password: this.loginForm.password,
+          // }
 
           await this.axios({
             method: 'post',
