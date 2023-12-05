@@ -51,7 +51,7 @@
                     <div class="card" v-for="item in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToProjectInfoPage(item.id)">
                             <div class="img-container">
-                                <img src="../../assets/images/project.png">
+                                <img :src="getProjectAvatar(item.id)" alt="project_avatar">
                             </div>
                             <div class="card-info">
                                 <div class="title-container">{{ item.name }}</div>
@@ -75,15 +75,8 @@
 
 export default {
     created() {
-        this.axios.post('http://localhost:8000/user_get_all_projects', {
-            userId: this.$store.state.userId
-        })
-            .then(res => {
-                console.log(res);
-                if (res.data.code === 0) {
-                    this.projectList = res.data.projectList;
-                }
-            });
+        this.fetchProjectsInfo();
+        this.fetchProjectsAvatar();
     },
     data() {
         return {
@@ -110,6 +103,7 @@ export default {
                 { id: 14, name: "志愿项目14", type: "1", team: "志愿团队9", isMyTeam: false, latestTime: "2023-11-23" },
                 { id: 15, name: "志愿项目15", type: "2", team: "志愿团队10", isMyTeam: false, latestTime: "N/A" }
             ],
+            avatarList: [],
             option1: [
                 { key: 1, value: "社区服务" },
                 { key: 2, value: "科技科普" },
@@ -171,6 +165,42 @@ export default {
         }
     },
     methods: {
+        fetchProjectsInfo() {
+            this.axios.post('http://localhost:8000/user_get_all_projects', {
+            userId: this.$store.state.userId
+        })
+            .then(res => {
+                console.log(res);
+                if (res.data.code === 0) {
+                    this.projectList = res.data.projectList;
+                }
+            });
+        },
+        fetchProjectsAvatar() {
+            for (let i = 0; i < this.projectList.length; i++) {
+                this.getProjectAvatar(this.projectList[i].id);
+            }
+        },
+        fetchProjectAvatar(id) {
+            this.axios.post('http://localhost:8000/get_project_avatar', {
+                projectId: id
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        // var avatar = document.getElementById('avatar');
+                        var avatar = "data:image/jpeg;base64," + res.data;
+                        this.avatarList.push([id, avatar]);
+                    }
+                });
+        },
+        getProjectAvatar(id) {
+            for (let i = 0; i < this.avatarList.length; i++) {
+                if (this.avatarList[i][0] === id) {
+                    return this.avatarList[i][1];
+                }
+            }
+        },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
             window.scrollTo(0, 0);

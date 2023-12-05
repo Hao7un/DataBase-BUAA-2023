@@ -12,7 +12,7 @@
                         返回
                     </v-btn>
                     <div class="img-container">
-                        <img src="../../assets/images/hand_shaking.png">
+                        <img :src="avatar" alt="team_avatar">
                     </div>
                     <div class="content-container">
                         <div class="high-container">
@@ -86,30 +86,13 @@ import { ElMessage } from 'element-plus';
 
 export default {
     created() {
-        this.teamId = this.$route.params.teamId;
-        this.axios.post('http://localhost:8000/user_get_specific_team_details', {
-            userId: this.userId,
-            teamId: this.teamId
-        })
-            .then(res => {
-                console.log(res);
-                if (res.data.code === 0) {
-                    this.isTeamMember = res.data.isTeamMember;
-                    this.teamName = res.data.teamName;
-                    this.teamNumber = res.data.teamNumber;
-                    this.teamIntro = res.data.teamIntro;
-                    this.foundationDate = res.data.foundationDate;
-                    this.joinDate = res.data.joinDate;
-                    this.teamLeader = res.data.teamLeader;
-                    this.telephone = res.data.telephone;
-                    this.email = res.data.email;
-                    this.projectList = res.data.projectList;
-                }
-            });
+        this.fetchTeamInfo();
+        this.fetchTeamAvatar();
     },
     data() {
         return {
             teamId: '1',
+            avatar: null,
             isTeamMember: true,
             teamName: '计算机学院志愿服务队',
             teamNumber: '10',
@@ -128,6 +111,40 @@ export default {
         }
     },
     methods: {
+        fetchTeamInfo() {
+            this.teamId = this.$route.params.teamId;
+            this.axios.post('http://localhost:8000/user_get_specific_team_details', {
+                userId: this.userId,
+                teamId: this.teamId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.isTeamMember = res.data.isTeamMember;
+                        this.teamName = res.data.teamName;
+                        this.teamNumber = res.data.teamNumber;
+                        this.teamIntro = res.data.teamIntro;
+                        this.foundationDate = res.data.foundationDate;
+                        this.joinDate = res.data.joinDate;
+                        this.teamLeader = res.data.teamLeader;
+                        this.telephone = res.data.telephone;
+                        this.email = res.data.email;
+                        this.projectList = res.data.projectList;
+                    }
+                });
+        },
+        fetchTeamAvatar() {
+            this.axios.post('http://localhost:8000/get_team_avatar', {
+                teamId: this.teamId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        // var avatar = document.getElementById('avatar');
+                        this.avatar = "data:image/jpeg;base64," + res.data;
+                    }
+                });
+        },
         handleBack() {
             this.$store.commit("setActiveMenu", this.lastMenu);
             this.$router.go(-1);

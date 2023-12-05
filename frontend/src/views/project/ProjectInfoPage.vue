@@ -12,7 +12,7 @@
                         返回
                     </v-btn>
                     <div class="img-container">
-                        <img src="../../assets/images/inf.png">
+                        <img :src="avatar" alt="project_avatar">
                     </div>
                     <div class="content-container">
                         <div class="row1-container">
@@ -104,30 +104,13 @@ import { ElMessage } from 'element-plus';
 
 export default {
     created() {
-        this.projectId = this.$route.params.projectId;
-        this.axios.post('http://localhost:8000/user_get_specific_project', {
-            userId: this.userId,
-            projectId: this.projectId
-        })
-            .then(res => {
-                console.log(res);
-                if (res.data.code === 0) {
-                    this.isCollect = res.data.isCollect;
-                    this.projectName = res.data.projectName;
-                    this.projectType = res.data.projectType;
-                    this.projectIntro = res.data.projectIntro;
-                    this.latestTime = res.data.latestTime;
-                    this.projectLeader = res.data.projectLeader;
-                    this.teamId = res.data.teamId;
-                    this.teamName = res.data.teamName;
-                    this.discussionList = res.data.discussionList;
-                    this.tutorialList = res.data.tutorialList;
-                }
-            });
+        this.fetchProjectInfo();
+        this.fetchProjectAvatar();
     },
     data() {
         return {
             projectId: '1',
+            avatar: null,
             isCollect: false,
             projectName: '气象防灾减灾宣讲',
             projectType: '1',
@@ -155,6 +138,40 @@ export default {
         }
     },
     methods: {
+        fetchProjectInfo() {
+            this.projectId = this.$route.params.projectId;
+            this.axios.post('http://localhost:8000/user_get_specific_project', {
+                userId: this.userId,
+                projectId: this.projectId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.isCollect = res.data.isCollect;
+                        this.projectName = res.data.projectName;
+                        this.projectType = res.data.projectType;
+                        this.projectIntro = res.data.projectIntro;
+                        this.latestTime = res.data.latestTime;
+                        this.projectLeader = res.data.projectLeader;
+                        this.teamId = res.data.teamId;
+                        this.teamName = res.data.teamName;
+                        this.discussionList = res.data.discussionList;
+                        this.tutorialList = res.data.tutorialList;
+                    }
+                });
+        },
+        fetchProjectAvatar() {
+            this.axios.post('http://localhost:8000/get_project_avatar', {
+                projectId: this.projectId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        // var avatar = document.getElementById('avatar');
+                        this.avatar = "data:image/jpeg;base64," + res.data;
+                    }
+                });
+        },
         handleBack() {
             this.$store.commit("setActiveMenu", this.lastMenu);
             this.$router.go(-1);
@@ -172,9 +189,9 @@ export default {
             if (latestTime === 'N/A') {
                 return '暂未招募';
             } else {
-                if (new Date() < new Date(latestTime)) 
+                if (new Date() < new Date(latestTime))
                     return '招募中';
-                else 
+                else
                     return '最近招募：' + latestTime;
             }
         },
@@ -204,9 +221,9 @@ export default {
                     console.log(res);
                     if (res.data.code === 0) {
                         this.isCollect = !this.isCollect;
-                        if (this.isCollect) 
+                        if (this.isCollect)
                             ElMessage.success('已收藏');
-                        else 
+                        else
                             ElMessage.success('已取消收藏');
                     }
                 });
@@ -217,30 +234,30 @@ export default {
         },
         getTutorialTime() {
             let tutorial = this.tutorialList.find(item => item.id === this.tutorialId);
-            if (!tutorial) 
+            if (!tutorial)
                 return '';
-            else 
+            else
                 return tutorial.time;
         },
         getTutorialTitle() {
             let tutorial = this.tutorialList.find(item => item.id === this.tutorialId);
-            if (!tutorial) 
+            if (!tutorial)
                 return '';
-            else 
+            else
                 return tutorial.title;
         },
         getTutorialTag() {
             let tutorial = this.tutorialList.find(item => item.id === this.tutorialId);
-            if (!tutorial) 
+            if (!tutorial)
                 return '';
-            else 
+            else
                 return tutorial.tag;
         },
         getTutorialContent() {
             let tutorial = this.tutorialList.find(item => item.id === this.tutorialId);
-            if (!tutorial) 
+            if (!tutorial)
                 return '';
-            else 
+            else
                 return tutorial.content;
         },
         showQuestionInput() {

@@ -30,10 +30,10 @@
             </div>
             <div class="teams-container">
                 <div class="info-container">
-                    <div class="card" v-for="(item, index) in displayedList">
+                    <div class="card" v-for="item in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToTeamInfoPage(item.id)">
                             <div class="img-container">
-                                <img src="../../assets/images/hand_shaking.png">
+                                <img :src="getTeamAvatar(item.id)" alt="team_avatar">
                             </div>
                             <div class="card-info">
                                 <div class="team-name">{{ item.name }}</div>
@@ -64,13 +64,8 @@
 
 export default {
     created() {
-        this.axios.get('http://localhost:8000/user_get_all_teams_info')
-            .then(res => {
-                console.log(res);
-                if (res.data.code === 0) {
-                    this.totalList = res.data.totalList;
-                }
-            });
+        this.fetchTeamsInfo();
+        this.fetchTeamsAvatar();
     },
     data() {
         return {
@@ -89,7 +84,8 @@ export default {
                 { id: 8, name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50 },
                 { id: 9, name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50 },
                 { id: 10, name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50 },
-            ]
+            ],
+            avatarList: [],
         }
     },
     computed: {
@@ -111,8 +107,8 @@ export default {
             if (this.keyword != null && this.number != null) {
                 filteredList = filteredList.filter(item => {
                     let itemDate = new Date(item.date);
-                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) 
-                    && itemDate >= this.date;
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1])
+                        && itemDate >= this.date;
                 }
                 );
             }
@@ -123,8 +119,8 @@ export default {
             if (this.keyword != null && this.number != null) {
                 list = list.filter(item => {
                     let itemDate = new Date(item.date);
-                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) 
-                    && itemDate >= this.date;
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1])
+                        && itemDate >= this.date;
                 }
                 );
             }
@@ -132,6 +128,40 @@ export default {
         },
     },
     methods: {
+        fetchTeamsInfo() {
+            this.axios.get('http://localhost:8000/user_get_all_teams_info')
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.totalList = res.data.totalList;
+                    }
+                });
+        },
+        fetchTeamsAvatar() {
+            for (let i = 0; i < this.totalList.length; i++) {
+                this.getTeamAvatar(this.totalList[i].id);
+            }
+        },
+        fetchTeamAvatar(id) {
+            this.axios.post('http://localhost:8000/get_team_avatar', {
+                teamId: id
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        // var avatar = document.getElementById('avatar');
+                        var avatar = "data:image/jpeg;base64," + res.data;
+                        this.avatarList.push([id, avatar]);
+                    }
+                });
+        },
+        getTeamAvatar(id) {
+            for (let i = 0; i < this.avatarList.length; i++) {
+                if (this.avatarList[i][0] === id) {
+                    return this.avatarList[i][1];
+                }
+            }
+        },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
             window.scrollTo(0, 0);
@@ -153,7 +183,7 @@ export default {
                 name: 'teamInfo',
                 params: { teamId: id }
             });
-        },
+        }
     },
 }
 </script>

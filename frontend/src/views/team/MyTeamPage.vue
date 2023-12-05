@@ -25,10 +25,10 @@
             </div>
             <div class="teams-container">
                 <div class="info-container">
-                    <div class="card" v-for="(item, index) in displayedList">
+                    <div class="card" v-for="item in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToTeamInfoPage(item.id)">
                             <div class="img-container">
-                                <img src="../../assets/images/hand_shaking.png">
+                                <img :src="getTeamAvatar(item.id)" alt="team_avatar">
                             </div>
                             <div class="card-info">
                                 <div class="team-name">{{ item.name }}</div>
@@ -59,15 +59,8 @@
 
 export default {
     created() {
-        this.axios.post('http://localhost:8000/user_get_all_my_teams', {
-            userId: this.$store.state.userId
-        })
-            .then(res => {
-                console.log(res);
-                if (res.data.code === 0) {
-                    this.teamList = res.data.teamList;
-                }
-            });
+        this.fetchTeamsInfo();
+        this.fetchTeamsAvatar();
     },
     data() {
         return {
@@ -86,6 +79,7 @@ export default {
                 { id: 9, name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50 },
                 { id: 10, name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50 },
             ],
+            avatarList: [],
         }
     },
     computed: {
@@ -148,6 +142,42 @@ export default {
         }
     },
     methods: {
+        fetchTeamsInfo() {
+            this.axios.post('http://localhost:8000/user_get_all_my_teams', {
+                userId: this.$store.state.userId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.teamList = res.data.teamList;
+                    }
+                });
+        },
+        fetchTeamsAvatar() {
+            for (let i = 0; i < this.teamList.length; i++) {
+                this.getTeamAvatar(this.teamList[i].id);
+            }
+        },
+        fetchTeamAvatar(id) {
+            this.axios.post('http://localhost:8000/get_team_avatar', {
+                teamId: id
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        // var avatar = document.getElementById('avatar');
+                        var avatar = "data:image/jpeg;base64," + res.data;
+                        this.avatarList.push([id, avatar]);
+                    }
+                });
+        },
+        getTeamAvatar(id) {
+            for (let i = 0; i < this.avatarList.length; i++) {
+                if (this.avatarList[i][0] === id) {
+                    return this.avatarList[i][1];
+                }
+            }
+        },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
             window.scrollTo(0, 0);

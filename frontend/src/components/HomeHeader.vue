@@ -21,7 +21,7 @@
     </div>
     <div class="avatar-container">
       <el-dropdown trigger="click">
-        <el-avatar :size="45" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
+        <el-avatar :size="45" :src="avatar" fit="cover"></el-avatar>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item @click="changeToUser()">个人主页</el-dropdown-item>
@@ -152,12 +152,15 @@ export default {
         },
       ],
       currentPage: 1,
-
+      avatar: null,
     }
   },
   computed: {
     activeMenu() {
       return this.$store.state.activeMenu;
+    },
+    userId() {
+      return this.$store.state.userId;
     },
     notReadMessageNum() {
       let cnt = 0;
@@ -200,7 +203,7 @@ export default {
   methods: {
     fetch() {
       const submitParams = {
-        userId: this.$store.state.userId,
+        userId: this.userId,
       }
 
       this.axios({
@@ -218,7 +221,18 @@ export default {
             console.log("获取通知列表失败, 错误码不是0");
           }
         });
-
+    },
+    fetchUserAvatar() {
+      this.axios.post('http://localhost:8000/get_user_avatar', {
+        userId: this.userId,
+      })
+        .then(res => {
+          console.log(res);
+          if (res.data) {
+            // var avatar = document.getElementById('avatar');
+            this.avatar = "data:image/jpeg;base64," + res.data;
+          }
+        });
     },
     viewMessageDetail(message) {
       this.selectedMessage = message;
@@ -326,10 +340,12 @@ export default {
   width: 100%;
 }
 
+.message-button-container {
+  margin-right: 40px;
+}
+
 .avatar-container {
-  margin-top: 10px;
-  margin-right: 50px;
-  margin-left: 20px;
+  margin-right: 40px;
 }
 
 .item-font {
