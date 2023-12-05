@@ -389,6 +389,7 @@ export default {
                 path: '/admin/recruitment',
                 query: {
                     projectId: this.projectId,
+                    projectName: this.projectName,
                     teamId: this.teamId,
                 }
             })
@@ -433,7 +434,7 @@ export default {
         },
         handleBack() {
             this.$router.push({
-                path: '/admin/teaminfo',
+                path: '/admin/projectlist',
                 query: {
                     teamId: this.teamId,
                 },
@@ -647,6 +648,7 @@ export default {
         handleSetProjectAvatarSubmit() {
             const formData = new FormData();
             formData.append("projectAvatar", this.fileToUpload);
+            formData.append("projectId", this.projectId);
 
             this.axios({
                 method: 'post',
@@ -654,10 +656,10 @@ export default {
                 data: formData
             })
                 .then((res) => {
-                console.log(res);
-                // 刷新头像
-                this.fetchPicture();
-                this.setAvatarVisible = false;
+                    console.log(res);
+                    // 刷新头像
+                    this.fetchPicture();
+                    this.setAvatarVisible = false;
             })
       }
         

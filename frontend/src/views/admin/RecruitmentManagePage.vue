@@ -272,8 +272,8 @@ export default {
     computed: {
         recruitmentList() {
             let recruitmentList = [];
-            for (let i = 0; i < this.recruitements.length; i++) {
-                let item = this.recruitements[i];
+            for (let i = 0; i < this.recruitments.length; i++) {
+                let item = this.recruitments[i];
                 let element = {
                     state: "",
                     id: item.id,
@@ -346,6 +346,7 @@ export default {
     data() {
         return {
             projectId: this.$route.query.projectId,
+            projectName: this.$route.query.projectName,
             teamId: this.$route.query.teamId,
             locationKey: "",
             statusKey: "",
@@ -366,7 +367,7 @@ export default {
             type: "",
             hours: "",
             maxNumber: 0,
-            recruitements: [
+            recruitments: [
                 {
                     id: "1",
                     launchTime: "2023-11-24 12:22",
@@ -445,7 +446,7 @@ export default {
                     console.log(res);
                     if (res.data.code === 0) {
                         console.log("获取项目下的招募列表成功");
-                        this.recruitements = res.data.recruitements;
+                        this.recruitments = res.data.recruitments;
                     }
                     else {
                         console.log("获取失败, 错误码不是0");
@@ -454,8 +455,10 @@ export default {
         },
         viewRecruits(recruitment) {
             const submitParams = {
-                recruitmemtId: recruitment.id
+                recruitmentId: recruitment.id
             }
+
+            console.log(recruitment.id);
 
             this.axios({
                 method: 'post',
@@ -494,6 +497,7 @@ export default {
                 path: '/admin/recruitment',
                 query: {
                     projectId: this.projectId,
+                    projectName: this.projectName,
                     teamId: this.teamId,
                 }
             })

@@ -406,16 +406,17 @@ export default {
     },
     handleDelete(index, row) {
       this.viewMembersDialogVisible = false;
+      if (row.userId === this.$store.state.userId) {
+          ElMessage.error("无法删除管理员!");
+          this.viewMembersDialogVisible = true;
+          return;
+      }
+      
       ElMessageBox.confirm('确定删除该成员?', '注意', {
         confirmButtonText: '是',
         cancelButtonText: '否',
         type: 'warning'
       }).then(() => {
-
-        if (row.userId === this.$store.state.userId) {
-          ElMessage.error("无法删除管理员!");
-          return;
-        }
 
         const submitParams = {
           userId: row.userId,
@@ -471,6 +472,7 @@ export default {
       handleSetTeamAvatarSubmit() {
         const formData = new FormData();
         formData.append("teamAvatar", this.fileToUpload);
+        formData.append("teamId", this.teamId);
 
         this.axios({
           method: 'post',
