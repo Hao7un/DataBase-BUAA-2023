@@ -19,11 +19,23 @@
             </template>
             返回
         </v-btn>
+        <div>
+            <div ref="barChart" style="width: 600px; height: 400px;"></div>
+            <div ref="pieChart" style="width: 600px; height: 400px;"></div>
+            <div ref="lineChart" style="width: 600px; height: 400px;"></div>
+        </div>
     </div>
 </template>
 
 <script>
+import * as echarts from 'echarts';
+
 export default {
+    mounted() {
+        this.initBarChart();
+        this.initPieChart();
+        this.initLineChart();
+    },
     computed: {
         userId() {
             return this.$store.state.userId;
@@ -46,6 +58,78 @@ export default {
         handleBack() {
             this.$store.commit("setActiveMenu", this.lastMenu);
             this.$router.go(-1);
+        },
+        initBarChart() {
+            const chartDom = this.$refs.barChart;
+            const myChart = echarts.init(chartDom);
+
+            const option = {
+                title: {
+                    text: '柱图示例'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['A', 'B', 'C', 'D', 'E']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: '柱图数据',
+                    type: 'bar',
+                    data: [10, 20, 15, 25, 30]
+                }]
+            };
+
+            myChart.setOption(option);
+        },
+        initPieChart() {
+            const chartDom = this.$refs.pieChart;
+            const myChart = echarts.init(chartDom);
+
+            const option = {
+                title: {
+                    text: '饼图示例',
+                    left: 'center'
+                },
+                series: [{
+                    name: '饼图数据',
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        { value: 10, name: 'A' },
+                        { value: 20, name: 'B' },
+                        { value: 15, name: 'C' },
+                        { value: 25, name: 'D' },
+                        { value: 30, name: 'E' }
+                    ]
+                }]
+            };
+            myChart.setOption(option);
+        },
+        initLineChart() {
+            const chartDom = this.$refs.lineChart;
+            const myChart = echarts.init(chartDom);
+
+            const option = {
+                title: {
+                    text: '折线图示例'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: '示例数据',
+                    type: 'line',
+                    data: [150, 230, 224, 218, 135, 147, 260]
+                }]
+            };
+
+            myChart.setOption(option);
         }
     }
 }
