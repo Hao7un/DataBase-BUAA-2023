@@ -11,19 +11,27 @@
                 </el-menu-item>
             </el-menu>
         </div>
-        <div class="grid-container">
-            <div class="grid-item">1</div>
-            <div class="grid-item">2</div>
-            <div class="grid-item">3</div>
-            <div class="grid-item">4</div>
-            <div class="grid-item">5</div>
-            <div class="grid-item">6</div>
-        </div>
+        <v-btn class="back-button" @click="handleBack">
+            <template v-slot:prepend>
+                <el-icon>
+                    <Back />
+                </el-icon>
+            </template>
+            返回
+        </v-btn>
     </div>
 </template>
 
 <script>
 export default {
+    computed: {
+        userId() {
+            return this.$store.state.userId;
+        },
+        lastMenu() {
+            return this.$store.state.lastMenu;
+        }
+    },
     methods: {
         changeToUserInfoPage() {
             this.$router.push({
@@ -34,6 +42,10 @@ export default {
             this.$router.push({
                 path: '/user/volunteer-time'
             })
+        },
+        handleBack() {
+            this.$store.commit("setActiveMenu", this.lastMenu);
+            this.$router.go(-1);
         }
     }
 }
@@ -55,21 +67,13 @@ export default {
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto; /* 定义了三列，每列的宽度为 auto */
-  grid-gap: 10px; /* 定义了网格线之间的间距 */
-}
-
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
-}
-
 .item-font {
     font-size: 18px;
     margin-left: 10px;
+}
+
+.back-button {
+    font-weight: bold;
+    font-size: 16px;
 }
 </style>

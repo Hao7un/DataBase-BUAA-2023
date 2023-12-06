@@ -60,11 +60,11 @@
             </div>
             <div class="text-center">
                 <el-carousel height="400px" :interval="5000" type="card">
-                    <el-carousel-item v-for="project in projectList" :key="project.id"
+                    <el-carousel-item v-for="(project, index) in projectList" :key="project.id"
                         @click="changeToProjectInfoPage(project.id)">
                         <h2 style="margin-top: 30px;">{{ project.name }}</h2>
                         <div style="margin-top: 20px; margin-bottom: 20px;">
-                            <img src="../../assets/images/project.png">
+                            <img :src="projectAvatarList[index]" alt="project_avatar">
                         </div>
                         <p><el-icon>
                                 <Guide />
@@ -88,6 +88,7 @@ export default {
     created() {
         this.fetchTeamInfo();
         this.fetchTeamAvatar();
+        this.fetchProjectsAvatar();
     },
     data() {
         return {
@@ -108,6 +109,7 @@ export default {
                 { id: 3, name: '项目3', type: '3', times: 3 },
                 { id: 4, name: '项目4', type: '4', times: 20 },
             ],
+            projectAvatarList: [],
         }
     },
     methods: {
@@ -142,6 +144,24 @@ export default {
                     if (res.data) {
                         // var avatar = document.getElementById('avatar');
                         this.avatar = "data:image/jpeg;base64," + res.data;
+                    }
+                });
+        },
+        fetchProjectsAvatar() {
+            for (let i = 0; i < this.projectList.length; i++) {
+                this.fetchProjectAvatar(this.projectList[i].id);
+            }
+        },
+        fetchProjectAvatar(id) {
+            this.axios.post('http://localhost:8000/get_project_avatar', {
+                projectId: id
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        // var avatar = document.getElementById('avatar');
+                        var avatar = "data:image/jpeg;base64," + res.data;
+                        this.projectAvatarList.push(avatar);
                     }
                 });
         },

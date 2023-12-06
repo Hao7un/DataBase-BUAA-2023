@@ -155,7 +155,7 @@ export default {
         },
         fetchTeamsAvatar() {
             for (let i = 0; i < this.teamList.length; i++) {
-                this.getTeamAvatar(this.teamList[i].id);
+                this.fetchTeamAvatar(this.teamList[i].id);
             }
         },
         fetchTeamAvatar(id) {

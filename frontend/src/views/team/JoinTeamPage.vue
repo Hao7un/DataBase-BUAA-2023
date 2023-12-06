@@ -139,7 +139,7 @@ export default {
         },
         fetchTeamsAvatar() {
             for (let i = 0; i < this.totalList.length; i++) {
-                this.getTeamAvatar(this.totalList[i].id);
+                this.fetchTeamAvatar(this.totalList[i].id);
             }
         },
         fetchTeamAvatar(id) {

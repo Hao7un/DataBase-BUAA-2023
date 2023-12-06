@@ -165,7 +165,7 @@ export default {
         },
         fetchProjectsAvatar() {
             for (let i = 0; i < this.projectList.length; i++) {
-                this.getProjectAvatar(this.projectList[i].id);
+                this.fetchProjectAvatar(this.projectList[i].id);
             }
         },
         fetchProjectAvatar(id) {

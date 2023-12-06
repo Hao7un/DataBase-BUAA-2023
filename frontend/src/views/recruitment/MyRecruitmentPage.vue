@@ -11,10 +11,15 @@
             </el-menu>
         </div>
         <div class="content-container">
-            <el-radio-group v-model="selectedActivity">
-                <el-radio label="upcoming" size="large" style="font-weight: bold;" border>即将进行的活动</el-radio>
-                <el-radio label="past" size="large" style="font-weight: bold;" border>已经结束的活动</el-radio>
-            </el-radio-group>
+            <div class="switch-container">
+                <el-radio-group v-model="selectedActivity">
+                    <el-radio label="upcoming" size="large" style="font-weight: bold;" border>即将进行的活动</el-radio>
+                    <el-radio label="past" size="large" style="font-weight: bold;" border>已经结束的活动</el-radio>
+                </el-radio-group>
+                <div v-if="selectedActivity === 'past'" style="margin-left: 100px;">
+                    只看本学期<el-switch v-model="onlySemester" style="padding-left: 10px;" />
+                </div>
+            </div>
             <div v-if="selectedActivity === 'upcoming'" v-for="item in futureRecruitmentList" :key="item.id">
                 <div class="recruitment-container">
                     <div>
@@ -68,6 +73,7 @@ export default {
     data() {
         return {
             selectedActivity: 'upcoming',
+            onlySemester: false,
             futureRecruitmentList: [
                 { id: "10", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "10", projectName: "志愿项目10", projectType: "1" },
                 { id: "9", startTime: "2023-12-11 19:00", endTime: "2023-12-11 21:00", location: "新主楼G1000", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "9", projectName: "志愿项目9", projectType: "2" },
@@ -159,6 +165,13 @@ export default {
     flex-direction: column;
     margin-left: 80px;
     margin-top: 50px;
+}
+
+.switch-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .recruitment-container {

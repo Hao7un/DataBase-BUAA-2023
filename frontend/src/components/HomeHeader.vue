@@ -293,6 +293,7 @@ export default {
       });
     },
     changeToVolunteerTimePage() {
+      this.$store.commit("setLastMenu", this.activeMenu);
       this.$store.commit("setActiveMenu", "none");
       console.log("change to volunteer time");
       this.$router.push({
