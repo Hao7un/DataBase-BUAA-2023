@@ -12,13 +12,6 @@
     </div>
 
     <div class="user-container">
-      <div class="button-container">
-        <el-button type="primary" size="large" @click="showAvatarDialog">
-          <span style="font-weight: bold; font-size: 16px; color:whitesmoke">上传头像</span></el-button>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button type="primary" size="large" @click="showPasswordDialog">
-          <span style="font-weight: bold; font-size: 16px; color:whitesmoke">修改密码</span></el-button>
-      </div>
       <div class="info-container">
         <el-descriptions :column="1" size="large">
           <el-descriptions-item label="姓名" width="400px">
@@ -88,11 +81,19 @@
             <el-input type="textarea" v-model="userIntro" class="input-container"></el-input>
           </el-descriptions-item>
         </el-descriptions>
-        <br>
+      </div>
+      <div class="button-container">
         <el-button type="primary" round size="large" @click="editUserInfo">
-          <span style="font-weight: bold; font-size: 15px; color:whitesmoke">保存</span></el-button>
+          <span style="font-weight: bold; font-size: 16px; color:whitesmoke">保存信息</span></el-button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <el-button type="primary" round size="large" @click="showAvatarDialog">
+          <span style="font-weight: bold; font-size: 16px; color:whitesmoke">上传头像</span></el-button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <el-button type="primary" round size="large" @click="showPasswordDialog">
+          <span style="font-weight: bold; font-size: 16px; color:whitesmoke">修改密码</span></el-button>
       </div>
     </div>
+
 
     <el-dialog v-model="avatarDialogVisible" title="上传头像" width="30%" align-center center draggable>
       <el-upload class="avatar-uploader" action="#" :show-file-list="false" :auto-upload="false" :on-change="uploadImage">
@@ -349,15 +350,15 @@ export default {
   width: 500px;
 }
 
+.info-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .button-container {
   display: flex;
   flex-direction: row;
-  margin-bottom: 50px;
-}
-
-.info-container {
-  display: block;
-  flex-direction: column;
+  margin-top: 40px;
 }
 
 .item-font {

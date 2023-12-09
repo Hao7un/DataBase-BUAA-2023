@@ -167,7 +167,6 @@ export default {
                 .then(res => {
                     console.log(res);
                     if (res.data) {
-                        // var avatar = document.getElementById('avatar');
                         this.avatar = "data:image/jpeg;base64," + res.data;
                     }
                 });

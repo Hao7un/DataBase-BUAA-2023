@@ -175,7 +175,6 @@ export default {
                 .then(res => {
                     console.log(res);
                     if (res.data) {
-                        // var avatar = document.getElementById('avatar');
                         var avatar = "data:image/jpeg;base64," + res.data;
                         this.avatarList.push([id, avatar]);
                     }
