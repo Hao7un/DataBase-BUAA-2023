@@ -67,15 +67,6 @@
   }
   ```
 
-* 修改失败
-
-  ```javascript
-  {
-    code: 1,
-    message: ""
-  }
-  ```
-
 ## JoinTeamPage
 ### 获取所有团队
 
