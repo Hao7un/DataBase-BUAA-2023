@@ -153,15 +153,15 @@ export default {
     methods: {
         fetchProjectsInfo() {
             this.axios.post('http://localhost:8000/user_get_favorite_projects', {
-            userId: this.$store.state.userId
-        })
-            .then(res => {
-                console.log(res);
-                if (res.data.code === 0) {
-                    this.projectList = res.data.projectList;
-                    this.fetchProjectsAvatar();
-                }
-            });
+                userId: this.$store.state.userId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.projectList = res.data.projectList;
+                        this.fetchProjectsAvatar();
+                    }
+                });
         },
         fetchProjectsAvatar() {
             for (let i = 0; i < this.projectList.length; i++) {

@@ -48,7 +48,7 @@
                                 <th style="width: 140px;">
                                     <el-input v-model="place" placeholder="输入活动地点" clearable></el-input>
                                 </th>
-                                <th style="width: 130px;">
+                                <th style="width: 140px;">
                                     <el-select v-model="typeR" placeholder="选择面向群体" clearable>
                                         <el-option key="1" value="面向公共招募">面向公共招募</el-option>
                                         <el-option key="2" value="仅限团队内部">仅限团队内部</el-option>
@@ -376,12 +376,16 @@ td {
 .public-type {
     background: rgb(12, 168, 53);
     color: white;
+    margin-left: 10px;
+    margin-right: 10px;
     border-radius: 5px;
 }
 
 .private-type {
     background: orange;
     color: white;
+    margin-left: 10px;
+    margin-right: 10px;
     border-radius: 5px;
 }
 
