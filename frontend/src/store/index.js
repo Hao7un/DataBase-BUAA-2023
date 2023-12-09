@@ -1,8 +1,5 @@
 import { createStore } from 'vuex'
 
-// 使用全局变量的例子：
-// 设置全局变量（调用对应函数）：this.$store.commit("setUserName", "yourUserName");
-
 const store = createStore({
     state() {
         return {

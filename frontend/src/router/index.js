@@ -99,15 +99,15 @@ const router = createRouter({
     ]
 })
 
-// import store from '../store'
-// router.beforeEach((to, from, next) => {
-//     const isLoggedIn = store.state.userId !== null;
-//     if (!isLoggedIn && to.path !== '/welcome') {
-//         next({path: "/welcome"})
-//     }
-//     else {
-//         next();
-//     }
-// })
+import store from '../store'
+router.beforeEach((to, from, next) => {
+    const isLoggedIn = store.state.userId !== null;
+    if (!isLoggedIn && to.path !== '/welcome') {
+        next({path: "/welcome"})
+    }
+    else {
+        next();
+    }
+})
 
 export default router
