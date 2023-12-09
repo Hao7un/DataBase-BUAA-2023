@@ -339,7 +339,8 @@ export default {
                     this.$store.commit("setCollegeId", this.registerForm.account);
                     this.$store.commit("setIsAdmin", this.registerForm.userType === "普通用户" ? false : true);
                     this.$store.commit("setPassword", this.registerForm.password);
-                    this.$router.push({path: '/project/all'});
+                    this.$router.push({path: '/welcome'});
+                    showLoginWindow();
                   }
                   /* 重复注册 */
                   else if (res.data.code === 1) {

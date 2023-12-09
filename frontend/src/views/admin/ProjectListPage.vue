@@ -11,6 +11,12 @@
             </el-menu>
           </div>
         <div class="content-container">
+            <v-btn class="back-button" @click="handleBack">
+                <template v-slot:prepend>
+                    <el-icon><Back /></el-icon>
+                </template>
+                返回
+            </v-btn>
             <div class="selector-container">
                 <div class="left">
                     <el-input v-model="projectNameKey" placeholder="搜索项目名称" clearable size="large" style="width: 200px">
@@ -65,7 +71,7 @@
                                 <span v-else-if="project.category === '5'" style="color: pink;"><el-icon><FolderOpened /></el-icon>&nbsp; 项目类别: 大型演出</span>
                                 <span v-else style="color: blue;"><el-icon><FolderOpened /></el-icon>&nbsp; 项目类别: 其它</span>
                             </div>
-                            <el-button style="margin-right: 40px;"  @click="viewProjectDetails(project.id)">查看详情</el-button>
+                            <el-button style="margin-right: 40px;"  @click="viewProjectDetails(project.id)"><el-badge :hidden="project.hasComments === false" is-dot>查看详情</el-badge></el-button>
                         </div>
                     </el-card>
                 </div>
@@ -168,7 +174,7 @@ export default {
             projects: [
                 {
                     id: "1",
-                    hasComments: false,
+                    hasComments: true,
                     name: "志愿项目1",
                     category: "1",
                     createdDate: "2023-11-17"
@@ -247,7 +253,6 @@ export default {
         changeToProjectListPage() {
             this.$router.push({
                 path: '/admin/projectlist',
-                // params
                 query: {
                     teamId: this.teamId
                 }
@@ -256,7 +261,6 @@ export default {
         changeToTeamManagePage() {
             this.$router.push({
                 path: '/admin/teaminfo',
-                // params
                 query: {
                     teamId: this.teamId,
                 }
@@ -307,22 +311,27 @@ export default {
         }
     },
     uploadFile(file) {
-      const isJPG = file.raw.type === 'image/jpeg';
-      const isPNG = file.raw.type === 'image/png';
-      if (!isJPG && !isPNG) {
-          ElMessage.error("只能上传JPG或PNG格式的文件");
-          return false;
-      }
-      else if (file.size / 1024 / 1024 > 2) {
-          ElMessage.error("图片大小不能超过2MB");
-          return false;
-      }
-      else {
-          this.imageUrl = URL.createObjectURL(file.raw);
-          this.fileToUpload = file.raw;
-          return true;
-      }
-    },        
+            const isJPG = file.raw.type === 'image/jpeg';
+            const isPNG = file.raw.type === 'image/png';
+            if (!isJPG && !isPNG) {
+                ElMessage.error("只能上传JPG或PNG格式的文件");
+                return false;
+            }
+            else if (file.size / 1024 / 1024 > 2) {
+                ElMessage.error("图片大小不能超过2MB");
+                return false;
+            }
+            else {
+                this.imageUrl = URL.createObjectURL(file.raw);
+                this.fileToUpload = file.raw;
+                return true;
+            }
+        },
+        handleBack() {
+            this.$router.push({
+                path: '/admin/manage'
+            })
+        },        
     },
 }
 
@@ -343,6 +352,11 @@ export default {
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
+.back-button {
+  margin-left: 25px;
+  margin-top: 25px;
+}
+
 .item-font {
     font-size: 18px;
     margin-left: 10px;
@@ -350,7 +364,6 @@ export default {
 
 .selector-container {
     width: 1200px;
-    margin-top: 40px;
     margin-left: 100px;
     display: flex;
     align-items: center;

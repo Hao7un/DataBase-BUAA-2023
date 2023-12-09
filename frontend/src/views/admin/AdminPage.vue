@@ -140,9 +140,6 @@ export default {
             this.createDialogVisible = true;
             console.log("显示创建团队对话");
         },
-        handleRemovePicture() {
-            this.imageUrl = "";
-        },
         viewTeamDetails(row) {
             this.$router.push({
                 path: '/admin/teaminfo',
