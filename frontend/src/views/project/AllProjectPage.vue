@@ -75,8 +75,9 @@
 
 export default {
     created() {
-        this.fetchProjectsInfo();
-        this.fetchProjectsAvatar();
+        this.fetchProjectsInfo().then(() => {
+            this.fetchProjectsAvatar();
+        });
     },
     data() {
         return {
@@ -167,14 +168,14 @@ export default {
     methods: {
         fetchProjectsInfo() {
             this.axios.post('http://localhost:8000/user_get_all_projects', {
-            userId: this.$store.state.userId
-        })
-            .then(res => {
-                console.log(res);
-                if (res.data.code === 0) {
-                    this.projectList = res.data.projectList;
-                }
-            });
+                userId: this.$store.state.userId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.projectList = res.data.projectList;
+                    }
+                });
         },
         fetchProjectsAvatar() {
             for (let i = 0; i < this.projectList.length; i++) {

@@ -64,8 +64,9 @@
 
 export default {
     created() {
-        this.fetchTeamsInfo();
-        this.fetchTeamsAvatar();
+        this.fetchTeamsInfo().then(() => {
+            this.fetchTeamsAvatar();
+        });
     },
     data() {
         return {

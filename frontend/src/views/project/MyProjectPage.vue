@@ -75,8 +75,9 @@
 
 export default {
     created() {
-        this.fetchProjectsInfo();
-        this.fetchProjectsAvatar();
+        this.fetchProjectsInfo().then(() => {
+            this.fetchProjectsAvatar();
+        });
     },
     data() {
         return {

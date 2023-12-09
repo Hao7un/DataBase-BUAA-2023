@@ -219,7 +219,7 @@ export default {
       }
     },
     editAvatar() {
-      this.axios.post('http://localhost:8000/', {
+      this.axios.post('http://localhost:8000/upload_user_avatar', {
         userAvatar: this.fileToUpload
       })
         .then(res => {

@@ -104,8 +104,9 @@ import { ElMessage } from 'element-plus';
 
 export default {
     created() {
-        this.fetchProjectInfo();
-        this.fetchProjectAvatar();
+        this.fetchProjectInfo().then(() => {
+            this.fetchProjectAvatar();
+        });
     },
     data() {
         return {

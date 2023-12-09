@@ -86,9 +86,10 @@ import { ElMessage } from 'element-plus';
 
 export default {
     created() {
-        this.fetchTeamInfo();
-        this.fetchTeamAvatar();
-        this.fetchProjectsAvatar();
+        this.fetchTeamInfo().then(() => {
+            this.fetchTeamAvatar();
+            this.fetchProjectsAvatar();
+        });
     },
     data() {
         return {
