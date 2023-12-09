@@ -18,6 +18,7 @@ const store = createStore({
             totalHours: null,
             activeMenu: null,
             lastMenu: null,
+            avatar: null
         }
     },
     mutations: {
@@ -59,6 +60,9 @@ const store = createStore({
         },
         setLastMenu(state, lastMenu) {
             state.lastMenu = lastMenu;
+        },
+        setAvatar(state, avatar) {
+            state.avatar = avatar;
         }
     },
 })

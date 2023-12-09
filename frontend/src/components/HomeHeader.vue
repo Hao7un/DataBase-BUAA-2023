@@ -96,7 +96,7 @@ import { ElMessage } from 'element-plus';
 
 export default {
   created() {
-    this.fetch();
+    this.fetchUserAvatar();
   },
   mounted() {
     this.fetch();
@@ -153,15 +153,17 @@ export default {
         },
       ],
       currentPage: 1,
-      avatar: null,
     }
   },
   computed: {
-    activeMenu() {
-      return this.$store.state.activeMenu;
-    },
     userId() {
       return this.$store.state.userId;
+    },
+    avatar() {
+      return this.$store.state.avatar;
+    },
+    activeMenu() {
+      return this.$store.state.activeMenu;
     },
     notReadMessageNum() {
       let cnt = 0;
@@ -230,8 +232,7 @@ export default {
         .then(res => {
           console.log(res);
           if (res.data) {
-            // var avatar = document.getElementById('avatar');
-            this.avatar = "data:image/jpeg;base64," + res.data;
+            this.$store.commit("setAvatar", "data:image/jpeg;base64," + res.data);
           }
         });
     },

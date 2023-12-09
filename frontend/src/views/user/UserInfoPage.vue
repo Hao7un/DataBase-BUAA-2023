@@ -219,12 +219,19 @@ export default {
       }
     },
     editAvatar() {
-      this.axios.post('http://localhost:8000/upload_user_avatar', {
-        userAvatar: this.fileToUpload
+      const formData = new FormData();
+      formData.append("userAvatar", this.fileToUpload);
+      formData.append("userId", this.userId);
+
+      this.axios({
+        method: 'post',
+        url: 'http://localhost:8000/upload_user_avatar',
+        data: formData,
       })
         .then(res => {
           console.log(res);
-          if (res.data.code === 0) {
+          if (res.data) {
+            this.$store.commit("setAvatar", "data:image/jpeg;base64," + res.data);
             console.log("上传成功");
             ElMessage.success('上传成功');
             this.avatarDialogVisible = false;
