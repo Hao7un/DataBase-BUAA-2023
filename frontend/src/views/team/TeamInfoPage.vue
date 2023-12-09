@@ -86,10 +86,7 @@ import { ElMessage } from 'element-plus';
 
 export default {
     created() {
-        this.fetchTeamInfo().then(() => {
-            this.fetchTeamAvatar();
-            this.fetchProjectsAvatar();
-        });
+        this.fetchTeamInfo();
     },
     data() {
         return {
@@ -133,6 +130,8 @@ export default {
                         this.telephone = res.data.telephone;
                         this.email = res.data.email;
                         this.projectList = res.data.projectList;
+                        this.fetchTeamAvatar();
+                        this.fetchProjectsAvatar();
                     }
                 });
         },

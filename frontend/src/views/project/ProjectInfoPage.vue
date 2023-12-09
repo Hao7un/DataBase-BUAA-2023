@@ -104,9 +104,7 @@ import { ElMessage } from 'element-plus';
 
 export default {
     created() {
-        this.fetchProjectInfo().then(() => {
-            this.fetchProjectAvatar();
-        });
+        this.fetchProjectInfo();
     },
     data() {
         return {
@@ -158,6 +156,7 @@ export default {
                         this.teamName = res.data.teamName;
                         this.discussionList = res.data.discussionList;
                         this.tutorialList = res.data.tutorialList;
+                        this.fetchProjectAvatar();
                     }
                 });
         },

@@ -75,9 +75,7 @@
 
 export default {
     created() {
-        this.fetchProjectsInfo().then(() => {
-            this.fetchProjectsAvatar();
-        });
+        this.fetchProjectsInfo();
     },
     data() {
         return {
@@ -161,6 +159,7 @@ export default {
                 console.log(res);
                 if (res.data.code === 0) {
                     this.projectList = res.data.projectList;
+                    this.fetchProjectsAvatar();
                 }
             });
         },

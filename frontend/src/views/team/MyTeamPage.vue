@@ -59,9 +59,7 @@
 
 export default {
     created() {
-        this.fetchTeamsInfo().then(() => {
-            this.fetchTeamsAvatar();
-        });
+        this.fetchTeamsInfo();
     },
     data() {
         return {
@@ -151,6 +149,7 @@ export default {
                     console.log(res);
                     if (res.data.code === 0) {
                         this.teamList = res.data.teamList;
+                        this.fetchTeamsAvatar();
                     }
                 });
         },
