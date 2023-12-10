@@ -12,7 +12,7 @@
                         返回
                     </v-btn>
                     <div class="img-container">
-                        <img :src="avatar" alt="project_avatar">
+                        <el-image style="width: 320px; height: 180px" :src="avatar" fit="contain" />
                     </div>
                     <div class="content-container">
                         <div class="row1-container">
@@ -328,12 +328,10 @@ export default {
 }
 
 .img-container {
-    display: flex;
-    width: 300px;
-    height: 200px;
     margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 50px;
+    margin-right: 50px;
 }
 
 .content-container {

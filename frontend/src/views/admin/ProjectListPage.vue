@@ -240,7 +240,6 @@ export default {
         fetch() {
             const submitParams = {
                 teamId: this.teamId,
-
             };
 
             this.axios({

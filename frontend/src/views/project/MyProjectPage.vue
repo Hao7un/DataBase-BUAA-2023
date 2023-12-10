@@ -48,7 +48,7 @@
                     <div class="card" v-for="item in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToProjectInfoPage(item.id)">
                             <div class="img-container">
-                                <img :src="getProjectAvatar(item.id)" alt="project_avatar">
+                                <el-image style="width: 267px; height: 150px" :src="getProjectAvatar(item.id)" fit="contain" />
                             </div>
                             <div class="card-info">
                                 <div class="title-container">{{ item.name }}</div>
@@ -344,11 +344,10 @@ export default {
 }
 
 .img-container {
-    width: 100%;
-    height: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .info-item {

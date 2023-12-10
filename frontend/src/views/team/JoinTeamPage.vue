@@ -33,7 +33,7 @@
                     <div class="card" v-for="item in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToTeamInfoPage(item.id)">
                             <div class="img-container">
-                                <img :src="getTeamAvatar(item.id)" alt="team_avatar">
+                                <el-image style="width: 320px; height: 180px" :src="getTeamAvatar(item.id)" fit="contain" />
                             </div>
                             <div class="card-info">
                                 <div class="team-name">{{ item.name }}</div>
@@ -266,11 +266,10 @@ export default {
 }
 
 .img-container {
-    width: 100%;
-    height: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .card-info {

@@ -344,8 +344,8 @@ export default {
         fetchPicture() {
             const submitParams = {
                 projectId: this.projectId,
-
             };
+
             this.axios({
                 method: 'post',
                 url: 'http://localhost:8000/get_project_avatar',
@@ -365,7 +365,6 @@ export default {
         fetch() {
             const submitParams = {
                 projectId: this.projectId,
-
             };
 
             this.axios({
@@ -414,7 +413,6 @@ export default {
                 projectId: this.projectId,
                 newProjectName: this.projectName,
                 newProjectIntro: this.projectIntro,
-
             };
 
             if (this.projectName === "") {
@@ -491,8 +489,8 @@ export default {
                     tutorialTitle: this.tutorialTitle,
                     tutorialTag: this.tutorialTag,
                     tutorialContent: this.tutorialContent,
-
                 };
+
                 this.axios({
                     method: 'post',
                     url: 'http://localhost:8000/admin_create_tutorial',
@@ -522,7 +520,6 @@ export default {
             }).then(() => {
                 const submitParams = {
                     tutorialId: this.selectedTutorial.id,
-
                 };
 
                 this.axios({

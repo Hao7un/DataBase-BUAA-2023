@@ -31,7 +31,7 @@
         </template>
       </el-dropdown>
     </div>
-    <!-- <div class="username-container">{{ username }}</div> -->
+
     <v-app>
       <v-navigation-drawer v-model="messagesVisible" location="top" temporary rounded
         style=" width: 500px; height: 300px; margin-left: 600px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);">
@@ -95,10 +95,11 @@
 import { ElMessage } from 'element-plus';
 
 export default {
-  created() {
-    this.fetchUserAvatar();
+  async created() {
+    await this.fetchUserAvatar();
   },
-  mounted() {
+  async mounted() {
+    await this.fetchUserAvatar();
     this.fetch();
     // setInterval(this.fetch, 5000);
   },
@@ -226,7 +227,7 @@ export default {
         });
     },
     fetchUserAvatar() {
-      this.axios.post('http://localhost:8000/get_user_avatar', {
+      return this.axios.post('http://localhost:8000/get_user_avatar', {
         userId: this.userId,
       })
         .then(res => {
@@ -243,7 +244,6 @@ export default {
       // axios
       const submitParams = {
         messageId: message.id,
-
       };
 
       this.axios({

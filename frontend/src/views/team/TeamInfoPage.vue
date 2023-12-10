@@ -12,12 +12,11 @@
                         返回
                     </v-btn>
                     <div class="img-container">
-                        <img :src="avatar" alt="team_avatar">
+                        <el-image style="width: 400px; height: 225px" :src="avatar" fit="contain" />
                     </div>
                     <div class="content-container">
                         <div class="high-container">
                             <h1 style="margin-right: 20px;">{{ teamName }}</h1>
-
                             <el-button size="large" type="primary" style="margin-top: 5px; margin-left: 40px;"
                                 :disabled="isTeamMember" @click="applyForTeam">
                                 <span v-if="isTeamMember" style="font-weight: bold; font-size: 15px; color:whitesmoke">加入于{{
@@ -59,12 +58,12 @@
                 <h2>志 愿 风 采</h2>
             </div>
             <div class="text-center">
-                <el-carousel height="400px" :interval="5000" type="card">
+                <el-carousel height="450px" :interval="5000" type="card">
                     <el-carousel-item v-for="(project, index) in projectList" :key="project.id"
                         @click="changeToProjectInfoPage(project.id)">
                         <h2 style="margin-top: 30px;">{{ project.name }}</h2>
                         <div style="margin-top: 20px; margin-bottom: 20px;">
-                            <img :src="projectAvatarList[index]" alt="project_avatar">
+                            <el-image style="width: 400px; height: 225px" :src="projectAvatarList[index]" fit="contain" />
                         </div>
                         <p><el-icon>
                                 <Guide />
@@ -253,12 +252,10 @@ export default {
 }
 
 .img-container {
-    display: flex;
-    width: 300px;
-    height: 200px;
     margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: 100px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 .content-container {
@@ -301,8 +298,8 @@ export default {
 .project-container {
     margin-top: 30px;
     margin-bottom: 100px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 100px;
+    margin-right: 100px;
     display: block;
     flex-direction: column;
 }

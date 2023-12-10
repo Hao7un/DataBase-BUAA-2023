@@ -114,7 +114,6 @@ export default {
         fetch() {
             const submitParams = {
                 userId: this.$store.state.userId,
-
             };
 
             (async () => {

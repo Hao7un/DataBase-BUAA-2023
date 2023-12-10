@@ -480,7 +480,6 @@ export default {
             const submitParams = {
                 recruitmentId: recruitment.id
             }
-
             console.log(recruitment.id);
 
             this.axios({

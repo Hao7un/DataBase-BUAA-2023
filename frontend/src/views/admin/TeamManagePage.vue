@@ -239,7 +239,6 @@ export default {
     fetchPicture() {
       const submitParams = {
         teamId: this.teamId,
-
       };
 
       this.axios({
@@ -262,7 +261,6 @@ export default {
     fetch() {
       const submitParams = {
         teamId: this.teamId,
-
       }
 
       const vm = this;
@@ -316,7 +314,6 @@ export default {
         teamId: this.teamId,
         newTeamName: this.teamName,
         newTeamIntro: this.teamIntroduction,
-
       }
 
       if (this.teamName === '') {
@@ -425,7 +422,6 @@ export default {
         const submitParams = {
           userId: row.userId,
           teamId: this.teamId,
-
         }
 
         const vm = this;
