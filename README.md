@@ -465,3 +465,42 @@
     ] 
   }
   ```
+
+## 获取志愿统计信息
+
+* 发送请求：
+
+  ```javascript
+  {
+    userId: "1"
+  }
+  ```
+
+* 获取成功
+
+  ```javascript
+  {
+    code: 0,
+    message: "",
+    total: 500,   // 总志愿时长
+    semester: 50, // 本学期志愿时长
+    type1: 20,    // 社区服务
+    type2: 100,   // 科技科普
+    type3: 50,    // 支教助学
+    type4: 0,     // 体育赛事
+    type5: 13,    // 大型演出
+    type6: 20,    // 其它
+    january: 0,   
+    february: 30,
+    march: 0,
+    april: 20,
+    may: 10,
+    june: 10,
+    july: 5,
+    august: 2,
+    september: 20,
+    october: 18,
+    november: 10,
+    december: 5
+  }
+  ```
