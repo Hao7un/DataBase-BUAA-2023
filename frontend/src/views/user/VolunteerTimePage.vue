@@ -132,7 +132,7 @@ export default {
     },
     methods: {
         async fetchStatistic() {
-            const res = await this.axios.post('http://localhost:8000/', {
+            const res = await this.axios.post('http://localhost:8000/user_get_volunteer_statistics', {
                 userId: this.userId
             });
             console.log(res);
@@ -187,7 +187,7 @@ export default {
             if (this.newTotalTarget == '' || this.newSemesterTarget == '') {
                 ElMessage.error('请设置目标');
             } else {
-                this.axios.post('http://localhost:8000/change_password', {
+                this.axios.post('http://localhost:8000/update_hour_target', {
                     userId: this.userId,
                     totalTarget: Number(this.newTotalTarget),
                     semesterTarget: Number(this.newSemesterTarget)

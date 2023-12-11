@@ -346,6 +346,7 @@ export default {
             else if (res.data.code === 1) {
               console.log("团队名已被注册");
               ElMessage.error("团队名已被注册");
+              this.fetch();
             }
             else {
               console.log('请求失败, 错误码code不是0或1');

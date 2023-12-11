@@ -273,13 +273,13 @@ export default {
       this.$refs.loginForm.validate(async (valid) => {
         /* 登录判断逻辑 */
         if (valid) {
-          this.$store.commit("setUserId", "1");
-          this.$store.commit("setCollegeId", "21371295");
-          this.$store.commit("setPassword", "123456");
-          this.$store.commit("setUserName", "张昊翔");
-          this.$store.commit("setUserType", "0");
-          this.$store.commit("setActiveMenu", "project");
-          this.$router.push({ path: '/project/all' });
+          // this.$store.commit("setUserId", "1");
+          // this.$store.commit("setCollegeId", "21371295");
+          // this.$store.commit("setPassword", "123456");
+          // this.$store.commit("setUserName", "张昊翔");
+          // this.$store.commit("setUserType", "0");
+          // this.$store.commit("setActiveMenu", "project");
+          // this.$router.push({ path: '/project/all' });
 
           const submitParams = {
             collegeId: this.loginForm.account,

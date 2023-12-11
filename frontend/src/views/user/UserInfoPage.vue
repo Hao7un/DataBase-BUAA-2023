@@ -20,9 +20,10 @@
                 <el-icon>
                   <Paperclip />
                 </el-icon>
-                学工号
+                &nbsp;学工号
               </div>
             </template>
+            &nbsp;
             <span style="font-size: 16px; color: #000;">{{ collegeId }}</span>
           </el-descriptions-item>
           <el-descriptions-item>
@@ -31,9 +32,10 @@
                 <el-icon>
                   <User />
                 </el-icon>
-                姓名
+                &nbsp;姓名
               </div>
             </template>
+            &nbsp;
             <span style="font-size: 16px; color: #000;">{{ userName }}</span>
           </el-descriptions-item>
           <el-descriptions-item>
@@ -42,9 +44,10 @@
                 <el-icon>
                   <School />
                 </el-icon>
-                用户类型
+                &nbsp;用户类型
               </div>
             </template>
+            &nbsp;
             <el-tag style="font-size: 16px;">{{ userType }}</el-tag>
           </el-descriptions-item>
           <el-descriptions-item>
@@ -53,7 +56,7 @@
                 <el-icon>
                   <Iphone />
                 </el-icon>
-                电话
+                &nbsp;电话
               </div>
             </template>
             <el-input type="text" v-model="telephone" class="input-container"></el-input>
@@ -64,7 +67,7 @@
                 <el-icon>
                   <MessageBox />
                 </el-icon>
-                邮箱
+                &nbsp;邮箱
               </div>
             </template>
             <el-input type="text" v-model="email" class="input-container"></el-input>
@@ -75,7 +78,7 @@
                 <el-icon>
                   <Postcard />
                 </el-icon>
-                个人简介
+                &nbsp;个人简介
               </div>
             </template>
             <el-input type="textarea" v-model="userIntro" class="input-container"></el-input>
@@ -221,8 +224,8 @@ export default {
     },
     editAvatar() {
       const formData = new FormData();
-      formData.append("userAvatar", this.fileToUpload);
       formData.append("userId", this.userId);
+      formData.append("userAvatar", this.fileToUpload);
 
       this.axios({
         method: 'post',

@@ -58,7 +58,7 @@
                 <h2>志 愿 风 采</h2>
             </div>
             <div class="text-center">
-                <el-carousel height="450px" :interval="5000" type="card">
+                <el-carousel height="450px" :interval="3000" type="card">
                     <el-carousel-item v-for="(project, index) in projectList" :key="project.id"
                         @click="changeToProjectInfoPage(project.id)">
                         <h2 style="margin-top: 30px;">{{ project.name }}</h2>
@@ -316,11 +316,15 @@ export default {
     color: var(--el-text-color-secondary);
 }
 
-.el-carousel__item:nth-child(2n) {
-    background-color: #a4b6c2;
+.el-carousel__item:nth-child(3n) {
+    background-color: #99ccff;
 }
 
-.el-carousel__item:nth-child(2n + 1) {
-    background-color: #d3dce6;
+.el-carousel__item:nth-child(3n + 1) {
+    background-color: #3399cc;
+}
+
+.el-carousel__item:nth-child(3n + 2) {
+    background-color: #ccffff;
 }
 </style>

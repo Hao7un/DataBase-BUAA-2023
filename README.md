@@ -1,6 +1,6 @@
 # API
-## UserInfoPage
 
+## 个人系统
 ### 获取用户信息
 * 发送请求：
 
@@ -18,11 +18,9 @@
     message: "",
     telephone: "18100000000",
     email: "abcd@xyz.com",
-    volunteerTime: "20",
     userIntro: "我是张昊翔。"
   }
   ```
-
 
 ### 修改用户信息
 
@@ -46,7 +44,6 @@
   }
   ```
 
-## PasswordPage
 ### 修改密码
 
 * 发送请求：
@@ -64,6 +61,66 @@
   {
     code: 0,
     message: ""
+  }
+  ```
+
+### 上传用户头像
+
+* 发送请求：
+
+  ```javascript
+  {
+    userId: "1",
+    userAvatar: file.raw
+  }
+  ```
+
+* 上传成功
+
+  ```javascript
+  {
+    data: image // Base64编码
+  }
+  ``` 
+
+### 获取志愿统计信息
+
+* 发送请求：
+
+  ```javascript
+  {
+    userId: "1"
+  }
+  ```
+
+* 获取成功
+
+  ```javascript
+  {
+    code: 0,
+    message: "",
+    total: 100,   // 总志愿时长
+    totalTarget: 120,
+    semester: 8, // 本学期志愿时长
+    semesterTarget: 16,
+    type1: 20,    // 社区服务
+    type2: 100,   // 科技科普
+    type3: 50,    // 支教助学
+    type4: 0,     // 体育赛事
+    type5: 13,    // 大型演出
+    type6: 20,    // 其它
+    january: 0,   
+    february: 30,
+    march: 0,
+    april: 20,
+    may: 10,
+    june: 10,
+    july: 5,
+    august: 2,
+    september: 20,
+    october: 18,
+    november: 10,
+    december: 5
   }
   ```
 
@@ -463,46 +520,5 @@
           projectType: "1" // 1: 社区服务，2: 科技科普，3: 支教助学，4: 体育赛事，5: 大型演出，6: 其它
         }
     ] 
-  }
-  ```
-
-## 获取志愿统计信息
-
-* 发送请求：
-
-  ```javascript
-  {
-    userId: "1"
-  }
-  ```
-
-* 获取成功
-
-  ```javascript
-  {
-    code: 0,
-    message: "",
-    total: 100,   // 总志愿时长
-    totalTarget: 120,
-    semester: 8, // 本学期志愿时长
-    semesterTarget: 16,
-    type1: 20,    // 社区服务
-    type2: 100,   // 科技科普
-    type3: 50,    // 支教助学
-    type4: 0,     // 体育赛事
-    type5: 13,    // 大型演出
-    type6: 20,    // 其它
-    january: 0,   
-    february: 30,
-    march: 0,
-    april: 20,
-    may: 10,
-    june: 10,
-    july: 5,
-    august: 2,
-    september: 20,
-    october: 18,
-    november: 10,
-    december: 5
   }
   ```

@@ -441,7 +441,8 @@ export default {
                     }
                     else if (res.data.code === 1) {
                         console.log("保存失败, 项目名重复");
-                        ElMessage.error("修改失败, 项目名称已被使用")
+                        ElMessage.error("修改失败, 项目名称已被使用");
+                        this.fetch();
                     }
                     else {
                         console.log("保存失败, 错误码不是0");
