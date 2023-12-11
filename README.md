@@ -391,12 +391,14 @@
     projectType: "1" // 1: 社区服务，2: 科技科普，3: 支教助学，4: 体育赛事，5: 大型演出，6: 其它
     projectIntro: "优秀项目。",
     latestTime: "YYYY-MM-DD", // 上一次招募结束时间，N/A: 未发布招募
-    projectLeader: '张昊翔', // 团队负责人
+    leaderId: "1",  // 团队负责人
+    leaderName: "张昊翔",
     teamId: "1",
     teamName: "志愿团队1",
     discussionList: [
         {
-          questionPoster: "张三", 
+          posterId: "1",
+          posterName: "张三", 
           questionTime: "YYYY-MM-DD HH:MM", 
           question: "需要什么技能？", 
           replyTime: "YYYY-MM-DD HH:MM", 

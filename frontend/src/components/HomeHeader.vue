@@ -228,7 +228,7 @@ export default {
     },
     async fetchUserAvatar() {
       const res = await this.axios.post('http://localhost:8000/get_user_avatar', {
-        userId: this.userId,
+        userId: this.userId
       });
       console.log(res);
       if (res.data) {

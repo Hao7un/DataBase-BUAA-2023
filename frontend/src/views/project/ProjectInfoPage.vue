@@ -61,20 +61,28 @@
             <div class="title-container">Q & A</div>
 
             <div v-for="(item, index) in discussionList" :key="index" class="discussion-container">
-                <p><el-icon>
-                        <ChatDotRound />
-                    </el-icon> {{ item.questionPoster }}
-                <p v-html="contentWithBreaks(item.question)"></p>
-                <span style="font-size: 16px; color: grey;">{{ item.questionTime }}</span></p>
-                <br>
-                <p><el-icon>
-                        <Checked />
-                    </el-icon> {{ projectLeader }} <el-tag
-                        style="font-size: 16px; font-weight: bold; margin-left: 15px; padding-bottom: 3px;">负责人</el-tag>
-                <p v-html="contentWithBreaks(item.reply)"></p>
-                <span style="font-size: 16px; color: grey;">{{ item.replyTime }}</span></p>
+                <div class="discussion-item">
+                    <el-avatar :size="50" :src="getUserAvatar(item.posterId)" fit="cover"></el-avatar>
+                    <p style="margin-left: 20px;"><el-icon>
+                            <ChatDotRound />
+                        </el-icon> {{ item.posterName }}
+                    <p v-html="contentWithBreaks(item.question)"></p>
+                    <span style="font-size: 16px; color: grey;">{{ item.questionTime }}</span>
+                    </p>
+                </div>
+
+                <div class="discussion-item">
+                    <el-avatar :size="50" :src="getUserAvatar(leaderId)" fit="cover"></el-avatar>
+                    <p style="margin-left: 20px;"><el-icon>
+                            <Checked />
+                        </el-icon> {{ leaderName }} <el-tag
+                            style="font-size: 16px; font-weight: bold; margin-left: 15px; padding-bottom: 3px;">负责人</el-tag>
+                    <p v-html="contentWithBreaks(item.reply)"></p>
+                    <span style="font-size: 16px; color: grey;">{{ item.replyTime }}</span>
+                    </p>
+                </div>
             </div>
-            <br>
+
             <el-button v-if="!questionInput" type="primary" @click="showQuestionInput"
                 style="font-weight: bold; font-size: 16px; color:whitesmoke">我要提问</el-button>
             <el-input v-if="questionInput" v-model="newQuestion" type="textarea" placeholder="输入你的问题"
@@ -115,14 +123,16 @@ export default {
             projectType: '1',
             projectIntro: '团队致力于发挥气象行业特色，常态化开展气象防灾减灾科普进社区、进校园公益项目，创办了独具特色的“气象科普”品牌。\n2022年，结合文明实践“一圈一带一群”建设，与徐汇区多个社区形成合作机制，定期为徐家汇商圈和社区居民开展科普讲座，惠及学生和市民千余人次，申报的“气象防灾减灾宣讲”入选为上海市文明实践百项重点项目。',
             latestTime: '2023-11-01',
-            projectLeader: '张昊翔',
+            leaderId: '1',
+            leaderName: '张昊翔',
             teamId: '1',
             teamName: '计算机学院志愿服务队',
             discussionList: [
-                { questionPoster: '张三', questionTime: '2023-01-01 19:00', question: '这个项目需要什么技能？', replyTime: '2023-01-02 19:00', reply: '不需要什么技能，只要你有热情就可以了。' },
-                { questionPoster: '李四', questionTime: '2023-01-03 19:00', question: '这个项目需要什么技能？', replyTime: '2023-01-04 19:00', reply: '不需要什么技能。\n只要你有热情就可以了。' },
-                { questionPoster: '王五', questionTime: '2023-01-05 19:00', question: '这个项目需要什么技能？', replyTime: '2023-01-06 19:00', reply: '不需要什么技能，只要你有热情就可以了。' },
+                { posterId: '1', posterName: '张三', questionTime: '2023-01-01 19:00', question: '这个项目需要什么技能？', replyTime: '2023-01-02 19:00', reply: '不需要什么技能，只要你有热情就可以了。' },
+                { posterId: '2', posterName: '李四', questionTime: '2023-01-03 19:00', question: '这个项目需要什么技能？', replyTime: '2023-01-04 19:00', reply: '不需要什么技能。\n只要你有热情就可以了。' },
+                { posterId: '3', posterName: '王五', questionTime: '2023-01-05 19:00', question: '这个项目需要什么技能？', replyTime: '2023-01-06 19:00', reply: '不需要什么技能，只要你有热情就可以了。' },
             ],
+            avatarList: [],
             tutorialList: [
                 { id: '1', time: '2023-01-01 19:00', title: '宣讲内容', tag: '培训', content: '自愿。即主观自觉选择，没有强制性。\n不图物质报酬。即动机上不追求物质报酬，但不否定开展志愿服务需要一定的物质条件。\n服务于社会公益事业。即服务的内容应是社会公众的公共利益和困难群体的利益，不是社会非困难群体的小团体利益;同时属于政府职责范围内的事情、能够通过正常的市场交换获得的服务(困难群体除外)，一般不能作为志愿者服务的内容。\n奉献自己的力所能及。奉献自己的时间、精力、智力、经验的人是志愿者外，出于自愿的献血、捐献骨髓、捐款捐物的人，也是志愿者。\n非本职职责范围内。比如自来水公司修理水管的职工，如果他正在值班、正在岗位上，为用户提供了优质的修理水管服务，那是本职工作，不是志愿服务;如果他不在值班、不在岗位上，是利用业余时间自愿且不取报酬地为他人提供了修理水管的服务，那他就是志愿者了。' },
                 { id: '2', time: '2023-05-02 19:00', title: '注意事项', tag: '注意', content: '请大家注意安全。' },
@@ -133,7 +143,7 @@ export default {
             tutorialId: '',
             tutorialContent: false,
             questionInput: false,
-            newQuestion: '',
+            newQuestion: ''
         }
     },
     methods: {
@@ -151,12 +161,14 @@ export default {
                         this.projectType = res.data.projectType;
                         this.projectIntro = res.data.projectIntro;
                         this.latestTime = res.data.latestTime;
-                        this.projectLeader = res.data.projectLeader;
+                        this.leaderId = res.data.leaderId;
+                        this.leaderName = res.data.leaderName;
                         this.teamId = res.data.teamId;
                         this.teamName = res.data.teamName;
                         this.discussionList = res.data.discussionList;
                         this.tutorialList = res.data.tutorialList;
                         this.fetchProjectAvatar();
+                        this.fetchUsersAvatar();
                     }
                 });
         },
@@ -258,6 +270,31 @@ export default {
                 return '';
             else
                 return tutorial.content;
+        },
+        fetchUsersAvatar() {
+            this.fetchUserAvatar(this.leaderId);
+            for (let i = 0; i < this.discussionList.length; i++) {
+                this.fetchUserAvatar(this.discussionList[i].posterId);
+            }
+        },
+        fetchUserAvatar(id) {
+            this.axios.post('http://localhost:8000/get_user_avatar', {
+                userId: id
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        var avatar = "data:image/jpeg;base64," + res.data;
+                        this.avatarList.push([id, avatar]);
+                    }
+                });
+        },
+        getUserAvatar(id) {
+            for (let i = 0; i < this.avatarList.length; i++) {
+                if (this.avatarList[i][0] === id) {
+                    return this.avatarList[i][1];
+                }
+            }
         },
         showQuestionInput() {
             this.questionInput = true;
@@ -398,13 +435,21 @@ export default {
 .discussion-container {
     font-size: 18px;
     margin-top: 50px;
+    margin-bottom: 50px;
     padding-top: 30px;
     padding-bottom: 30px;
-    padding-left: 200px;
+    padding-left: 300px;
     display: flex;
     flex-direction: column;
     border: 2px solid rgb(114, 110, 104, 0.2);
     border-radius: 50px;
+}
+
+.discussion-item {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .title-container {
