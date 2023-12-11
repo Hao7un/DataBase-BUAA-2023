@@ -226,16 +226,14 @@ export default {
           }
         });
     },
-    fetchUserAvatar() {
-      return this.axios.post('http://localhost:8000/get_user_avatar', {
+    async fetchUserAvatar() {
+      const res = await this.axios.post('http://localhost:8000/get_user_avatar', {
         userId: this.userId,
-      })
-        .then(res => {
-          console.log(res);
-          if (res.data) {
-            this.$store.commit("setAvatar", "data:image/jpeg;base64," + res.data);
-          }
-        });
+      });
+      console.log(res);
+      if (res.data) {
+        this.$store.commit("setAvatar", "data:image/jpeg;base64," + res.data);
+      }
     },
     viewMessageDetail(message) {
       this.selectedMessage = message;

@@ -482,8 +482,10 @@
   {
     code: 0,
     message: "",
-    total: 500,   // 总志愿时长
-    semester: 50, // 本学期志愿时长
+    total: 100,   // 总志愿时长
+    totalTarget: 120,
+    semester: 8, // 本学期志愿时长
+    semesterTarget: 16,
     type1: 20,    // 社区服务
     type2: 100,   // 科技科普
     type3: 50,    // 支教助学

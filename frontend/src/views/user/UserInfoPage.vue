@@ -269,7 +269,7 @@ export default {
         this.confirmPassword = '';
       } else {
         this.axios.post('http://localhost:8000/change_password', {
-          userId: this.$store.state.userId,
+          userId: this.userId,
           newPassword: this.newPassword
         })
           .then(res => {

@@ -48,7 +48,8 @@
                     <div class="card" v-for="item in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToProjectInfoPage(item.id)">
                             <div class="img-container">
-                                <el-image style="width: 267px; height: 150px" :src="getProjectAvatar(item.id)" fit="contain" />
+                                <el-image style="width: 267px; height: 150px" :src="getProjectAvatar(item.id)"
+                                    fit="contain" />
                             </div>
                             <div class="card-info">
                                 <div class="title-container">{{ item.name }}</div>
@@ -219,8 +220,14 @@ export default {
                     return "招募中";
                 } else if (currentTime.getFullYear() == latestTime.getFullYear() && currentTime.getMonth() == latestTime.getMonth()) {
                     return "本月";
-                } else if (currentTime.getFullYear() == latestTime.getFullYear() && Math.floor(currentTime.getMonth() / 6) == Math.floor(latestTime.getMonth() / 6)) {
-                    return "本学期";
+                } else if (currentTime.getFullYear() == latestTime.getFullYear()) {
+                    let currentSemester = currentTime.getMonth() < 6 ? 0 : 1;
+                    let latestSemester = latestTime.getMonth() < 6 ? 0 : 1;
+                    if (currentSemester == latestSemester) {
+                        return "本学期";
+                    } else {
+                        return "上学期及以前";
+                    }
                 } else {
                     return "上学期及以前";
                 }
@@ -352,7 +359,6 @@ export default {
 
 .info-item {
     margin-top: 10px;
-    margin-left: 10px;
     justify-content: center;
     align-items: center;
 }
@@ -375,7 +381,6 @@ export default {
 
 .title-container {
     text-align: center;
-    height: 20%;
     font-size: 22px;
     font-weight: bold;
 }

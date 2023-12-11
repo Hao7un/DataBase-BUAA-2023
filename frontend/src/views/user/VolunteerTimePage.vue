@@ -21,8 +21,8 @@
         </v-btn>
         <div class="statistic-container">
             <div class="title-container">
-                <p>志愿者<strong>{{ userName }}</strong>，您的累计志愿时长为<strong>{{ total }}</strong>小时，其中本学期志愿时长为<strong>{{ semester
-                }}</strong>小时。</p>
+                <p>志愿者<strong>{{ userName }}</strong>，您本学期的志愿时长为 <strong>{{ semester
+                }}</strong> 小时，累计志愿时长 <strong>{{ total }}</strong> 小时。</p>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <el-button type="primary" round size="large" @click="showDialog">
                     <span style="font-weight: bold; font-size: 15px; color:whitesmoke">设置目标</span></el-button>
@@ -64,10 +64,15 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus';
 import * as echarts from 'echarts';
 
 export default {
-    mounted() {
+    async created() {
+        await this.fetchStatistic();
+    },
+    async mounted() {
+        await this.fetchStatistic();
         this.initPieChart();
         this.initLineChart();
     },
@@ -98,10 +103,10 @@ export default {
     },
     data() {
         return {
-            total: 200,
-            totalTarget: 500,
-            semester: 50,
-            semesterTarget: 100,
+            total: 100,
+            totalTarget: 120,
+            semester: 5,
+            semesterTarget: 16,
             type1: 20,
             type2: 100,
             type3: 50,
@@ -126,6 +131,36 @@ export default {
         }
     },
     methods: {
+        async fetchStatistic() {
+            const res = await this.axios.post('http://localhost:8000/', {
+                userId: this.userId
+            });
+            console.log(res);
+            if (res.data.code === 0) {
+                this.total = res.data.total;
+                this.totalTarget = res.data.totalTarget;
+                this.semester = res.data.semester;
+                this.semesterTarget = res.data.semesterTarget;
+                this.type1 = res.data.type1;
+                this.type2 = res.data.type2;
+                this.type3 = res.data.type3;
+                this.type4 = res.data.type4;
+                this.type5 = res.data.type5;
+                this.type6 = res.data.type6;
+                this.january = res.data.january;
+                this.february = res.data.february;
+                this.march = res.data.march;
+                this.april = res.data.april;
+                this.may = res.data.may;
+                this.june = res.data.june;
+                this.july = res.data.july;
+                this.august = res.data.august;
+                this.september = res.data.september;
+                this.october = res.data.october;
+                this.november = res.data.november;
+                this.december = res.data.december;
+            }
+        },
         changeToUserInfoPage() {
             this.$router.push({
                 path: '/user/info'
@@ -149,9 +184,25 @@ export default {
             this.dialogVisible = false;
         },
         editTarget() {
-            this.totalTarget = Number(this.newTotalTarget);
-            this.semesterTarget = Number(this.newSemesterTarget);
-            this.dialogVisible = false;
+            if (this.newTotalTarget == '' || this.newSemesterTarget == '') {
+                ElMessage.error('请设置目标');
+            } else {
+                this.axios.post('http://localhost:8000/change_password', {
+                    userId: this.userId,
+                    totalTarget: Number(this.newTotalTarget),
+                    semesterTarget: Number(this.newSemesterTarget)
+                })
+                    .then(res => {
+                        console.log(res);
+                        if (res.data.code === 0) {
+                            console.log("设置成功");
+                            ElMessage.success('设置成功');
+                            this.totalTarget = Number(this.newTotalTarget);
+                            this.semesterTarget = Number(this.newSemesterTarget);
+                            this.dialogVisible = false;
+                        }
+                    });
+            }
         },
         initBarChart() {
             const chartDom = this.$refs.barChart;

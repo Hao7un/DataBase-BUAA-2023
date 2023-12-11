@@ -303,8 +303,8 @@ export default {
 }
 
 .detail-item {
-    margin-right: 10px;
     margin-left: 10px;
+    margin-right: 10px;
 }
 
 .pagination-container {

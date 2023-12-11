@@ -155,8 +155,14 @@ export default {
         checkInSemester(time) {
             let currentTime = new Date();
             let startTime = new Date(time);
-            if (currentTime.getFullYear() == startTime.getFullYear() && Math.floor(currentTime.getMonth() / 6) == Math.floor(startTime.getMonth() / 6)) {
-                return true;
+            if (currentTime.getFullYear() == startTime.getFullYear()) {
+                let currentSemester = currentTime.getMonth() < 6 ? 0 : 1;
+                let startSemester = startTime.getMonth() < 6 ? 0 : 1;
+                if (currentSemester == startSemester) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
             return false;
         }
