@@ -23,7 +23,7 @@
       <div class="header">
         <div class="team-avatar">
           <el-tooltip placement="right" content="更换头像" effect="light">
-            <img src="../../assets/images/hand_shaking.png" id="avatar" @click="setAvatarVisible = true">
+            <img src="../../assets/images/hand_shaking.png" id="avatar" @click="setAvatarVisible = true" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding: 10px;">
           </el-tooltip>
         </div>
         <el-divider direction="vertical" style="height: 200px;" />
@@ -31,16 +31,16 @@
           <div class="team-info">
             <h3 style="display: flex; justify-content: center; margin-bottom: 10px; font-weight: bold;">团队信息</h3>
             <el-descriptions column="2" border>
-              <el-descriptions-item label="团队名称" width="150px">
+              <el-descriptions-item label="团队名称" width="200px" align="center">
                 <el-input placeholder="输入团队名称" v-model="teamName" clearable></el-input>
               </el-descriptions-item>
-              <el-descriptions-item label="团队人数" width="150px">
+              <el-descriptions-item label="团队人数" width="100px" align="center">
                 {{ teamSize }} 人
               </el-descriptions-item>
-              <el-descriptions-item label="成立日期" width="150px">
+              <el-descriptions-item label="成立日期" width="200px" align="center">
                 {{ establishmentDate }}
               </el-descriptions-item>
-              <el-descriptions-item label="总志愿时长" width="150px">
+              <el-descriptions-item label="总志愿时长" width="100px" align="center">
                 {{ totalHours }} h
               </el-descriptions-item>
             </el-descriptions>
@@ -63,7 +63,10 @@
       <el-divider style="width: 90%; margin-left: 100px;" />
       <div class="content">
         <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍(不超过500字)" :rows="15" :maxlength="500"
-          show-word-limit clearable></el-input>
+          show-word-limit clearable style="font-size: 20px;"></el-input>
+      </div>
+      <div style="font-size: 12px; display: flex; justify-content: center; margin-top: 20px;">
+        Copyright BUAA Volunteer Service © 2023. All rights reserved.
       </div>
       <div>
         <v-dialog v-model="createApplicationDialogVisible" width="900px" max-height="600">

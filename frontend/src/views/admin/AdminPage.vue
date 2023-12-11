@@ -59,6 +59,9 @@
                     </div>
                 </v-dialog>
             </div>
+            <div style="font-size: 12px; display: flex; justify-content: center; margin-top: 100px;">
+                Copyright BUAA Volunteer Service © 2023. All rights reserved.
+            </div>
         </div>
     </div>
 </template>

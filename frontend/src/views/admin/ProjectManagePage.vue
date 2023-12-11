@@ -23,7 +23,7 @@
             <div class="header">
                 <div class="project-avatar">
                     <el-tooltip placement="right" content="更换头像" effect="light">
-                        <img src="../../assets/images/project.png" id="avatar" @click="setAvatarVisible = true">
+                        <img src="../../assets/images/project.png" id="avatar" @click="setAvatarVisible = true" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding: 10px;">
                     </el-tooltip>
                 </div>
                 <el-divider direction="vertical" style="height: 200px;"></el-divider>
@@ -32,10 +32,10 @@
                         <h3 style="display: flex; justify-content: center; margin-bottom: 10px; font-weight: bold;">项目信息
                         </h3>
                         <el-descriptions column="2" border>
-                            <el-descriptions-item label="项目名称" width="150px">
+                            <el-descriptions-item label="项目名称" width="200px" align="center">
                                 <el-input placeholder="输入项目名称" v-model="projectName" clearable></el-input>
                             </el-descriptions-item>
-                            <el-descriptions-item label="项目类别" width="150px">
+                            <el-descriptions-item label="项目类别" width="100px" align="center">
                                 <el-tag v-if="projectType === '1'">社区服务</el-tag>
                                 <el-tag v-else-if="projectType === '2'">科技科普</el-tag>
                                 <el-tag v-else-if="projectType === '3'">支教助学</el-tag>
@@ -43,7 +43,7 @@
                                 <el-tag v-else-if="projectType === '5'">大型演出</el-tag>
                                 <el-tag v-else>其它类别</el-tag>
                             </el-descriptions-item>
-                            <el-descriptions-item label="创建时间">
+                            <el-descriptions-item label="创建时间" align="center">
                                 {{ createdDate }}
                             </el-descriptions-item>
                         </el-descriptions>
@@ -66,8 +66,11 @@
             <el-divider style="width: 90%; margin-left: 100px;" />
             <div class="content">
                 <el-input type="textarea" v-model="projectIntro" placeholder="输入项目简介(不超过500字)" :rows="15" clearable
-                    :maxlength="500" show-word-limit></el-input>
+                    :maxlength="500" show-word-limit style="font-size: 20px;"></el-input>
             </div>
+            <div style="font-size: 12px; display: flex; justify-content: center; margin-top: 30px;">
+                Copyright BUAA Volunteer Service © 2023. All rights reserved.
+              </div>
             <div>
                 <v-dialog v-model="createTutorialVisible" width="550px">
                     <div class="create-tutorial-dialog-container">
@@ -703,7 +706,8 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 900px;
+    min-height: 900px;
+    height: auto;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 

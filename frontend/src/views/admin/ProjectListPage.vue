@@ -95,6 +95,9 @@
                     </el-card>
                 </div>
             </div>
+            <div style="font-size: 12px; display: flex; justify-content: center; margin-top: 10px;">
+                Copyright BUAA Volunteer Service © 2023. All rights reserved.
+            </div>
         </div>
     </div>
     <v-dialog v-model="createProjectDialogVisible" width="auto" max-height="1000">
