@@ -42,8 +42,18 @@
                     <el-radio label="type" size="large" style="font-weight: bold;" border>按类别</el-radio>
                     <el-radio label="month" size="large" style="font-weight: bold;" border>按月份</el-radio>
                 </el-radio-group>
-                <div v-if="statisticType === 'type'" ref="pieChart" class="chart-item"></div>
-                <div v-else ref="lineChart" class="chart-item"></div>
+                <div v-if="statisticType === 'type'">
+                    <div ref="pieChart" class="chart-item"></div>
+                    <p class="text-item">
+                        您最喜欢的志愿项目类别是<strong>{{ maxTimeType }}</strong>，总共获得了<strong>{{ maxTime }}</strong>小时的志愿时长。
+                    </p>
+                </div>
+                <div v-else>
+                    <div ref="lineChart" class="chart-item"></div>
+                    <p class="text-item">
+                        您本月的志愿时长相比{{ currentMonth - 1 }}月增长了<strong>{{ increasePercent }}%</strong>，继续加油！
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -102,6 +112,52 @@ export default {
                 percent = 100;
             }
             return percent.toFixed(1);
+        },
+        maxTime() {
+            return Math.max(this.type1, this.type2, this.type3, this.type4, this.type5, this.type6);
+        },
+        maxTimeType() {
+            let max = 0;
+            let maxType = '';
+            if (this.type1 > max) {
+                max = this.type1;
+                maxType = '社区服务';
+            }
+            if (this.type2 > max) {
+                max = this.type2;
+                maxType = '科技科普';
+            }
+            if (this.type3 > max) {
+                max = this.type3;
+                maxType = '支教助学';
+            }
+            if (this.type4 > max) {
+                max = this.type4;
+                maxType = '体育赛事';
+            }
+            if (this.type5 > max) {
+                max = this.type5;
+                maxType = '大型演出';
+            }
+            if (this.type6 > max) {
+                max = this.type6;
+                maxType = '其它';
+            }
+            return maxType;
+        },
+        currentMonth() {
+            const date = new Date();
+            return date.getMonth() + 1;
+        },
+        increasePercent() {
+            const lastMonth = this.currentMonth - 2 < 0 ? 12 : this.currentMonth - 1;
+            const lastMonthVolunteerTime = this[`month${lastMonth}`];
+            const currentMonthVolunteerTime = this[`month${this.currentMonth}`];
+            if (lastMonthVolunteerTime === 0) {
+                return currentMonthVolunteerTime > 0 ? 100 : 0;
+            } else {
+                return ((currentMonthVolunteerTime - lastMonthVolunteerTime) / lastMonthVolunteerTime * 100).toFixed(1);
+            }
         }
     },
     data() {
@@ -117,18 +173,18 @@ export default {
             type4: 0,
             type5: 13,
             type6: 20,
-            january: 0,
-            february: 30,
-            march: 0,
-            april: 20,
-            may: 10,
-            june: 10,
-            july: 5,
-            august: 2,
-            september: 20,
-            october: 18,
-            november: 10,
-            december: 5,
+            month1: 0,
+            month2: 30,
+            month3: 0,
+            month4: 20,
+            month5: 10,
+            month6: 10,
+            month7: 5,
+            month8: 2,
+            month9: 20,
+            month10: 18,
+            month11: 10,
+            month12: 5,
             dialogVisible: false,
             newTotalTarget: '',
             newSemesterTarget: ''
@@ -162,18 +218,18 @@ export default {
                 this.type4 = res.data.type4;
                 this.type5 = res.data.type5;
                 this.type6 = res.data.type6;
-                this.january = res.data.january;
-                this.february = res.data.february;
-                this.march = res.data.march;
-                this.april = res.data.april;
-                this.may = res.data.may;
-                this.june = res.data.june;
-                this.july = res.data.july;
-                this.august = res.data.august;
-                this.september = res.data.september;
-                this.october = res.data.october;
-                this.november = res.data.november;
-                this.december = res.data.december;
+                this.month1 = res.data.month1;
+                this.month2 = res.data.month2;
+                this.month3 = res.data.month3;
+                this.month4 = res.data.month4;
+                this.month5 = res.data.month5;
+                this.month6 = res.data.month6;
+                this.month7 = res.data.month7;
+                this.month8 = res.data.month8;
+                this.month9 = res.data.month9;
+                this.month10 = res.data.month10;
+                this.month11 = res.data.month11;
+                this.month12 = res.data.month12;
             }
         },
         changeToUserInfoPage() {
@@ -285,7 +341,7 @@ export default {
                 },
                 series: [
                     {
-                        data: [this.january, this.february, this.march, this.april, this.may, this.june, this.july, this.august, this.september, this.october, this.november, this.december],
+                        data: [this.month1, this.month2, this.month3, this.month4, this.month5, this.month6, this.month7, this.month8, this.month9, this.month10, this.month11, this.month12],
                         type: 'line',
                         smooth: true
                     }
@@ -360,7 +416,13 @@ export default {
     width: 600px;
     height: 350px;
     margin-top: 20px;
+    margin-bottom: 20px;
     margin-left: 200px;
+}
+
+.text-item {
+    font-size: 17px;
+    margin-left: 240px;
 }
 
 .input-container {

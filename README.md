@@ -117,18 +117,18 @@
     type4: 0,     // 体育赛事
     type5: 13,    // 大型演出
     type6: 20,    // 其它
-    january: 0,   
-    february: 30,
-    march: 0,
-    april: 20,
-    may: 10,
-    june: 10,
-    july: 5,
-    august: 2,
-    september: 20,
-    october: 18,
-    november: 10,
-    december: 5
+    month1: 0,
+    month2: 30,
+    month3: 0,
+    month4: 20,
+    month5: 10,
+    month6: 10,
+    month7: 5,
+    month8: 2,
+    month9: 20,
+    month10: 18,
+    month11: 10,
+    month12: 5
   }
   ```
 
