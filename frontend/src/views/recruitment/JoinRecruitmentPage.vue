@@ -115,7 +115,6 @@
             <span class="text-font">请确认此次志愿活动的时间与地点，报名后无法退出。</span>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取消</el-button>
                     <el-button type="primary" @click="attendRecruitment">
                         <span style="color:whitesmoke; font-weight: bold;">报名</span>
                     </el-button>
@@ -403,7 +402,7 @@ td {
 }
 
 .dialog-footer button:first-child {
-    margin-right: 50px;
+    margin-right: 18px;
 }
 
 .已报名 {

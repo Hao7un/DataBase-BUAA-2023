@@ -59,7 +59,7 @@
                         <template #header>
                             <div style="display: flex; justify-content: center">
                                 <span
-                                    style="font-style: italic; font-weight: bold; font-size: x-large; position: absolute;">{{
+                                    style="font-weight: bold; font-size: x-large; position: absolute;">{{
                                         project.name }}</span>
                                 <span style="margin-left: 700px;">项目ID: {{ project.id }}</span>
                             </div>
@@ -377,7 +377,7 @@ export default {
     margin-left: 25px;
     margin-top: 25px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .item-font {

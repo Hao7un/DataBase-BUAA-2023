@@ -248,7 +248,7 @@ export default {
 
 .back-button {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .img-container {

@@ -321,7 +321,7 @@ export default {
 
 .back-button {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
     margin-top: 30px;
     margin-left: 50px;
 }

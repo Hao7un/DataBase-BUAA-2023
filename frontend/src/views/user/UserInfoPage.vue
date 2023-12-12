@@ -107,7 +107,7 @@
       </el-upload>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="avatarDialogVisible = false">取消</el-button>
+          <el-button @click="closeAvatarDialog">取消</el-button>
           <el-button type="primary" @click="editAvatar">
             <span style="color:whitesmoke; font-weight: bold;">上传</span>
           </el-button>
@@ -221,6 +221,11 @@ export default {
         this.fileToUpload = file.raw;
         return true;
       }
+    },
+    closeAvatarDialog() {
+      this.avatarDialogVisible = false;
+      this.imageUrl = null;
+      this.fileToUpload = null;
     },
     editAvatar() {
       const formData = new FormData();

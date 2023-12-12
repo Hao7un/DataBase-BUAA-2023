@@ -629,7 +629,7 @@ export default {
     margin-left: 25px;
     margin-top: 25px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .sidebar-container {

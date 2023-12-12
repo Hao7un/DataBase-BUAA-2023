@@ -361,7 +361,7 @@ export default {
 
 .back-button {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .img-container {
@@ -466,6 +466,6 @@ export default {
 }
 
 .dialog-footer button:first-child {
-    margin-right: 50px;
+    margin-right: 18px;
 }
 </style>
