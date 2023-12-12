@@ -59,11 +59,11 @@
             </div>
             <div class="text-center">
                 <el-carousel height="450px" :interval="3000" type="card">
-                    <el-carousel-item v-for="(project, index) in projectList" :key="project.id"
+                    <el-carousel-item v-for="project in projectList" :key="project.id"
                         @click="changeToProjectInfoPage(project.id)">
                         <h2 style="margin-top: 30px;">{{ project.name }}</h2>
                         <div style="margin-top: 20px; margin-bottom: 20px;">
-                            <el-image style="width: 400px; height: 225px" :src="projectAvatarList[index]" fit="contain" />
+                            <el-image style="width: 400px; height: 225px" :src="getProjectAvatar(project.id)" fit="contain" />
                         </div>
                         <p><el-icon>
                                 <Guide />
@@ -158,9 +158,16 @@ export default {
                     console.log(res);
                     if (res.data) {
                         var avatar = "data:image/jpeg;base64," + res.data;
-                        this.projectAvatarList.push(avatar);
+                        this.projectAvatarList.push([id, avatar])
                     }
                 });
+        },
+        getProjectAvatar(id) {
+            for (let i = 0; i < this.projectAvatarList.length; i++) {
+                if (this.projectAvatarList[i][0] === id) {
+                    return this.projectAvatarList[i][1];
+                }
+            }
         },
         handleBack() {
             this.$store.commit("setActiveMenu", this.lastMenu);
