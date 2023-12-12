@@ -23,8 +23,7 @@
             <div class="title-container">
                 <p>志愿者<strong>{{ userName }}</strong>，您本学期的志愿时长为 <strong>{{ semester
                 }}</strong> 小时，累计志愿时长 <strong>{{ total }}</strong> 小时。</p>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <el-button type="primary" round size="large" @click="showDialog">
+                <el-button type="primary" round size="large" style="margin-left: 100px;" @click="showDialog">
                     <span style="font-weight: bold; font-size: 15px; color:whitesmoke">设置目标</span></el-button>
             </div>
             <div class="progress-container">
@@ -39,8 +38,12 @@
                 </div>
             </div>
             <div class="chart-container">
-                <div ref="pieChart" style="width: 600px; height: 400px;"></div>
-                <div ref="lineChart" style="width: 600px; height: 400px;"></div>
+                <el-radio-group v-model="statisticType">
+                    <el-radio label="type" size="large" style="font-weight: bold;" border>按类别</el-radio>
+                    <el-radio label="month" size="large" style="font-weight: bold;" border>按月份</el-radio>
+                </el-radio-group>
+                <div v-if="statisticType === 'type'" ref="pieChart" class="chart-item"></div>
+                <div v-else ref="lineChart" class="chart-item"></div>
             </div>
         </div>
 
@@ -103,6 +106,7 @@ export default {
     },
     data() {
         return {
+            statisticType: 'type',
             total: 100,
             totalTarget: 120,
             semester: 5,
@@ -128,6 +132,17 @@ export default {
             dialogVisible: false,
             newTotalTarget: '',
             newSemesterTarget: ''
+        }
+    },
+    watch: {
+        statisticType(newType) {
+            this.$nextTick(() => {
+                if (newType === 'type') {
+                    this.initPieChart();
+                } else {
+                    this.initLineChart();
+                }
+            });
         }
     },
     methods: {
@@ -203,30 +218,6 @@ export default {
                         }
                     });
             }
-        },
-        initBarChart() {
-            const chartDom = this.$refs.barChart;
-            const myChart = echarts.init(chartDom);
-
-            const option = {
-                title: {
-                    text: '柱图示例'
-                },
-                xAxis: {
-                    type: 'category',
-                    data: ['A', 'B', 'C', 'D', 'E']
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    name: '柱图数据',
-                    type: 'bar',
-                    data: [10, 20, 15, 25, 30]
-                }]
-            };
-
-            myChart.setOption(option);
         },
         initPieChart() {
             const chartDom = this.$refs.pieChart;
@@ -346,7 +337,6 @@ export default {
     display: flex;
     flex-direction: row;
     font-size: 19px;
-    margin-left: 50px;
 }
 
 .progress-container {
@@ -363,7 +353,14 @@ export default {
 
 .chart-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+}
+
+.chart-item {
+    width: 600px;
+    height: 350px;
+    margin-top: 20px;
+    margin-left: 200px;
 }
 
 .input-container {
