@@ -1,6 +1,5 @@
 <template>
   <div class="main">
-    <div class="top-container">志 愿 北 航</div>
     <div class="button-container" v-if="buttonVisible">
       <el-button class="button" round @click="showLoginWindow()">登 录</el-button>
       <div class="spacer"></div>
@@ -375,7 +374,7 @@ export default {
 
 <style scoped>
 .main {
-  background-image: url(../assets/images/mountain.png);
+  background-image: url(../assets/images/cover.png);
   background-size: cover;
   position: relative;
   display: flex;
@@ -389,19 +388,8 @@ export default {
   border-radius: 1em
 }
 
-.top-container {
-  position: absolute;
-  height: 100px;
-  width: 1000px;
-  font-size: 80px;
-  font-weight: bold;
-  color: white;
-  top: 150px;
-  text-align: center;
-}
-
 .button-container {
-  margin-top: 200px;
+  margin-top: 500px;
   display: flex;
   justify-content: center;
 }
@@ -452,7 +440,7 @@ export default {
 }
 
 .spacer {
-  width: 200px;
+  width: 150px;
 }
 
 .hint {
@@ -461,10 +449,11 @@ export default {
 }
 
 .button {
-  font-size: 40px;
+  font-size: 30px;
+  color: #082f49;
   font-weight: bold;
-  width: 170px;
-  height: 80px;
+  width: 130px;
+  height: 60px;
 }
 
 .login-button {
