@@ -434,7 +434,7 @@ export default {
 
 .discussion-container {
     font-size: 18px;
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 50px;
     padding-top: 30px;
     padding-bottom: 30px;

@@ -238,7 +238,7 @@ export default {
 .team-container {
     display: flex;
     flex-direction: row;
-    margin-bottom: 80px;
+    margin-bottom: 50px;
 }
 
 .left-container {

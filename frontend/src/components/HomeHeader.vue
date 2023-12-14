@@ -34,7 +34,7 @@
 
     <v-app>
       <v-navigation-drawer v-model="messagesVisible" location="top" temporary rounded
-        style=" width: 500px; height: 300px; margin-left: 600px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);">
+        style=" width: 540px; height: 300px; margin-left: 600px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);">
         <div class="message-container">
           <h2 style="text-align: center; margin: 10px 0"><el-icon>
               <MessageBox />

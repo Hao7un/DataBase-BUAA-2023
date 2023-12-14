@@ -100,7 +100,7 @@
         <div class="create-dialog-container">
             <div class="create-item">
                 <h3 style="margin-bottom: 15px;">项目名称</h3>
-                <el-input v-model="projectName" clearable style="width: 150px;">
+                <el-input v-model="projectName" clearable style="width: 400px;">
                     <template #prefix>
                         <el-icon>
                             <Postcard />
@@ -118,7 +118,7 @@
                 <el-radio-group v-model="projectType">
                     <el-radio label="1" border size="small">社区服务</el-radio>
                     <el-radio label="2" border size="small">科技科普</el-radio>
-                    <el-radio label="3" border size="small" style="margin-top: 8px;">支教助学</el-radio>
+                    <el-radio label="3" border size="small">支教助学</el-radio>
                     <el-radio label="4" border size="small" style="margin-top: 8px;">体育赛事</el-radio>
                     <el-radio label="5" border size="small" style="margin-top: 8px;">大型演出</el-radio>
                     <el-radio label="6" border size="small" style="margin-top: 8px;">其它类别</el-radio>

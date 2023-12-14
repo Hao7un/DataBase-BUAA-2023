@@ -97,7 +97,7 @@
                             <el-input v-model="tutorialContent" type="textarea" clearable :autosize="{ minRows: 12 }"
                                 style="width: 70%;" show-word-limit :maxlength="500"></el-input>
                         </div>
-                        <div style="display: flex; margin-bottom: 30px; margin-top: 40px;">
+                        <div style="display: flex; margin-bottom: 30px; margin-top: 40px; justify-content: center;">
                             <el-button @click="handleCreateTutorial">提交</el-button>
                         </div>
                     </div>
