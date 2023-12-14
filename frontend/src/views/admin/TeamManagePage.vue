@@ -23,7 +23,7 @@
       <div class="header">
         <div class="team-avatar">
           <el-tooltip placement="right" content="更换头像" effect="light">
-            <img src="../../assets/images/hand_shaking.png" id="avatar" @click="setAvatarVisible = true"
+            <img src="" id="avatar" @click="setAvatarVisible = true"
               style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding: 10px;">
           </el-tooltip>
         </div>
@@ -189,51 +189,50 @@ export default {
       setAvatarVisible: false,
       fileToUpload: null,
       applicationList: [
-        {
-          collegeId: "21370000",
-          name: "aaa",
-          date: "2023-11-17",
-        },
-        {
-          collegeId: "21370001",
-          name: "bbb",
-          date: "2023-11-18",
-        },
-        {
-          collegeId: "21370002",
-          name: "ccc",
-          date: "2023-11-19",
-        },
-        {
-          collegeId: "21370003",
-          name: "ddd",
-          date: "2023-11-20",
-        },
+        // {
+        //   collegeId: "21370000",
+        //   name: "aaa",
+        //   date: "2023-11-17",
+        // },
+        // {
+        //   collegeId: "21370001",
+        //   name: "bbb",
+        //   date: "2023-11-18",
+        // },
+        // {
+        //   collegeId: "21370002",
+        //   name: "ccc",
+        //   date: "2023-11-19",
+        // },
+        // {
+        //   collegeId: "21370003",
+        //   name: "ddd",
+        //   date: "2023-11-20",
+        // }
       ],
       members: [
-        {
-          collegeId: "21371372",
-          name: "严皓钧",
-          telephone: "13710000001",
-          joinDate: "2023-11-18",
-          hours: 1,
-        },
-        {
-          collegeId: "21371401",
-          name: "王乐",
-          telephone: "13710000002",
-          joinDate: "2023-11-19",
-          hours: 1,
-        },
-        {
-          collegeId: "21371295",
-          name: "张昊翔",
-          telephone: "13710000003",
-          joinDate: "2023-11-20",
-          hours: 1,
-        },
-
-      ],
+        // {
+        //   collegeId: "21371372",
+        //   name: "严皓钧",
+        //   telephone: "13710000001",
+        //   joinDate: "2023-11-18",
+        //   hours: 1,
+        // },
+        // {
+        //   collegeId: "21371401",
+        //   name: "王乐",
+        //   telephone: "13710000002",
+        //   joinDate: "2023-11-19",
+        //   hours: 1,
+        // },
+        // {
+        //   collegeId: "21371295",
+        //   name: "张昊翔",
+        //   telephone: "13710000003",
+        //   joinDate: "2023-11-20",
+        //   hours: 1,
+        // }
+      ]
     };
   },
   methods: {

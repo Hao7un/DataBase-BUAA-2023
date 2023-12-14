@@ -110,48 +110,48 @@ export default {
       showNotRead: false,
       selectedMessage: null,
       messages: [
-        {
-          id: "1",
-          title: "您关注的项目发布了新的招募",
-          time: "2023-11-28 15:36",
-          content: "1111111111111",
-          isRead: true,
-        },
-        {
-          id: "2",
-          title: "您的问题得到了回复",
-          time: "2023-11-28 15:43",
-          content: "11111111111",
-          isRead: true,
-        },
-        {
-          id: "3",
-          title: "您的团队审核结果已出",
-          time: "2023-11-28 15:43",
-          content: "11111111111111",
-          isRead: true
-        },
-        {
-          id: "4",
-          title: "您关注的项目发布了新的招募",
-          time: "2023-11-28 15:43",
-          content: "111111111111",
-          isRead: true,
-        },
-        {
-          id: "5",
-          title: "您的团队审核结果已出",
-          time: "2023-11-28 15:43",
-          content: "11111111111111",
-          isRead: false,
-        },
-        {
-          id: "6",
-          title: "您的问题得到了回复",
-          time: "2023-11-28 15:43",
-          content: "11111111111111",
-          isRead: false,
-        },
+        // {
+        //   id: "1",
+        //   title: "您关注的项目发布了新的招募",
+        //   time: "2023-11-28 15:36",
+        //   content: "1111111111111",
+        //   isRead: true,
+        // },
+        // {
+        //   id: "2",
+        //   title: "您的问题得到了回复",
+        //   time: "2023-11-28 15:43",
+        //   content: "11111111111",
+        //   isRead: true,
+        // },
+        // {
+        //   id: "3",
+        //   title: "您的团队审核结果已出",
+        //   time: "2023-11-28 15:43",
+        //   content: "11111111111111",
+        //   isRead: true
+        // },
+        // {
+        //   id: "4",
+        //   title: "您关注的项目发布了新的招募",
+        //   time: "2023-11-28 15:43",
+        //   content: "111111111111",
+        //   isRead: true,
+        // },
+        // {
+        //   id: "5",
+        //   title: "您的团队审核结果已出",
+        //   time: "2023-11-28 15:43",
+        //   content: "11111111111111",
+        //   isRead: false,
+        // },
+        // {
+        //   id: "6",
+        //   title: "您的问题得到了回复",
+        //   time: "2023-11-28 15:43",
+        //   content: "11111111111111",
+        //   isRead: false,
+        // }
       ],
       currentPage: 1,
     }
@@ -307,6 +307,7 @@ export default {
       })
     },
     logout() {
+      this.$store.commit("setUserId", "");
       console.log("quit to welcome");
       ElMessage.success('已登出');
       this.$router.push({

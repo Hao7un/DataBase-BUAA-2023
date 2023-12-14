@@ -90,23 +90,23 @@ export default {
             imageUrl: null,
             teamNameKey: "",
             totalTeamList: [
-                {
-                    teamId: "666",
-                    name: "计算机学院团队",
-                    number: 5,
-                    date: "2023-11-21",
-                    hours: 10,
-                    hasApplication: false,
-                },
-                {
-                    teamId: "888",
-                    name: "软件学院团队",
-                    number: 10,
-                    date: "2023-11-20",
-                    hours: 12,
-                    hasApplication: true,
-                }
-            ],
+                // {
+                //     teamId: "666",
+                //     name: "计算机学院团队",
+                //     number: 5,
+                //     date: "2023-11-21",
+                //     hours: 10,
+                //     hasApplication: false,
+                // },
+                // {
+                //     teamId: "888",
+                //     name: "软件学院团队",
+                //     number: 10,
+                //     date: "2023-11-20",
+                //     hours: 12,
+                //     hasApplication: true,
+                // }
+            ]
         }
 
     },

@@ -23,7 +23,7 @@
             <div class="header">
                 <div class="project-avatar">
                     <el-tooltip placement="right" content="更换头像" effect="light">
-                        <img src="../../assets/images/project.png" id="avatar" @click="setAvatarVisible = true"
+                        <img src="" id="avatar" @click="setAvatarVisible = true"
                             style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding: 10px;">
                     </el-tooltip>
                 </div>
@@ -280,66 +280,65 @@ export default {
             imageUrl: null,
             fileToUpload: null,
             comments: [
-                {
-                    questionId: "1",
-                    date: "2023-11-24 10:45",
-                    content: "这个项目大概每隔多久发一次招募？",
-                    posterId: "1",
-                    posterName: "王乐",
-                },
-                {
-                    questionId: "2",
-                    date: "2023-11-24 10:46",
-                    content: "参加这个项目需要我学习些什么？",
-                    posterId: "1",
-                    posterName: "王乐",
-                },
-                {
-                    questionId: "2",
-                    date: "2023-11-24 10:47",
-                    content: "什么时候结算上一次招募的志愿时长？",
-                    posterId: "1",
-                    posterName: "王乐",
-                },
+                // {
+                //     questionId: "1",
+                //     date: "2023-11-24 10:45",
+                //     content: "这个项目大概每隔多久发一次招募？",
+                //     posterId: "1",
+                //     posterName: "王乐",
+                // },
+                // {
+                //     questionId: "2",
+                //     date: "2023-11-24 10:46",
+                //     content: "参加这个项目需要我学习些什么？",
+                //     posterId: "1",
+                //     posterName: "王乐",
+                // },
+                // {
+                //     questionId: "2",
+                //     date: "2023-11-24 10:47",
+                //     content: "什么时候结算上一次招募的志愿时长？",
+                //     posterId: "1",
+                //     posterName: "王乐",
+                // }
             ],
             tutorials: [
-                {
-                    id: "1",
-                    title: "项目教程1",
-                    content: "lorem",
-                    date: "2023-11-24",
-                    tag: "急救知识",
-                },
-                {
-                    id: "2",
-                    title: "项目教程2",
-                    content: "lorem",
-                    date: "2023-11-25",
-                    tag: "礼仪规范",
-                },
-                {
-                    id: "3",
-                    title: "项目教程3",
-                    content: "lorem",
-                    date: "2023-11-24",
-                    tag: "环境保护",
-                },
-                {
-                    id: "4",
-                    title: "项目教程4",
-                    content: "lorem",
-                    date: "2023-11-25",
-                    tag: "文化尊重",
-                },
-                {
-                    id: "5",
-                    title: "项目教程5",
-                    content: "lorem",
-                    date: "2023-11-24",
-                    tag: "心理健康",
-                },
+                // {
+                //     id: "1",
+                //     title: "项目教程1",
+                //     content: "lorem",
+                //     date: "2023-11-24",
+                //     tag: "急救知识",
+                // },
+                // {
+                //     id: "2",
+                //     title: "项目教程2",
+                //     content: "lorem",
+                //     date: "2023-11-25",
+                //     tag: "礼仪规范",
+                // },
+                // {
+                //     id: "3",
+                //     title: "项目教程3",
+                //     content: "lorem",
+                //     date: "2023-11-24",
+                //     tag: "环境保护",
+                // },
+                // {
+                //     id: "4",
+                //     title: "项目教程4",
+                //     content: "lorem",
+                //     date: "2023-11-25",
+                //     tag: "文化尊重",
+                // },
+                // {
+                //     id: "5",
+                //     title: "项目教程5",
+                //     content: "lorem",
+                //     date: "2023-11-24",
+                //     tag: "心理健康",
+                // }
             ]
-
         }
     },
     methods: {

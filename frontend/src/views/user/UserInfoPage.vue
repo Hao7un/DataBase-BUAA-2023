@@ -160,16 +160,16 @@ export default {
   },
   data() {
     return {
-      telephone: '18101000000',
-      email: '123@xyz.com',
-      userIntro: '我是张昊翔。\n我来自北京航空航天大学。',
+      telephone: '',
+      email: '',
+      userIntro: '',
       avatarDialogVisible: false,
       imageUrl: null,
       fileToUpload: null,
       passwordDialogVisible: false,
       oldPassword: '',
       newPassword: '',
-      confirmPassword: '',
+      confirmPassword: ''
     };
   },
   computed: {

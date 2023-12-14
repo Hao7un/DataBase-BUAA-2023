@@ -51,7 +51,7 @@
                 <div v-else>
                     <div ref="lineChart" class="chart-item"></div>
                     <p class="text-item">
-                        您本月的志愿时长相比{{ currentMonth - 1 }}月增长了<strong>{{ increasePercent }}%</strong>，继续加油！
+                        您本月的志愿时长相比{{ currentMonth - 1 }}月增加了<strong>{{ diffValue }}</strong>小时，继续加油！
                     </p>
                 </div>
             </div>
@@ -149,42 +149,38 @@ export default {
             const date = new Date();
             return date.getMonth() + 1;
         },
-        increasePercent() {
+        diffValue() {
             const lastMonth = this.currentMonth - 2 < 0 ? 12 : this.currentMonth - 1;
             const lastMonthVolunteerTime = this[`month${lastMonth}`];
             const currentMonthVolunteerTime = this[`month${this.currentMonth}`];
-            if (lastMonthVolunteerTime === 0) {
-                return currentMonthVolunteerTime > 0 ? 100 : 0;
-            } else {
-                return ((currentMonthVolunteerTime - lastMonthVolunteerTime) / lastMonthVolunteerTime * 100).toFixed(1);
-            }
+            return currentMonthVolunteerTime - lastMonthVolunteerTime;
         }
     },
     data() {
         return {
             statisticType: 'type',
-            total: 100,
+            total: 0,
             totalTarget: 120,
-            semester: 5,
+            semester: 0,
             semesterTarget: 16,
-            type1: 20,
-            type2: 100,
-            type3: 50,
+            type1: 0,
+            type2: 0,
+            type3: 0,
             type4: 0,
-            type5: 13,
-            type6: 20,
+            type5: 0,
+            type6: 0,
             month1: 0,
-            month2: 30,
+            month2: 0,
             month3: 0,
-            month4: 20,
-            month5: 10,
-            month6: 10,
-            month7: 5,
-            month8: 2,
-            month9: 20,
-            month10: 18,
-            month11: 10,
-            month12: 5,
+            month4: 0,
+            month5: 0,
+            month6: 0,
+            month7: 0,
+            month8: 0,
+            month9: 0,
+            month10: 0,
+            month11: 0,
+            month12: 0,
             dialogVisible: false,
             newTotalTarget: '',
             newSemesterTarget: ''

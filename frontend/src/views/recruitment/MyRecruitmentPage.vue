@@ -93,19 +93,19 @@ export default {
             selectedActivity: 'upcoming',
             inSemester: false,
             futureRecruitmentList: [
-                { id: "10", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "10", projectName: "志愿项目10", projectType: "1" },
-                { id: "9", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "新主楼G1000", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "9", projectName: "志愿项目9", projectType: "2" },
-                { id: "8", startTime: "2023-12-24 19:00", endTime: "2023-12-24 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "3", projectName: "志愿项目3", projectType: "3" },
-                { id: "7", startTime: "2023-12-22 19:00", endTime: "2023-12-22 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "50", projectId: "2", projectName: "志愿项目2", projectType: "4" },
-                { id: "6", startTime: "2023-12-21 19:00", endTime: "2023-12-21 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目1", projectType: "5" },
+                // { id: "10", startTime: "2023-12-26 19:00", endTime: "2023-12-26 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "10", projectName: "志愿项目10", projectType: "1" },
+                // { id: "9", startTime: "2023-12-25 19:00", endTime: "2023-12-25 21:00", location: "新主楼G1000", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "9", projectName: "志愿项目9", projectType: "2" },
+                // { id: "8", startTime: "2023-12-24 19:00", endTime: "2023-12-24 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "3", projectName: "志愿项目3", projectType: "3" },
+                // { id: "7", startTime: "2023-12-22 19:00", endTime: "2023-12-22 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "50", projectId: "2", projectName: "志愿项目2", projectType: "4" },
+                // { id: "6", startTime: "2023-12-21 19:00", endTime: "2023-12-21 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目1", projectType: "5" }
             ],
             pastRecruitmentList: [
-                { id: "5", startTime: "2023-11-26 19:00", endTime: "2023-11-26 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "5", projectName: "志愿项目5", projectType: "1" },
-                { id: "4", startTime: "2023-11-11 19:00", endTime: "2023-11-11 21:00", location: "新主楼G1000", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "4", projectName: "志愿项目4", projectType: "2" },
-                { id: "3", startTime: "2023-11-05 19:00", endTime: "2023-11-05 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "3", projectName: "志愿项目3", projectType: "3" },
-                { id: "2", startTime: "2023-11-02 19:00", endTime: "2023-11-02 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "50", projectId: "2", projectName: "志愿项目2", projectType: "4" },
-                { id: "1", startTime: "2023-05-01 19:00", endTime: "2023-05-01 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目1", projectType: "5" },
-            ],
+                // { id: "5", startTime: "2023-11-26 19:00", endTime: "2023-11-26 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "5", projectName: "志愿项目5", projectType: "1" },
+                // { id: "4", startTime: "2023-11-11 19:00", endTime: "2023-11-11 21:00", location: "新主楼G1000", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "4", projectName: "志愿项目4", projectType: "2" },
+                // { id: "3", startTime: "2023-11-05 19:00", endTime: "2023-11-05 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "30", projectId: "3", projectName: "志愿项目3", projectType: "3" },
+                // { id: "2", startTime: "2023-11-02 19:00", endTime: "2023-11-02 21:00", location: "操场", volunteerHour: "5", type: "2", maxNumber: "50", participantNumber: "50", projectId: "2", projectName: "志愿项目2", projectType: "4" },
+                // { id: "1", startTime: "2023-05-01 19:00", endTime: "2023-05-01 21:00", location: "操场", volunteerHour: "5", type: "1", maxNumber: "50", participantNumber: "30", projectId: "1", projectName: "志愿项目1", projectType: "5" }
+            ]
         };
     },
     methods: {

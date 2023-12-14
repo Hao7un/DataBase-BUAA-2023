@@ -190,49 +190,49 @@ export default {
             imageUrl: null,
             fileToUpload: null,
             projects: [
-                {
-                    id: "1",
-                    hasComments: true,
-                    name: "志愿项目1",
-                    category: "1",
-                    createdDate: "2023-11-17"
-                },
-                {
-                    id: "2",
-                    hasComments: false,
-                    name: "志愿项目2",
-                    category: "2",
-                    createdDate: "2023-11-18"
-                },
-                {
-                    id: "3",
-                    hasComments: false,
-                    name: "志愿项目3",
-                    category: "3",
-                    createdDate: "2023-11-19"
-                },
-                {
-                    id: "4",
-                    hasComments: false,
-                    name: "志愿项目4",
-                    category: "4",
-                    createdDate: "2023-11-20"
-                },
-                {
-                    id: "5",
-                    hasComments: false,
-                    name: "志愿项目5",
-                    category: "5",
-                    createdDate: "2023-11-21"
-                },
-                {
-                    id: "6",
-                    hasComments: false,
-                    name: "志愿项目6",
-                    category: "6",
-                    createdDate: "2023-11-27"
-                },
-            ],
+                // {
+                //     id: "1",
+                //     hasComments: true,
+                //     name: "志愿项目1",
+                //     category: "1",
+                //     createdDate: "2023-11-17"
+                // },
+                // {
+                //     id: "2",
+                //     hasComments: false,
+                //     name: "志愿项目2",
+                //     category: "2",
+                //     createdDate: "2023-11-18"
+                // },
+                // {
+                //     id: "3",
+                //     hasComments: false,
+                //     name: "志愿项目3",
+                //     category: "3",
+                //     createdDate: "2023-11-19"
+                // },
+                // {
+                //     id: "4",
+                //     hasComments: false,
+                //     name: "志愿项目4",
+                //     category: "4",
+                //     createdDate: "2023-11-20"
+                // },
+                // {
+                //     id: "5",
+                //     hasComments: false,
+                //     name: "志愿项目5",
+                //     category: "5",
+                //     createdDate: "2023-11-21"
+                // },
+                // {
+                //     id: "6",
+                //     hasComments: false,
+                //     name: "志愿项目6",
+                //     category: "6",
+                //     createdDate: "2023-11-27"
+                // }
+            ]
         }
     },
     methods: {

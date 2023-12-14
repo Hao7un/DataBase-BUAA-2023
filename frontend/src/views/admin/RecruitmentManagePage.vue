@@ -205,19 +205,19 @@
                     <template #empty>
                         无匹配信息
                     </template>
-                    <el-table-column prop="collegeId" label="学工号" align="center">
+                    <el-table-column prop="collegeId" label="学工号" align="center" width="120px">
                         <template #header>
                             <div>学工号</div>
                             <el-input v-model="collegeIdKey" clearable placeholder="输入学工号"></el-input>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="name" label="姓名" align="center">
+                    <el-table-column prop="name" label="姓名" align="center" width="120px">
                         <template #header>
                             <div>姓名</div>
                             <el-input v-model="nameKey" clearable placeholder="输入姓名"></el-input>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="telephone" label="电话" align="center">
+                    <el-table-column prop="telephone" label="电话" align="center" width="170px">
                         <template #header>
                             <div>电话</div>
                             <el-input v-model="telephoneKey" clearable placeholder="输入电话"></el-input>
@@ -391,67 +391,66 @@ export default {
             hours: "",
             maxNumber: 0,
             recruitments: [
-                {
-                    id: "1",
-                    launchTime: "2023-11-24 12:22",
-                    deadline: "2023-11-24 13:00",
-                    startTime: "2023-11-25 16:08",
-                    endTime: "2023-11-25 17:00",
-                    location: "校医院",
-                    type: "面向公共招募",
-                    hours: 16,
-                    number: 5,
-                    maxNumber: 10,
-                },
-                {
-                    id: "2",
-                    launchTime: "2023-11-23 12:23",
-                    deadline: "2023-11-28 14:00",
-                    startTime: "2023-11-24 16:09",
-                    endTime: "2023-11-24 18:00",
-                    location: "田径场",
-                    type: "面向公共招募",
-                    hours: 4,
-                    number: 6,
-                    maxNumber: 20,
-                },
-                {
-                    id: "3",
-                    launchTime: "2023-11-29 12:24",
-                    deadline: "2023-11-23 15:00",
-                    startTime: "2023-11-24 16:10",
-                    endTime: "2023-11-24 17:30",
-                    location: "晨兴音乐厅",
-                    type: "仅限团队内部",
-                    hours: 8,
-                    number: 10,
-                    maxNumber: 100,
-                },
+                // {
+                //     id: "1",
+                //     launchTime: "2023-11-24 12:22",
+                //     deadline: "2023-11-24 13:00",
+                //     startTime: "2023-11-25 16:08",
+                //     endTime: "2023-11-25 17:00",
+                //     location: "校医院",
+                //     type: "面向公共招募",
+                //     hours: 16,
+                //     number: 5,
+                //     maxNumber: 10,
+                // },
+                // {
+                //     id: "2",
+                //     launchTime: "2023-11-23 12:23",
+                //     deadline: "2023-11-28 14:00",
+                //     startTime: "2023-11-24 16:09",
+                //     endTime: "2023-11-24 18:00",
+                //     location: "田径场",
+                //     type: "面向公共招募",
+                //     hours: 4,
+                //     number: 6,
+                //     maxNumber: 20,
+                // },
+                // {
+                //     id: "3",
+                //     launchTime: "2023-11-29 12:24",
+                //     deadline: "2023-11-23 15:00",
+                //     startTime: "2023-11-24 16:10",
+                //     endTime: "2023-11-24 17:30",
+                //     location: "晨兴音乐厅",
+                //     type: "仅限团队内部",
+                //     hours: 8,
+                //     number: 10,
+                //     maxNumber: 100,
+                // }
             ],
             recruits: [
-                {
-                    collegeId: "1",
-                    name: "Kevin",
-                    telephone: "13700000000",
-                    email: "123@abc.com",
-                    time: "2023-12-04 23:02",
-                },
-                {
-                    collegeId: "2",
-                    name: "Bob",
-                    telephone: "13700000001",
-                    email: "456@abc.com",
-                    time: "2023-12-04 23:03"
-                },
-                {
-                    collegeId: "3",
-                    name: "Stuart",
-                    telephone: "13700000002",
-                    email: "789@abc.com",
-                    time: "2023-12-05 11:31"
-                },
+                // {
+                //     collegeId: "1",
+                //     name: "Kevin",
+                //     telephone: "13700000000",
+                //     email: "123@abc.com",
+                //     time: "2023-12-04 23:02",
+                // },
+                // {
+                //     collegeId: "2",
+                //     name: "Bob",
+                //     telephone: "13700000001",
+                //     email: "456@abc.com",
+                //     time: "2023-12-04 23:03"
+                // },
+                // {
+                //     collegeId: "3",
+                //     name: "Stuart",
+                //     telephone: "13700000002",
+                //     email: "789@abc.com",
+                //     time: "2023-12-05 11:31"
+                // }
             ]
-
         }
     },
     methods: {
