@@ -192,9 +192,6 @@
                         </v-expansion-panel>
                     </v-expansion-panels>
                 </div>
-                <div style="font-size: 12px; display: flex; justify-content: center; margin-top: 450px;">
-                    Copyright BUAA Volunteer Service © 2023. All rights reserved.
-                </div>
             </div>
         </div>
     </div>

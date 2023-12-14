@@ -23,7 +23,8 @@
             <div class="header">
                 <div class="project-avatar">
                     <el-tooltip placement="right" content="更换头像" effect="light">
-                        <img src="../../assets/images/project.png" id="avatar" @click="setAvatarVisible = true" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding: 10px;">
+                        <img src="../../assets/images/project.png" id="avatar" @click="setAvatarVisible = true"
+                            style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding: 10px;">
                     </el-tooltip>
                 </div>
                 <el-divider direction="vertical" style="height: 200px;"></el-divider>
@@ -68,9 +69,6 @@
                 <el-input type="textarea" v-model="projectIntro" placeholder="输入项目简介(不超过500字)" :rows="15" clearable
                     :maxlength="500" show-word-limit style="font-size: 20px;"></el-input>
             </div>
-            <div style="font-size: 12px; display: flex; justify-content: center; margin-top: 30px;">
-                Copyright BUAA Volunteer Service © 2023. All rights reserved.
-              </div>
             <div>
                 <v-dialog v-model="createTutorialVisible" width="550px">
                     <div class="create-tutorial-dialog-container">
@@ -161,8 +159,9 @@
                                 <el-input v-model="selectedTutorial.tag" clearable style="width: 150px;"></el-input>
                             </el-form-item>
                             <div style="margin-left: 50px; margin-bottom: 10px; margin-top: 25px">教程内容：</div>
-                            <el-input v-model="selectedTutorial.content" clearable type="textarea" :autosize="{ minRows: 12 }"
-                                style="width: 600px; margin-left: 100px" :maxlength="500" show-word-limit></el-input>
+                            <el-input v-model="selectedTutorial.content" clearable type="textarea"
+                                :autosize="{ minRows: 12 }" style="width: 600px; margin-left: 100px" :maxlength="500"
+                                show-word-limit></el-input>
                         </el-form>
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 40px;"><v-btn

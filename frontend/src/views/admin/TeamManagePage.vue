@@ -23,7 +23,8 @@
       <div class="header">
         <div class="team-avatar">
           <el-tooltip placement="right" content="更换头像" effect="light">
-            <img src="../../assets/images/hand_shaking.png" id="avatar" @click="setAvatarVisible = true" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding: 10px;">
+            <img src="../../assets/images/hand_shaking.png" id="avatar" @click="setAvatarVisible = true"
+              style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding: 10px;">
           </el-tooltip>
         </div>
         <el-divider direction="vertical" style="height: 200px;" />
@@ -64,9 +65,6 @@
       <div class="content">
         <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍(不超过500字)" :rows="15" :maxlength="500"
           show-word-limit clearable style="font-size: 20px;"></el-input>
-      </div>
-      <div style="font-size: 12px; display: flex; justify-content: center; margin-top: 20px;">
-        Copyright BUAA Volunteer Service © 2023. All rights reserved.
       </div>
       <div>
         <v-dialog v-model="createApplicationDialogVisible" width="900px" max-height="600">

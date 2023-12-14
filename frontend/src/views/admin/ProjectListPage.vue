@@ -58,9 +58,8 @@
                     <el-card shadow="hover" v-for="project in displayedList" class="card">
                         <template #header>
                             <div style="display: flex; justify-content: center">
-                                <span
-                                    style="font-weight: bold; font-size: x-large; position: absolute;">{{
-                                        project.name }}</span>
+                                <span style="font-weight: bold; font-size: x-large; position: absolute;">{{
+                                    project.name }}</span>
                                 <span style="margin-left: 700px;">项目ID: {{ project.id }}</span>
                             </div>
                         </template>
@@ -94,9 +93,6 @@
                         </div>
                     </el-card>
                 </div>
-            </div>
-            <div style="font-size: 12px; display: flex; justify-content: center; margin-top: 10px;">
-                Copyright BUAA Volunteer Service © 2023. All rights reserved.
             </div>
         </div>
     </div>

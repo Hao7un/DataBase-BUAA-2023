@@ -6,6 +6,9 @@
       <el-button class="button" round @click="showRegisterWindow()">注 册</el-button>
     </div>
   </div>
+  <div style="font-size: 12px; display: flex; position: fixed; top: 785px; margin-left: 665px;">
+    Copyright BUAA Volunteer Service © 2023. All rights reserved.
+  </div>
   <div class="login-container" v-if="loginWindowVisible">
     <div class="quit-container">
       <el-button round @click="quitLoginWindow()">
@@ -272,7 +275,7 @@ export default {
       this.$refs.loginForm.validate(async (valid) => {
         /* 登录判断逻辑 */
         if (valid) {
-          // this.$store.commit("setUserId", "1");
+          // this.$store.commit("setUserId", "3");
           // this.$store.commit("setCollegeId", "21371295");
           // this.$store.commit("setPassword", "123456");
           // this.$store.commit("setUserName", "张昊翔");
