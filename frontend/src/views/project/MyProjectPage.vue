@@ -48,7 +48,8 @@
                     <div class="card" v-for="item in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToProjectInfoPage(item.id)">
                             <div class="img-container">
-                                <img src="../../assets/images/project.png">
+                                <el-image style="width: 267px; height: 150px" :src="getProjectAvatar(item.id)"
+                                    fit="contain" />
                             </div>
                             <div class="card-info">
                                 <div class="title-container">{{ item.name }}</div>
@@ -75,15 +76,7 @@
 
 export default {
     created() {
-        this.axios.post('http://localhost:8000/user_get_favorite_projects', {
-            userId: this.$store.state.userId
-        })
-            .then(res => {
-                console.log(res);
-                if (res.data.code === 0) {
-                    this.projectList = res.data.projectList;
-                }
-            });
+        this.fetchProjectsInfo();
     },
     data() {
         return {
@@ -93,22 +86,23 @@ export default {
             statusRadio: "",
             currentPage: 1,
             projectList: [
-                { id: 1, name: "志愿项目1", type: "1", team: "志愿团队1", latestTime: "2023-12-21" },
-                { id: 2, name: "志愿项目2", type: "2", team: "志愿团队2", latestTime: "2023-09-01" },
-                { id: 3, name: "志愿项目3", type: "3", team: "志愿团队3", latestTime: "2023-11-01" },
-                { id: 4, name: "志愿项目4", type: "4", team: "志愿团队4", latestTime: "2023-09-01" },
-                { id: 5, name: "志愿项目5", type: "5", team: "志愿团队5", latestTime: "2023-04-01" },
-                { id: 6, name: "志愿项目6", type: "6", team: "志愿团队6", latestTime: "2022-01-01" },
-                { id: 7, name: "志愿项目7", type: "3", team: "志愿团队7", latestTime: "2023-11-21" },
-                { id: 8, name: "志愿项目8", type: "5", team: "志愿团队8", latestTime: "2021-01-01" },
-                { id: 9, name: "志愿项目9", type: "1", team: "志愿团队9", latestTime: "2023-11-01" },
-                { id: 10, name: "志愿项目10", type: "4", team: "志愿团队10", latestTime: "2023-10-01" },
-                { id: 11, name: "志愿项目11", type: "2", team: "志愿团队6", latestTime: "2023-05-01" },
-                { id: 12, name: "志愿项目12", type: "3", team: "志愿团队7", latestTime: "2021-01-01" },
-                { id: 13, name: "志愿项目13", type: "5", team: "志愿团队8", latestTime: "2023-11-22" },
-                { id: 14, name: "志愿项目14", type: "1", team: "志愿团队9", latestTime: "2023-11-23" },
-                { id: 15, name: "志愿项目15", type: "2", team: "志愿团队10", latestTime: "N/A" }
+                // { id: 1, name: "志愿项目1", type: "1", team: "志愿团队1", latestTime: "2023-12-21" },
+                // { id: 2, name: "志愿项目2", type: "2", team: "志愿团队2", latestTime: "2023-09-01" },
+                // { id: 3, name: "志愿项目3", type: "3", team: "志愿团队3", latestTime: "2023-11-01" },
+                // { id: 4, name: "志愿项目4", type: "4", team: "志愿团队4", latestTime: "2023-09-01" },
+                // { id: 5, name: "志愿项目5", type: "5", team: "志愿团队5", latestTime: "2023-04-01" },
+                // { id: 6, name: "志愿项目6", type: "6", team: "志愿团队6", latestTime: "2022-01-01" },
+                // { id: 7, name: "志愿项目7", type: "3", team: "志愿团队7", latestTime: "2023-11-21" },
+                // { id: 8, name: "志愿项目8", type: "5", team: "志愿团队8", latestTime: "2021-01-01" },
+                // { id: 9, name: "志愿项目9", type: "1", team: "志愿团队9", latestTime: "2023-11-01" },
+                // { id: 10, name: "志愿项目10", type: "4", team: "志愿团队10", latestTime: "2023-10-01" },
+                // { id: 11, name: "志愿项目11", type: "2", team: "志愿团队6", latestTime: "2023-05-01" },
+                // { id: 12, name: "志愿项目12", type: "3", team: "志愿团队7", latestTime: "2021-01-01" },
+                // { id: 13, name: "志愿项目13", type: "5", team: "志愿团队8", latestTime: "2023-11-22" },
+                // { id: 14, name: "志愿项目14", type: "1", team: "志愿团队9", latestTime: "2023-11-23" },
+                // { id: 15, name: "志愿项目15", type: "2", team: "志愿团队10", latestTime: "N/A" }
             ],
+            avatarList: [],
             option1: [
                 { key: 1, value: "社区服务" },
                 { key: 2, value: "科技科普" },
@@ -158,8 +152,45 @@ export default {
         },
     },
     methods: {
+        fetchProjectsInfo() {
+            this.axios.post('http://localhost:8000/user_get_favorite_projects', {
+                userId: this.$store.state.userId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.projectList = res.data.projectList;
+                        this.fetchProjectsAvatar();
+                    }
+                });
+        },
+        fetchProjectsAvatar() {
+            for (let i = 0; i < this.projectList.length; i++) {
+                this.fetchProjectAvatar(this.projectList[i].id);
+            }
+        },
+        fetchProjectAvatar(id) {
+            this.axios.post('http://localhost:8000/get_project_avatar', {
+                projectId: id
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        var avatar = "data:image/jpeg;base64," + res.data;
+                        this.avatarList.push([id, avatar]);
+                    }
+                });
+        },
+        getProjectAvatar(id) {
+            for (let i = 0; i < this.avatarList.length; i++) {
+                if (this.avatarList[i][0] === id) {
+                    return this.avatarList[i][1];
+                }
+            }
+        },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
+            window.scrollTo(0, 0);
         },
         changeToMyProjectPage() {
             this.$router.push({
@@ -172,6 +203,7 @@ export default {
             })
         },
         changeToProjectInfoPage(id) {
+            this.$store.commit("setLastMenu", "project");
             console.log('projectId:', id);
             this.$router.push({
                 name: 'projectInfo',
@@ -188,8 +220,14 @@ export default {
                     return "招募中";
                 } else if (currentTime.getFullYear() == latestTime.getFullYear() && currentTime.getMonth() == latestTime.getMonth()) {
                     return "本月";
-                } else if (currentTime.getFullYear() == latestTime.getFullYear() && Math.floor(currentTime.getMonth() / 6) == Math.floor(latestTime.getMonth() / 6)) {
-                    return "本学期";
+                } else if (currentTime.getFullYear() == latestTime.getFullYear()) {
+                    let currentSemester = currentTime.getMonth() < 6 ? 0 : 1;
+                    let latestSemester = latestTime.getMonth() < 6 ? 0 : 1;
+                    if (currentSemester == latestSemester) {
+                        return "本学期";
+                    } else {
+                        return "上学期及以前";
+                    }
                 } else {
                     return "上学期及以前";
                 }
@@ -199,9 +237,7 @@ export default {
             if (latestTime === 'N/A') {
                 return '暂未招募';
             } else {
-                const now = new Date();
-                const latest = new Date(latestTime);
-                if (now < latest) return '招募中';
+                if (new Date() < new Date(latestTime)) return '招募中';
                 else return '上一次招募：' + latestTime;
             }
         },
@@ -238,7 +274,8 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 1500px;
+    height: auto;
+    min-height: 750px;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
@@ -314,16 +351,14 @@ export default {
 }
 
 .img-container {
-    width: 100%;
-    height: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .info-item {
     margin-top: 10px;
-    margin-left: 10px;
     justify-content: center;
     align-items: center;
 }
@@ -346,7 +381,6 @@ export default {
 
 .title-container {
     text-align: center;
-    height: 20%;
     font-size: 22px;
     font-weight: bold;
 }

@@ -1,8 +1,5 @@
 import { createStore } from 'vuex'
 
-// 使用全局变量的例子：
-// 设置全局变量（调用对应函数）：this.$store.commit("setUserName", "yourUserName");
-
 const store = createStore({
     state() {
         return {
@@ -16,6 +13,9 @@ const store = createStore({
             password: null,
             userIntro: null,
             totalHours: null,
+            activeMenu: null,
+            lastMenu: null,
+            avatar: null
         }
     },
     mutations: {
@@ -52,8 +52,16 @@ const store = createStore({
         setTotalHours(state, totalHours) {
             state.totalHours = totalHours;
         },
+        setActiveMenu(state, activeMenu) {
+            state.activeMenu = activeMenu;
+        },
+        setLastMenu(state, lastMenu) {
+            state.lastMenu = lastMenu;
+        },
+        setAvatar(state, avatar) {
+            state.avatar = avatar;
+        }
     },
-
 })
 
 export default store;

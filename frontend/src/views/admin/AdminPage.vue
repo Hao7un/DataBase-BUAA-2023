@@ -5,7 +5,8 @@
                 <v-btn size="x-large" @click="showCreateDialog">创建团队</v-btn>
             </div>
             <div class="table-container">
-                <el-table :data="displayedTeamList" border style="width: 100%; height: 100%; border: 2px solid grey;" max-height="600">
+                <el-table :data="displayedTeamList" border style="width: 100%; height: 100%; border: 2px solid grey;"
+                    max-height="600">
                     <template #empty>
                         <p>无匹配数据</p>
                     </template>
@@ -38,19 +39,18 @@
                         </div>
                         <div class="create-item">
                             <h3 style="margin-bottom: 15px;">团队简介</h3>
-                            <el-input type="textarea" v-model="teamIntro" clearable :maxlength="500" show-word-limit></el-input>
+                            <el-input type="textarea" v-model="teamIntro" clearable :maxlength="500"
+                                show-word-limit></el-input>
                         </div>
                         <div class="create-item">
                             <h3 style="margin-bottom: 15px;">上传团队头像</h3>
-                            <el-upload
-                                    class="avatar-uploader"
-                                    action="#"
-                                    :show-file-list="false"
-                                    :auto-upload="false"
-                                    :on-change="uploadFile"
-                                >
-                                <el-image v-if="imageUrl" :src="imageUrl" style="width: 218px; height: 218px" fit="contain" />
-                                <el-icon v-if="!imageUrl"><Plus /></el-icon>
+                            <el-upload class="avatar-uploader" action="#" :show-file-list="false" :auto-upload="false"
+                                :on-change="uploadFile">
+                                <el-image v-if="imageUrl" :src="imageUrl" style="width: 218px; height: 218px"
+                                    fit="contain" />
+                                <el-icon v-if="!imageUrl">
+                                    <Plus />
+                                </el-icon>
                             </el-upload>
                         </div>
                         <div style="text-align: center; margin-top: 30px;">
@@ -90,23 +90,23 @@ export default {
             imageUrl: null,
             teamNameKey: "",
             totalTeamList: [
-                {
-                    teamId: "666",
-                    name: "计算机学院团队",
-                    number: 5,
-                    date: "2023-11-21",
-                    hours: 10,
-                    hasApplication: false,
-                },
-                {
-                    teamId: "888",
-                    name: "软件学院团队",
-                    number: 10,
-                    date: "2023-11-20",
-                    hours: 12,
-                    hasApplication: true,
-                }
-            ],
+                // {
+                //     teamId: "666",
+                //     name: "计算机学院团队",
+                //     number: 5,
+                //     date: "2023-11-21",
+                //     hours: 10,
+                //     hasApplication: false,
+                // },
+                // {
+                //     teamId: "888",
+                //     name: "软件学院团队",
+                //     number: 10,
+                //     date: "2023-11-20",
+                //     hours: 12,
+                //     hasApplication: true,
+                // }
+            ]
         }
 
     },
@@ -114,7 +114,6 @@ export default {
         fetch() {
             const submitParams = {
                 userId: this.$store.state.userId,
-                
             };
 
             (async () => {
@@ -123,17 +122,17 @@ export default {
                     url: 'http://localhost:8000/admin_get_all_teams',
                     data: submitParams,
                 })
-                .then(async (res) => {
-                    console.log('获取管理团队列表');
-                    console.log(res);
-                    if (res.data.code === 0) {
-                        console.log('请求成功');
-                        this.totalTeamList = res.data.teamList;
-                    } 
-                    else {
-                        console.log('请求失败, 错误码code不是0');
-                    }
-                });
+                    .then(async (res) => {
+                        console.log('获取管理团队列表');
+                        console.log(res);
+                        if (res.data.code === 0) {
+                            console.log('请求成功');
+                            this.totalTeamList = res.data.teamList;
+                        }
+                        else {
+                            console.log('请求失败, 错误码code不是0');
+                        }
+                    });
             })();
         },
         showCreateDialog() {
@@ -182,7 +181,7 @@ export default {
                 })
                 return;
             }
-            
+
             const vm = this;
             (async () => {
                 await vm.axios({
@@ -190,7 +189,7 @@ export default {
                     url: 'http://localhost:8000/admin_create_team',
                     data: formData,
                 })
-                    .then(async(res) => {
+                    .then(async (res) => {
                         console.log(res);
                         if (res.data.code === 0) {
                             console.log("创建团队成功");
@@ -273,7 +272,5 @@ export default {
     border: 1px dashed black;
     width: 220px;
     height: 220px;
-    
 }
-
 </style>

@@ -3,17 +3,24 @@
         <div class="team-container">
             <div class="left-container">
                 <div class="info-container">
+                    <v-btn class="back-button" @click="handleBack">
+                        <template v-slot:prepend>
+                            <el-icon>
+                                <Back />
+                            </el-icon>
+                        </template>
+                        返回
+                    </v-btn>
                     <div class="img-container">
-                        <img src="../../assets/images/hand_shaking.png">
+                        <el-image style="width: 400px; height: 225px" :src="avatar" fit="contain" />
                     </div>
                     <div class="content-container">
                         <div class="high-container">
                             <h1 style="margin-right: 20px;">{{ teamName }}</h1>
-
                             <el-button size="large" type="primary" style="margin-top: 5px; margin-left: 40px;"
                                 :disabled="isTeamMember" @click="applyForTeam">
-                                <span v-if="isTeamMember"
-                                    style="font-weight: bold; font-size: 15px; color:whitesmoke">加入于{{ joinDate }}</span>
+                                <span v-if="isTeamMember" style="font-weight: bold; font-size: 15px; color:whitesmoke">加入于{{
+                                    joinDate }}</span>
                                 <span v-else style="font-weight: bold; font-size: 15px; color:whitesmoke">申请加入</span>
                             </el-button>
                             <br>
@@ -29,7 +36,7 @@
                     <p style="font-size: 22px; font-weight: bold; margin-bottom: 8px;"><el-icon>
                             <Document />
                         </el-icon>团队简介</p>
-                    <p>{{ teamIntro }}</p>
+                    <p style="line-height: 30px;" v-html="teamIntroWithBreaks"></p>
                 </div>
             </div>
             <div class="leader-container">
@@ -51,12 +58,12 @@
                 <h2>志 愿 风 采</h2>
             </div>
             <div class="text-center">
-                <el-carousel height="400px" :interval="5000" type="card">
+                <el-carousel height="450px" :interval="3000" type="card">
                     <el-carousel-item v-for="project in projectList" :key="project.id"
                         @click="changeToProjectInfoPage(project.id)">
                         <h2 style="margin-top: 30px;">{{ project.name }}</h2>
                         <div style="margin-top: 20px; margin-bottom: 20px;">
-                            <img src="../../assets/images/project.png">
+                            <el-image style="width: 400px; height: 225px" :src="getProjectAvatar(project.id)" fit="contain" />
                         </div>
                         <p><el-icon>
                                 <Guide />
@@ -78,49 +85,97 @@ import { ElMessage } from 'element-plus';
 
 export default {
     created() {
-        this.teamId = this.$route.params.teamId;
-        this.axios.post('http://localhost:8000/user_get_specific_team_details', {
-            userId: this.userId,
-            teamId: this.teamId
-        })
-            .then(res => {
-                console.log(res);
-                if (res.data.code === 0) {
-                    this.isTeamMember = res.data.isTeamMember;
-                    this.teamName = res.data.teamName;
-                    this.teamNumber = res.data.teamNumber;
-                    this.teamIntro = res.data.teamIntro;
-                    this.foundationDate = res.data.foundationDate;
-                    this.joinDate = res.data.joinDate;
-                    this.teamLeader = res.data.teamLeader;
-                    this.telephone = res.data.telephone;
-                    this.email = res.data.email;
-                    this.projectList = res.data.projectList;
-                }
-            });
+        this.fetchTeamInfo();
     },
     data() {
         return {
-            teamId: '00001',
-            isTeamMember: true,
-            teamName: '计算机学院志愿服务队',
-            teamNumber: '10',
-            teamIntro: '团队致力于发挥气象行业特色，常态化开展气象防灾减灾科普进社区、进校园公益项目，创办了独具特色的“气象科普”品牌。2022年，结合文明实践“一圈一带一群”建设，与徐汇区多个社区形成合作机制，定期为徐家汇商圈和社区居民开展科普讲座，惠及学生和市民千余人次，申报的“气象防灾减灾宣讲”入选为上海市文明实践百项重点项目。',
-            foundationDate: '2020-01-01',
-            joinDate: '2023-01-01',
-            teamLeader: '张昊翔',
-            telephone: '18100000000',
-            email: '1234@xyz.com',
+            teamId: '',
+            avatar: null,
+            isTeamMember: false,
+            teamName: '',
+            teamNumber: '',
+            teamIntro: '',
+            foundationDate: '',
+            joinDate: '',
+            teamLeader: '',
+            telephone: '',
+            email: '',
             projectList: [
-                { id: 1, name: '项目1', type: '1', times: 10 },
-                { id: 2, name: '项目2', type: '2', times: 5 },
-                { id: 3, name: '项目3', type: '3', times: 3 },
-                { id: 4, name: '项目4', type: '4', times: 20 },
+                // { id: 1, name: '项目1', type: '1', times: 10 },
+                // { id: 2, name: '项目2', type: '2', times: 5 },
+                // { id: 3, name: '项目3', type: '3', times: 3 },
+                // { id: 4, name: '项目4', type: '4', times: 20 }
             ],
+            projectAvatarList: [],
         }
     },
     methods: {
+        fetchTeamInfo() {
+            this.teamId = this.$route.params.teamId;
+            this.axios.post('http://localhost:8000/user_get_specific_team_details', {
+                userId: this.userId,
+                teamId: this.teamId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.isTeamMember = res.data.isTeamMember;
+                        this.teamName = res.data.teamName;
+                        this.teamNumber = res.data.teamNumber;
+                        this.teamIntro = res.data.teamIntro;
+                        this.foundationDate = res.data.foundationDate;
+                        this.joinDate = res.data.joinDate;
+                        this.teamLeader = res.data.teamLeader;
+                        this.telephone = res.data.telephone;
+                        this.email = res.data.email;
+                        this.projectList = res.data.projectList;
+                        this.fetchTeamAvatar();
+                        this.fetchProjectsAvatar();
+                    }
+                });
+        },
+        fetchTeamAvatar() {
+            this.axios.post('http://localhost:8000/get_team_avatar', {
+                teamId: this.teamId
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        this.avatar = "data:image/jpeg;base64," + res.data;
+                    }
+                });
+        },
+        fetchProjectsAvatar() {
+            for (let i = 0; i < this.projectList.length; i++) {
+                this.fetchProjectAvatar(this.projectList[i].id);
+            }
+        },
+        fetchProjectAvatar(id) {
+            this.axios.post('http://localhost:8000/get_project_avatar', {
+                projectId: id
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        var avatar = "data:image/jpeg;base64," + res.data;
+                        this.projectAvatarList.push([id, avatar])
+                    }
+                });
+        },
+        getProjectAvatar(id) {
+            for (let i = 0; i < this.projectAvatarList.length; i++) {
+                if (this.projectAvatarList[i][0] === id) {
+                    return this.projectAvatarList[i][1];
+                }
+            }
+        },
+        handleBack() {
+            this.$store.commit("setActiveMenu", this.lastMenu);
+            this.$router.go(-1);
+        },
         changeToProjectInfoPage(id) {
+            this.$store.commit("setActiveMenu", "project");
+            this.$store.commit("setLastMenu", "team");
             console.log('projectId:', id);
             this.$router.push({
                 name: 'projectInfo',
@@ -135,7 +190,9 @@ export default {
                 .then(res => {
                     console.log(res);
                     if (res.data.code === 0) {
-                        ElMessage.success('申请成功');
+                        ElMessage.success('申请成功，请等待负责人通过');
+                    } else {
+                        ElMessage.error('请勿重复申请');
                     }
                 });
         },
@@ -160,6 +217,12 @@ export default {
         userId() {
             return this.$store.state.userId;
         },
+        lastMenu() {
+            return this.$store.state.lastMenu;
+        },
+        teamIntroWithBreaks() {
+            return this.teamIntro.replace(/\n/g, '<br>');
+        }
     },
 }
 </script>
@@ -175,7 +238,7 @@ export default {
 .team-container {
     display: flex;
     flex-direction: row;
-    margin-bottom: 80px;
+    margin-bottom: 50px;
 }
 
 .left-container {
@@ -188,21 +251,24 @@ export default {
 .info-container {
     display: flex;
     flex-direction: row;
-    margin-top: 20px;
+}
+
+.back-button {
+    font-weight: bold;
+    font-size: 15px;
 }
 
 .img-container {
-    display: flex;
-    width: 300px;
-    height: 200px;
-    margin-bottom: 30px;
-    margin-left: 100px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 .content-container {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: 10px;
 }
 
@@ -218,7 +284,6 @@ export default {
     align-items: center;
     margin-top: 30px;
     font-size: 18px;
-    font-style: italic;
 }
 
 .intro-container {
@@ -240,8 +305,8 @@ export default {
 .project-container {
     margin-top: 30px;
     margin-bottom: 100px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 100px;
+    margin-right: 100px;
     display: block;
     flex-direction: column;
 }
@@ -258,11 +323,15 @@ export default {
     color: var(--el-text-color-secondary);
 }
 
-.el-carousel__item:nth-child(2n) {
-    background-color: #a4b6c2;
+.el-carousel__item:nth-child(3n) {
+    background-color: #99ccff;
 }
 
-.el-carousel__item:nth-child(2n + 1) {
-    background-color: #d3dce6;
+.el-carousel__item:nth-child(3n + 1) {
+    background-color: #3399cc;
+}
+
+.el-carousel__item:nth-child(3n + 2) {
+    background-color: #ccffff;
 }
 </style>

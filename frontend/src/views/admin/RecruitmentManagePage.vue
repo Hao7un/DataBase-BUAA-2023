@@ -9,26 +9,32 @@
                     <span class="item-font" style="font-weight: bold;">招募管理</span>
                 </el-menu-item>
             </el-menu>
-        </div>  
+        </div>
         <div class="content-container">
             <v-btn class="back-button" @click="handleBack">
                 <template v-slot:prepend>
-                  <el-icon><Back /></el-icon>
+                    <el-icon>
+                        <Back />
+                    </el-icon>
                 </template>
                 返回
-              </v-btn>
+            </v-btn>
             <div class="selector-container">
                 <div class="left">
                     <el-input v-model="locationKey" clearable placeholder="输入活动地点" size="large" style="width: 250px;">
                         <template #prefix>
-                            <el-icon><Location /></el-icon>
+                            <el-icon>
+                                <Location />
+                            </el-icon>
                         </template>
                     </el-input>
                 </div>
                 <div class="middle1">
                     <el-select v-model="statusKey" clearable placeholder="选择招募状态" size="large" style="width: 250px;">
                         <template #prefix>
-                            <el-icon><Clock /></el-icon>
+                            <el-icon>
+                                <Clock />
+                            </el-icon>
                         </template>
                         <el-option label="即将招募" key="即将招募" value="即将招募"></el-option>
                         <el-option label="招募中" key="招募中" value="招募中"></el-option>
@@ -38,7 +44,9 @@
                 <div class="middle2">
                     <el-select v-model="typeKey" clearable placeholder="选择面向人群" size="large">
                         <template #prefix>
-                            <el-icon><Unlock /></el-icon>
+                            <el-icon>
+                                <Unlock />
+                            </el-icon>
                         </template>
                         <el-option label="面向公共招募" key="面向公共招募" value="面向公共招募"></el-option>
                         <el-option label="仅限团队内部" key="仅限团队内部" value="仅限团队内部"></el-option>
@@ -47,7 +55,9 @@
                 <div class="right">
                     <el-select v-model="sortKey" clearable placeholder="选择排序方式" size="large">
                         <template #prefix>
-                            <el-icon><Sort /></el-icon>
+                            <el-icon>
+                                <Sort />
+                            </el-icon>
                         </template>
                         <el-option label="按招募发布时间排序" key="按招募发布时间排序" value="按招募发布时间排序"></el-option>
                         <el-option label="按招募结束时间排序" key="按招募结束时间排序" value="按招募结束时间排序"></el-option>
@@ -63,38 +73,52 @@
                     <v-btn size="large" @click="createRecruitmentVisible = true">发布招募</v-btn>
                 </div>
                 <div class="recruitments-list-container">
-                    <v-expansion-panels
-                        v-model="panel"
-                        multiple
-                    >
+                    <v-expansion-panels v-model="panel" multiple>
                         <v-expansion-panel v-for="(card, index) in displayedList" class="panel">
                             <v-expansion-panel-title @click="card.showDetails = !card.showDetails" style="height: 70px;">
                                 <div style="display: flex; justify-content: space-between; width: 99%;">
                                     <div>招募编号: &nbsp;{{ card.id }}</div>
-                                    <div><el-icon><Clock /></el-icon>&nbsp;招募状态: &nbsp;{{ card.state }}</div>
-                                    <div v-if="card.type === '1'"><el-icon><Unlock /></el-icon>&nbsp;面向群体: &nbsp;面向公共招募</div>
-                                    <div v-else="card.type === '2'"><el-icon><Unlock /></el-icon>&nbsp;面向群体: &nbsp;仅限团队内部</div>
-                                    <div><el-icon><Calendar /></el-icon>&nbsp;发布时间: &nbsp;{{ card.startTime }}</div>
+                                    <div><el-icon>
+                                            <Clock />
+                                        </el-icon>&nbsp;招募状态: &nbsp;{{ card.state }}</div>
+                                    <div v-if="card.type === '1'"><el-icon>
+                                            <Unlock />
+                                        </el-icon>&nbsp;面向群体: &nbsp;面向公共招募</div>
+                                    <div v-else="card.type === '2'"><el-icon>
+                                            <Unlock />
+                                        </el-icon>&nbsp;面向群体: &nbsp;仅限团队内部</div>
+                                    <div><el-icon>
+                                            <Calendar />
+                                        </el-icon>&nbsp;发布时间: &nbsp;{{ card.startTime }}</div>
                                 </div>
-                                <span v-if="!card.showDetails" style="margin-left: 20px;"><el-icon><ArrowDownBold /></el-icon></span>
-                                <span v-else style="margin-left: 20px;"><el-icon><ArrowUpBold /></el-icon></span>
+                                <span v-if="!card.showDetails" style="margin-left: 20px;"><el-icon>
+                                        <ArrowDownBold />
+                                    </el-icon></span>
+                                <span v-else style="margin-left: 20px;"><el-icon>
+                                        <ArrowUpBold />
+                                    </el-icon></span>
                             </v-expansion-panel-title>
                             <v-expansion-panel-text>
                                 <div style="display: flex; justify-content: center; flex-direction: column">
                                     <el-descriptions :column="6" :row="3" border>
                                         <el-descriptions-item :span="2" label-align="center" align="center">
                                             <template #label>
-                                                <el-icon><Clock /></el-icon>
+                                                <el-icon>
+                                                    <Clock />
+                                                </el-icon>
                                                 &nbsp;
                                                 招募状态:
                                             </template>
-                                            <span v-if="card.state === '招募结束' " style="color: red;">{{ card.state }}</span>
-                                            <span v-else-if="card.state === '招募中' " style="color: orange;">{{ card.state }}</span>
+                                            <span v-if="card.state === '招募结束'" style="color: red;">{{ card.state }}</span>
+                                            <span v-else-if="card.state === '招募中'" style="color: orange;">{{ card.state
+                                            }}</span>
                                             <span v-else style="color: green;">{{ card.state }}</span>
                                         </el-descriptions-item>
                                         <el-descriptions-item :span="1" label-align="center" align="center">
                                             <template #label>
-                                                <el-icon><Coin /></el-icon>
+                                                <el-icon>
+                                                    <Coin />
+                                                </el-icon>
                                                 &nbsp;
                                                 志愿时长:
                                             </template>
@@ -102,7 +126,9 @@
                                         </el-descriptions-item>
                                         <el-descriptions-item :span="2" label-align="center" align="center">
                                             <template #label>
-                                                <el-icon><Location /></el-icon>
+                                                <el-icon>
+                                                    <Location />
+                                                </el-icon>
                                                 &nbsp;
                                                 活动地点:
                                             </template>
@@ -110,7 +136,9 @@
                                         </el-descriptions-item>
                                         <el-descriptions-item :span="1" label-align="center" align="center">
                                             <template #label>
-                                                <el-icon><User /></el-icon>
+                                                <el-icon>
+                                                    <User />
+                                                </el-icon>
                                                 &nbsp;
                                                 招募人数:
                                             </template>
@@ -118,15 +146,19 @@
                                         </el-descriptions-item>
                                         <el-descriptions-item :span="3" label-align="center" align="center">
                                             <template #label>
-                                                <el-icon><Calendar /></el-icon>
+                                                <el-icon>
+                                                    <Calendar />
+                                                </el-icon>
                                                 &nbsp;
                                                 招募发布时间:
                                             </template>
                                             {{ card.launchTime }}
-                                        </el-descriptions-item>                                    
+                                        </el-descriptions-item>
                                         <el-descriptions-item :span="3" label-align="center" align="center">
                                             <template #label>
-                                                <el-icon><Calendar /></el-icon>
+                                                <el-icon>
+                                                    <Calendar />
+                                                </el-icon>
                                                 &nbsp;
                                                 招募结束时间:
                                             </template>
@@ -134,22 +166,27 @@
                                         </el-descriptions-item>
                                         <el-descriptions-item :span="3" label-align="center" align="center">
                                             <template #label>
-                                                <el-icon><Calendar /></el-icon>
+                                                <el-icon>
+                                                    <Calendar />
+                                                </el-icon>
                                                 &nbsp;
                                                 活动开始时间:
                                             </template>
                                             {{ card.startTime }}
                                         </el-descriptions-item>
-                                        <el-descriptions-item :span="3"  label-align="center" align="center">
+                                        <el-descriptions-item :span="3" label-align="center" align="center">
                                             <template #label>
-                                                <el-icon><Calendar /></el-icon>
+                                                <el-icon>
+                                                    <Calendar />
+                                                </el-icon>
                                                 &nbsp;
                                                 活动结束时间:
                                             </template>
                                             {{ card.endTime }}
                                         </el-descriptions-item>
                                     </el-descriptions>
-                                    <el-button size="large" @click="viewRecruits(card)" style="margin-top: 5px;">查看应募人员</el-button>
+                                    <el-button size="large" @click="viewRecruits(card)"
+                                        style="margin-top: 5px;">查看应募人员</el-button>
                                 </div>
                             </v-expansion-panel-text>
                         </v-expansion-panel>
@@ -161,25 +198,26 @@
     <v-dialog v-model="viewRecruitsVisible">
         <div style="width: 800px; height: 600px; background: white; position: relative; padding: 10px; margin-left: 500px;">
             <h3 style="text-align: center; margin-top: 35px">应募人员</h3>
-            <el-button style="position: absolute; top: 10px; right: 10px" @click="viewRecruitsVisible = false">退出</el-button>
+            <el-button style="position: absolute; top: 10px; right: 10px"
+                @click="viewRecruitsVisible = false">退出</el-button>
             <div style="margin-top: 20px; text-align: center;">
                 <el-table :data="this.displayedRecruits" border max-height="500">
                     <template #empty>
                         无匹配信息
                     </template>
-                    <el-table-column prop="collegeId" label="学工号" align="center">
+                    <el-table-column prop="collegeId" label="学工号" align="center" width="120px">
                         <template #header>
                             <div>学工号</div>
                             <el-input v-model="collegeIdKey" clearable placeholder="输入学工号"></el-input>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="name" label="姓名" align="center">
+                    <el-table-column prop="name" label="姓名" align="center" width="120px">
                         <template #header>
                             <div>姓名</div>
                             <el-input v-model="nameKey" clearable placeholder="输入姓名"></el-input>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="telephone" label="电话" align="center">
+                    <el-table-column prop="telephone" label="电话" align="center" width="170px">
                         <template #header>
                             <div>电话</div>
                             <el-input v-model="telephoneKey" clearable placeholder="输入电话"></el-input>
@@ -202,43 +240,27 @@
                 <h3 style="margin-bottom: 10px;">活动地点</h3>
                 <el-input v-model="location" clearable style="width: 250px;">
                     <template #prefix>
-                        <el-icon><Location /></el-icon>
+                        <el-icon>
+                            <Location />
+                        </el-icon>
                     </template>
                 </el-input>
             </div>
             <div class="create-item">
                 <h3 style="margin-bottom: 10px;">活动开始时间</h3>
-                <el-date-picker
-                    v-model="startTime"
-                    type="datetime"
-                    format="YYYY-MM-DD HH:mm"
-                    value-format="YYYY-MM-DD HH:mm"
-                    :disabled-date="disabledDates"
-                    @focus="this.focus"
-                    @confirm="handleDateConfirm"
-                ></el-date-picker>
+                <el-date-picker v-model="startTime" type="datetime" format="YYYY-MM-DD HH:mm"
+                    value-format="YYYY-MM-DD HH:mm" :disabled-date="disabledDates" @focus="this.focus"
+                    @confirm="handleDateConfirm"></el-date-picker>
             </div>
             <div class="create-item">
                 <h3 style="margin-bottom: 10px;">活动结束时间</h3>
-                <el-date-picker
-                    v-model="endTime"
-                    type="datetime"
-                    format="YYYY-MM-DD HH:mm"
-                    value-format="YYYY-MM-DD HH:mm"
-                    :disabled-date="disabledDates"
-                    @focus="this.focus"
-            ></el-date-picker>
+                <el-date-picker v-model="endTime" type="datetime" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm"
+                    :disabled-date="disabledDates" @focus="this.focus"></el-date-picker>
             </div>
             <div class="create-item">
                 <h3 style="margin-bottom: 10px;">招募结束时间</h3>
-                <el-date-picker
-                    v-model="deadline"
-                    type="datetime"
-                    format="YYYY-MM-DD HH:mm"
-                    value-format="YYYY-MM-DD HH:mm"
-                    :disabled-date="disabledDates"
-                    @focus="this.focus"
-            ></el-date-picker>
+                <el-date-picker v-model="deadline" type="datetime" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm"
+                    :disabled-date="disabledDates" @focus="this.focus"></el-date-picker>
             </div>
             <div class="create-item">
                 <h3 style="margin-bottom: 10px;">面向群体</h3>
@@ -369,67 +391,66 @@ export default {
             hours: "",
             maxNumber: 0,
             recruitments: [
-                {
-                    id: "1",
-                    launchTime: "2023-11-24 12:22",
-                    deadline: "2023-11-24 13:00",
-                    startTime: "2023-11-25 16:08",
-                    endTime: "2023-11-25 17:00",
-                    location: "校医院",
-                    type: "面向公共招募",
-                    hours: 16,
-                    number: 5,
-                    maxNumber: 10,
-                },
-                {
-                    id: "2",
-                    launchTime: "2023-11-23 12:23",
-                    deadline: "2023-11-28 14:00",
-                    startTime: "2023-11-24 16:09",
-                    endTime: "2023-11-24 18:00",
-                    location: "田径场",
-                    type: "面向公共招募",
-                    hours: 4,
-                    number: 6,
-                    maxNumber: 20,
-                },
-                {
-                    id: "3",
-                    launchTime: "2023-11-29 12:24",
-                    deadline: "2023-11-23 15:00",
-                    startTime: "2023-11-24 16:10",
-                    endTime: "2023-11-24 17:30",
-                    location: "晨兴音乐厅",
-                    type: "仅限团队内部",
-                    hours: 8,
-                    number: 10,
-                    maxNumber: 100,
-                },
+                // {
+                //     id: "1",
+                //     launchTime: "2023-11-24 12:22",
+                //     deadline: "2023-11-24 13:00",
+                //     startTime: "2023-11-25 16:08",
+                //     endTime: "2023-11-25 17:00",
+                //     location: "校医院",
+                //     type: "面向公共招募",
+                //     hours: 16,
+                //     number: 5,
+                //     maxNumber: 10,
+                // },
+                // {
+                //     id: "2",
+                //     launchTime: "2023-11-23 12:23",
+                //     deadline: "2023-11-28 14:00",
+                //     startTime: "2023-11-24 16:09",
+                //     endTime: "2023-11-24 18:00",
+                //     location: "田径场",
+                //     type: "面向公共招募",
+                //     hours: 4,
+                //     number: 6,
+                //     maxNumber: 20,
+                // },
+                // {
+                //     id: "3",
+                //     launchTime: "2023-11-29 12:24",
+                //     deadline: "2023-11-23 15:00",
+                //     startTime: "2023-11-24 16:10",
+                //     endTime: "2023-11-24 17:30",
+                //     location: "晨兴音乐厅",
+                //     type: "仅限团队内部",
+                //     hours: 8,
+                //     number: 10,
+                //     maxNumber: 100,
+                // }
             ],
             recruits: [
-                {
-                    collegeId: "1",
-                    name: "Kevin",
-                    telephone: "13700000000",
-                    email: "123@abc.com",
-                    time: "2023-12-04 23:02",
-                },
-                {
-                    collegeId: "2",
-                    name: "Bob",
-                    telephone: "13700000001",
-                    email: "456@abc.com",
-                    time: "2023-12-04 23:03"                    
-                },
-                {
-                    collegeId: "3",
-                    name: "Stuart",
-                    telephone: "13700000002",
-                    email: "789@abc.com",
-                    time: "2023-12-05 11:31"
-                },
+                // {
+                //     collegeId: "1",
+                //     name: "Kevin",
+                //     telephone: "13700000000",
+                //     email: "123@abc.com",
+                //     time: "2023-12-04 23:02",
+                // },
+                // {
+                //     collegeId: "2",
+                //     name: "Bob",
+                //     telephone: "13700000001",
+                //     email: "456@abc.com",
+                //     time: "2023-12-04 23:03"
+                // },
+                // {
+                //     collegeId: "3",
+                //     name: "Stuart",
+                //     telephone: "13700000002",
+                //     email: "789@abc.com",
+                //     time: "2023-12-05 11:31"
+                // }
             ]
-
         }
     },
     methods: {
@@ -440,7 +461,7 @@ export default {
 
             this.axios({
                 method: 'post',
-                url: 'http://localhost:8000/',
+                url: 'http://localhost:8000/admin_get_project_recruitments',
                 data: submitParams,
             })
                 .then((res) => {
@@ -463,7 +484,7 @@ export default {
 
             this.axios({
                 method: 'post',
-                url: 'http://localhost:8000/',
+                url: 'http://localhost:8000/admin_get_recruitment_applicants',
                 data: submitParams,
             })
                 .then((res) => {
@@ -512,7 +533,7 @@ export default {
             })
         },
         handleCreateRecruitmentSubmit() {
-            console.log(typeof(this.type));
+            console.log(typeof (this.type));
             if (this.startTime === "" || this.location === "" || this.type === "" || this.deadline === "" || this.endTime === "") {
                 this.createRecruitmentVisible = false;
                 ElMessageBox.alert("请填写完整的招募信息", "注意", {
@@ -601,8 +622,10 @@ export default {
 }
 
 .back-button {
-  margin-left: 25px;
-  margin-top: 25px;
+    margin-left: 25px;
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 .sidebar-container {
@@ -633,7 +656,7 @@ export default {
 .recruitments-list-container {
     margin-left: 200px;
     margin-bottom: 50px;
-    width: 1000px;   
+    width: 1000px;
 }
 
 .panel {
@@ -653,6 +676,4 @@ export default {
     margin-left: 50px;
     width: 99%;
 }
-
-
 </style>

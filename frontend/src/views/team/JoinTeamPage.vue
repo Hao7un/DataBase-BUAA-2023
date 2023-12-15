@@ -30,10 +30,10 @@
             </div>
             <div class="teams-container">
                 <div class="info-container">
-                    <div class="card" v-for="(item, index) in displayedList">
+                    <div class="card" v-for="item in displayedList">
                         <el-card shadow="hover" class="inner-card" @click="changeToTeamInfoPage(item.id)">
                             <div class="img-container">
-                                <img src="../../assets/images/hand_shaking.png">
+                                <el-image style="width: 320px; height: 180px" :src="getTeamAvatar(item.id)" fit="contain" />
                             </div>
                             <div class="card-info">
                                 <div class="team-name">{{ item.name }}</div>
@@ -64,13 +64,7 @@
 
 export default {
     created() {
-        this.axios.get('http://localhost:8000/user_get_all_teams_info')
-            .then(res => {
-                console.log(res);
-                if (res.data.code === 0) {
-                    this.totalList = res.data.totalList;
-                }
-            });
+        this.fetchTeamsInfo();
     },
     data() {
         return {
@@ -79,31 +73,29 @@ export default {
             number: "",
             currentPage: 1,
             totalList: [
-                { id: 1, name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100 },
-                { id: 2, name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50 },
-                { id: 3, name: "志愿团队3", date: "2023-11-03", number: 8, hours: 50 },
-                { id: 4, name: "志愿团队4", date: "2023-11-04", number: 25, hours: 50 },
-                { id: 5, name: "志愿团队5", date: "2023-11-05", number: 27, hours: 50 },
-                { id: 6, name: "志愿团队6", date: "2023-11-06", number: 30, hours: 50 },
-                { id: 7, name: "志愿团队7", date: "2023-11-07", number: 45, hours: 50 },
-                { id: 8, name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50 },
-                { id: 9, name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50 },
-                { id: 10, name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50 },
-            ]
+                // { id: 1, name: "志愿团队1", date: "2023-11-01", number: 2, hours: 100 },
+                // { id: 2, name: "志愿团队2", date: "2023-11-02", number: 6, hours: 50 },
+                // { id: 3, name: "志愿团队3", date: "2023-11-03", number: 8, hours: 50 },
+                // { id: 4, name: "志愿团队4", date: "2023-11-04", number: 25, hours: 50 },
+                // { id: 5, name: "志愿团队5", date: "2023-11-05", number: 27, hours: 50 },
+                // { id: 6, name: "志愿团队6", date: "2023-11-06", number: 30, hours: 50 },
+                // { id: 7, name: "志愿团队7", date: "2023-11-07", number: 45, hours: 50 },
+                // { id: 8, name: "志愿团队8", date: "2023-11-08", number: 56, hours: 50 },
+                // { id: 9, name: "志愿团队9", date: "2023-11-09", number: 90, hours: 50 },
+                // { id: 10, name: "志愿团队10", date: "2023-11-10", number: 106, hours: 50 }
+            ],
+            avatarList: [],
         }
     },
     computed: {
         range() {
             if (this.number === "10人以下") {
                 return [1, 10];
-            }
-            else if (this.number === "11至99人") {
+            } else if (this.number === "11至99人") {
                 return [11, 99];
-            }
-            else if (this.number === "100人以上") {
+            } else if (this.number === "100人以上") {
                 return [100, Infinity];
-            }
-            else {
+            } else {
                 return [0, Infinity];
             }
         },
@@ -114,8 +106,8 @@ export default {
             if (this.keyword != null && this.number != null) {
                 filteredList = filteredList.filter(item => {
                     let itemDate = new Date(item.date);
-                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) 
-                    && itemDate >= this.date;
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1])
+                        && itemDate >= this.date;
                 }
                 );
             }
@@ -126,8 +118,8 @@ export default {
             if (this.keyword != null && this.number != null) {
                 list = list.filter(item => {
                     let itemDate = new Date(item.date);
-                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1]) 
-                    && itemDate >= this.date;
+                    return item.name.includes(this.keyword) && (item.number >= this.range[0] && item.number <= this.range[1])
+                        && itemDate >= this.date;
                 }
                 );
             }
@@ -135,8 +127,43 @@ export default {
         },
     },
     methods: {
+        fetchTeamsInfo() {
+            this.axios.get('http://localhost:8000/user_get_all_teams_info')
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code === 0) {
+                        this.totalList = res.data.totalList;
+                        this.fetchTeamsAvatar();
+                    }
+                });
+        },
+        fetchTeamsAvatar() {
+            for (let i = 0; i < this.totalList.length; i++) {
+                this.fetchTeamAvatar(this.totalList[i].id);
+            }
+        },
+        fetchTeamAvatar(id) {
+            this.axios.post('http://localhost:8000/get_team_avatar', {
+                teamId: id
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                        var avatar = "data:image/jpeg;base64," + res.data;
+                        this.avatarList.push([id, avatar]);
+                    }
+                });
+        },
+        getTeamAvatar(id) {
+            for (let i = 0; i < this.avatarList.length; i++) {
+                if (this.avatarList[i][0] === id) {
+                    return this.avatarList[i][1];
+                }
+            }
+        },
         handlePageChange(currentPage) {
             this.currentPage = currentPage;
+            window.scrollTo(0, 0);
         },
         changeToJoinTeamPage() {
             this.$router.push({
@@ -149,12 +176,13 @@ export default {
             })
         },
         changeToTeamInfoPage(id) {
+            this.$store.commit("setLastMenu", "team");
             console.log('teamId:', id);
             this.$router.push({
                 name: 'teamInfo',
                 params: { teamId: id }
             });
-        },
+        }
     },
 }
 </script>
@@ -170,7 +198,8 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 1550px;
+    height: auto;
+    min-height: 750px;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
@@ -236,13 +265,11 @@ export default {
     height: 100%;
 }
 
-
 .img-container {
-    width: 100%;
-    height: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .card-info {
@@ -267,8 +294,8 @@ export default {
 }
 
 .detail-item {
-    margin-right: 10px;
     margin-left: 10px;
+    margin-right: 10px;
 }
 
 .pagination-container {

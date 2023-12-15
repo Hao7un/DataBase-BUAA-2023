@@ -1,33 +1,39 @@
 <template>
   <div class="main">
-    <div class="top-container">志 愿 北 航</div>
     <div class="button-container" v-if="buttonVisible">
       <el-button class="button" round @click="showLoginWindow()">登 录</el-button>
       <div class="spacer"></div>
       <el-button class="button" round @click="showRegisterWindow()">注 册</el-button>
     </div>
   </div>
+  <div style="font-size: 12px; display: flex; position: fixed; top: 785px; margin-left: 665px;">
+    Copyright BUAA Volunteer Service © 2023. All rights reserved.
+  </div>
   <div class="login-container" v-if="loginWindowVisible">
     <div class="quit-container">
-        <el-button round @click="quitLoginWindow()">
-          <el-icon><CloseBold /></el-icon>
-        </el-button>
+      <el-button round @click="quitLoginWindow()">
+        <el-icon>
+          <CloseBold />
+        </el-icon>
+      </el-button>
     </div>
     <div class="form-container">
       <el-form :rules="rules" :model="loginForm" ref="loginForm" label-width="80px">
         <div>
           <el-form-item label="学工号" prop="loginAccount">
-            <el-input v-model="loginForm.account" clearable placeholder="请输入学工号" :style="{width: '300px', height: '40px'}"></el-input>
+            <el-input v-model="loginForm.account" clearable placeholder="请输入学工号"
+              :style="{ width: '300px', height: '40px' }"></el-input>
           </el-form-item>
         </div>
         <div>
           <el-form-item label="密码" prop="loginPassword">
-            <el-input v-model="loginForm.password" show-password clearable placeholder="请输入密码" :style="{width: '300px', height: '40px'}"></el-input>
+            <el-input v-model="loginForm.password" show-password clearable placeholder="请输入密码"
+              :style="{ width: '300px', height: '40px' }"></el-input>
           </el-form-item>
         </div>
       </el-form>
       <div class="submit-container">
-          <el-button class="login-button" @click="loginSubmit()">登 录</el-button>
+        <el-button class="login-button" @click="loginSubmit()">登 录</el-button>
       </div>
       <el-link class="hint" @click="showRegisterWindow()">还未注册？点击注册</el-link>
     </div>
@@ -35,39 +41,47 @@
   <div class="register-container" v-if="registerWindowVisible">
     <div class="quit-container">
       <el-button round @click="quitRegisterWindow()">
-          <el-icon><CloseBold /></el-icon>
+        <el-icon>
+          <CloseBold />
+        </el-icon>
       </el-button>
     </div>
     <div class="form-container">
       <el-form :rules="rules" :model="registerForm" ref="registerForm" label-width="80px">
         <div>
           <el-form-item prop="username" label="姓名">
-            <el-input v-model="registerForm.username" clearable placeholder="请输入姓名" :style="{width: '300px', height: '40px'}"></el-input>
+            <el-input v-model="registerForm.username" clearable placeholder="请输入姓名"
+              :style="{ width: '300px', height: '40px' }"></el-input>
           </el-form-item>
         </div>
         <div>
           <el-form-item prop="registerAccount" label="学工号">
-            <el-input v-model="registerForm.account" clearable placeholder="请输入学工号" :style="{width: '300px', height: '40px'}"></el-input>
+            <el-input v-model="registerForm.account" clearable placeholder="请输入学工号"
+              :style="{ width: '300px', height: '40px' }"></el-input>
           </el-form-item>
         </div>
         <div>
           <el-form-item prop="telephone" label="电话">
-            <el-input v-model="registerForm.telephone" clearable placeholder="请输入电话" :style="{width: '300px', height: '40px'}"></el-input>
+            <el-input v-model="registerForm.telephone" clearable placeholder="请输入电话"
+              :style="{ width: '300px', height: '40px' }"></el-input>
           </el-form-item>
         </div>
         <div>
           <el-form-item prop="email" label="邮箱">
-            <el-input v-model="registerForm.email" clearable placeholder="请输入邮箱" :style="{width : '300px', height : '40px'}"></el-input>
+            <el-input v-model="registerForm.email" clearable placeholder="请输入邮箱"
+              :style="{ width: '300px', height: '40px' }"></el-input>
           </el-form-item>
         </div>
         <div>
           <el-form-item prop="registerPassword" label="密码">
-            <el-input v-model="registerForm.password" show-password clearable placeholder="请输入密码" :style="{width : '300px', height : '40px'}"></el-input>
+            <el-input v-model="registerForm.password" show-password clearable placeholder="请输入密码"
+              :style="{ width: '300px', height: '40px' }"></el-input>
           </el-form-item>
         </div>
         <div>
           <el-form-item prop="confirmPassword" label="确认密码">
-            <el-input v-model="registerForm.rePassword" show-password clearable placeholder="请再次输入密码" :style="{width : '300px', height : '40px'}"></el-input>
+            <el-input v-model="registerForm.rePassword" show-password clearable placeholder="请再次输入密码"
+              :style="{ width: '300px', height: '40px' }"></el-input>
           </el-form-item>
         </div>
         <div>
@@ -81,7 +95,7 @@
         </div>
       </el-form>
       <div class="submit-container">
-          <el-button class="register-button" @click="registerSubmit()">注 册</el-button>
+        <el-button class="register-button" @click="registerSubmit()">注 册</el-button>
       </div>
     </div>
   </div>
@@ -139,7 +153,7 @@ export default {
       let reg = /^[a-zA-Z0-9]+([-_.][A-Za-zd]+)*@([a-zA-Z0-9]+[-.])+[A-Za-zd]{2,5}$/
       var result = reg.test(this.registerForm.email)
       if (!result) {
-          callback(new Error('邮箱格式不正确！'));
+        callback(new Error('邮箱格式不正确！'));
       }
       else {
         callback();
@@ -170,28 +184,28 @@ export default {
     return {
       rules: {
         loginAccount: [
-          {validator: validateLoginAccount, trigger: 'blur'},
+          { validator: validateLoginAccount, trigger: 'blur' },
         ],
         username: [
-          {validator: validateRegisterUserName, trigger: 'blur'},
+          { validator: validateRegisterUserName, trigger: 'blur' },
         ],
         telephone: [
-          {validator: validateTelephone, trigger: 'blur'},
+          { validator: validateTelephone, trigger: 'blur' },
         ],
         email: [
-          {validator: validateEmail, trigger: 'blur'},
+          { validator: validateEmail, trigger: 'blur' },
         ],
         registerAccount: [
-          {validator: validateRegisterAccount, trigger: 'blur'},
+          { validator: validateRegisterAccount, trigger: 'blur' },
         ],
         loginPassword: [
-          {validator: validateLoginPassword, trigger: 'blur'},
+          { validator: validateLoginPassword, trigger: 'blur' },
         ],
         registerPassword: [
-          {validator: validateRegisterPassword, trigger: 'blur'},
+          { validator: validateRegisterPassword, trigger: 'blur' },
         ],
         confirmPassword: [
-          {validator: validateConfirmPassword, trigger: 'blur'}
+          { validator: validateConfirmPassword, trigger: 'blur' }
         ],
       },
       loginForm: {
@@ -213,7 +227,7 @@ export default {
       buttonVisible: true,
     }
   },
-  methods : {
+  methods: {
     showLoginWindow() {
       this.loginWindowVisible = true;
       this.registerWindowVisible = false;
@@ -261,27 +275,27 @@ export default {
       this.$refs.loginForm.validate(async (valid) => {
         /* 登录判断逻辑 */
         if (valid) {
-          // console.log("登录成功");
-          // ElMessage.success("登录成功");
+          // this.$store.commit("setUserId", "3");
           // this.$store.commit("setCollegeId", "21371295");
           // this.$store.commit("setPassword", "123456");
           // this.$store.commit("setUserName", "张昊翔");
           // this.$store.commit("setUserType", "0");
-          // this.$router.push({path: '/project/all'});
+          // this.$store.commit("setActiveMenu", "project");
+          // this.$router.push({ path: '/project/all' });
 
-          // const submitParams = {
-          //   collegeId: this.loginForm.account,
-          //   password: this.loginForm.password,
-          // }
+          const submitParams = {
+            collegeId: this.loginForm.account,
+            password: this.loginForm.password,
+          }
 
           await this.axios({
             method: 'post',
             url: 'http://localhost:8000/login_info',
             data: submitParams,
           })
-            .then(async(res) => {
+            .then(async (res) => {
               console.log(res);
-              /* 登陆成功 */
+              /* 登录成功 */
               if (res.data.code === 0) {
                 console.log("登录成功");
                 ElMessage.success('登录成功');
@@ -291,7 +305,8 @@ export default {
                 this.$store.commit("setIsAdmin", res.data.userType === "0" ? false : true);
                 this.$store.commit("setPassword", this.loginForm.password);
                 this.$store.commit("setUserType", res.data.userType);
-                this.$router.push({path: '/project/all'});
+                this.$store.commit("setActiveMenu", "project");
+                this.$router.push({ path: '/project/all' });
               }
               /* 用户不存在 */
               else if (res.data.code === 1) {
@@ -304,55 +319,55 @@ export default {
                 ElMessage.error('密码错误！');
               }
             })
-        }
-        else {
+            
+        } else {
           ElMessage.error("请填写正确的登录信息");
         }
       });
     },
     registerSubmit() {
-      this.$refs.registerForm.validate(async(valid) => {
-          if (valid) {
-            console.log("注册信息有效");
-            /* 注册有效逻辑 */
-            const submitParams = {
-              userName: this.registerForm.username,
-              collegeId: this.registerForm.account,
-              password: this.registerForm.password,
-              email: this.registerForm.email,
-              telephone: this.registerForm.telephone,
-              userType: this.registerForm.userType === "普通用户" ? "0" : "1",
-            }
+      this.$refs.registerForm.validate(async (valid) => {
+        if (valid) {
+          console.log("注册信息有效");
+          /* 注册有效逻辑 */
+          const submitParams = {
+            userName: this.registerForm.username,
+            collegeId: this.registerForm.account,
+            password: this.registerForm.password,
+            email: this.registerForm.email,
+            telephone: this.registerForm.telephone,
+            userType: this.registerForm.userType === "普通用户" ? "0" : "1",
+          }
 
-            await this.axios({
-              method: 'post',
-              url: 'http://localhost:8000/register_info',
-              data: submitParams,
-            })
-              .then(async (res) => {
-                  /* 注册成功 */
-                  console.log(res);
-                  if (res.data.code === 0) {
-                    ElMessage.success('注册成功');
-                    this.$store.commit("setUserId", res.data.userId);
-                    this.$store.commit("setUserName", this.registerForm.username);
-                    this.$store.commit("setCollegeId", this.registerForm.account);
-                    this.$store.commit("setIsAdmin", this.registerForm.userType === "普通用户" ? false : true);
-                    this.$store.commit("setPassword", this.registerForm.password);
-                    this.$router.push({path: '/project/all'});
-                  }
-                  /* 重复注册 */
-                  else if (res.data.code === 1) {
-                    ElMessage.error('该用户已被注册！');
-                  }
-                }
+          await this.axios({
+            method: 'post',
+            url: 'http://localhost:8000/register_info',
+            data: submitParams,
+          })
+            .then(async (res) => {
+              /* 注册成功 */
+              console.log(res);
+              if (res.data.code === 0) {
+                ElMessage.success('注册成功');
+                this.$store.commit("setUserId", res.data.userId);
+                this.$store.commit("setUserName", this.registerForm.username);
+                this.$store.commit("setCollegeId", this.registerForm.account);
+                this.$store.commit("setIsAdmin", this.registerForm.userType === "普通用户" ? false : true);
+                this.$store.commit("setPassword", this.registerForm.password);
+                this.$router.push({ path: '/welcome' });
+                this.showLoginWindow();
+              }
+              /* 重复注册 */
+              else if (res.data.code === 1) {
+                ElMessage.error('该用户已被注册！');
+              }
+            }
             )
 
-          }
-          else {
-            ElMessage.error('请正确填写注册信息！');
-          }
-        });
+        } else {
+          ElMessage.error('请正确填写注册信息！');
+        }
+      });
     }
 
   }
@@ -361,7 +376,7 @@ export default {
 
 <style scoped>
 .main {
-  background-image: url(../assets/images/mountain.png);
+  background-image: url(../assets/images/cover.png);
   background-size: cover;
   position: relative;
   display: flex;
@@ -375,19 +390,8 @@ export default {
   border-radius: 1em
 }
 
-.top-container {
-  position: absolute;
-  height: 100px;
-  width: 1000px;
-  font-size: 80px;
-  font-weight: bold;
-  color: white;
-  top: 150px;
-  text-align: center;
-}
-
 .button-container {
-  margin-top: 200px;
+  margin-top: 500px;
   display: flex;
   justify-content: center;
 }
@@ -438,7 +442,7 @@ export default {
 }
 
 .spacer {
-  width: 200px;
+  width: 150px;
 }
 
 .hint {
@@ -447,10 +451,11 @@ export default {
 }
 
 .button {
-  font-size: 40px;
+  font-size: 30px;
+  color: #082f49;
   font-weight: bold;
-  width: 170px;
-  height: 80px;
+  width: 130px;
+  height: 60px;
 }
 
 .login-button {
@@ -471,5 +476,4 @@ export default {
   font-size: 25px;
   margin-right: 20px;
 }
-
 </style>

@@ -1,219 +1,231 @@
 <template>
-<div class="main-container">
-    <div class="sidebar-container">
-      <el-menu mode="vertical" default-active="info" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
-          <el-menu-item index="info" @click="changeToProjectManagePage">
-              <span class="item-font" style="font-weight: bold;">项目详情</span>
-          </el-menu-item>
-          <el-menu-item index="list" @click="changeToRecruitmentManangePage">
-              <span class="item-font" style="font-weight: bold;">招募管理</span>
-          </el-menu-item>
-      </el-menu>
-    </div>
-    <div class="project-management">
-        <v-btn class="back-button" @click="handleBack">
-            <template v-slot:prepend>
-                <el-icon><Back /></el-icon>
-            </template>
-            返回
-        </v-btn>
-        <h2 class="title">项目详情</h2>
-        <div class="header">
-            <div class="project-avatar">
-                <el-tooltip placement="right" content="更换头像" effect="light">
-                    <img src="../../assets/images/project.png" id="avatar" @click="setAvatarVisible = true">
-                </el-tooltip>
-            </div>
-            <el-divider direction="vertical" style="height: 200px;"></el-divider>
-            <div class="project-info-container">
-                <div class="project-info">
-                    <h3 style="display: flex; justify-content: center; margin-bottom: 10px; font-weight: bold;">项目信息</h3>
-                    <el-descriptions column="2" border>
-                        <el-descriptions-item label="项目名称" width="150px">
-                            <el-input placeholder="输入项目名称" v-model="projectName" clearable></el-input>
-                        </el-descriptions-item>
-                        <el-descriptions-item label="项目类别" width="150px">
-                            <el-tag v-if="projectType === '1'">社区服务</el-tag>
-                            <el-tag v-else-if="projectType === '2'">科技科普</el-tag>
-                            <el-tag v-else-if="projectType === '3'">支教助学</el-tag>
-                            <el-tag v-else-if="projectType === '4'">体育赛事</el-tag>
-                            <el-tag v-else-if="projectType === '5'">大型演出</el-tag>
-                            <el-tag v-else>其它类别</el-tag>
-                        </el-descriptions-item>
-                        <el-descriptions-item label="创建时间">
-                            {{ createdDate }}
-                        </el-descriptions-item>
-                    </el-descriptions>
-                </div>
-                <div class="project-info-buttons">
-                    <div class="project-info-button">
-                        <el-badge :value="this.comments.length" :max="99">
-                            <v-btn size="x-large" @click="viewComments" rounded="lg">查看评论</v-btn>
-                        </el-badge>
-                    </div>
-                    <div class="project-info-button">
-                        <v-btn size="x-large" @click="viewTutorial" rounded="sm">查看教程</v-btn>
-                    </div>
-                    <div class="project-info-button">
-                        <v-btn size="x-large" @click="handleSave" rounded="xl">保存修改</v-btn>
-                    </div>
-                </div>
-            </div>
+    <div class="main-container">
+        <div class="sidebar-container">
+            <el-menu mode="vertical" default-active="info" style="border-right: 0px solid rgb(114, 110, 104, 0.2);">
+                <el-menu-item index="info" @click="changeToProjectManagePage">
+                    <span class="item-font" style="font-weight: bold;">项目详情</span>
+                </el-menu-item>
+                <el-menu-item index="list" @click="changeToRecruitmentManangePage">
+                    <span class="item-font" style="font-weight: bold;">招募管理</span>
+                </el-menu-item>
+            </el-menu>
         </div>
-        <el-divider style="width: 90%; margin-left: 100px;" />
-        <div class="content">
-            <el-input type="textarea" v-model="projectIntro" placeholder="输入项目简介(不超过500字)" :rows="15" clearable :maxlength="500" show-word-limit></el-input>
+        <div class="project-management">
+            <v-btn class="back-button" @click="handleBack">
+                <template v-slot:prepend>
+                    <el-icon>
+                        <Back />
+                    </el-icon>
+                </template>
+                返回
+            </v-btn>
+            <h2 class="title">项目详情</h2>
+            <div class="header">
+                <div class="project-avatar">
+                    <el-tooltip placement="right" content="更换头像" effect="light">
+                        <img src="" id="avatar" @click="setAvatarVisible = true"
+                            style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding: 10px;">
+                    </el-tooltip>
+                </div>
+                <el-divider direction="vertical" style="height: 200px;"></el-divider>
+                <div class="project-info-container">
+                    <div class="project-info">
+                        <h3 style="display: flex; justify-content: center; margin-bottom: 10px; font-weight: bold;">项目信息
+                        </h3>
+                        <el-descriptions column="2" border>
+                            <el-descriptions-item label="项目名称" width="200px" align="center">
+                                <el-input placeholder="输入项目名称" v-model="projectName" clearable></el-input>
+                            </el-descriptions-item>
+                            <el-descriptions-item label="项目类别" width="100px" align="center">
+                                <el-tag v-if="projectType === '1'">社区服务</el-tag>
+                                <el-tag v-else-if="projectType === '2'">科技科普</el-tag>
+                                <el-tag v-else-if="projectType === '3'">支教助学</el-tag>
+                                <el-tag v-else-if="projectType === '4'">体育赛事</el-tag>
+                                <el-tag v-else-if="projectType === '5'">大型演出</el-tag>
+                                <el-tag v-else>其它类别</el-tag>
+                            </el-descriptions-item>
+                            <el-descriptions-item label="创建时间" align="center">
+                                {{ createdDate }}
+                            </el-descriptions-item>
+                        </el-descriptions>
+                    </div>
+                    <div class="project-info-buttons">
+                        <div class="project-info-button">
+                            <el-badge :value="this.comments.length" :max="99">
+                                <v-btn size="x-large" @click="viewComments" rounded="lg">查看评论</v-btn>
+                            </el-badge>
+                        </div>
+                        <div class="project-info-button">
+                            <v-btn size="x-large" @click="viewTutorial" rounded="sm">查看教程</v-btn>
+                        </div>
+                        <div class="project-info-button">
+                            <v-btn size="x-large" @click="handleSave" rounded="xl">保存修改</v-btn>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <el-divider style="width: 90%; margin-left: 100px;" />
+            <div class="content">
+                <el-input type="textarea" v-model="projectIntro" placeholder="输入项目简介(不超过500字)" :rows="15" clearable
+                    :maxlength="500" show-word-limit style="font-size: 20px;"></el-input>
+            </div>
+            <div>
+                <v-dialog v-model="createTutorialVisible" width="550px">
+                    <div class="create-tutorial-dialog-container">
+                        <div class="create-item">
+                            <h3 style="margin-bottom: 15px;">教程标题</h3>
+                            <el-input v-model="tutorialTitle" clearable style="width: 70%;">
+                                <template #prefix>
+                                    <el-icon>
+                                        <Postcard />
+                                    </el-icon>
+                                </template>
+                            </el-input>
+                        </div>
+                        <div class="create-item">
+                            <h3 style="margin-bottom: 15px;">教程标签</h3>
+                            <el-input v-model="tutorialTag" clearable style="width: 70%;">
+                                <template #prefix>
+                                    <el-icon>
+                                        <CollectionTag />
+                                    </el-icon>
+                                </template>
+                            </el-input>
+                        </div>
+                        <div class="create-item">
+                            <h3 style="margin-bottom: 15px;">教程内容</h3>
+                            <el-input v-model="tutorialContent" type="textarea" clearable :autosize="{ minRows: 12 }"
+                                style="width: 70%;" show-word-limit :maxlength="500"></el-input>
+                        </div>
+                        <div style="display: flex; margin-bottom: 30px; margin-top: 40px; justify-content: center;">
+                            <el-button @click="handleCreateTutorial">提交</el-button>
+                        </div>
+                    </div>
+                </v-dialog>
+            </div>
         </div>
         <div>
-            <v-dialog v-model="createTutorialVisible" width="550px">
-                <div class="create-tutorial-dialog-container">
-                    <div class="create-item">
-                        <h3 style="margin-bottom: 15px;">教程标题</h3>
-                        <el-input v-model="tutorialTitle" clearable style="width: 70%;">
-                            <template #prefix>
-                                <el-icon><Postcard /></el-icon>
+            <v-dialog v-model="viewTutorialsVisible">
+                <div style="height: 600px; width: 800px; border: 2px solid black; background: white; margin-left: 450px;">
+                    <div style="margin-left: 715px; margin-top: 10px;">
+                        <v-btn @click="viewTutorialsVisible = !viewTutorialsVisible">退出</v-btn>
+                    </div>
+                    <div class="tutorial-topbar">
+                        <v-btn size="large" @click="viewCreateTutorial">发布教程</v-btn>
+                    </div>
+                    <div class="tutorials-container">
+                        <el-table :data="displayedTutorials" border>
+                            <template #empty>
+                                <p>无匹配数据</p>
                             </template>
-                        </el-input>
+                            <el-table-column prop="title" label="教程标题" align="center">
+                                <template #header>
+                                    <div>教程标题</div>
+                                    <el-input v-model="tutorialNameKey" clearable placeholder="输入教程标题"></el-input>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="tag" label="标签" align="center">
+                                <template #header>
+                                    <div>标签</div>
+                                    <el-input v-model="tutorialTagKey" clearable placeholder="输入标签"></el-input>
+                                </template>
+                                <template #default="scope">
+                                    <el-tag>{{ scope.row.tag }}</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="date" label="发布日期" align="center" sortable></el-table-column>
+                            <el-table-column label="操作" align="center">
+                                <template #default="scope">
+                                    <el-button @click="viewTutorialDetail(scope.row)" type="primary"><span
+                                            style="color: white;">编辑</span></el-button>
+                                    <el-button @click="handleDeleteTutorial(scope.$index, scope.row)" type="warning"><span
+                                            style="color: white;">删除</span></el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
                     </div>
-                    <div class="create-item">
-                        <h3 style="margin-bottom: 15px;">教程标签</h3>
-                        <el-input v-model="tutorialTag" clearable style="width: 70%;">
-                            <template #prefix>
-                                <el-icon><CollectionTag /></el-icon>
+                </div>
+            </v-dialog>
+        </div>
+        <div>
+            <v-dialog v-model="viewTutorialDetailVisible">
+                <div style="height: 600px; width: 800px; background-color: white; padding-top: 50px; margin-left: 450px;">
+                    <div class="edit-tutorial-dialog-container">
+                        <el-form>
+                            <el-form-item label="教程标题： " style="margin-left: 50px;">
+                                <el-input v-model="selectedTutorial.title" clearable style="width: 250px;"></el-input>
+                            </el-form-item>
+                            <el-form-item label="教程标签：" style="margin-left: 50px;">
+                                <el-input v-model="selectedTutorial.tag" clearable style="width: 150px;"></el-input>
+                            </el-form-item>
+                            <div style="margin-left: 50px; margin-bottom: 10px; margin-top: 25px">教程内容：</div>
+                            <el-input v-model="selectedTutorial.content" clearable type="textarea"
+                                :autosize="{ minRows: 12 }" style="width: 600px; margin-left: 100px" :maxlength="500"
+                                show-word-limit></el-input>
+                        </el-form>
+                    </div>
+                    <div style="display: flex; justify-content: center; margin-top: 40px;"><v-btn
+                            @click="closeEditTutorialDialog">编辑完成</v-btn></div>
+                </div>
+            </v-dialog>
+        </div>
+        <div>
+            <v-dialog v-model="viewCommentsVisible">
+                <div style="background-color: white; width: 800px; border: 2px solid black; margin-left: 400px;">
+                    <h2 style="text-align: center; margin-bottom: 20px; margin-top: 20px;">提问清单</h2>
+                    <v-list>
+                        <v-list-item v-for="(item, i) in this.comments" :key="i" :value="item" rounded="xl"
+                            @click="handleReplyComment(item, i)">
+                            <template v-slot:prepend>
+                                <el-icon>
+                                    <QuestionFilled />
+                                </el-icon>
+                                &nbsp; &nbsp;
                             </template>
-                        </el-input>
-                    </div>
-                    <div class="create-item">
-                        <h3 style="margin-bottom: 15px;">教程内容</h3>
-                        <el-input v-model="tutorialContent" type="textarea" clearable :autosize="{minRows: 12}" style="width: 70%;" show-word-limit :maxlength="500"></el-input>
-                    </div> 
-                    <div style="display: flex; margin-bottom: 30px; margin-top: 40px;">
-                        <el-button @click="handleCreateTutorial">提交</el-button>
-                    </div>
+                            <div style="display: flex; justify-content: space-between">
+                                <div>{{ item.content }}</div>
+                                <div>{{ item.posterName }} &nbsp; 提问于 &nbsp; {{ item.date }}</div>
+                            </div>
+                        </v-list-item>
+                    </v-list>
                 </div>
             </v-dialog>
         </div>
     </div>
     <div>
-        <v-dialog v-model="viewTutorialsVisible">
-            <div style="height: 600px; width: 800px; border: 2px solid black; background: white; margin-left: 450px;">
-                <div style="margin-left: 715px; margin-top: 10px;">
-                    <v-btn @click="viewTutorialsVisible = !viewTutorialsVisible">退出</v-btn>
+        <v-dialog v-model="replyCommentVisible" style="margin-left: 500px; margin-bottom: 200px;">
+            <div style="width: 600px; height: 300px; margin-top: 470px; background: white;">
+                <div style="margin-left: 520px; margin-top: 10px">
+                    <v-btn
+                        @click="replyCommentVisible = !replyCommentVisible; viewCommentsVisible = !viewCommentsVisible">取消</v-btn>
                 </div>
-                <div class="tutorial-topbar">
-                    <v-btn size="large" @click="viewCreateTutorial">发布教程</v-btn>
+                <h3 style="display: flex; justify-content: center; margin-bottom: 10px;">回复留言</h3>
+                <div style="margin-left: 15px;">问题：{{ this.selectedComment.content }}</div>
+                <div style="margin-top: 15px; margin-left: 15px;">回复：
+                    <el-input style="width: 550px; margin-top: 10px" type="textarea" v-model="replyContent" :maxlength="500"
+                        show-word-limit></el-input>
                 </div>
-                <div class="tutorials-container">
-                    <el-table :data="displayedTutorials" border>
-                        <template #empty>
-                            <p>无匹配数据</p>
-                        </template>
-                        <el-table-column prop="title" label="教程标题" align="center">
-                            <template #header>
-                                <div>教程标题</div>
-                                <el-input v-model="tutorialNameKey" clearable placeholder="输入教程标题"></el-input>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="tag" label="标签" align="center">
-                            <template #header>
-                                <div>标签</div>
-                                <el-input v-model="tutorialTagKey" clearable placeholder="输入标签"></el-input>
-                            </template>
-                            <template #default="scope">
-                                <el-tag>{{ scope.row.tag }}</el-tag>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="date" label="发布日期" align="center" sortable></el-table-column>
-                        <el-table-column label="操作" align="center">
-                            <template #default="scope">
-                                <el-button @click="viewTutorialDetail(scope.row)" type="primary"><span style="color: white;">编辑</span></el-button>
-                                <el-button @click="handleDeleteTutorial(scope.$index, scope.row)" type="warning"><span style="color: white;">删除</span></el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </div>
+                <el-button style="margin-left: 250px; margin-top: 25px; margin-bottom: 10px;"
+                    @click="replyCommentSubmit">提交回复</el-button>
             </div>
         </v-dialog>
     </div>
     <div>
-        <v-dialog v-model="viewTutorialDetailVisible">
-            <div style="height: 600px; width: 800px; background-color: white; padding-top: 50px; margin-left: 450px;">
-                <div class="edit-tutorial-dialog-container">
-                    <el-form>
-                        <el-form-item label="教程标题： " style="margin-left: 50px;">
-                            <el-input v-model="selectedTutorial.title" clearable style="width: 250px;"></el-input>
-                        </el-form-item>
-                        <el-form-item label="教程标签：" style="margin-left: 50px;">
-                            <el-input v-model="selectedTutorial.tag" clearable style="width: 150px;"></el-input>
-                        </el-form-item>
-                        <div style="margin-left: 50px; margin-bottom: 10px; margin-top: 25px">教程内容：</div>
-                        <el-input v-model="selectedTutorial.content" clearable type="textarea" :autosize="{minRows: 12}" style="width: 600px; margin-left: 100px" :maxlength="500" show-word-limit></el-input>
-                    </el-form>
-                </div>
-                <div style="display: flex; justify-content: center; margin-top: 40px;"><v-btn @click="closeEditTutorialDialog">编辑完成</v-btn></div>
+        <v-dialog v-model="setAvatarVisible">
+            <div class="setAvatar-container">
+                <el-button @click="setAvatarVisible = false" style="margin-top: 10px; margin-left: 200px">退出</el-button>
+                <h3 style="margin-bottom: 20px; margin-top: 20px;">上传新头像</h3>
+                <el-upload class="avatar-uploader" action="#" :show-file-list="false" :auto-upload="false"
+                    :on-change="uploadFile">
+                    <el-image v-if="imageUrl" :src="imageUrl" style="width: 218px; height: 218px" fit="contain" />
+                    <el-icon v-if="!imageUrl">
+                        <Plus />
+                    </el-icon>
+                </el-upload>
+                <el-button @click="handleSetProjectAvatarSubmit" size="large" style="margin-top: 30px;">点击上传</el-button>
             </div>
         </v-dialog>
     </div>
-    <div>
-        <v-dialog v-model="viewCommentsVisible">
-            <div style="background-color: white; width: 800px; border: 2px solid black; margin-left: 400px;">
-                <h2 style="text-align: center; margin-bottom: 20px; margin-top: 20px;">提问清单</h2>
-                <v-list>
-                    <v-list-item
-                        v-for="(item, i) in this.comments"
-                        :key="i"
-                        :value="item"
-                        rounded="xl"
-                        @click="handleReplyComment(item, i)"
-                    >
-                    <template v-slot:prepend>
-                        <el-icon><QuestionFilled /></el-icon>
-                        &nbsp; &nbsp;
-                    </template>
-                    <div style="display: flex; justify-content: space-between">
-                        <div>{{ item.content }}</div>
-                        <div>{{ item.posterName }} &nbsp; 提问于 &nbsp; {{ item.date }}</div>
-                    </div>
-                    </v-list-item>
-                </v-list>
-            </div>
-        </v-dialog>
-    </div>
-</div>
-<div>
-    <v-dialog v-model="replyCommentVisible" style="margin-left: 500px; margin-bottom: 200px;">
-        <div style="width: 600px; height: 300px; margin-top: 470px; background: white;">
-            <div style="margin-left: 520px; margin-top: 10px">
-                <v-btn @click="replyCommentVisible = !replyCommentVisible; viewCommentsVisible = !viewCommentsVisible">取消</v-btn>
-            </div>
-            <h3 style="display: flex; justify-content: center; margin-bottom: 10px;">回复留言</h3>
-            <div style="margin-left: 15px;">问题：{{ this.selectedComment.content }}</div>
-            <div style="margin-top: 15px; margin-left: 15px;">回复：
-                <el-input style="width: 550px; margin-top: 10px" type="textarea" v-model="replyContent" :maxlength="500" show-word-limit></el-input>
-            </div>
-            <el-button style="margin-left: 250px; margin-top: 25px; margin-bottom: 10px;" @click="replyCommentSubmit">提交回复</el-button>
-        </div>
-    </v-dialog>
-</div>
-<div>
-    <v-dialog v-model="setAvatarVisible">
-      <div class="setAvatar-container">
-        <el-button @click="setAvatarVisible = false" style="margin-top: 10px; margin-left: 200px">退出</el-button>
-        <h3 style="margin-bottom: 20px; margin-top: 20px;">上传新头像</h3>
-        <el-upload
-              class="avatar-uploader"
-              action="#"
-              :show-file-list="false"
-              :auto-upload="false"
-              :on-change="uploadFile"
-          >
-          <el-image v-if="imageUrl" :src="imageUrl" style="width: 218px; height: 218px" fit="contain" />
-          <el-icon v-if="!imageUrl"><Plus /></el-icon>
-        </el-upload>
-        <el-button @click="handleSetProjectAvatarSubmit" size="large" style="margin-top: 30px;">点击上传</el-button>
-      </div>
-    </v-dialog>
-  </div>
 </template>
 
 
@@ -268,74 +280,73 @@ export default {
             imageUrl: null,
             fileToUpload: null,
             comments: [
-                {
-                    questionId: "1",
-                    date: "2023-11-24 10:45",
-                    content: "这个项目大概每隔多久发一次招募？",
-                    posterId: "1",
-                    posterName: "王乐",
-                },
-                {
-                    questionId: "2",
-                    date: "2023-11-24 10:46",
-                    content: "参加这个项目需要我学习些什么？",
-                    posterId: "1",
-                    posterName: "王乐",
-                },
-                {
-                    questionId: "2",
-                    date: "2023-11-24 10:47",
-                    content: "什么时候结算上一次招募的志愿时长？",
-                    posterId: "1",
-                    posterName: "王乐",
-                },
+                // {
+                //     questionId: "1",
+                //     date: "2023-11-24 10:45",
+                //     content: "这个项目大概每隔多久发一次招募？",
+                //     posterId: "1",
+                //     posterName: "王乐",
+                // },
+                // {
+                //     questionId: "2",
+                //     date: "2023-11-24 10:46",
+                //     content: "参加这个项目需要我学习些什么？",
+                //     posterId: "1",
+                //     posterName: "王乐",
+                // },
+                // {
+                //     questionId: "2",
+                //     date: "2023-11-24 10:47",
+                //     content: "什么时候结算上一次招募的志愿时长？",
+                //     posterId: "1",
+                //     posterName: "王乐",
+                // }
             ],
             tutorials: [
-                {
-                    id: "1",
-                    title: "项目教程1",
-                    content: "lorem",
-                    date: "2023-11-24",
-                    tag: "急救知识",
-                },
-                {
-                    id: "2",
-                    title: "项目教程2",
-                    content: "lorem",
-                    date: "2023-11-25",
-                    tag: "礼仪规范",
-                },
-                {
-                    id: "3",
-                    title: "项目教程3",
-                    content: "lorem",
-                    date: "2023-11-24",
-                    tag: "环境保护",
-                },
-                {
-                    id: "4",
-                    title: "项目教程4",
-                    content: "lorem",
-                    date: "2023-11-25",
-                    tag: "文化尊重",
-                },
-                {
-                    id: "5",
-                    title: "项目教程5",
-                    content: "lorem",
-                    date: "2023-11-24",
-                    tag: "心理健康",
-                },
+                // {
+                //     id: "1",
+                //     title: "项目教程1",
+                //     content: "lorem",
+                //     date: "2023-11-24",
+                //     tag: "急救知识",
+                // },
+                // {
+                //     id: "2",
+                //     title: "项目教程2",
+                //     content: "lorem",
+                //     date: "2023-11-25",
+                //     tag: "礼仪规范",
+                // },
+                // {
+                //     id: "3",
+                //     title: "项目教程3",
+                //     content: "lorem",
+                //     date: "2023-11-24",
+                //     tag: "环境保护",
+                // },
+                // {
+                //     id: "4",
+                //     title: "项目教程4",
+                //     content: "lorem",
+                //     date: "2023-11-25",
+                //     tag: "文化尊重",
+                // },
+                // {
+                //     id: "5",
+                //     title: "项目教程5",
+                //     content: "lorem",
+                //     date: "2023-11-24",
+                //     tag: "心理健康",
+                // }
             ]
-
         }
     },
     methods: {
         fetchPicture() {
             const submitParams = {
                 projectId: this.projectId,
-
             };
+
             this.axios({
                 method: 'post',
                 url: 'http://localhost:8000/get_project_avatar',
@@ -355,7 +366,6 @@ export default {
         fetch() {
             const submitParams = {
                 projectId: this.projectId,
-
             };
 
             this.axios({
@@ -404,7 +414,6 @@ export default {
                 projectId: this.projectId,
                 newProjectName: this.projectName,
                 newProjectIntro: this.projectIntro,
-
             };
 
             if (this.projectName === "") {
@@ -430,7 +439,8 @@ export default {
                     }
                     else if (res.data.code === 1) {
                         console.log("保存失败, 项目名重复");
-                        ElMessage.error("修改失败, 项目名称已被使用")
+                        ElMessage.error("修改失败, 项目名称已被使用");
+                        this.fetch();
                     }
                     else {
                         console.log("保存失败, 错误码不是0");
@@ -481,8 +491,8 @@ export default {
                     tutorialTitle: this.tutorialTitle,
                     tutorialTag: this.tutorialTag,
                     tutorialContent: this.tutorialContent,
-
                 };
+
                 this.axios({
                     method: 'post',
                     url: 'http://localhost:8000/admin_create_tutorial',
@@ -512,7 +522,6 @@ export default {
             }).then(() => {
                 const submitParams = {
                     tutorialId: this.selectedTutorial.id,
-
                 };
 
                 this.axios({
@@ -557,33 +566,33 @@ export default {
                 })
             }
             else {
-                    this.viewTutorialDetailVisible = false;
-                    const submitParams = {
-                        tutorialId: this.selectedTutorial.id,
-                        newTutorialTitle: this.selectedTutorial.title,
-                        newTutorialTag: this.selectedTutorial.tag,
-                        newTutorialContent: this.selectedTutorial.content,
+                this.viewTutorialDetailVisible = false;
+                const submitParams = {
+                    tutorialId: this.selectedTutorial.id,
+                    newTutorialTitle: this.selectedTutorial.title,
+                    newTutorialTag: this.selectedTutorial.tag,
+                    newTutorialContent: this.selectedTutorial.content,
 
-                    }
-                    
-                    this.axios({
-                        method: 'post',
-                        url: 'http://localhost:8000/admin_update_tutorial',
-                        data: submitParams,
+                }
+
+                this.axios({
+                    method: 'post',
+                    url: 'http://localhost:8000/admin_update_tutorial',
+                    data: submitParams,
+                })
+                    .then((res) => {
+                        console.log(res);
+                        if (res.data.code === 0) {
+                            console.log("修改教程成功");
+                            this.viewTutorialDetailVisible = false;
+                            // 刷新教程列表中的详细信息
+                            this.fetch();
+                            ElMessage.success("修改教程成功");
+                        }
+                        else {
+                            console.log("修改教程失败, 错误码不是0");
+                        }
                     })
-                        .then((res) => {
-                            console.log(res);
-                            if (res.data.code === 0) {
-                                console.log("修改教程成功");
-                                this.viewTutorialDetailVisible = false;
-                                // 刷新教程列表中的详细信息
-                                this.fetch();
-                                ElMessage.success("修改教程成功");
-                            }
-                            else {
-                                console.log("修改教程失败, 错误码不是0");
-                            }
-                        })
             }
         },
         handleReplyComment(item, index) {
@@ -649,7 +658,7 @@ export default {
                 this.fileToUpload = file.raw;
                 return true;
             }
-      },
+        },
         handleSetProjectAvatarSubmit() {
             const formData = new FormData();
             formData.append("projectAvatar", this.fileToUpload);
@@ -657,7 +666,7 @@ export default {
 
             this.axios({
                 method: 'post',
-                url: 'http://localhost:8000/',
+                url: 'http://localhost:8000/upload_project_avatar',
                 data: formData
             })
                 .then((res) => {
@@ -665,9 +674,9 @@ export default {
                     // 刷新头像
                     this.fetchPicture();
                     this.setAvatarVisible = false;
-            })
-      }
-        
+                })
+        }
+
     }
 }
 
@@ -687,7 +696,7 @@ export default {
 }
 
 #avatar:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .sidebar-container {
@@ -696,7 +705,8 @@ export default {
     flex-direction: column;
     padding-top: 20px;
     margin-left: 20px;
-    height: 900px;
+    min-height: 900px;
+    height: auto;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
@@ -713,6 +723,8 @@ export default {
 .back-button {
     margin-left: 25px;
     margin-top: 25px;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 .title {
@@ -735,7 +747,6 @@ export default {
     height: auto;
 }
 
-
 .project-info-container {
     flex: 1;
     display: flex;
@@ -751,17 +762,17 @@ export default {
 }
 
 .project-info-buttons {
-  display: flex;
-  flex-direction: row;
-  margin-top: 5px;
-  margin-left: 60px;
-  margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    margin-left: 60px;
+    margin-top: 10px;
 }
 
 .project-info-button {
-  margin-bottom: 5px;
-  margin-right: 30px;
-  margin-left: 30px;  
+    margin-bottom: 5px;
+    margin-right: 30px;
+    margin-left: 30px;
 }
 
 .content {
@@ -811,17 +822,16 @@ export default {
     border: 1px dashed black;
     width: 220px;
     height: 220px;
-    
+
 }
 
 .setAvatar-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: white;
-  height: 450px;
-  width: 300px;
-  margin-left: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    height: 450px;
+    width: 300px;
+    margin-left: 700px;
 }
-
 </style>
