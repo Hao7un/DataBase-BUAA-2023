@@ -295,7 +295,7 @@ export default {
           })
             .then(async (res) => {
               console.log(res);
-              /* 登陆成功 */
+              /* 登录成功 */
               if (res.data.code === 0) {
                 console.log("登录成功");
                 ElMessage.success('登录成功');
@@ -319,8 +319,8 @@ export default {
                 ElMessage.error('密码错误！');
               }
             })
-        }
-        else {
+            
+        } else {
           ElMessage.error("请填写正确的登录信息");
         }
       });
@@ -355,7 +355,7 @@ export default {
                 this.$store.commit("setIsAdmin", this.registerForm.userType === "普通用户" ? false : true);
                 this.$store.commit("setPassword", this.registerForm.password);
                 this.$router.push({ path: '/welcome' });
-                showLoginWindow();
+                this.showLoginWindow();
               }
               /* 重复注册 */
               else if (res.data.code === 1) {
@@ -364,8 +364,7 @@ export default {
             }
             )
 
-        }
-        else {
+        } else {
           ElMessage.error('请正确填写注册信息！');
         }
       });
