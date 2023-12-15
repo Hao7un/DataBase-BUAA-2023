@@ -1,7 +1,7 @@
 import base64
 import os
 from datetime import datetime, timedelta
-
+import pytz
 import pymysql
 from django.http import JsonResponse, HttpResponse
 import json
@@ -31,7 +31,9 @@ def admin_create_project(request):
     project_type = request.POST.get("projectType")
     project_intro = request.POST.get("projectIntro")
     team_id = request.POST.get("teamId")
-    foundation_date = (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d")
+    china_tz = pytz.timezone('Asia/Shanghai')
+    foundation_date = datetime.now(china_tz).strftime("%Y-%m-%d")
+
 
     connection = create_connection()
     with connection.cursor() as cursor:
@@ -53,7 +55,9 @@ def admin_create_project(request):
 
             # 文件名
             img_name = img.name
-            img_name = (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S") + img_name
+
+            china_tz = pytz.timezone('Asia/Shanghai')
+            img_name = datetime.now(china_tz).strftime("%Y-%m-%d %H:%M:%S") + img_name
 
             # 存储的文件夹
             img_dir = IMAGE_PATH + 'projectAvatar/' + str(project_id)
@@ -121,7 +125,8 @@ def admin_create_tutorial(request):
     connection = create_connection()
     with connection.cursor() as cursor:
         # 创建新教程
-        current_time = (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+        china_tz = pytz.timezone('Asia/Shanghai')
+        current_time = datetime.now(china_tz).strftime("%Y-%m-%d %H:%M:%S")
         cursor.callproc('admin_create_tutorial', [project_id, current_time,
                                                   tutorial_title, tutorial_tag, tutorial_content])
         connection.commit()
@@ -296,7 +301,8 @@ def user_post_question(request):
     connection = create_connection()
     with connection.cursor() as cursor:
         # 插入提问数据到question表
-        cursor.callproc('user_post_question', [(datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S"),
+        china_tz = pytz.timezone('Asia/Shanghai')
+        cursor.callproc('user_post_question', [datetime.now(china_tz).strftime("%Y-%m-%d %H:%M:%S"),
                                                post_content, project_id, user_id])
         connection.commit()
 
@@ -308,7 +314,6 @@ def user_post_question(request):
 def user_get_all_projects(request):
     request_dict = json.loads(request.body.decode('utf-8'))
     user_id = request_dict.get("userId")
-
 
     connection = create_connection()
     with connection.cursor() as cursor:
@@ -370,11 +375,12 @@ def user_get_specific_project(request):
         for disc in discussions:
             details = disc.split('|')
             discussion_list.append({
-                "questionPoster": details[0],
-                "questionTime": details[1],
-                "question": details[2],
-                "replyTime": details[3],
-                "reply": details[4]
+                "posterId": details[0],
+                "posterName": details[1],
+                "questionTime": details[2],
+                "question": details[3],
+                "replyTime": details[4],
+                "reply": details[5]
             })
 
         # 解析教程信息
@@ -400,8 +406,11 @@ def user_get_specific_project(request):
         "projectIntro": project_details[2],
         "teamId": str(project_details[3]),
         "teamName": project_details[4],
-        "latestTime": project_details[5],
-        "projectLeader": project_details[6],
+        "latestTime": project_details[5].split(' ')[0],
+
+        "leaderId": project_details[6],
+        "leaderName": project_details[7],
+
         "discussionList": discussion_list,
         "tutorialList": tutorial_list
     })
@@ -432,7 +441,7 @@ def user_get_favorite_projects(request):
                 "name": project_details[1],
                 "type": project_details[2],
                 "team": project_details[3],
-                "latestTime": project_details[4]
+                "latestTime": project_details[4].split(' ')[0]
             })
     resp = {
         "code": 0,
@@ -468,7 +477,8 @@ def upload_project_avatar(request):
 
     # 文件名
     img_name = img.name.split('/')[-1]
-    img_name = (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S") + img_name
+    china_tz = pytz.timezone('Asia/Shanghai')
+    img_name = datetime.now(china_tz).strftime("%Y-%m-%d %H:%M:%S") + img_name
 
     # 存储的文件夹
     img_dir = IMAGE_PATH + 'projectAvatar/' + project_id
@@ -506,6 +516,8 @@ def get_project_avatar(request):
     request_dict = json.loads(request.body.decode('utf-8'))
     project_id = request_dict.get("projectId")
     connection = create_connection()
+
+
     with connection:
         with connection.cursor() as cursor:
             # 查询project的 avatarId

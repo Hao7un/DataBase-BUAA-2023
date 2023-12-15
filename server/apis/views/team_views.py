@@ -10,6 +10,7 @@ from settings import DATABASES as db_conf
 from settings import IMAGE_PATH
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
+import pytz
 
 
 def create_connection():
@@ -59,7 +60,8 @@ def admin_create_team(request):
                 img = request.FILES['teamAvatar']
                 # 文件名
                 img_name = img.name
-                img_name = (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S") + img_name
+                china_tz = pytz.timezone('Asia/Shanghai')
+                img_name = datetime.now(china_tz).strftime("%Y-%m-%d %H:%M:%S") + img_name
 
                 # 存储的文件夹
                 img_dir = IMAGE_PATH + 'teamAvatar/' + str(team_id)
@@ -307,7 +309,8 @@ def user_apply_to_join_team(request):
     user_id = request_dict.get("userId")
 
     # 获取当前时间作为申请时间
-    apply_time = (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d")
+    china_tz = pytz.timezone('Asia/Shanghai')
+    apply_time = datetime.now(china_tz).strftime("%Y-%m-%d %H:%M:%S")
 
     # 调用存储过程处理申请
     connection = create_connection()
@@ -416,7 +419,6 @@ def user_get_specific_team_details(request):
         join_date = result['@_user_get_specific_team_details_4']
 
         # 解析团队详情
-        print(team_details_raw)
         team_details = team_details_raw.split('|')
         team_name = team_details[0]
         team_number = team_details[6]
@@ -469,7 +471,8 @@ def upload_team_avatar(request):
 
     # 文件名
     img_name = img.name.split('/')[-1]
-    img_name = (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S") + img_name
+    china_tz = pytz.timezone('Asia/Shanghai')
+    img_name = datetime.now(china_tz).strftime("%Y-%m-%d %H:%M:%S") + img_name
 
     # 存储的文件夹
     img_dir = IMAGE_PATH + 'teamAvatar/' + team_id

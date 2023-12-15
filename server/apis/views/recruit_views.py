@@ -6,6 +6,7 @@ import json
 from pymysql.cursors import DictCursor
 from settings import DATABASES as db_conf
 from django.views.decorators.csrf import csrf_exempt
+import pytz
 
 
 def create_connection():
@@ -24,7 +25,8 @@ def admin_create_recruitment(request):
     project_id = request_dict.get("projectId")
     start_time = datetime.strptime(request_dict.get("startTime"), "%Y-%m-%d %H:%M")
     end_time = datetime.strptime(request_dict.get("endTime"), "%Y-%m-%d %H:%M")
-    launch_time = (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M")
+    china_tz = pytz.timezone('Asia/Shanghai')
+    launch_time = datetime.now(china_tz).strftime("%Y-%m-%d %H:%M:%S")
     due_time = datetime.strptime(request_dict.get("deadline"), "%Y-%m-%d %H:%M")
     location = request_dict.get("location")
     hours = request_dict.get("hours")
@@ -95,10 +97,10 @@ def user_get_recruitment_list(request):
             recruitment_details = entry.split('|')
             recruitment_list.append({
                 'id': recruitment_details[0],
-                'launchTime': recruitment_details[1],
-                'dueTime': recruitment_details[2],
-                'startTime': recruitment_details[3],
-                'endTime': recruitment_details[4],
+                'launchTime': datetime.strptime(recruitment_details[1], '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d %H:%M'),
+                'dueTime': datetime.strptime(recruitment_details[2], '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d %H:%M'),
+                'startTime': datetime.strptime(recruitment_details[3], '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d %H:%M'),
+                'endTime': datetime.strptime(recruitment_details[4], '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d %H:%M'),
                 'location': recruitment_details[5],
                 'volunteerHour': recruitment_details[6],
                 'isAttend': recruitment_details[7] == '1',
@@ -110,7 +112,7 @@ def user_get_recruitment_list(request):
                 'projectType': recruitment_details[13],
             })
 
-    recruitment_list = sorted(recruitment_list, key=lambda k: k['launchTime'])
+    recruitment_list = sorted(recruitment_list, key=lambda k: k['launchTime'], reverse=True)
     return JsonResponse({
         'code': 0,
         'message': '招募列表获取成功',
@@ -139,8 +141,8 @@ def user_get_my_recruitments(request):
             recruitment_details = entry.split('|')
             future_recruitment_list.append({
                 'id': recruitment_details[0],
-                'startTime': recruitment_details[1],
-                'endTime': recruitment_details[2],
+                'startTime': datetime.strptime(recruitment_details[1], '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d %H:%M'),
+                'endTime': datetime.strptime(recruitment_details[2], '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d %H:%M'),
                 'location': recruitment_details[3],
                 'volunteerHour': recruitment_details[4],
                 'type': recruitment_details[5],
@@ -169,6 +171,8 @@ def user_get_my_recruitments(request):
                 'projectType': recruitment_details[9],
                 'participantNumber': recruitment_details[10],
             })
+    future_recruitment_list = sorted(future_recruitment_list, key=lambda k: k['startTime'])
+    past_recruitment_list = sorted(past_recruitment_list, key=lambda k: k['startTime'], reverse=True)
 
     return JsonResponse({
         'code': 0,
@@ -186,11 +190,18 @@ def user_get_volunteer_statistics(request):
     current_year = datetime.now().year
     spring_semester_start = datetime(current_year, 2, 25)
     spring_semester_end = datetime(current_year, 6, 30)
+
     fall_semester_start = datetime(current_year, 9, 1)
     fall_semester_end = datetime(current_year + 1, 1, 15)
 
     connection = create_connection()
     with connection.cursor() as cursor:
+        # 获取志愿时长目标
+        cursor.execute('SELECT semesterTarget,totalTarget FROM user WHERE userId =%s', [user_id])
+        targets = cursor.fetchone()
+        semester_target = targets['semesterTarget']
+        total_target = targets['totalTarget']
+
         # 获取过去的招募信息
         cursor.callproc('user_get_my_recruitments', [user_id, '', ''])
         cursor.execute('SELECT @_user_get_my_recruitments_1,'
@@ -203,8 +214,7 @@ def user_get_volunteer_statistics(request):
         semester_hours = 0
         type_hours = {'type1': 0, 'type2': 0, 'type3': 0,
                       'type4': 0, 'type5': 0, 'type6': 0}
-        monthly_hours = {month: 0 for month in ['january', 'february', 'march', 'april', 'may', 'june', 'july',
-                                                'august', 'september', 'october', 'november', 'december']}
+        monthly_hours = {f'month{i}': 0 for i in range(1, 13)}
 
         # 处理数据
         recruitment_entries = past_recruitments_raw.split(',')[1:]
@@ -212,7 +222,7 @@ def user_get_volunteer_statistics(request):
             details = entry.split('|')
             volunteer_hours = int(details[4])
             project_type = details[9]
-            start_time = datetime.strptime(details[1], '%Y-%m-%d')
+            start_time = datetime.strptime(details[1], '%Y-%m-%d %H:%M:%S')
 
             total_hours += volunteer_hours
             # 判断是否属于当前学期
@@ -220,7 +230,11 @@ def user_get_volunteer_statistics(request):
                 semester_hours += volunteer_hours
 
             type_hours[f'type{project_type}'] += volunteer_hours
-            monthly_hours[start_time.strftime('%B').lower()] += volunteer_hours
+
+            # 判断是否为当年的数据，并更新每月志愿时数
+            if start_time.year == current_year:
+                month_index = start_time.month
+                monthly_hours[f'month{month_index}'] += volunteer_hours
 
         # 返回统计结果
         statistics = {
@@ -228,6 +242,8 @@ def user_get_volunteer_statistics(request):
             'message': '',
             'total': total_hours,
             'semester': semester_hours,
+            'semesterTarget': semester_target,
+            'totalTarget': total_target,
             **type_hours,
             **monthly_hours
         }

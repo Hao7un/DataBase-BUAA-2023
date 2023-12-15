@@ -10,7 +10,7 @@ from django.http import JsonResponse
 import json
 from pymysql.cursors import DictCursor
 from django.views.decorators.csrf import csrf_exempt
-
+import pytz
 
 def create_connection():
     return pymysql.connect(host=db_conf["default"]["HOST"],
@@ -40,11 +40,12 @@ def register_info(request):
     with connection:
         with connection.cursor() as cursor:
             cursor.callproc('register_info', params + [0])  # 添加一个额外的参数用于输出结果
-            cursor.execute('SELECT @register_info_6')
+            cursor.execute('SELECT @_register_info_6')
             result = cursor.fetchone()
 
-            if result['@register_info_6'] == 1:
-                resp = {"code": 1, "message": "重复注册"}
+            if result['@_register_info_6'] == 1:
+                resp = {"code": 1,
+                        "message": "重复注册"}
                 return JsonResponse(resp)
 
     resp = {"code": 0,
@@ -228,7 +229,8 @@ def upload_user_avatar(request):
 
     # 文件名
     img_name = img.name.split('/')[-1]
-    img_name = (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S") + img_name
+    china_tz = pytz.timezone('Asia/Shanghai')
+    img_name = datetime.now(china_tz).strftime("%Y-%m-%d %H:%M:%S") + img_name
 
     # 存储的文件夹
     img_dir = IMAGE_PATH + 'userAvatar/' + user_id
@@ -270,10 +272,28 @@ def upload_user_avatar(request):
 
 
 @csrf_exempt
+def update_hour_target(request):
+    request_dict = json.loads(request.body.decode('utf-8'))
+    user_id = request_dict.get("userId")
+    semester_target = request_dict.get("semesterTarget")
+    total_target = request_dict.get("totalTarget")
+
+    connection = create_connection()
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.callproc('update_hour_target',[user_id,semester_target,total_target])
+            connection.commit()
+
+    return JsonResponse({
+        'code' : 0,
+        'message' : '目标更新成功'
+    })
+
+
+@csrf_exempt
 def get_user_avatar(request):
     request_dict = json.loads(request.body.decode('utf-8'))
     user_id = request_dict.get("userId")
-    print(user_id)
     connection = create_connection()
     with connection:
         with connection.cursor() as cursor:
