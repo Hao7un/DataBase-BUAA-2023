@@ -1,4 +1,22 @@
-# API
+# Beihang Volunteer Service
+produced by: HAOJUN YAN , LE WANG , HAOXIANG ZHANG
+
+------
+
+
+安装依赖后运行前端和后端：
+```bash
+# run frontend
+cd frontend
+npm install
+npm run dev
+
+# run server
+cd server
+pip install django
+pip install pymysql
+python manage.py runserver
+```
 
 ## 个人系统
 ### 获取用户信息
