@@ -229,10 +229,10 @@ export default {
 
 <style scoped>
 .main-container {
-    margin-left: 60px;
-    margin-right: 60px;
     display: flex;
     flex-direction: column;
+    margin-left: 50px;
+    margin-right: 30px;
 }
 
 .team-container {

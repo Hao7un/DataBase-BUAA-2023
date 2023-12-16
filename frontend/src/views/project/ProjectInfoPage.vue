@@ -86,7 +86,7 @@
             <el-button v-if="!questionInput" type="primary" @click="showQuestionInput"
                 style="font-weight: bold; font-size: 16px; color:whitesmoke">我要提问</el-button>
             <el-input v-if="questionInput" v-model="newQuestion" type="textarea" placeholder="输入你的问题"
-                style="margin-bottom: 20px; font-size: 16px;"></el-input>
+                style="margin-bottom: 30px; font-size: 16px;"></el-input>
             <el-button v-if="questionInput" type="primary" @click="askQuestion"
                 style="font-weight: bold; font-size: 16px; color:whitesmoke">完成</el-button>
         </div>
@@ -301,7 +301,8 @@ export default {
         },
         askQuestion() {
             if (this.newQuestion === '') {
-                ElMessage.error('问题不能为空');
+                ElMessage.error('问题为空');
+                this.questionInput = false;
                 return;
             }
             this.axios.post('http://localhost:8000/user_post_question', {
@@ -314,7 +315,7 @@ export default {
                     if (res.data.code === 0) {
                         ElMessage.success('提问成功，请等待负责人回复');
                         this.newQuestion = '';
-                        this.showQuestionInput = false;
+                        this.questionInput = false;
                     }
                 });
         },
@@ -335,10 +336,10 @@ export default {
 
 <style scoped>
 .main-container {
-    margin-left: 40px;
-    margin-right: 40px;
     display: flex;
     flex-direction: column;
+    margin-left: 40px;
+    margin-right: 40px;
 }
 
 .top-container {
@@ -402,10 +403,9 @@ export default {
 .right-container {
     display: flex;
     flex-direction: column;
+    width: 470px;
     margin-left: 30px;
     padding-top: 50px;
-    padding-left: 30px;
-    padding-right: 30px;
     font-size: 18px;
     border-left: 2px solid rgb(114, 110, 104, 0.2);
     overflow-x: hidden;
@@ -415,6 +415,7 @@ export default {
 
 .tutorial-container {
     width: 400px;
+    margin-left: 30px;
     margin-bottom: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
