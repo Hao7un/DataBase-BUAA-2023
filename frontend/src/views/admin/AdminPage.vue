@@ -141,7 +141,7 @@ export default {
         },
         viewTeamDetails(row) {
             this.$router.push({
-                path: '/admin/teaminfo',
+                path: '/admin/team-info',
                 query: {
                     teamId: row.teamId,
                 }
@@ -228,16 +228,6 @@ export default {
     margin-top: 35px;
     height: 600px;
     width: 99%;
-}
-
-.sidebar-container {
-    display: flex;
-    width: 180px;
-    height: 890px;
-    flex-direction: column;
-    padding-top: 20px;
-    margin-left: 20px;
-    border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 
 .item-font {

@@ -5,7 +5,7 @@
     </div>
     <div class="nav-container">
       <el-menu mode="horizontal" :default-active="activeMenu" class="menu-container">
-        <el-menu-item index="recruit" class="item-font" @click="changeToRecruit()">志愿招募</el-menu-item>
+        <el-menu-item index="recruitment" class="item-font" @click="changeToRecruit()">志愿招募</el-menu-item>
         <el-menu-item index="project" class="item-font" @click="changeToProject()">志愿项目</el-menu-item>
         <el-menu-item index="team" class="item-font" @click="changeToTeam()">志愿团队</el-menu-item>
         <el-menu-item index="manage" class="item-font" @click="changeToManagement()"
@@ -264,8 +264,8 @@ export default {
       this.currentPage = currentPage;
     },
     changeToRecruit() {
-      this.$store.commit("setActiveMenu", "recruit");
-      console.log("change to recruit");
+      this.$store.commit("setActiveMenu", "recruitment");
+      console.log("change to recruitment");
       this.$router.push({
         path: '/recruitment/join'
       });

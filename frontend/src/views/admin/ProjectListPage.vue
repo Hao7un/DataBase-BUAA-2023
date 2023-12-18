@@ -260,7 +260,7 @@ export default {
         },
         viewProjectDetails(projectId) {
             this.$router.push({
-                path: '/admin/projectinfo',
+                path: '/admin/project-info',
                 query: {
                     teamId: this.teamId,
                     projectId: projectId
@@ -269,7 +269,7 @@ export default {
         },
         changeToProjectListPage() {
             this.$router.push({
-                path: '/admin/projectlist',
+                path: '/admin/project-list',
                 query: {
                     teamId: this.teamId
                 }
@@ -277,7 +277,7 @@ export default {
         },
         changeToTeamManagePage() {
             this.$router.push({
-                path: '/admin/teaminfo',
+                path: '/admin/team-info',
                 query: {
                     teamId: this.teamId,
                 }
@@ -366,6 +366,7 @@ export default {
     padding-top: 20px;
     margin-left: 20px;
     height: auto;
+    min-height: 750px;
     border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 

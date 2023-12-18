@@ -74,18 +74,18 @@ const router = createRouter({
                     component: () => import('../views/admin/AdminPage.vue'),
                 },
                 {
-                    path: '/admin/teaminfo',
+                    path: '/admin/team-info',
                     name: 'teamDetail',
                     component: () => import('../views/admin/TeamManagePage.vue')
                 },
                 {
-                    path: '/admin/projectinfo',
+                    path: '/admin/project-info',
                     name: 'projectAdmin',
                     component: () => import('../views/admin/ProjectManagePage.vue')
                 },
                 {
-                    path: '/admin/projectlist',
-                    name: 'projectlist',
+                    path: '/admin/project-list',
+                    name: 'projectList',
                     component: () => import('../views/admin/ProjectListPage.vue')
                 },
                 {
