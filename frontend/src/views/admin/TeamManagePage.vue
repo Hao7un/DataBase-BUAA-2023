@@ -64,7 +64,7 @@
       <el-divider style="width: 90%; margin-left: 100px;" />
       <div class="content">
         <el-input type="textarea" v-model="teamIntroduction" placeholder="输入团队介绍(不超过500字)" :rows="15" :maxlength="500"
-          show-word-limit clearable style="font-size: 20px;"></el-input>
+          show-word-limit clearable style="font-size: 18px;"></el-input>
       </div>
       <div>
         <v-dialog v-model="createApplicationDialogVisible" width="900px" max-height="600">
@@ -512,7 +512,7 @@ export default {
   flex-direction: column;
   padding-top: 20px;
   margin-left: 20px;
-  height: 1000px;
+  height: 900px;
   border-right: 2px solid rgb(114, 110, 104, 0.2);
 }
 

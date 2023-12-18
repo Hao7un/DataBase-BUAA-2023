@@ -186,7 +186,7 @@
                                         </el-descriptions-item>
                                     </el-descriptions>
                                     <el-button size="large" @click="viewRecruits(card)"
-                                        style="margin-top: 5px;">查看应募人员</el-button>
+                                        style="margin-top: 5px;">查看志愿者</el-button>
                                 </div>
                             </v-expansion-panel-text>
                         </v-expansion-panel>
@@ -197,7 +197,7 @@
     </div>
     <v-dialog v-model="viewRecruitsVisible">
         <div style="width: 800px; height: 600px; background: white; position: relative; padding: 10px; margin-left: 500px;">
-            <h3 style="text-align: center; margin-top: 35px">应募人员</h3>
+            <h3 style="text-align: center; margin-top: 35px">志愿者名单</h3>
             <el-button style="position: absolute; top: 10px; right: 10px"
                 @click="viewRecruitsVisible = false">退出</el-button>
             <div style="margin-top: 20px; text-align: center;">
@@ -229,7 +229,7 @@
                             <el-input v-model="emailKey" clearable placeholder="输入邮箱"></el-input>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="time" label="应募时间" align="center" sortable></el-table-column>
+                    <el-table-column prop="time" label="报名时间" align="center" sortable></el-table-column>
                 </el-table>
             </div>
         </div>
@@ -490,7 +490,7 @@ export default {
                 .then((res) => {
                     console.log(res);
                     if (res.data.code === 0) {
-                        console.log("获取应募人员列表成功");
+                        console.log("获取志愿者名单成功");
                         this.recruits = res.data.recruits;
                     }
                     else {
