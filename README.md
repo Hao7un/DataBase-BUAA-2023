@@ -36,7 +36,7 @@ python manage.py runserver
     message: "",
     telephone: "18100000000",
     email: "abcd@xyz.com",
-    userIntro: "我是张昊翔。"
+    userIntro: "我来自北京航空航天大学。"
   }
   ```
 
@@ -259,7 +259,7 @@ python manage.py runserver
     teamIntro: "优秀团队。",
     foundationDate: "YYYY-MM-DD",
     joinDate: "YYYY-MM-DD", // N/A: 未加入团队
-    teamLeader: "张昊翔",
+    teamLeader: "张三",
     telephone: "18100000000",
     email: "abcd@xyz.com",
     projectList: [
@@ -410,13 +410,13 @@ python manage.py runserver
     projectIntro: "优秀项目。",
     latestTime: "YYYY-MM-DD", // 上一次招募结束时间，N/A: 未发布招募
     leaderId: "1",  // 团队负责人
-    leaderName: "张昊翔",
+    leaderName: "张三",
     teamId: "1",
     teamName: "志愿团队1",
     discussionList: [
         {
-          posterId: "1",
-          posterName: "张三", 
+          posterId: "2",
+          posterName: "李四", 
           questionTime: "YYYY-MM-DD HH:MM", 
           question: "需要什么技能？", 
           replyTime: "YYYY-MM-DD HH:MM", 

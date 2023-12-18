@@ -276,7 +276,7 @@ export default {
         /* 登录判断逻辑 */
         if (valid) {
           // this.$store.commit("setUserId", "3");
-          // this.$store.commit("setCollegeId", "21371295");
+          // this.$store.commit("setCollegeId", "21371001");
           // this.$store.commit("setPassword", "123456");
           // this.$store.commit("setUserName", "张昊翔");
           // this.$store.commit("setUserType", "0");

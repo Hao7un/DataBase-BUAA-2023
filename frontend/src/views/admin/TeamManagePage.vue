@@ -212,21 +212,21 @@ export default {
       ],
       members: [
         // {
-        //   collegeId: "21371372",
+        //   collegeId: "21371004",
         //   name: "严皓钧",
         //   telephone: "13710000001",
         //   joinDate: "2023-11-18",
         //   hours: 1,
         // },
         // {
-        //   collegeId: "21371401",
+        //   collegeId: "21371005",
         //   name: "王乐",
         //   telephone: "13710000002",
         //   joinDate: "2023-11-19",
         //   hours: 1,
         // },
         // {
-        //   collegeId: "21371295",
+        //   collegeId: "21371006",
         //   name: "张昊翔",
         //   telephone: "13710000003",
         //   joinDate: "2023-11-20",
